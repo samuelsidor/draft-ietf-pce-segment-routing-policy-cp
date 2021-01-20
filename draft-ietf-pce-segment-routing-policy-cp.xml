@@ -322,7 +322,7 @@ they will automatically be output with "(if approved)" -->
    Range MUST NOT be set for this Association type and MUST be ignored.</t>
 
 
-<t>SRPAG MUST carry additional TLVs to communicate Association Information. This document specifies five new TLVs to carry Association Information: SRPOLICY-POL-ID TLV, SRPOLICY-POL-NAME TLV, SRPOLICY-CPATH-ID TLV, SRPOLICY-CPATH-NAME TLV, SRPOLICY-CPATH-PREFERENCE TLV. These five TLVs encode the Policy Identifiers, SR Policy name, Candidate path identifiers, candidate path name, and Candidate path preference, respectively. When any of the mandatory TLVs are missing from the SRPAG association object, the PCE MUST send a PCErr message with Error Code = 26 "Association Error", Error Type = TBD7 "Missing mandatory SRPAG TLV".</t>
+<t>SRPAG MUST carry additional TLVs to communicate Association Information. This document specifies four new TLVs to carry Association Information: SRPOLICY-POL-NAME TLV, SRPOLICY-CPATH-ID TLV, SRPOLICY-CPATH-NAME TLV, SRPOLICY-CPATH-PREFERENCE TLV. These five TLVs encode the Policy Identifiers, SR Policy name, Candidate path identifiers, candidate path name, and Candidate path preference, respectively. When any of the mandatory TLVs are missing from the SRPAG association object, the PCE MUST send a PCErr message with Error Code = 26 "Association Error", Error Type = TBD7 "Missing mandatory SRPAG TLV".</t>
 
 <t>A given LSP MUST belong to at most one SRPAG, since a candidate path cannot belong to multiple SR policies. If a PCEP speaker receives a PCEP message with more than one SRPAG for an LSP, then the PCEP speaker MUST send a PCErr message with Error-Type 26 "Association Error" and Error-Value TBD8 "Multiple SRPAG for one LSP". If the message is a PCRpt message, then the PCEP speaker MUST close the PCEP connection. Closing the PCEP connection is necessary because ignoring PCRpt messages may lead to inconsistent LSP DB state between the two PCEP peers.</t>
 
@@ -330,6 +330,7 @@ they will automatically be output with "(if approved)" -->
   If the Path Setup Type (PST) of the LSP in SRPAG is not set to SR or SRv6, then the PCEP speaker MUST send a PCErr message with Error-Type 26 "Association Error" and Error-Value TBD10 "non-SR LSP in SRPAG".</t>
 
 
+<!--
 <section anchor="Policy-identifiers-tlv" title="SR Policy Identifiers TLV">
 
 <t>The SRPOLICY-POL-ID TLV is a mandatory TLV for the SRPAG Association. Only one SRPOLICY-POL-ID TLV can be carried and only the first occurrence is processed and any others MUST be ignored.</t>
@@ -356,7 +357,7 @@ they will automatically be output with "(if approved)" -->
 
 <t>Endpoint: can be either IPv4 or IPv6, depending on whether the policy endpoint is IPv4 or IPv6. This value may be different from the one contained in the END-POINTS object, or in the LSP IDENTIFIERS TLV of the LSP object. Endpoint is meant to strictly correspond to the endpoint of the SR policy, as it is defined in <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
 
-</section> <!-- Policy-identifiers-tlv -->
+</section> --><!-- Policy-identifiers-tlv -->
 
 <section anchor="Policy-name-tlv" title="SR Policy Name TLV">
 
@@ -646,8 +647,6 @@ they will automatically be output with "(if approved)" -->
 +------------+-----------------------------------+------------------+
 | TLV Type   | TLV Name                          | Reference        |
 | Value      |                                   |                  |
-+------------+-----------------------------------+------------------+
-| TBD2       | SRPOLICY-POL-ID                   | This document    |
 +------------+-----------------------------------+------------------+
 | TBD3       | SRPOLICY-POL-NAME                 | This document    |
 +------------+-----------------------------------+------------------+
