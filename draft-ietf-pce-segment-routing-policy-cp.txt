@@ -399,16 +399,20 @@ Internet-Draft                  SR Policy                   January 2021
    The Association Parameters (see Section 2) uniquely identify the
    Association.  In this section, we describe how these are to be set.
 
-   The Association Source MUST be set to the PCC's IP address.  This
+   The Association Source MUST be set to the headend value of the SR
+   Policy, as defined in [I-D.ietf-spring-segment-routing-policy].  This
    applies for both PCC-initiated and PCE-initiated candidate paths.
    The reasoning for this is that if different PCEs could set their own
    Association Source, then the candidate paths instantiated by
    different PCEs would by definition be in different PCEP Associations,
    which contradicts our requirement that the SR Policy is represented
-   by an Association.  It is assumed that all the PCEs that talk to a
-   particular PCC will either connect to it using the same IP address,
-   or they will have some other way of learning the PCC's address, that
-   is outside of scope of this document.
+   by an Association.
+
+   If the PCC receives a PCInit message for a non-existing SR Policy,
+   where the Association Source is set not to the headend value but to
+   some globally unique IP address that the PCC owns, then the PCC
+   SHOULD accept the PCInit message and create the SR Policy Association
+   with the Association Source that was sent in the PCInit message.
 
    The 16-bit Association ID field in the ASSOCIATION object MUST be set
    to the value of "1".  The Extended Association ID TLV MUST be
@@ -437,11 +441,7 @@ Internet-Draft                  SR Policy                   January 2021
    endpoint is IPv4 or IPv6.  This value may be different from the one
    contained in the END-POINTS object, or in the LSP IDENTIFIERS TLV of
    the LSP object.  Endpoint is meant to strictly correspond to the
-   endpoint of the SR policy, as it is defined in
-   [I-D.ietf-spring-segment-routing-policy].
 
-   If the PCEP speaker receives an ASSOCIATION object that does not
-   follow the above specification, then the PCEP speaker MUST send PCErr
 
 
 
@@ -450,8 +450,13 @@ Koldychev, et al.         Expires July 23, 2021                 [Page 8]
 Internet-Draft                  SR Policy                   January 2021
 
 
-   message with Error-Type 26 "Association Error" and Error-Value 7
-   "Cannot join the association group".
+   endpoint of the SR policy, as it is defined in
+   [I-D.ietf-spring-segment-routing-policy].
+
+   If the PCEP speaker receives an ASSOCIATION object whose ID and
+   Extended ID do not follow the above specification, then the PCEP
+   speaker MUST send PCErr message with Error-Type 26 "Association
+   Error" and Error-Value 7 "Cannot join the association group".
 
    The purpose of choosing the Association Parameters in this way is to
    guarantee that there is no possibility of a race condition when
@@ -493,11 +498,6 @@ Internet-Draft                  SR Policy                   January 2021
    Operator-configured Association Range MUST NOT be set for this
    Association type and MUST be ignored.
 
-   SRPAG MUST carry additional TLVs to communicate Association
-   Information.  This document specifies four new TLVs to carry
-   Association Information: SRPOLICY-POL-NAME TLV, SRPOLICY-CPATH-ID
-   TLV, SRPOLICY-CPATH-NAME TLV, SRPOLICY-CPATH-PREFERENCE TLV.  These
-   five TLVs encode the Policy Identifiers, SR Policy name, Candidate
 
 
 
@@ -506,6 +506,11 @@ Koldychev, et al.         Expires July 23, 2021                 [Page 9]
 Internet-Draft                  SR Policy                   January 2021
 
 
+   SRPAG MUST carry additional TLVs to communicate Association
+   Information.  This document specifies four new TLVs to carry
+   Association Information: SRPOLICY-POL-NAME TLV, SRPOLICY-CPATH-ID
+   TLV, SRPOLICY-CPATH-NAME TLV, SRPOLICY-CPATH-PREFERENCE TLV.  These
+   five TLVs encode the Policy Identifiers, SR Policy name, Candidate
    path identifiers, candidate path name, and Candidate path preference,
    respectively.  When any of the mandatory TLVs are missing from the
    SRPAG association object, the PCE MUST send a PCErr message with
@@ -550,17 +555,14 @@ Internet-Draft                  SR Policy                   January 2021
 
                 Figure 2: The SRPOLICY-POL-NAME TLV format
 
-   Type: TBD3 for "SRPOLICY-POL-NAME" TLV.
-
-
-
-
 
 
 Koldychev, et al.         Expires July 23, 2021                [Page 10]
 
 Internet-Draft                  SR Policy                   January 2021
 
+
+   Type: TBD3 for "SRPOLICY-POL-NAME" TLV.
 
    Length: indicates the total length of the TLV in octets and MUST be
    greater than 0.  The TLV MUST be zero-padded so that the TLV is
@@ -607,8 +609,6 @@ Internet-Draft                  SR Policy                   January 2021
    Originator ASN: Represented as 4 byte number, part of the originator
    identifier, as specified in [I-D.ietf-spring-segment-routing-policy]
    Section 2.4.
-
-
 
 
 

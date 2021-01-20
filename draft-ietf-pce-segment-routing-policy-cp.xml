@@ -264,7 +264,11 @@ they will automatically be output with "(if approved)" -->
 
 <t>The Association Parameters (see <xref target="Terminology"/>) uniquely identify the Association. In this section, we describe how these are to be set.</t>
 
-<t>The Association Source MUST be set to the PCC's IP address. This applies for both PCC-initiated and PCE-initiated candidate paths. The reasoning for this is that if different PCEs could set their own Association Source, then the candidate paths instantiated by different PCEs would by definition be in different PCEP Associations, which contradicts our requirement that the SR Policy is represented by an Association. It is assumed that all the PCEs that talk to a particular PCC will either connect to it using the same IP address, or they will have some other way of learning the PCC's address, that is outside of scope of this document.</t>
+<t>The Association Source MUST be set to the headend value of the SR Policy, as defined in <xref target="I-D.ietf-spring-segment-routing-policy"/>. This applies for both PCC-initiated and PCE-initiated candidate paths. The reasoning for this is that if different PCEs could set their own Association Source, then the candidate paths instantiated by different PCEs would by definition be in different PCEP Associations, which contradicts our requirement that the SR Policy is represented by an Association.
+<!-- It is assumed that all the PCEs that talk to a particular PCC will either connect to it using the same IP address, or they will have some other way of learning the PCC's address, that is outside of scope of this document. -->
+</t>
+
+<t>If the PCC receives a PCInit message for a non-existing SR Policy, where the Association Source is set not to the headend value but to some globally unique IP address that the PCC owns, then the PCC SHOULD accept the PCInit message and create the SR Policy Association with the Association Source that was sent in the PCInit message.</t>
 
 <t>The 16-bit Association ID field in the ASSOCIATION object MUST be set to the value of "1". The Extended Association ID TLV MUST be included and it MUST be in the following format:</t>
 
@@ -290,7 +294,7 @@ they will automatically be output with "(if approved)" -->
 
 <t>Endpoint: can be either IPv4 or IPv6, depending on whether the policy endpoint is IPv4 or IPv6. This value may be different from the one contained in the END-POINTS object, or in the LSP IDENTIFIERS TLV of the LSP object. Endpoint is meant to strictly correspond to the endpoint of the SR policy, as it is defined in <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
 
-<t>If the PCEP speaker receives an ASSOCIATION object that does not follow the above specification, then the PCEP speaker MUST send PCErr message with Error-Type 26 "Association Error" and Error-Value 7 "Cannot join the association group".</t>
+<t>If the PCEP speaker receives an ASSOCIATION object whose ID and Extended ID do not follow the above specification, then the PCEP speaker MUST send PCErr message with Error-Type 26 "Association Error" and Error-Value 7 "Cannot join the association group".</t>
 
 <t>The purpose of choosing the Association Parameters in this way is to guarantee that there is no possibility of a race condition when multiple PCEP speakers want to create the same SR Policy at the same time. By adhering to this format, all PCEP speakers come up with the same Association Parameters independently of each other. Thus, there is no chance that different PCEP speakers will come up with different Association Parameters for the same SR Policy.</t>
 
