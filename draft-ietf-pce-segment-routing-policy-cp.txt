@@ -5,18 +5,18 @@
 PCE Working Group                                           M. Koldychev
 Internet-Draft                                       Cisco Systems, Inc.
 Intended status: Standards Track                            S. Sivabalan
-Expires: July 23, 2021                                 Ciena Corporation
+Expires: August 22, 2021                               Ciena Corporation
                                                                 C. Barth
                                                   Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                        January 19, 2021
+                                                       February 18, 2021
 
 
     PCEP extension to support Segment Routing Policy Candidate Paths
-              draft-ietf-pce-segment-routing-policy-cp-02
+              draft-ietf-pce-segment-routing-policy-cp-03
 
 Abstract
 
@@ -53,15 +53,15 @@ Status of This Memo
 
 
 
-Koldychev, et al.         Expires July 23, 2021                 [Page 1]
+Koldychev, et al.        Expires August 22, 2021                [Page 1]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 23, 2021.
+   This Internet-Draft will expire on August 22, 2021.
 
 Copyright Notice
 
@@ -103,15 +103,15 @@ Table of Contents
      6.4.  PCE Initiated SR Policy with multiple candidate-paths . .  15
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  15
      7.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  15
-     7.2.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  16
-     7.3.  SRPAG TLVs  . . . . . . . . . . . . . . . . . . . . . . .  16
+     7.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  16
+     7.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  16
    8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  17
 
 
 
-Koldychev, et al.         Expires July 23, 2021                 [Page 2]
+Koldychev, et al.        Expires August 22, 2021                [Page 2]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
      8.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  17
@@ -165,9 +165,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                 [Page 3]
+Koldychev, et al.        Expires August 22, 2021                [Page 3]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    candidate paths, with the additional knowledge that these candidate
@@ -221,9 +221,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                 [Page 4]
+Koldychev, et al.        Expires August 22, 2021                [Page 4]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
 3.  Motivation
@@ -277,9 +277,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                 [Page 5]
+Koldychev, et al.        Expires August 22, 2021                [Page 5]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
 3.4.  Minimal signaling overhead
@@ -333,9 +333,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                 [Page 6]
+Koldychev, et al.        Expires August 22, 2021                [Page 6]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    An Association object of SRPAG group contains TLVs that carry
@@ -389,9 +389,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                 [Page 7]
+Koldychev, et al.        Expires August 22, 2021                [Page 7]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
 4.2.  Choice of Association Parameters
@@ -445,9 +445,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                 [Page 8]
+Koldychev, et al.        Expires August 22, 2021                [Page 8]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    endpoint of the SR policy, as it is defined in
@@ -501,16 +501,16 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                 [Page 9]
+Koldychev, et al.        Expires August 22, 2021                [Page 9]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    SRPAG MUST carry additional TLVs to communicate Association
    Information.  This document specifies four new TLVs to carry
    Association Information: SRPOLICY-POL-NAME TLV, SRPOLICY-CPATH-ID
    TLV, SRPOLICY-CPATH-NAME TLV, SRPOLICY-CPATH-PREFERENCE TLV.  These
-   five TLVs encode the Policy Identifiers, SR Policy name, Candidate
+   four TLVs encode the Policy Identifiers, SR Policy name, Candidate
    path identifiers, candidate path name, and Candidate path preference,
    respectively.  When any of the mandatory TLVs are missing from the
    SRPAG association object, the PCE MUST send a PCErr message with
@@ -557,12 +557,12 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                [Page 10]
+Koldychev, et al.        Expires August 22, 2021               [Page 10]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
-   Type: TBD3 for "SRPOLICY-POL-NAME" TLV.
+   Type: TBD2 for "SRPOLICY-POL-NAME" TLV.
 
    Length: indicates the total length of the TLV in octets and MUST be
    greater than 0.  The TLV MUST be zero-padded so that the TLV is
@@ -597,7 +597,7 @@ Internet-Draft                  SR Policy                   January 2021
 
                 Figure 3: The SRPOLICY-CPATH-ID TLV format
 
-   Type: TBD4 for "SRPOLICY-CPATH-ID" TLV.
+   Type: TBD3 for "SRPOLICY-CPATH-ID" TLV.
 
    Length: 28.
 
@@ -613,9 +613,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                [Page 11]
+Koldychev, et al.        Expires August 22, 2021               [Page 11]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    Originator Address: Represented as 128 bit value where IPv4 address
@@ -644,7 +644,7 @@ Internet-Draft                  SR Policy                   January 2021
 
                Figure 4: The SRPOLICY-CPATH-NAME TLV format
 
-   Type: TBD11 for "SRPOLICY-CPATH-NAME" TLV.
+   Type: TBD4 for "SRPOLICY-CPATH-NAME" TLV.
 
    Length: indicates the total length of the TLV in octets and MUST be
    greater than 0.  The TLV MUST be zero-padded so that the TLV is
@@ -669,9 +669,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                [Page 12]
+Koldychev, et al.        Expires August 22, 2021               [Page 12]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
        0                   1                   2                   3
@@ -725,9 +725,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                [Page 13]
+Koldychev, et al.        Expires August 22, 2021               [Page 13]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    1.  For each candidate path of the SR Policy, the PCC generates a
@@ -781,9 +781,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                [Page 14]
+Koldychev, et al.        Expires August 22, 2021               [Page 14]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    2.  PCC uses the PLSP-ID from the LSP object to find the candidate
@@ -822,80 +822,80 @@ Internet-Draft                  SR Policy                   January 2021
 
 7.1.  Association Type
 
-   This document defines a new association type: SR Policy Association
-   Group (SRPAG).  IANA is requested to make the assignment of a new
-   value for the sub-registry "ASSOCIATION Type Field" (request to be
-   created in [RFC8697]), as follows:
+   This document defines a new association type: SR Policy Association.
+   IANA is requested to make the following codepoint assignment in the
+   "ASSOCIATION Type Field" subregistry [RFC8697] within the "Path
+   Computation Element Protocol (PCEP) Numbers registry:
 
-   +----------------------+-------------------------+------------------+
-   | Association Type     | Association Name        | Reference        |
-   | Value                |                         |                  |
-   +----------------------+-------------------------+------------------+
-   | TBD1                 | SR Policy Association   | This document    |
-   +----------------------+-------------------------+------------------+
-
+   +-----------+-------------------------------------------+-----------+
+   | Type      | Name                                      | Reference |
+   +-----------+-------------------------------------------+-----------+
+   | TBD1      | SR Policy Association                     | This.I-D  |
+   +-----------+-------------------------------------------+-----------+
 
 
 
-Koldychev, et al.         Expires July 23, 2021                [Page 15]
+
+
+Koldychev, et al.        Expires August 22, 2021               [Page 15]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
-7.2.  PCEP Errors
+7.2.  PCEP TLV Type Indicators
+
+   This document defines four new TLVs for carrying additional
+   information about SR policy and SR candidate paths.  IANA is
+   requested to make the assignment of a new value for the existing
+   "PCEP TLV Type Indicators" registry as follows:
+
+   +-----------+-------------------------------------------+-----------+
+   | Value     | Description                               | Reference |
+   +-----------+-------------------------------------------+-----------+
+   | TBD2      | SRPOLICY-POL-NAME                         | This.I-D  |
+   +-----------+-------------------------------------------+-----------+
+   | TBD3      | SRPOLICY-CPATH-ID                         | This.I-D  |
+   +-----------+-------------------------------------------+-----------+
+   | TBD4      | SRPOLICY-CPATH-NAME                       | This.I-D  |
+   +-----------+-------------------------------------------+-----------+
+   | TBD5      | SRPOLICY-CPATH-PREFERENCE                 | This.I-D  |
+   +-----------+-------------------------------------------+-----------+
+
+7.3.  PCEP Errors
 
    This document defines five new Error-Values within the "Association
    Error" Error-Type.  IANA is requested to allocate new error values
    within the "PCEP-ERROR Object Error Types and Values" sub-registry of
    the PCEP Numbers registry, as follows:
 
-   +-------+----------+-----------------------------+------------------+
-   | Error | Error    | Meaning                     | Reference        |
-   | Type  | Value    |                             |                  |
-   +-------+----------+-----------------------------+------------------+
-   | 29    | TBD6     | Conflicting SRPAG TLV       | This document    |
-   +-------+----------+-----------------------------+------------------+
-   | 29    | TBD7     | Missing mandatory SRPAG TLV | This document    |
-   +-------+----------+-----------------------------+------------------+
-   | 29    | TBD8     | Multiple SRPAG for one LSP  | This document    |
-   +-------+----------+-----------------------------+------------------+
-   | 29    | TBD9     | Use of SRPAG without SR     | This document    |
-   |       |          | capability exchange         |                  |
-   +-------+----------+-----------------------------+------------------+
-   | 29    | TBD10    | non-SR LSP in SRPAG         | This document    |
-   +-------+----------+-----------------------------+------------------+
-
-
-7.3.  SRPAG TLVs
-
-   This document defines five new TLVs for carrying additional
-   information about SR policy and SR candidate paths.  IANA is
-   requested to make the assignment of a new value for the existing
-   "PCEP TLV Type Indicators" registry as follows:
-
-   +------------+-----------------------------------+------------------+
-   | TLV Type   | TLV Name                          | Reference        |
-   | Value      |                                   |                  |
-   +------------+-----------------------------------+------------------+
-   | TBD3       | SRPOLICY-POL-NAME                 | This document    |
-   +------------+-----------------------------------+------------------+
-   | TBD4       | SRPOLICY-CPATH-ID                 | This document    |
-   +------------+-----------------------------------+------------------+
-   | TBD11      | SRPOLICY-CPATH-NAME               | This document    |
-   +------------+-----------------------------------+------------------+
-   | TBD5       | SRPOLICY-CPATH-PREFERENCE         | This document    |
-   +------------+-----------------------------------+------------------+
+   +------------+------------------+-----------------------+-----------+
+   | Error-Type | Meaning          | Error-value           | Reference |
+   +------------+------------------+-----------------------+-----------+
+   | 26         | Association      | TBD6: Conflicting     | This.I-D  |
+   |            | Error            | SRPAG TLV             |           |
+   +------------+------------------+-----------------------+-----------+
+   | 26         | Association      | TBD7: Missing         | This.I-D  |
+   |            | Error            | mandatory SRPAG TLV   |           |
+   +------------+------------------+-----------------------+-----------+
+   | 26         | Association      | TBD8: Multiple SRPAG  | This.I-D  |
+   |            | Error            | for one LSP           |           |
+   +------------+------------------+-----------------------+-----------+
+   | 26         | Association      | TBD9: Use of SRPAG    | This.I-D  |
+   |            | Error            | without SR capability |           |
+   |            |                  | exchange              |           |
+   +------------+------------------+-----------------------+-----------+
+   | 26         | Association      | TBD10: non-SR LSP in  | This.I-D  |
+   |            | Error            | SRPAG                 |           |
+   +------------+------------------+-----------------------+-----------+
 
 
 
 
 
 
-
-
-Koldychev, et al.         Expires July 23, 2021                [Page 16]
+Koldychev, et al.        Expires August 22, 2021               [Page 16]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
 8.  Implementation Status
@@ -949,9 +949,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                [Page 17]
+Koldychev, et al.        Expires August 22, 2021               [Page 17]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    can also be derived from the SR Database, but association provides a
@@ -964,8 +964,8 @@ Internet-Draft                  SR Policy                   January 2021
 
 10.  Acknowledgement
 
-   Would like to thank Stephane Litkowski and Praveen Kumar for review
-   comments.
+   Would like to thank Stephane Litkowski, Praveen Kumar and Tom Petch
+   for review comments.
 
 11.  References
 
@@ -1005,9 +1005,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                [Page 18]
+Koldychev, et al.        Expires August 22, 2021               [Page 18]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    [I-D.ietf-spring-segment-routing-policy]
@@ -1061,9 +1061,9 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                [Page 19]
+Koldychev, et al.        Expires August 22, 2021               [Page 19]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    [I-D.ietf-pce-segment-routing-ipv6]
@@ -1117,9 +1117,9 @@ Authors' Addresses
 
 
 
-Koldychev, et al.         Expires July 23, 2021                [Page 20]
+Koldychev, et al.        Expires August 22, 2021               [Page 20]
 
-Internet-Draft                  SR Policy                   January 2021
+Internet-Draft                  SR Policy                  February 2021
 
 
    Colby Barth
@@ -1173,4 +1173,4 @@ Internet-Draft                  SR Policy                   January 2021
 
 
 
-Koldychev, et al.         Expires July 23, 2021                [Page 21]
+Koldychev, et al.        Expires August 22, 2021               [Page 21]
