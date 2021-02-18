@@ -605,7 +605,7 @@ they will automatically be output with "(if approved)" -->
 <t>This document defines a new association type: SR Policy Association.
 IANA is requested to make the following codepoint assignment in the
 "ASSOCIATION Type Field" subregistry <xref target="RFC8697"/> within
-the "Path Computation Element Protocol (PCEP) Numbers registry:</t>
+the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
@@ -648,21 +648,24 @@ the "Path Computation Element Protocol (PCEP) Numbers registry:</t>
 +------------+------------------+-----------------------+-----------+
 | Error-Type | Meaning          | Error-value           | Reference |
 +------------+------------------+-----------------------+-----------+
-| 26         | Association      | TBD6: Conflicting     | This.I-D  |
-|            | Error            | SRPAG TLV             |           |
+| 26         | Association      |                       | [RFC8697] |
+|            | Error            |                       |           |
 +------------+------------------+-----------------------+-----------+
-| 26         | Association      | TBD7: Missing         | This.I-D  |
-|            | Error            | mandatory SRPAG TLV   |           |
+|            |                  | TBD6: Conflicting     | This.I-D  |
+|            |                  | SRPAG TLV             |           |
 +------------+------------------+-----------------------+-----------+
-| 26         | Association      | TBD8: Multiple SRPAG  | This.I-D  |
-|            | Error            | for one LSP           |           |
+|            |                  | TBD7: Missing         | This.I-D  |
+|            |                  | mandatory SRPAG TLV   |           |
 +------------+------------------+-----------------------+-----------+
-| 26         | Association      | TBD9: Use of SRPAG    | This.I-D  |
-|            | Error            | without SR capability |           |
+|            |                  | TBD8: Multiple SRPAG  | This.I-D  |
+|            |                  | for one LSP           |           |
++------------+------------------+-----------------------+-----------+
+|            |                  | TBD9: Use of SRPAG    | This.I-D  |
+|            |                  | without SR capability |           |
 |            |                  | exchange              |           |
 +------------+------------------+-----------------------+-----------+
-| 26         | Association      | TBD10: non-SR LSP in  | This.I-D  |
-|            | Error            | SRPAG                 |           |
+|            |                  | TBD10: non-SR LSP in  | This.I-D  |
+|            |                  | SRPAG                 |           |
 +------------+------------------+-----------------------+-----------+
 
 ]]></artwork>

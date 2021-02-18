@@ -114,14 +114,14 @@ Koldychev, et al.        Expires August 22, 2021                [Page 2]
 Internet-Draft                  SR Policy                  February 2021
 
 
-     8.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  17
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
+     8.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  18
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  18
    10. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  18
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
      11.1.  Normative References . . . . . . . . . . . . . . . . . .  18
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  19
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  20
    Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  20
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
 
 1.  Introduction
 
@@ -825,7 +825,7 @@ Internet-Draft                  SR Policy                  February 2021
    This document defines a new association type: SR Policy Association.
    IANA is requested to make the following codepoint assignment in the
    "ASSOCIATION Type Field" subregistry [RFC8697] within the "Path
-   Computation Element Protocol (PCEP) Numbers registry:
+   Computation Element Protocol (PCEP) Numbers" registry:
 
    +-----------+-------------------------------------------+-----------+
    | Type      | Name                                      | Reference |
@@ -868,25 +868,25 @@ Internet-Draft                  SR Policy                  February 2021
    within the "PCEP-ERROR Object Error Types and Values" sub-registry of
    the PCEP Numbers registry, as follows:
 
-   +------------+------------------+-----------------------+-----------+
-   | Error-Type | Meaning          | Error-value           | Reference |
-   +------------+------------------+-----------------------+-----------+
-   | 26         | Association      | TBD6: Conflicting     | This.I-D  |
-   |            | Error            | SRPAG TLV             |           |
-   +------------+------------------+-----------------------+-----------+
-   | 26         | Association      | TBD7: Missing         | This.I-D  |
-   |            | Error            | mandatory SRPAG TLV   |           |
-   +------------+------------------+-----------------------+-----------+
-   | 26         | Association      | TBD8: Multiple SRPAG  | This.I-D  |
-   |            | Error            | for one LSP           |           |
-   +------------+------------------+-----------------------+-----------+
-   | 26         | Association      | TBD9: Use of SRPAG    | This.I-D  |
-   |            | Error            | without SR capability |           |
-   |            |                  | exchange              |           |
-   +------------+------------------+-----------------------+-----------+
-   | 26         | Association      | TBD10: non-SR LSP in  | This.I-D  |
-   |            | Error            | SRPAG                 |           |
-   +------------+------------------+-----------------------+-----------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -896,6 +896,30 @@ Internet-Draft                  SR Policy                  February 2021
 Koldychev, et al.        Expires August 22, 2021               [Page 16]
 
 Internet-Draft                  SR Policy                  February 2021
+
+
+   +------------+------------------+-----------------------+-----------+
+   | Error-Type | Meaning          | Error-value           | Reference |
+   +------------+------------------+-----------------------+-----------+
+   | 26         | Association      |                       | [RFC8697] |
+   |            | Error            |                       |           |
+   +------------+------------------+-----------------------+-----------+
+   |            |                  | TBD6: Conflicting     | This.I-D  |
+   |            |                  | SRPAG TLV             |           |
+   +------------+------------------+-----------------------+-----------+
+   |            |                  | TBD7: Missing         | This.I-D  |
+   |            |                  | mandatory SRPAG TLV   |           |
+   +------------+------------------+-----------------------+-----------+
+   |            |                  | TBD8: Multiple SRPAG  | This.I-D  |
+   |            |                  | for one LSP           |           |
+   +------------+------------------+-----------------------+-----------+
+   |            |                  | TBD9: Use of SRPAG    | This.I-D  |
+   |            |                  | without SR capability |           |
+   |            |                  | exchange              |           |
+   +------------+------------------+-----------------------+-----------+
+   |            |                  | TBD10: non-SR LSP in  | This.I-D  |
+   |            |                  | SRPAG                 |           |
+   +------------+------------------+-----------------------+-----------+
 
 
 8.  Implementation Status
@@ -923,6 +947,13 @@ Internet-Draft                  SR Policy                  February 2021
    It is up to the individual working groups to use this information as
    they see fit".
 
+
+
+Koldychev, et al.        Expires August 22, 2021               [Page 17]
+
+Internet-Draft                  SR Policy                  February 2021
+
+
 8.1.  Cisco
 
    o  Organization: Cisco Systems
@@ -946,14 +977,6 @@ Internet-Draft                  SR Policy                  February 2021
 
    The information carried in the SRPAG Association object, as per this
    document is related to SR Policy.  It often reflects information that
-
-
-
-Koldychev, et al.        Expires August 22, 2021               [Page 17]
-
-Internet-Draft                  SR Policy                  February 2021
-
-
    can also be derived from the SR Database, but association provides a
    much easier grouping of related LSPs and messages.  The SRPAG
    association could provides an adversary with the opportunity to
@@ -975,6 +998,17 @@ Internet-Draft                  SR Policy                  February 2021
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
+
+
+
+
+
+
+
+Koldychev, et al.        Expires August 22, 2021               [Page 18]
+
+Internet-Draft                  SR Policy                  February 2021
+
 
    [RFC5440]  Vasseur, JP., Ed. and JL. Le Roux, Ed., "Path Computation
               Element (PCE) Communication Protocol (PCEP)", RFC 5440,
@@ -1002,14 +1036,6 @@ Internet-Draft                  SR Policy                  February 2021
               RFC 7942, DOI 10.17487/RFC7942, July 2016,
               <https://www.rfc-editor.org/info/rfc7942>.
 
-
-
-
-Koldychev, et al.        Expires August 22, 2021               [Page 18]
-
-Internet-Draft                  SR Policy                  February 2021
-
-
    [I-D.ietf-spring-segment-routing-policy]
               Filsfils, C., Talaulikar, K., Voyer, D., Bogdanov, A., and
               P. Mattes, "Segment Routing Policy Architecture", draft-
@@ -1028,6 +1054,17 @@ Internet-Draft                  SR Policy                  February 2021
               Protocol (PCEP) Extensions for Segment Routing", RFC 8664,
               DOI 10.17487/RFC8664, December 2019,
               <https://www.rfc-editor.org/info/rfc8664>.
+
+
+
+
+
+
+
+Koldychev, et al.        Expires August 22, 2021               [Page 19]
+
+Internet-Draft                  SR Policy                  February 2021
+
 
    [I-D.koldychev-pce-operational]
               Koldychev, M., Sivabalan, S., Negi, M., Achaval, D., and
@@ -1054,18 +1091,6 @@ Internet-Draft                  SR Policy                  February 2021
               RFC 8253, DOI 10.17487/RFC8253, October 2017,
               <https://www.rfc-editor.org/info/rfc8253>.
 
-
-
-
-
-
-
-
-Koldychev, et al.        Expires August 22, 2021               [Page 19]
-
-Internet-Draft                  SR Policy                  February 2021
-
-
    [I-D.ietf-pce-segment-routing-ipv6]
               Li, C., Negi, M., Sivabalan, S., Koldychev, M.,
               Kaladharan, P., and Y. Zhu, "PCEP Extensions for Segment
@@ -1073,6 +1098,29 @@ Internet-Draft                  SR Policy                  February 2021
               segment-routing-ipv6-08 (work in progress), November 2020.
 
 Appendix A.  Contributors
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.        Expires August 22, 2021               [Page 20]
+
+Internet-Draft                  SR Policy                  February 2021
+
 
    Dhruv Dhody
    Huawei Technologies
@@ -1111,21 +1159,23 @@ Authors' Addresses
    Email: ssivabal@ciena.com
 
 
-
-
-
-
-
-
-Koldychev, et al.        Expires August 22, 2021               [Page 20]
-
-Internet-Draft                  SR Policy                  February 2021
-
-
    Colby Barth
    Juniper Networks, Inc.
 
    Email: cbarth@juniper.net
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.        Expires August 22, 2021               [Page 21]
+
+Internet-Draft                  SR Policy                  February 2021
 
 
    Shuping Peng
@@ -1173,4 +1223,10 @@ Internet-Draft                  SR Policy                  February 2021
 
 
 
-Koldychev, et al.        Expires August 22, 2021               [Page 21]
+
+
+
+
+
+
+Koldychev, et al.        Expires August 22, 2021               [Page 22]
