@@ -438,10 +438,10 @@ Internet-Draft                  SR Policy                  February 2021
    Color: SR Policy color value.
 
    Endpoint: can be either IPv4 or IPv6, depending on whether the policy
-   endpoint is IPv4 or IPv6.  This value may be different from the one
+   endpoint is IPv4 or IPv6.  This value MAY be different from the one
    contained in the END-POINTS object, or in the LSP IDENTIFIERS TLV of
-   the LSP object.  Endpoint is endpoint of the SR policy, as it is
-   defined in [I-D.ietf-spring-segment-routing-policy].
+   the LSP object.  This value is part of the tuple <color, endpoint>
+   that identifies the SR Policy on a given head-end.
 
 
 
