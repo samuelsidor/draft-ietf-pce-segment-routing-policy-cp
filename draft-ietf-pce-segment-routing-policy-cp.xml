@@ -387,7 +387,7 @@ This value is part of the tuple &#60;color, endpoint&#62; that identifies the SR
 
 <t>Type: TBD2 for "SRPOLICY-POL-NAME" TLV.</t>
 
-<t>Length: indicates the total length of the TLV in octets and MUST be greater than 0. The TLV MUST be zero-padded so that the TLV is 4-octet aligned.</t>
+<t>Length: indicates the length of the value portion of the TLV in octets and MUST be greater than 0. The TLV MUST be zero-padded so that the TLV is 4-octet aligned.</t>
 
 <t>Policy Name: Policy name, as defined in <xref target="I-D.ietf-spring-segment-routing-policy"/>. It SHOULD be a string of printable ASCII characters, without a NULL terminator.</t>
 
@@ -454,7 +454,7 @@ This value is part of the tuple &#60;color, endpoint&#62; that identifies the SR
 
 <t>Type: TBD4 for "SRPOLICY-CPATH-NAME" TLV.</t>
 
-<t>Length: indicates the total length of the TLV in octets and MUST be greater than 0. The TLV MUST be zero-padded so that the TLV is 4-octet aligned.</t>
+<t>Length: indicates the length of the value portion of the TLV in octets and MUST be greater than 0. The TLV MUST be zero-padded so that the TLV is 4-octet aligned.</t>
 
 <t>SR Policy Candidate Path Name: SR Policy Candidate Path Name, as defined in <xref target="I-D.ietf-spring-segment-routing-policy"/>. It SHOULD be a string of printable ASCII characters, without a NULL terminator.</t>
 
