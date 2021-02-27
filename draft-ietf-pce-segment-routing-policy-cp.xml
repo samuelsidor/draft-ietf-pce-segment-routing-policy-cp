@@ -230,9 +230,9 @@ This draft provides a mechanism to signal this information in PCEP.</t>
 
 <t>A new Association Type is defined in this document, based on the generic ASSOCIATION object. Association type = TBD1 "SR Policy Association" for SR Policy Association Group (SRPAG). The SRPAG Association MUST NOT be used for LSPs that are not part of an SR Policy.</t>
 
-<t>An Association object of SRPAG group contains TLVs that carry Association Information. The association information can be subdivided into three parts: Policy identifiers, Candidate path identifiers, and Candidate path attributes.</t>
+<t>An Association object of SRPAG group contains TLVs that carry Association Information. The association information can be subdivided into three parts: SR Policy identifiers, Candidate path identifiers, and Candidate path attributes.</t>
 
-<t>Policy Identifiers uniquely identify the SR policy to which a given LSP belongs, within the context of the head-end. Policy Identifiers MUST be the same for all candidate paths in the same SRPAG. Policy Identifiers MUST NOT change for a given LSP during its lifetime. Policy Identifiers MUST be different for different SRPAG associations. When these rules are not satisfied, the PCE MUST send a PCErr message with Error Code = 26 "Association Error", Error Type = TBD6 "Inconsistent SRPAG Identifiers". Policy Identifiers consist of:</t>
+<t>SR Policy Identifiers uniquely identify the SR policy to which a given LSP belongs, within the context of the head-end. SR Policy Identifiers MUST be the same for all candidate paths in the same SRPAG. SR Policy Identifiers MUST NOT change for a given LSP during its lifetime. SR Policy Identifiers MUST be different for different SRPAG associations. When these rules are not satisfied, the PCE MUST send a PCErr message with Error Code = 26 "Association Error", Error Type = TBD6 "Inconsistent SRPAG Identifiers". SR Policy Identifiers consist of:</t>
 <t>
       <list style="symbols">
         <t>Color of SR policy.</t>
@@ -379,7 +379,7 @@ This value is part of the tuple &#60;color, endpoint&#62; that identifies the SR
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |                                                               |
-  ~                          Policy Name                          ~
+  ~                       SR Policy Name                          ~
   |                                                               |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
@@ -389,7 +389,7 @@ This value is part of the tuple &#60;color, endpoint&#62; that identifies the SR
 
 <t>Length: indicates the length of the value portion of the TLV in octets and MUST be greater than 0. The TLV MUST be zero-padded so that the TLV is 4-octet aligned.</t>
 
-<t>Policy Name: Policy name, as defined in <xref target="I-D.ietf-spring-segment-routing-policy"/>. It SHOULD be a string of printable ASCII characters, without a NULL terminator.</t>
+<t>SR Policy Name: SR Policy name, as defined in <xref target="I-D.ietf-spring-segment-routing-policy"/>. It SHOULD be a string of printable ASCII characters, without a NULL terminator.</t>
 
 </section> <!-- Policy-name-tlv -->
 
