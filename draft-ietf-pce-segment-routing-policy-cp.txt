@@ -82,7 +82,7 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
-   3.  Motivation  . . . . . . . . . . . . . . . . . . . . . . . . .   5
+   3.  Motivation  . . . . . . . . . . . . . . . . . . . . . . . . .   4
      3.1.  Group Candidate Paths belonging to the same SR policy . .   5
      3.2.  Instantiation of SR policy candidate paths  . . . . . . .   5
      3.3.  Avoid computing lower preference candidate paths  . . . .   5
@@ -176,11 +176,6 @@ Internet-Draft                  SR Policy                  February 2021
    association type specifically for associating SR candidate paths into
    a single SR policy.
 
-   [Editor's Note- Currently it is assumed that each candidate path has
-   only one ERO (SID-List) within the scope of this document.  Another
-   document will deal with a way to allow multiple ERO/SID-Lists for a
-   candidate path within PCEP.]
-
 2.  Terminology
 
    The following terminologies are used in this document:
@@ -214,9 +209,14 @@ Internet-Draft                  SR Policy                  February 2021
    PCEP Tunnel:  The entity identified by the PLSP-ID, as per
       [I-D.koldychev-pce-operational].
 
+3.  Motivation
 
-
-
+   The new Association Type (SR Policy Association) and the new TLVs for
+   the ASSOCIATION object, defined in this document, allow a PCEP peer
+   to exchange additional parameters of SR candidate paths and of their
+   associated SR policy.  For the SR policy, the parameters are: color
+   and endpoint.  For the candidate path, the parameters are: protocol
+   origin, originator, discriminator and preference.
 
 
 
@@ -226,14 +226,6 @@ Koldychev, et al.       Expires September 1, 2021               [Page 4]
 Internet-Draft                  SR Policy                  February 2021
 
 
-3.  Motivation
-
-   The new Association Type (SR Policy Association) and the new TLVs for
-   the ASSOCIATION object, defined in this document, allow a PCEP peer
-   to exchange additional parameters of SR candidate paths and of their
-   associated SR policy.  For the SR policy, the parameters are: color
-   and endpoint.  For the candidate path, the parameters are: protocol
-   origin, originator, discriminator and preference.
    [I-D.ietf-spring-segment-routing-policy] describes the concept of SR
    Policy and these parameters.
 
@@ -274,6 +266,14 @@ Internet-Draft                  SR Policy                  February 2021
    PCE, such candidate paths can be created, updated and deleted
    independently of each other.  This is achieved by making each
    candidate path correspond to a unique LSP (identified via PLSP-ID).
+   For example, if an SR policy has 4 candidate paths, then if the PCE
+   wants to update one of those candidate paths, only one set of PCUpd
+   and PCRpt messages needs to be exchanged.
+
+
+
+
+
 
 
 
@@ -281,10 +281,6 @@ Koldychev, et al.       Expires September 1, 2021               [Page 5]
 
 Internet-Draft                  SR Policy                  February 2021
 
-
-   For example, if an SR policy has 4 candidate paths, then if the PCE
-   wants to update one of those candidate paths, only one set of PCUpd
-   and PCRpt messages needs to be exchanged.
 
 4.  Procedure
 
@@ -331,16 +327,16 @@ Internet-Draft                  SR Policy                  February 2021
 
    o  Color of SR Policy.
 
+   o  Endpoint of SR Policy.
+
+   o  Optionally, the SR Policy name.
+
 
 
 Koldychev, et al.       Expires September 1, 2021               [Page 6]
 
 Internet-Draft                  SR Policy                  February 2021
 
-
-   o  Endpoint of SR Policy.
-
-   o  Optionally, the SR Policy name.
 
    SR Policy Candidate Path Identifiers uniquely identify the SR Policy
    Candidate Path within the context of an SR Policy.  SR Policy
@@ -385,6 +381,10 @@ Internet-Draft                  SR Policy                  February 2021
 
    o  Extended Association ID TLV.
 
+   The Association Source MUST be set to the headend value of the SR
+   Policy, as defined in [I-D.ietf-spring-segment-routing-policy]
+   Section 2.1.
+
 
 
 
@@ -393,10 +393,6 @@ Koldychev, et al.       Expires September 1, 2021               [Page 7]
 
 Internet-Draft                  SR Policy                  February 2021
 
-
-   The Association Source MUST be set to the headend value of the SR
-   Policy, as defined in [I-D.ietf-spring-segment-routing-policy]
-   Section 2.1.
 
    If the PCC receives a PCInit message for a non-existent SR Policy,
    where the Association Source is set not to the headend value but to
@@ -442,6 +438,10 @@ Internet-Draft                  SR Policy                  February 2021
 
    The purpose of choosing the Association Parameters in this way is to
    guarantee that there is no possibility of a race condition when
+   multiple PCEP speakers want to create the same SR Policy at the same
+   time.  By adhering to this format, all PCEP speakers come up with the
+   same Association Parameters independently of each other.  Thus, there
+
 
 
 
@@ -450,9 +450,6 @@ Koldychev, et al.       Expires September 1, 2021               [Page 8]
 Internet-Draft                  SR Policy                  February 2021
 
 
-   multiple PCEP speakers want to create the same SR Policy at the same
-   time.  By adhering to this format, all PCEP speakers come up with the
-   same Association Parameters independently of each other.  Thus, there
    is no chance that different PCEP speakers will come up with different
    Association Parameters for the same SR Policy.
 
@@ -497,6 +494,9 @@ Internet-Draft                  SR Policy                  February 2021
    o  SRPOLICY-CPATH-NAME TLV: encodes SR Policy Candidate Path string
       name.
 
+   o  SRPOLICY-CPATH-PREFERENCE TLV: encodes SR Policy Candidate Path
+      preference value.
+
 
 
 
@@ -505,9 +505,6 @@ Koldychev, et al.       Expires September 1, 2021               [Page 9]
 
 Internet-Draft                  SR Policy                  February 2021
 
-
-   o  SRPOLICY-CPATH-PREFERENCE TLV: encodes SR Policy Candidate Path
-      preference value.
 
    Of these new TLVs, only SRPOLICY-CPATH-ID TLV is mandatory.  When the
    mandatory TLV is missing from the SRPAG ASSOCIATION object, the PCE
@@ -553,6 +550,9 @@ Internet-Draft                  SR Policy                  February 2021
    octets and MUST be greater than 0.  The TLV MUST be zero-padded so
    that the TLV is 4-octet aligned.
 
+   SR Policy Name: SR Policy name, as defined in
+   [I-D.ietf-spring-segment-routing-policy].  It SHOULD be a string of
+   printable ASCII characters, without a NULL terminator.
 
 
 
@@ -561,10 +561,6 @@ Koldychev, et al.       Expires September 1, 2021              [Page 10]
 
 Internet-Draft                  SR Policy                  February 2021
 
-
-   SR Policy Name: SR Policy name, as defined in
-   [I-D.ietf-spring-segment-routing-policy].  It SHOULD be a string of
-   printable ASCII characters, without a NULL terminator.
 
 5.2.  SR Policy Candidate Path Identifiers TLV
 
@@ -609,6 +605,10 @@ Internet-Draft                  SR Policy                  February 2021
    are encoded in lowest 32 bits, part of the originator identifier, as
    specified in [I-D.ietf-spring-segment-routing-policy] Section 2.4.
 
+   Discriminator: 32-bit value that encodes the Discriminator of the
+   candidate path.
+
+
 
 
 
@@ -617,9 +617,6 @@ Koldychev, et al.       Expires September 1, 2021              [Page 11]
 
 Internet-Draft                  SR Policy                  February 2021
 
-
-   Discriminator: 32-bit value that encodes the Discriminator of the
-   candidate path.
 
 5.3.  SR Policy Candidate Path Name TLV
 
@@ -667,14 +664,15 @@ Internet-Draft                  SR Policy                  February 2021
 
             Figure 5: The SRPOLICY-CPATH-PREFERENCE TLV format
 
+   Type: TBD5 for "SRPOLICY-CPATH-PREFERENCE" TLV.
+
+
 
 
 Koldychev, et al.       Expires September 1, 2021              [Page 12]
 
 Internet-Draft                  SR Policy                  February 2021
 
-
-   Type: TBD5 for "SRPOLICY-CPATH-PREFERENCE" TLV.
 
    Length: 4.
 
@@ -722,6 +720,8 @@ Internet-Draft                  SR Policy                  February 2021
    2.  PCE takes into account that all the LSPs belong to the same SR
        policy.  PCE prioritizes computation for the highest preference
        LSP and sends PCUpd message(s) back to the PCC.
+
+
 
 
 
