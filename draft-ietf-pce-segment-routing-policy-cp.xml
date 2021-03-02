@@ -151,7 +151,7 @@ they will automatically be output with "(if approved)" -->
 
 <t>Segment Routing Policy for Traffic Engineering <xref target="I-D.ietf-spring-segment-routing-policy"/> details the concepts of SR Policy and approaches to steering traffic into an SR Policy.</t>
 
-<t>An SR policy contains one or more candidate paths where one or more such paths can be computed via PCE. This document specifies PCEP extensions to signal additional information to map candidate paths to their SR policies. Each candidate path maps to a unique PLSP-ID in PCEP. By associating multiple candidate paths together, a PCE becomes aware of the hierarchical structure of an SR policy. Thus the PCE can take computation and control decisions about the candidate paths, with the additional knowledge that these candidate paths belong to the same SR policy. This is accomplished via the use of the existing PCEP Association object, by defining a new association type specifically for associating SR candidate paths into a single SR policy.</t>
+<t>An SR Policy contains one or more SR Policy Candidate Paths where one or more such paths can be computed via PCE. This document specifies PCEP extensions to signal additional information to map candidate paths to their SR policies. Each candidate path maps to a unique PLSP-ID in PCEP. By associating multiple candidate paths together, a PCE becomes aware of the hierarchical structure of an SR policy. Thus the PCE can take computation and control decisions about the candidate paths, with the additional knowledge that these candidate paths belong to the same SR policy. This is accomplished via the use of the existing PCEP Association object, by defining a new association type specifically for associating SR candidate paths into a single SR policy.</t>
 
 <t>[Editor's Note- Currently it is assumed that each candidate path has only one ERO (SID-List) within the scope of this document. Another document will deal with a way to allow multiple ERO/SID-Lists for a candidate path within PCEP.]</t>
       
@@ -222,15 +222,15 @@ This draft provides a mechanism to signal this information in PCEP.</t>
 
 <t>As per <xref target="RFC8697"/>, LSPs are placed into an association group. As per <xref target="I-D.koldychev-pce-operational"/>, LSPs are contained in PCEP Tunnels and a PCEP Tunnel is contained in an Association if all of its LSPs are in that Association.</t>
 
-<t>PCEP Tunnels naturally map to SR Candidate Paths and PCEP Associations naturally map to SR Policies. Definition of these mappings is the central purpose of this document.</t>
+<t>PCEP Tunnels naturally map to SR Policy Candidate Paths and PCEP Associations naturally map to SR Policies. Definition of these mappings is the central purpose of this document.</t>
 
-<t>The mapping between PCEP Associations and SR Policies is always one-to-one. However, the mapping between PCEP Tunnels and SR Candidate Paths may be either one-to-one, or many-to-one. The mapping is one-to-one when the SR Candidate Path has only a single constraint and optimization objective. The mapping is many-to-one when the SR Candidate Path has multiple constraints and optimization objectives. For more details on multiple optimization objectives and constraints, see <xref target="MultipleObjectives"/>. The subject of encoding multiple Segment Lists within an SR Candidate Path is described in <xref target="I-D.koldychev-pce-multipath"/>.</t>
+<t>The mapping between PCEP Associations and SR Policies is always one-to-one. However, the mapping between PCEP Tunnels and SR Policy Candidate Paths may be either one-to-one, or many-to-one. The mapping is one-to-one when the SR Policy Candidate Path has only a single constraint and optimization objective. The mapping is many-to-one when the SR Policy Candidate Path has multiple constraints and optimization objectives. For more details on multiple optimization objectives and constraints, see <xref target="MultipleObjectives"/>. The subject of encoding multiple Segment Lists within an SR Policy Candidate Path is described in <xref target="I-D.koldychev-pce-multipath"/>.</t>
 
-<t>This document defines a new Association Type "SR Policy Association Group" (SRPAG) to represent an SR Policy as a collection of SR Candidate Paths.</t>
+<t>This document defines a new Association Type "SR Policy Association Group" (SRPAG) to represent an SR Policy as a collection of SR Policy Candidate Paths.</t>
 
-<t>An Association object of SRPAG group contains TLVs that carry Association Information. The association information can be subdivided into three parts: SR Policy identifiers, SR Candidate Path identifiers, and SR Candidate Path attributes.</t>
+<t>An Association object of SRPAG group contains TLVs that carry Association Information. The association information can be subdivided into three parts: SR Policy identifiers, SR Policy Candidate Path identifiers, and SR Policy Candidate Path attributes.</t>
 
-<t>SR Policy Identifiers uniquely identify the SR policy within the context of the head-end. SR Policy Identifiers MUST be the same for all SR Candidate Paths in the same SRPAG. SR Policy Identifiers MUST NOT change for a given SR Candidate Path during its lifetime. SR Policy Identifiers MUST be different for different SRPAG associations. When these rules are not satisfied, the PCE MUST send a PCErr message with Error Code = 26 "Association Error", Error Type = TBD6 "Inconsistent SRPAG Identifiers". SR Policy Identifiers consist of:</t>
+<t>SR Policy Identifiers uniquely identify the SR policy within the context of the head-end. SR Policy Identifiers MUST be the same for all SR Policy Candidate Paths in the same SRPAG. SR Policy Identifiers MUST NOT change for a given SR Policy Candidate Path during its lifetime. SR Policy Identifiers MUST be different for different SRPAG associations. When these rules are not satisfied, the PCE MUST send a PCErr message with Error Type = 26 "Association Error", Error Value = TBD7 "SRPAG - SR Policy Identifiers Mismatch". SR Policy Identifiers consist of:</t>
 <t>
       <list style="symbols">
         <t>Color of SR Policy.</t>
@@ -239,17 +239,17 @@ This draft provides a mechanism to signal this information in PCEP.</t>
       </list>
 </t>
 
-<t>SR Candidate Path Identifiers uniquely identify the SR Candidate Path within the context of an SR Policy. SR Candidate Path Identifiers MUST NOT change for a given LSP during its lifetime. SR Candidate Path Identifiers MUST be different for different LSPs within the same SRPAG. When these rules are not satisfied, the PCE MUST send a PCErr message with Error Code = 26 "Association Error", Error Type = TBD6 "Inconsistent SRPAG Identifiers". SR Candidate Path Identifiers consist of:</t>
+<t>SR Policy Candidate Path Identifiers uniquely identify the SR Policy Candidate Path within the context of an SR Policy. SR Policy Candidate Path Identifiers MUST NOT change for a given LSP during its lifetime. SR Policy Candidate Path Identifiers MUST be different for different LSPs within the same SRPAG. When these rules are not satisfied, the PCE MUST send a PCErr message with Error Type = 26 "Association Error", Error Value = TBD8 "SRPAG - SR Policy Candidate Path Identifiers Mismatch". SR Policy Candidate Path Identifiers consist of:</t>
 <t>
       <list style="symbols">
         <t>Protocol Origin.</t>
         <t>Originator.</t>
         <t>Discriminator.</t>
-        <t>Optionally, the SR Candidate Path name.</t>
+        <t>Optionally, the SR Policy Candidate Path name.</t>
       </list>
 </t>
 
-<t>SR Candidate Path Attributes MUST NOT be used to identify the SR Candidate Path. SR Candidate Path Attributes carry non-key information about the candidate path and MAY change during the lifetime of the LSP. SR Candidate Path Attributes consist of:</t>
+<t>SR Policy Candidate Path Attributes MUST NOT be used to identify the SR Policy Candidate Path. SR Policy Candidate Path Attributes carry non-key information about the candidate path and MAY change during the lifetime of the LSP. SR Policy Candidate Path Attributes consist of:</t>
 <t>
       <list style="symbols">
         <t>Preference.</t>
@@ -305,7 +305,7 @@ This draft provides a mechanism to signal this information in PCEP.</t>
 This value MAY be different from the one contained in the END-POINTS object, or in the LSP IDENTIFIERS TLV of the LSP object.
 This value is part of the tuple &#60;color, endpoint&#62; that identifies the SR Policy on a given head-end.</t>
 
-<t>If the PCEP speaker receives an ASSOCIATION object whose ID and Extended ID do not follow the above specification, then the PCEP speaker MUST send PCErr message with Error-Type 26 "Association Error" and Error-Value 7 "Cannot join the association group".</t>
+<t>If the PCEP speaker receives an ASSOCIATION object whose ID and Extended ID do not follow the above specification, then the PCEP speaker MUST send PCErr message with Error-Type 26 "Association Error" and Error-Value TBD7 "SRPAG - SR Policy Identifiers Mismatch".</t>
 
 <t>The purpose of choosing the Association Parameters in this way is to guarantee that there is no possibility of a race condition when multiple PCEP speakers want to create the same SR Policy at the same time. By adhering to this format, all PCEP speakers come up with the same Association Parameters independently of each other. Thus, there is no chance that different PCEP speakers will come up with different Association Parameters for the same SR Policy.</t>
 
@@ -313,9 +313,9 @@ This value is part of the tuple &#60;color, endpoint&#62; that identifies the SR
 
 <section anchor="MultipleObjectives" title="Multiple Optimization Objectives and Constraints">
 
-<t>In certain scenarios, it is desired for each SR Candidate Path to contain multiple sub-candidate paths, each of which has a different optimization objective and constraints. Traffic is then sent ECMP or UCMP among these sub-candidate paths.</t>
+<t>In certain scenarios, it is desired for each SR Policy Candidate Path to contain multiple sub-candidate paths, each of which has a different optimization objective and constraints. Traffic is then sent ECMP or UCMP among these sub-candidate paths.</t>
 
-<t>This is represented in PCEP by a many-to-one mapping between PCEP Tunnels and SR Candidate Paths. This means that multiple PCEP Tunnels are allocated for each SR Candidate Path. Each PCEP Tunnel has its own optimization objective and constraints. When a single SR Candidate Path contains multiple PCEP Tunnels, each of these PCEP Tunnels MUST have identical values of Candidate Path Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see <xref target="Cpath-identifiers-tlv"/>.</t>
+<t>This is represented in PCEP by a many-to-one mapping between PCEP Tunnels and SR Policy Candidate Paths. This means that multiple PCEP Tunnels are allocated for each SR Policy Candidate Path. Each PCEP Tunnel has its own optimization objective and constraints. When a single SR Policy Candidate Path contains multiple PCEP Tunnels, each of these PCEP Tunnels MUST have identical values of Candidate Path Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see <xref target="Cpath-identifiers-tlv"/>.</t>
 
 </section> <!-- MultipleObjectives -->
 
@@ -342,11 +342,11 @@ This document defines four new TLVs to carry Association Information:</t>
       </list>
 </t>
 
-<t>Of these new TLVs, only SRPOLICY-CPATH-ID TLV is mandatory. When the mandatory TLV is missing from the SRPAG association object, the PCE MUST send a PCErr message with Error Code = 26 "Association Error", Error Type = TBD7 "Missing mandatory SRPAG TLV".</t>
+<t>Of these new TLVs, only SRPOLICY-CPATH-ID TLV is mandatory. When the mandatory TLV is missing from the SRPAG ASSOCIATION object, the PCE MUST send a PCErr message with Error Type = 6 "Mandatory Object Missing", Error Type = TBD6 "SRPAG - Missing SR Policy Candidate Path Identifiers".</t>
 
-<t>A given LSP MUST belong to at most one SRPAG, since an SR Policy Candidate Path cannot belong to multiple SR Policies. If a PCEP speaker receives a PCEP message with more than one SRPAG for an LSP, then the PCEP speaker MUST send a PCErr message with Error-Type 26 "Association Error" and Error-Value TBD8 "Same LSP in multiple SRPAG".</t>
+<t>A given LSP MUST belong to at most one SRPAG, since an SR Policy Candidate Path cannot belong to multiple SR Policies. If a PCEP speaker receives a PCEP message with more than one SRPAG for an LSP, then the PCEP speaker MUST send a PCErr message with Error-Type 26 "Association Error" and Error-Value 7 "Cannot join the association group".</t>
 
-<t>If the PCEP speaker receives the SRPAG association when the SR capability (as per <xref target="RFC8664"/> or <xref target="I-D.ietf-pce-segment-routing-ipv6"/>) was not exchanged, the PCEP speaker MUST send a PCErr message with Error-Type 26 "Association Error" and Error-Value TBD9 "Use of SRPAG without SR capability exchange". If the Path Setup Type (PST) of the LSP in SRPAG is not set to SR or SRv6, then the PCEP speaker MUST send a PCErr message with Error-Type 26 "Association Error" and Error-Value TBD10 "non-SR LSP in SRPAG".</t>
+<t>If the PCEP speaker receives the SRPAG association and the Path Setup Type (PST) of the LSP in SRPAG is not set to SR or SRv6, then the PCEP speaker MUST send a PCErr message with Error-Type 26 "Association Error" and Error-Value TBD9 "SRPAG - Path Setup Type Mismatch".</t>
 
 
 <!--
@@ -663,24 +663,26 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 +------------+------------------+-----------------------+-----------+
 | Error-Type | Meaning          | Error-value           | Reference |
 +------------+------------------+-----------------------+-----------+
+| 6          | Mandatory Object |                       | [RFC5440] |
+|            | Missing          |                       |           |
++------------+------------------+-----------------------+-----------+
+|            |                  | TBD6: SRPAG - Missing | This.I-D  |
+|            |                  | SR Policy Candidate   |           |
+|            |                  | Path Identifiers      |           |
++------------+------------------+-----------------------+-----------+
 | 26         | Association      |                       | [RFC8697] |
 |            | Error            |                       |           |
 +------------+------------------+-----------------------+-----------+
-|            |                  | TBD6: Inconsistent    | This.I-D  |
-|            |                  | SRPAG Identifiers     |           |
+|            |                  | TBD7: SRPAG - SR      | This.I-D  |
+|            |                  | Policy Identifers     |           |
+|            |                  | Mismatch              |           |
 +------------+------------------+-----------------------+-----------+
-|            |                  | TBD7: Missing         | This.I-D  |
-|            |                  | mandatory SRPAG TLV   |           |
+|            |                  | TBD8: SRPAG - SR      | This.I-D  |
+|            |                  | Policy Candidate Path |           |
+|            |                  | Identifiers Mismatch  |           |
 +------------+------------------+-----------------------+-----------+
-|            |                  | TBD8: Same LSP in     | This.I-D  |
-|            |                  | multiple SRPAG        |           |
-+------------+------------------+-----------------------+-----------+
-|            |                  | TBD9: Use of SRPAG    | This.I-D  |
-|            |                  | without SR capability |           |
-|            |                  | exchange              |           |
-+------------+------------------+-----------------------+-----------+
-|            |                  | TBD10: non-SR LSP in  | This.I-D  |
-|            |                  | SRPAG                 |           |
+|            |                  | TBD9: SRPAG - Path    | This.I-D  |
+|            |                  | Setup Type Mismatch   |           |
 +------------+------------------+-----------------------+-----------+
 
 ]]></artwork>
