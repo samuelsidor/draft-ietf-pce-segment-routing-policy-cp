@@ -89,13 +89,14 @@ Table of Contents
      3.4.  Minimal signaling overhead  . . . . . . . . . . . . . . .   5
    4.  Procedure . . . . . . . . . . . . . . . . . . . . . . . . . .   6
      4.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .   6
-     4.2.  Choice of Association Parameters  . . . . . . . . . . . .   7
-     4.3.  Multiple Optimization Objectives and Constraints  . . . .   8
-   5.  SR Policy Association Group . . . . . . . . . . . . . . . . .   9
-     5.1.  SR Policy Name TLV  . . . . . . . . . . . . . . . . . . .  10
-     5.2.  SR Policy Candidate Path Identifiers TLV  . . . . . . . .  10
-     5.3.  SR Policy Candidate Path Name TLV . . . . . . . . . . . .  11
-     5.4.  SR Policy Candidate Path Preference TLV . . . . . . . . .  12
+     4.2.  Multiple Optimization Objectives and Constraints  . . . .   7
+   5.  SR Policy Association Group . . . . . . . . . . . . . . . . .   8
+     5.1.  Association Parameters  . . . . . . . . . . . . . . . . .   8
+     5.2.  Association Information . . . . . . . . . . . . . . . . .   9
+       5.2.1.  SR Policy Name TLV  . . . . . . . . . . . . . . . . .  10
+       5.2.2.  SR Policy Candidate Path Identifiers TLV  . . . . . .  10
+       5.2.3.  SR Policy Candidate Path Name TLV . . . . . . . . . .  11
+       5.2.4.  SR Policy Candidate Path Preference TLV . . . . . . .  12
    6.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  13
      6.1.  PCC Initiated SR Policy with single candidate-path  . . .  13
      6.2.  PCC Initiated SR Policy with multiple candidate-paths . .  13
@@ -105,7 +106,6 @@ Table of Contents
      7.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  15
      7.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  15
      7.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  16
-   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  16
 
 
 
@@ -114,6 +114,7 @@ Koldychev, et al.       Expires September 1, 2021               [Page 2]
 Internet-Draft                  SR Policy                  February 2021
 
 
+   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  16
      8.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  17
    9.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
    10. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  17
@@ -161,7 +162,6 @@ Internet-Draft                  SR Policy                  February 2021
    paths to their SR policies.  Each candidate path maps to a unique
    PLSP-ID in PCEP.  By associating multiple candidate paths together, a
    PCE becomes aware of the hierarchical structure of an SR policy.
-   Thus the PCE can take computation and control decisions about the
 
 
 
@@ -170,6 +170,7 @@ Koldychev, et al.       Expires September 1, 2021               [Page 3]
 Internet-Draft                  SR Policy                  February 2021
 
 
+   Thus the PCE can take computation and control decisions about the
    candidate paths, with the additional knowledge that these candidate
    paths belong to the same SR policy.  This is accomplished via the use
    of the existing PCEP Association object, by defining a new
@@ -217,7 +218,6 @@ Internet-Draft                  SR Policy                  February 2021
    associated SR policy.  For the SR policy, the parameters are: color
    and endpoint.  For the candidate path, the parameters are: protocol
    origin, originator, discriminator and preference.
-
 
 
 
@@ -289,22 +289,17 @@ Internet-Draft                  SR Policy                  February 2021
    As per [RFC8697], LSPs are placed into an association group.  As per
    [I-D.koldychev-pce-operational], LSPs are contained in PCEP Tunnels
    and a PCEP Tunnel is contained in an Association if all of its LSPs
-   are in that Association.
-
-   PCEP Tunnels naturally map to SR Policy Candidate Paths and PCEP
-   Associations naturally map to SR Policies.  Definition of these
-   mappings is the central purpose of this document.
+   are in that Association.  PCEP Tunnels naturally map to SR Policy
+   Candidate Paths and PCEP Associations naturally map to SR Policies.
 
    The mapping between PCEP Associations and SR Policies is always one-
    to-one.  However, the mapping between PCEP Tunnels and SR Policy
-   Candidate Paths may be either one-to-one, or many-to-one.  The
-   mapping is one-to-one when the SR Policy Candidate Path has only a
-   single constraint and optimization objective.  The mapping is many-
-   to-one when the SR Policy Candidate Path has multiple constraints and
-   optimization objectives.  For more details on multiple optimization
-   objectives and constraints, see Section 4.3.  The subject of encoding
-   multiple Segment Lists within an SR Policy Candidate Path is
-   described in [I-D.koldychev-pce-multipath].
+   Candidate Paths may be either one-to-one, or many-to-one, see
+   Section 4.2.
+
+   Each SR Policy Candidate Path contains one or more Segment Lists.
+   The subject of encoding multiple Segment Lists within an SR Policy
+   Candidate Path is described in [I-D.koldychev-pce-multipath].
 
    This document defines a new Association Type "SR Policy Association
    Group" (SRPAG) to represent an SR Policy as a collection of SR Policy
@@ -330,6 +325,11 @@ Internet-Draft                  SR Policy                  February 2021
    Candidate Path within the context of an SR Policy.  SR Policy
    Candidate Path Identifiers MUST NOT change for a given LSP during its
    lifetime.  SR Policy Candidate Path Identifiers MUST be different for
+   different LSPs within the same SRPAG.  When these rules are not
+   satisfied, the PCE MUST send a PCErr message with Error-Type = 26
+   "Association Error", Error Value = TBD8 "SRPAG - SR Policy Candidate
+   Path Identifiers Mismatch".  SR Policy Candidate Path Identifiers
+   consist of:
 
 
 
@@ -338,23 +338,15 @@ Koldychev, et al.       Expires September 1, 2021               [Page 6]
 Internet-Draft                  SR Policy                  February 2021
 
 
-   different LSPs within the same SRPAG.  When these rules are not
-   satisfied, the PCE MUST send a PCErr message with Error-Type = 26
-   "Association Error", Error Value = TBD8 "SRPAG - SR Policy Candidate
-   Path Identifiers Mismatch".  SR Policy Candidate Path Identifiers
-   consist of:
-
    o  Protocol Origin.
 
    o  Originator.
 
    o  Discriminator.
 
-   SR Policy Candidate Path Attributes MUST NOT be used to identify the
-   SR Policy Candidate Path.  SR Policy Candidate Path Attributes carry
-   non-key information about the candidate path and MAY change during
-   the lifetime of the LSP.  SR Policy Candidate Path Attributes consist
-   of:
+   SR Policy Candidate Path Attributes carry non-key information about
+   the candidate path and MAY change during the lifetime of the LSP.  SR
+   Policy Candidate Path Attributes consist of:
 
    o  Preference.
 
@@ -362,7 +354,57 @@ Internet-Draft                  SR Policy                  February 2021
 
    o  Optionally, the SR Policy name.
 
-4.2.  Choice of Association Parameters
+   As per the processing rules specified in section 5.4 of [RFC8697], if
+   a PCEP speaker does not support the SRPAG association type, it MUST
+   return a PCErr message with Error-Type = 26 "Association Error",
+   Error-Value = 1 "Association-type is not supported".
+
+   A given LSP MUST belong to at most one SRPAG, since an SR Policy
+   Candidate Path cannot belong to multiple SR Policies.  If a PCEP
+   speaker receives a PCEP message with more than one SRPAG for the same
+   LSP, then the PCEP speaker MUST send a PCErr message with Error-Type
+   = 26 "Association Error", Error-Value = 7 "Cannot join the
+   association group".
+
+   If the PCEP speaker receives the SRPAG association and the Path Setup
+   Type (PST) of the LSP in SRPAG is not set to SR or SRv6, then the
+   PCEP speaker MUST send a PCErr message with Error-Type = 26
+   "Association Error", Error-Value = TBD9 "SRPAG - Path Setup Type
+   Mismatch".
+
+4.2.  Multiple Optimization Objectives and Constraints
+
+   In certain scenarios, it is desired for each SR Policy Candidate Path
+   to contain multiple sub-candidate paths, each of which has a
+   different optimization objective and constraints.  Traffic is then
+   sent ECMP or UCMP among these sub-candidate paths.
+
+   This is represented in PCEP by a many-to-one mapping between PCEP
+   Tunnels and SR Policy Candidate Paths.  This means that multiple PCEP
+   Tunnels are allocated for each SR Policy Candidate Path.  Each PCEP
+   Tunnel has its own optimization objective and constraints.  When a
+   single SR Policy Candidate Path contains multiple PCEP Tunnels, each
+   of these PCEP Tunnels MUST have identical values of Candidate Path
+   Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see Section 5.2.2.
+
+
+
+Koldychev, et al.       Expires September 1, 2021               [Page 7]
+
+Internet-Draft                  SR Policy                  February 2021
+
+
+5.  SR Policy Association Group
+
+   Two ASSOCIATION object types for IPv4 and IPv6 are defined in
+   [RFC8697].  The ASSOCIATION object includes "Association Type"
+   indicating the type of the association group.  This document adds a
+   new Association Type = TBD1 "SR Policy Association" for SR Policy
+   Association Group (SRPAG).  This Association Type is dynamic in
+   nature, thus operator-configured Association Range MUST NOT be set
+   for this Association type and MUST be ignored.
+
+5.1.  Association Parameters
 
    The Association Parameters (see Section 2) uniquely identify the
    Association.  For the SRPAG, the Association Parameters consist of:
@@ -386,14 +428,6 @@ Internet-Draft                  SR Policy                  February 2021
    The 16-bit Association ID field in the ASSOCIATION object MUST be set
    to the value of "1".
 
-
-
-
-Koldychev, et al.       Expires September 1, 2021               [Page 7]
-
-Internet-Draft                  SR Policy                  February 2021
-
-
    The Extended Association ID TLV MUST be included and it MUST be in
    the following format:
 
@@ -408,6 +442,13 @@ Internet-Draft                  SR Policy                  February 2021
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                Figure 1: Extended Association ID TLV format
+
+
+
+Koldychev, et al.       Expires September 1, 2021               [Page 8]
+
+Internet-Draft                  SR Policy                  February 2021
+
 
    Type: Extended Association ID TLV, type = 31.
 
@@ -435,38 +476,7 @@ Internet-Draft                  SR Policy                  February 2021
    is no chance that different PCEP speakers will come up with different
    Association Parameters for the same SR Policy.
 
-4.3.  Multiple Optimization Objectives and Constraints
-
-   In certain scenarios, it is desired for each SR Policy Candidate Path
-   to contain multiple sub-candidate paths, each of which has a
-   different optimization objective and constraints.  Traffic is then
-   sent ECMP or UCMP among these sub-candidate paths.
-
-
-
-
-Koldychev, et al.       Expires September 1, 2021               [Page 8]
-
-Internet-Draft                  SR Policy                  February 2021
-
-
-   This is represented in PCEP by a many-to-one mapping between PCEP
-   Tunnels and SR Policy Candidate Paths.  This means that multiple PCEP
-   Tunnels are allocated for each SR Policy Candidate Path.  Each PCEP
-   Tunnel has its own optimization objective and constraints.  When a
-   single SR Policy Candidate Path contains multiple PCEP Tunnels, each
-   of these PCEP Tunnels MUST have identical values of Candidate Path
-   Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see Section 5.2.
-
-5.  SR Policy Association Group
-
-   Two ASSOCIATION object types for IPv4 and IPv6 are defined in
-   [RFC8697].  The ASSOCIATION object includes "Association Type"
-   indicating the type of the association group.  This document adds a
-   new Association Type = TBD1 "SR Policy Association" for SR Policy
-   Association Group (SRPAG).  This Association Type is dynamic in
-   nature, thus operator-configured Association Range MUST NOT be set
-   for this Association type and MUST be ignored.
+5.2.  Association Information
 
    The ASSOCIATION object of SRPAG type contains the following TLVs:
 
@@ -478,25 +488,15 @@ Internet-Draft                  SR Policy                  February 2021
    o  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
       Path string name.
 
-   o  SRPOLICY-CPATH-PREFERENCE TLV: (mandatory) encodes SR Policy
+   o  SRPOLICY-CPATH-PREFERENCE TLV: (optional) encodes SR Policy
       Candidate Path preference value.
 
-   Note that the absense of an optional TLV, such as SRPOLICY-POL-NAME
-   TLV or the SRPOLICY-CPATH-NAME TLV, from the ASSOCIATION object means
-   that the given value is to be treated as empty, or non-existant.
+   Of these new TLVs, SRPOLICY-CPATH-ID TLV is mandatory.  When a
+   mandatory TLV is missing from the SRPAG ASSOCIATION object, the PCE
+   MUST send a PCErr message with Error-Type = 6 "Mandatory Object
+   Missing", Error-Value = TBD6 "SRPAG - Missing Mandatory TLV".
 
-   Of these new TLVs, SRPOLICY-CPATH-ID TLV and SRPOLICY-CPATH-
-   PREFERENCE TLV are mandatory.  When a mandatory TLV is missing from
-   the SRPAG ASSOCIATION object, the PCE MUST send a PCErr message with
-   Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "SRPAG
-   - Missing Mandatory TLV".
 
-   A given LSP MUST belong to at most one SRPAG, since an SR Policy
-   Candidate Path cannot belong to multiple SR Policies.  If a PCEP
-   speaker receives a PCEP message with more than one SRPAG for the same
-   LSP, then the PCEP speaker MUST send a PCErr message with Error-Type
-   = 26 "Association Error", Error-Value = 7 "Cannot join the
-   association group".
 
 
 
@@ -506,13 +506,7 @@ Koldychev, et al.       Expires September 1, 2021               [Page 9]
 Internet-Draft                  SR Policy                  February 2021
 
 
-   If the PCEP speaker receives the SRPAG association and the Path Setup
-   Type (PST) of the LSP in SRPAG is not set to SR or SRv6, then the
-   PCEP speaker MUST send a PCErr message with Error-Type = 26
-   "Association Error", Error-Value = TBD9 "SRPAG - Path Setup Type
-   Mismatch".
-
-5.1.  SR Policy Name TLV
+5.2.1.  SR Policy Name TLV
 
    The SRPOLICY-POL-NAME TLV is an optional TLV for the SRPAG
    Association.  At most one SRPOLICY-POL-NAME TLV SHOULD be encoded by
@@ -541,12 +535,18 @@ Internet-Draft                  SR Policy                  February 2021
    [I-D.ietf-spring-segment-routing-policy].  It SHOULD be a string of
    printable ASCII characters, without a NULL terminator.
 
-5.2.  SR Policy Candidate Path Identifiers TLV
+5.2.2.  SR Policy Candidate Path Identifiers TLV
 
    The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPAG
    Association.  Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the
    sender and only the first occurrence is processed and any others MUST
    be ignored.
+
+
+
+
+
+
 
 
 
@@ -601,7 +601,7 @@ Internet-Draft                  SR Policy                  February 2021
    Discriminator: 32-bit value that encodes the Discriminator of the
    candidate path.
 
-5.3.  SR Policy Candidate Path Name TLV
+5.2.3.  SR Policy Candidate Path Name TLV
 
    The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPAG
    Association.  At most one SRPOLICY-CPATH-NAME TLV SHOULD be encoded
@@ -640,7 +640,7 @@ Internet-Draft                  SR Policy                  February 2021
    defined in [I-D.ietf-spring-segment-routing-policy].  It SHOULD be a
    string of printable ASCII characters, without a NULL terminator.
 
-5.4.  SR Policy Candidate Path Preference TLV
+5.2.4.  SR Policy Candidate Path Preference TLV
 
    The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPAG
    Association.  Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be
@@ -737,7 +737,7 @@ Internet-Draft                  SR Policy                  February 2021
    1.  PCE sends PCInitiate message, containing the SRPAG Association
        object.  The Association Source is set to the IP address of the
        PCC and the Association ID is set to 0, as described in
-       Section 4.2.
+       Section 5.1.
 
    2.  PCC uses the color, endpoint and preference from the SRPAG object
        to create a new candidate path.  If no SR policy exists to hold
@@ -770,7 +770,7 @@ Internet-Draft                  SR Policy                  February 2021
        a single PCInitiate message.  The SRPAG Association object is
        sent for every LSP in the PCInitiate message.  The Association
        Source is set to the IP address of the PCC and the Association ID
-       is set to 0, as described in Section 4.2.
+       is set to 0, as described in Section 5.1.
 
    2.  PCC creates multiple candidate paths under the same SR policy,
        identified by Color and Endpoint.
@@ -912,7 +912,7 @@ Internet-Draft                  SR Policy                  February 2021
 
    o  Organization: Cisco Systems
 
-   o  Implementation: Head-end and controller.
+   o  Implementation: IOS-XR PCC and PCE.
 
    o  Description: An experimental code-point is currently used.
 
