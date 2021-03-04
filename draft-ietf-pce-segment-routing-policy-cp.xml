@@ -332,7 +332,14 @@ Range MUST NOT be set for this Association type and MUST be ignored.</t>
 
 <section anchor="AssociationParameters" title="Association Parameters">
 
-<t>The Association Parameters (see <xref target="Terminology"/>) uniquely identify the Association. For the SRPAG, the Association Parameters consist of:</t>
+<t>
+As per <xref target="I-D.ietf-spring-segment-routing-policy"/>,
+an SR Policy is identified through the tuple &#60;headend, color, endpoint&#62;.
+the headend is encoded as the Association Source in the ASSOCIATION object and
+the color and endpoint are encoded as part of Extended Association ID TLV.
+</t>
+
+<t>For the SRPAG, the Association Parameters (see <xref target="Terminology"/>) consist of:</t>
 <t>
       <list style="symbols">
         <t>Association Type: set to TBD1 "SR Policy Association".</t>

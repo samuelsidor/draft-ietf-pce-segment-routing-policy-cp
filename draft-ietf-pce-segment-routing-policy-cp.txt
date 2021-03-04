@@ -401,8 +401,13 @@ Internet-Draft                  SR Policy                  February 2021
 
 5.1.  Association Parameters
 
-   The Association Parameters (see Section 2) uniquely identify the
-   Association.  For the SRPAG, the Association Parameters consist of:
+   As per [I-D.ietf-spring-segment-routing-policy], an SR Policy is
+   identified through the tuple <headend, color, endpoint>.  the headend
+   is encoded as the Association Source in the ASSOCIATION object and
+   the color and endpoint are encoded as part of Extended Association ID
+   TLV.
+
+   For the SRPAG, the Association Parameters (see Section 2) consist of:
 
    o  Association Type: set to TBD1 "SR Policy Association".
 
@@ -428,6 +433,23 @@ Internet-Draft                  SR Policy                  February 2021
    The Extended Association ID TLV MUST be included and it MUST be in
    the following format:
 
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.       Expires September 1, 2021               [Page 8]
+
+Internet-Draft                  SR Policy                  February 2021
+
+
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -441,14 +463,6 @@ Internet-Draft                  SR Policy                  February 2021
                Figure 1: Extended Association ID TLV format
 
    Type: Extended Association ID TLV, type = 31.
-
-
-
-
-Koldychev, et al.       Expires September 1, 2021               [Page 8]
-
-Internet-Draft                  SR Policy                  February 2021
-
 
    Length: Either 8 or 20, depending on whether IPv4 or IPv6 address is
    encoded in the Endpoint.
@@ -484,6 +498,14 @@ Internet-Draft                  SR Policy                  February 2021
    o  SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate
       Path Identifiers.
 
+
+
+
+Koldychev, et al.       Expires September 1, 2021               [Page 9]
+
+Internet-Draft                  SR Policy                  February 2021
+
+
    o  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
       Path string name.
 
@@ -494,17 +516,6 @@ Internet-Draft                  SR Policy                  February 2021
    mandatory TLV is missing from the SRPAG ASSOCIATION object, the PCE
    MUST send a PCErr message with Error-Type = 6 "Mandatory Object
    Missing", Error-Value = TBD6 "SRPAG - Missing Mandatory TLV".
-
-
-
-
-
-
-
-Koldychev, et al.       Expires September 1, 2021               [Page 9]
-
-Internet-Draft                  SR Policy                  February 2021
-
 
 5.2.1.  SR Policy Name TLV
 
@@ -541,17 +552,6 @@ Internet-Draft                  SR Policy                  February 2021
    Association.  Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the
    sender and only the first occurrence is processed and any others MUST
    be ignored.
-
-
-
-
-
-
-
-
-
-
-
 
 
 
