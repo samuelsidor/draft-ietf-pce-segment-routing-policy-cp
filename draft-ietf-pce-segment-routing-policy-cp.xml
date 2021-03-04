@@ -240,6 +240,7 @@ Error-Type = 26 "Association Error", Error Value = TBD7 "SRPAG - SR Policy Ident
 SR Policy Identifiers consist of:</t>
 <t>
       <list style="symbols">
+        <t>Headend router where the SR Policy originates.</t>
         <t>Color of SR Policy.</t>
         <t>Endpoint of SR Policy.</t>
       </list>
@@ -277,8 +278,10 @@ Error-Type = 26 "Association Error", Error-Value = 1 "Association-type is not su
 If a PCEP speaker receives a PCEP message with more than one SRPAG for the same LSP, then the PCEP speaker MUST send a PCErr message with
 Error-Type = 26 "Association Error", Error-Value = 7 "Cannot join the association group".</t>
 
+<!--
 <t>If the PCEP speaker receives the SRPAG association and the Path Setup Type (PST) of the LSP in SRPAG is not set to SR or SRv6, then the PCEP speaker MUST send a PCErr message with
 Error-Type = 26 "Association Error", Error-Value = TBD9 "SRPAG - Path Setup Type Mismatch".</t>
+-->
 
 
 </section> <!-- Overview -->
@@ -334,6 +337,7 @@ Range MUST NOT be set for this Association type and MUST be ignored.</t>
 <t>The Association Parameters (see <xref target="Terminology"/>) uniquely identify the Association. For the SRPAG, the Association Parameters consist of:</t>
 <t>
       <list style="symbols">
+        <t>Association Type: set to TBD1 "SR Policy Association".</t>
         <t>Association Source (IPv4/IPv6): set to the headend IP address.</t>
         <t>Association ID (16-bit): set to "1".</t>
         <t>Extended Association ID TLV: encodes the Color and Endpoint of the SR Policy.</t>
@@ -372,7 +376,8 @@ then the PCC SHOULD accept the PCInit message and create the SR Policy Associati
 This value MAY be different from the one contained in the END-POINTS object, or in the LSP IDENTIFIERS TLV of the LSP object.
 This value is part of the tuple &#60;color, endpoint&#62; that identifies the SR Policy on a given headend.</t>
 
-<t>If the PCEP speaker receives an ASSOCIATION object whose Association Parameters do not follow the above specification,
+<t>If the PCEP speaker receives an ASSOCIATION object with SR Policy Association type,
+whose Association Parameters do not follow the above specification,
 then the PCEP speaker MUST send PCErr message with
 Error-Type = 26 "Association Error", Error-Value = TBD7 "SRPAG - SR Policy Identifiers Mismatch".</t>
 
@@ -677,7 +682,7 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 </section>
 
 <section title="PCEP Errors">
-<t>This document defines one new Error-Value within the "Mandatory Object Missing" Error-Type and three new Error-Values within the "Association Error" Error-Type.
+<t>This document defines one new Error-Value within the "Mandatory Object Missing" Error-Type and two new Error-Values within the "Association Error" Error-Type.
 IANA is requested to allocate new error values within the "PCEP-ERROR Object Error Types and Values" sub-registry of the PCEP Numbers registry, as follows:</t>
 <t>
 <figure>
@@ -701,9 +706,6 @@ IANA is requested to allocate new error values within the "PCEP-ERROR Object Err
 |            |                  | TBD8: SRPAG - SR      | This.I-D  |
 |            |                  | Policy Candidate Path |           |
 |            |                  | Identifiers Mismatch  |           |
-+------------+------------------+-----------------------+-----------+
-|            |                  | TBD9: SRPAG - Path    | This.I-D  |
-|            |                  | Setup Type Mismatch   |           |
 +------------+------------------+-----------------------+-----------+
 
 ]]></artwork>

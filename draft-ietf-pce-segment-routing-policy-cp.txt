@@ -118,7 +118,7 @@ Internet-Draft                  SR Policy                  February 2021
      8.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  17
    9.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
    10. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  17
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
      11.1.  Normative References . . . . . . . . . . . . . . . . . .  18
      11.2.  Informative References . . . . . . . . . . . . . . . . .  19
    Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  19
@@ -317,6 +317,8 @@ Internet-Draft                  SR Policy                  February 2021
    Error", Error Value = TBD7 "SRPAG - SR Policy Identifiers Mismatch".
    SR Policy Identifiers consist of:
 
+   o  Headend router where the SR Policy originates.
+
    o  Color of SR Policy.
 
    o  Endpoint of SR Policy.
@@ -328,8 +330,6 @@ Internet-Draft                  SR Policy                  February 2021
    different LSPs within the same SRPAG.  When these rules are not
    satisfied, the PCE MUST send a PCErr message with Error-Type = 26
    "Association Error", Error Value = TBD8 "SRPAG - SR Policy Candidate
-   Path Identifiers Mismatch".  SR Policy Candidate Path Identifiers
-   consist of:
 
 
 
@@ -337,6 +337,9 @@ Koldychev, et al.       Expires September 1, 2021               [Page 6]
 
 Internet-Draft                  SR Policy                  February 2021
 
+
+   Path Identifiers Mismatch".  SR Policy Candidate Path Identifiers
+   consist of:
 
    o  Protocol Origin.
 
@@ -366,12 +369,6 @@ Internet-Draft                  SR Policy                  February 2021
    = 26 "Association Error", Error-Value = 7 "Cannot join the
    association group".
 
-   If the PCEP speaker receives the SRPAG association and the Path Setup
-   Type (PST) of the LSP in SRPAG is not set to SR or SRv6, then the
-   PCEP speaker MUST send a PCErr message with Error-Type = 26
-   "Association Error", Error-Value = TBD9 "SRPAG - Path Setup Type
-   Mismatch".
-
 4.2.  Multiple Optimization Objectives and Constraints
 
    In certain scenarios, it is desired for each SR Policy Candidate Path
@@ -386,6 +383,9 @@ Internet-Draft                  SR Policy                  February 2021
    single SR Policy Candidate Path contains multiple PCEP Tunnels, each
    of these PCEP Tunnels MUST have identical values of Candidate Path
    Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see Section 5.2.2.
+
+
+
 
 
 
@@ -409,6 +409,8 @@ Internet-Draft                  SR Policy                  February 2021
    The Association Parameters (see Section 2) uniquely identify the
    Association.  For the SRPAG, the Association Parameters consist of:
 
+   o  Association Type: set to TBD1 "SR Policy Association".
+
    o  Association Source (IPv4/IPv6): set to the headend IP address.
 
    o  Association ID (16-bit): set to "1".
@@ -431,6 +433,23 @@ Internet-Draft                  SR Policy                  February 2021
    The Extended Association ID TLV MUST be included and it MUST be in
    the following format:
 
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.       Expires September 1, 2021               [Page 8]
+
+Internet-Draft                  SR Policy                  February 2021
+
+
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -442,13 +461,6 @@ Internet-Draft                  SR Policy                  February 2021
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                Figure 1: Extended Association ID TLV format
-
-
-
-Koldychev, et al.       Expires September 1, 2021               [Page 8]
-
-Internet-Draft                  SR Policy                  February 2021
-
 
    Type: Extended Association ID TLV, type = 31.
 
@@ -463,10 +475,11 @@ Internet-Draft                  SR Policy                  February 2021
    the LSP object.  This value is part of the tuple <color, endpoint>
    that identifies the SR Policy on a given headend.
 
-   If the PCEP speaker receives an ASSOCIATION object whose Association
-   Parameters do not follow the above specification, then the PCEP
-   speaker MUST send PCErr message with Error-Type = 26 "Association
-   Error", Error-Value = TBD7 "SRPAG - SR Policy Identifiers Mismatch".
+   If the PCEP speaker receives an ASSOCIATION object with SR Policy
+   Association type, whose Association Parameters do not follow the
+   above specification, then the PCEP speaker MUST send PCErr message
+   with Error-Type = 26 "Association Error", Error-Value = TBD7 "SRPAG -
+   SR Policy Identifiers Mismatch".
 
    The purpose of choosing the Association Parameters in this way is to
    guarantee that there is no possibility of a race condition when
@@ -485,6 +498,14 @@ Internet-Draft                  SR Policy                  February 2021
    o  SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate
       Path Identifiers.
 
+
+
+
+Koldychev, et al.       Expires September 1, 2021               [Page 9]
+
+Internet-Draft                  SR Policy                  February 2021
+
+
    o  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
       Path string name.
 
@@ -495,16 +516,6 @@ Internet-Draft                  SR Policy                  February 2021
    mandatory TLV is missing from the SRPAG ASSOCIATION object, the PCE
    MUST send a PCErr message with Error-Type = 6 "Mandatory Object
    Missing", Error-Value = TBD6 "SRPAG - Missing Mandatory TLV".
-
-
-
-
-
-
-Koldychev, et al.       Expires September 1, 2021               [Page 9]
-
-Internet-Draft                  SR Policy                  February 2021
-
 
 5.2.1.  SR Policy Name TLV
 
@@ -541,17 +552,6 @@ Internet-Draft                  SR Policy                  February 2021
    Association.  Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the
    sender and only the first occurrence is processed and any others MUST
    be ignored.
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -845,7 +845,7 @@ Internet-Draft                  SR Policy                  February 2021
 7.3.  PCEP Errors
 
    This document defines one new Error-Value within the "Mandatory
-   Object Missing" Error-Type and three new Error-Values within the
+   Object Missing" Error-Type and two new Error-Values within the
    "Association Error" Error-Type.  IANA is requested to allocate new
    error values within the "PCEP-ERROR Object Error Types and Values"
    sub-registry of the PCEP Numbers registry, as follows:
@@ -870,9 +870,6 @@ Internet-Draft                  SR Policy                  February 2021
    |            |                  | Policy Candidate Path |           |
    |            |                  | Identifiers Mismatch  |           |
    +------------+------------------+-----------------------+-----------+
-   |            |                  | TBD9: SRPAG - Path    | This.I-D  |
-   |            |                  | Setup Type Mismatch   |           |
-   +------------+------------------+-----------------------+-----------+
 
 
 8.  Implementation Status
@@ -890,6 +887,9 @@ Internet-Draft                  SR Policy                  February 2021
    has been spent to verify the information presented here that was
    supplied by IETF contributors.  This is not intended as, and must not
    be construed to be, a catalog of available implementations or their
+   features.  Readers are advised to note that other implementations may
+   exist.
+
 
 
 
@@ -897,9 +897,6 @@ Koldychev, et al.       Expires September 1, 2021              [Page 16]
 
 Internet-Draft                  SR Policy                  February 2021
 
-
-   features.  Readers are advised to note that other implementations may
-   exist.
 
    According to [RFC7942], "this will allow reviewers and working groups
    to assign due consideration to documents that have the benefit of
@@ -944,6 +941,9 @@ Internet-Draft                  SR Policy                  February 2021
    Would like to thank Stephane Litkowski, Praveen Kumar and Tom Petch
    for review comments.
 
+11.  References
+
+
 
 
 
@@ -953,8 +953,6 @@ Koldychev, et al.       Expires September 1, 2021              [Page 17]
 
 Internet-Draft                  SR Policy                  February 2021
 
-
-11.  References
 
 11.1.  Normative References
 
@@ -1001,6 +999,8 @@ Internet-Draft                  SR Policy                  February 2021
               Relationships between Sets of Label Switched Paths
               (LSPs)", RFC 8697, DOI 10.17487/RFC8697, January 2020,
               <https://www.rfc-editor.org/info/rfc8697>.
+
+
 
 
 
