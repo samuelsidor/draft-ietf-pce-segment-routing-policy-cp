@@ -235,8 +235,6 @@ An ASSOCIATION object of SRPAG type carries three pieces of information: SR Poli
 SR Policy Identifiers MUST be the same for all SR Policy Candidate Paths in the same SRPAG.
 SR Policy Identifiers MUST NOT change for a given SR Policy Candidate Path during its lifetime.
 SR Policy Identifiers MUST be different for different SRPAG associations.
-When these rules are not satisfied, the PCE MUST send a PCErr message with
-Error-Type = 26 "Association Error", Error Value = TBD7 "SRPAG - SR Policy Identifiers Mismatch".
 SR Policy Identifiers consist of:</t>
 <t>
       <list style="symbols">

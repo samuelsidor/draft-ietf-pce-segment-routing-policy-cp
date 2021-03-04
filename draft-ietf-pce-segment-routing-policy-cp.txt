@@ -90,7 +90,7 @@ Table of Contents
    4.  Procedure . . . . . . . . . . . . . . . . . . . . . . . . . .   6
      4.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .   6
      4.2.  Multiple Optimization Objectives and Constraints  . . . .   7
-   5.  SR Policy Association Group . . . . . . . . . . . . . . . . .   8
+   5.  SR Policy Association Group . . . . . . . . . . . . . . . . .   7
      5.1.  Association Parameters  . . . . . . . . . . . . . . . . .   8
      5.2.  Association Information . . . . . . . . . . . . . . . . .   9
        5.2.1.  SR Policy Name TLV  . . . . . . . . . . . . . . . . .  10
@@ -312,10 +312,7 @@ Internet-Draft                  SR Policy                  February 2021
    all SR Policy Candidate Paths in the same SRPAG.  SR Policy
    Identifiers MUST NOT change for a given SR Policy Candidate Path
    during its lifetime.  SR Policy Identifiers MUST be different for
-   different SRPAG associations.  When these rules are not satisfied,
-   the PCE MUST send a PCErr message with Error-Type = 26 "Association
-   Error", Error Value = TBD7 "SRPAG - SR Policy Identifiers Mismatch".
-   SR Policy Identifiers consist of:
+   different SRPAG associations.  SR Policy Identifiers consist of:
 
    o  Headend router where the SR Policy originates.
 
@@ -330,6 +327,9 @@ Internet-Draft                  SR Policy                  February 2021
    different LSPs within the same SRPAG.  When these rules are not
    satisfied, the PCE MUST send a PCErr message with Error-Type = 26
    "Association Error", Error Value = TBD8 "SRPAG - SR Policy Candidate
+   Path Identifiers Mismatch".  SR Policy Candidate Path Identifiers
+   consist of:
+
 
 
 
@@ -337,9 +337,6 @@ Koldychev, et al.       Expires September 1, 2021               [Page 6]
 
 Internet-Draft                  SR Policy                  February 2021
 
-
-   Path Identifiers Mismatch".  SR Policy Candidate Path Identifiers
-   consist of:
 
    o  Protocol Origin.
 
@@ -384,8 +381,11 @@ Internet-Draft                  SR Policy                  February 2021
    of these PCEP Tunnels MUST have identical values of Candidate Path
    Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see Section 5.2.2.
 
+5.  SR Policy Association Group
 
-
+   Two ASSOCIATION object types for IPv4 and IPv6 are defined in
+   [RFC8697].  The ASSOCIATION object includes "Association Type"
+   indicating the type of the association group.  This document adds a
 
 
 
@@ -394,11 +394,6 @@ Koldychev, et al.       Expires September 1, 2021               [Page 7]
 Internet-Draft                  SR Policy                  February 2021
 
 
-5.  SR Policy Association Group
-
-   Two ASSOCIATION object types for IPv4 and IPv6 are defined in
-   [RFC8697].  The ASSOCIATION object includes "Association Type"
-   indicating the type of the association group.  This document adds a
    new Association Type = TBD1 "SR Policy Association" for SR Policy
    Association Group (SRPAG).  This Association Type is dynamic in
    nature, thus operator-configured Association Range MUST NOT be set
@@ -433,23 +428,6 @@ Internet-Draft                  SR Policy                  February 2021
    The Extended Association ID TLV MUST be included and it MUST be in
    the following format:
 
-
-
-
-
-
-
-
-
-
-
-
-
-Koldychev, et al.       Expires September 1, 2021               [Page 8]
-
-Internet-Draft                  SR Policy                  February 2021
-
-
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -463,6 +441,14 @@ Internet-Draft                  SR Policy                  February 2021
                Figure 1: Extended Association ID TLV format
 
    Type: Extended Association ID TLV, type = 31.
+
+
+
+
+Koldychev, et al.       Expires September 1, 2021               [Page 8]
+
+Internet-Draft                  SR Policy                  February 2021
+
 
    Length: Either 8 or 20, depending on whether IPv4 or IPv6 address is
    encoded in the Endpoint.
@@ -498,14 +484,6 @@ Internet-Draft                  SR Policy                  February 2021
    o  SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate
       Path Identifiers.
 
-
-
-
-Koldychev, et al.       Expires September 1, 2021               [Page 9]
-
-Internet-Draft                  SR Policy                  February 2021
-
-
    o  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
       Path string name.
 
@@ -516,6 +494,17 @@ Internet-Draft                  SR Policy                  February 2021
    mandatory TLV is missing from the SRPAG ASSOCIATION object, the PCE
    MUST send a PCErr message with Error-Type = 6 "Mandatory Object
    Missing", Error-Value = TBD6 "SRPAG - Missing Mandatory TLV".
+
+
+
+
+
+
+
+Koldychev, et al.       Expires September 1, 2021               [Page 9]
+
+Internet-Draft                  SR Policy                  February 2021
+
 
 5.2.1.  SR Policy Name TLV
 
@@ -552,6 +541,17 @@ Internet-Draft                  SR Policy                  February 2021
    Association.  Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the
    sender and only the first occurrence is processed and any others MUST
    be ignored.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
