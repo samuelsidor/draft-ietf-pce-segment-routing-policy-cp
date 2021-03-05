@@ -167,6 +167,12 @@ they will automatically be output with "(if approved)" -->
 
      <t hangText="Association Information:"> As described in <xref target="RFC8697"/>, the ASSOCIATION object could also include other TLVs based on the association types, that provides non-key information.</t>
 
+     <t hangText="SRPAG:"> SR Policy Association Group.</t>
+
+     <t hangText="SRPAT:"> SR Policy Association Type.</t>
+
+     <t hangText="SRPAT ASSOCIATION:"> ASSOCIATION object of type SR Policy Association.</t>
+
      <t hangText="PCC:"> Path Computation Client.  Any client application requesting a path computation to be performed by a Path Computation Element.</t>
 
      <t hangText="PCE:"> Path Computation Element.  An entity (component, application, or network node) that is capable of computing a network path or route based on a network graph and applying computational constraints.</t>
@@ -182,33 +188,38 @@ they will automatically be output with "(if approved)" -->
 
 <section anchor="Motivation" title="Motivation">
 
-<t>The new Association Type (SR Policy Association) and the new TLVs for the ASSOCIATION object, defined in this document, allow a PCEP peer to exchange additional parameters of SR candidate paths and of their associated SR policy. For the SR policy, the parameters are: color and endpoint. For the candidate path, the parameters are: protocol origin, originator, discriminator and preference. <xref target="I-D.ietf-spring-segment-routing-policy"/> describes the concept of SR Policy and these parameters.</t>
-
-<t>The motivation for signaling these parameters is summarized in the following subsections.</t>
+<t>The SR Policy Association and its TLVs, defined in this document, allow PCEP speakers to exchange additional information about SR Policy Candidate Paths and their container SR Policy.
+</t>
 
 <section anchor="Motivation-group" title="Group Candidate Paths belonging to the same SR policy">
 
-<t>Since each candidate path of an SR policy appears as a different LSP (identified via a PLSP-ID) in PCEP, it is useful to group together all the candidate paths that belong to the same SR policy. Furthermore, it is useful for the PCE to have knowledge of the SR candidate path parameters such as color, protocol origin, discriminator, and preference.</t>
+<t>Since each SR Policy Candidate Path appears as a different Tunnel (identified via a PLSP-ID) in PCEP,
+it is useful to group together all the SR Policy Candidate Paths that belong to the same SR Policy.
+Furthermore, it is useful for the PCE to have knowledge of the SR Policy related information such as color, endpoint, protocol origin, discriminator, and preference.</t>
 
 </section> <!-- Motivation-group -->
 
 <section anchor="Motivation-candidate-path" title="Instantiation of SR policy candidate paths">
 
-<t>A PCE needs to instantiate one or more candidate paths on the PCC, as specified in <xref target="RFC8281"/>.
-Each candidate path is identified by the tuple &#60;headend, color, endpoint, originator, discriminator, preference&#62;.
+<t>A PCE needs to instantiate one or more SR Policy Candidate Paths on the PCC, as specified in <xref target="RFC8281"/>.
+Each SR Policy Candidate Path is identified by the tuple &#60;headend, color, endpoint, originator, discriminator, preference&#62;.
 This draft provides a mechanism to signal this information in PCEP.</t>
 
 </section> <!-- Motivation-candidate-path -->
 
 <section anchor="Motivation-preference" title="Avoid computing lower preference candidate paths">
 
-<t>When a PCE knows that a given set of candidate paths all belong to the same SR policy, then path computation MAY be done on only the highest preference candidate-path(s). Path computation for lower preference paths is not necessary if one or two higher preference paths are already computed. Since computing their paths will not affect traffic steering, it MAY be postponed until the higher preference paths become invalid, thus saving computation resources on the PCE.</t>
+<t>When a PCE knows that a given set of SR Policy Candidate Paths all belong to the same SR Policy, then path computation MAY be done on only the highest preference candidate-path(s).
+Path computation for lower preference paths is not necessary if one or two higher preference paths are already computed.
+Since computing their paths will not affect traffic steering, it MAY be postponed until the higher preference paths become invalid.</t>
 
 </section> <!-- Motivation-preference -->
 
 <section anchor="Motivation-signaling-overhead" title="Minimal signaling overhead">
 
-<t>When an SR policy contains multiple candidate paths computed by a PCE, such candidate paths can be created, updated and deleted independently of each other. This is achieved by making each candidate path correspond to a unique LSP (identified via PLSP-ID). For example, if an SR policy has 4 candidate paths, then if the PCE wants to update one of those candidate paths, only one set of PCUpd and PCRpt messages needs to be exchanged.</t>
+<t>When an SR Policy contains multiple SR Policy Candidate Paths computed by a PCE, such candidate paths can be created, updated and deleted independently of each other.
+This is achieved by making each SR Policy Candidate Path correspond to a unique Tunnel (identified via PLSP-ID).
+For example, if an SR Policy has 4 SR Policy Candidate Paths, then if the PCE wants to update one of those, only one set of PCUpd and PCRpt messages needs to be exchanged.</t>
 
 </section> <!-- Motivation-signaling-overhead -->
 
@@ -228,13 +239,20 @@ However, the mapping between PCEP Tunnels and SR Policy Candidate Paths may be e
 <t>Each SR Policy Candidate Path contains one or more Segment Lists.
 The subject of encoding multiple Segment Lists within an SR Policy Candidate Path is described in <xref target="I-D.koldychev-pce-multipath"/>.</t>
 
-<t>This document defines a new Association Type "SR Policy Association Group" (SRPAG) to represent an SR Policy as a collection of SR Policy Candidate Paths.
-An ASSOCIATION object of SRPAG type carries three pieces of information: SR Policy Identifiers, SR Policy Candidate Path Identifiers, and SR Policy Candidate Path Attributes.</t>
+<t>
+This document defines a new Association Type called "SR Policy Association", of value TBD1, based on the generic ASSOCIATION object.
+The new Association Type is also called "SRPAT", for "SR Policy Association Type". 
+We say "SRPAT ASSOCIATION" to mean "ASSOCIATION object of type SR Policy Association".
+The group of LSPs that are part of the SR Policy Association is called "SRPAG", for "SR Policy Association Group".
+</t>
+
+<t>An SRPAT ASSOCIATION carries three pieces of information:
+SR Policy Identifiers, SR Policy Candidate Path Identifiers, and SR Policy Candidate Path Attributes.</t>
 
 <t>SR Policy Identifiers uniquely identify the SR policy within the context of the headend.
 SR Policy Identifiers MUST be the same for all SR Policy Candidate Paths in the same SRPAG.
 SR Policy Identifiers MUST NOT change for a given SR Policy Candidate Path during its lifetime.
-SR Policy Identifiers MUST be different for different SRPAG associations.
+SR Policy Identifiers MUST be different for different SRPAGs.
 SR Policy Identifiers consist of:</t>
 <t>
       <list style="symbols">
@@ -248,7 +266,7 @@ SR Policy Identifiers consist of:</t>
 SR Policy Candidate Path Identifiers MUST NOT change for a given LSP during its lifetime.
 SR Policy Candidate Path Identifiers MUST be different for different LSPs within the same SRPAG.
 When these rules are not satisfied, the PCE MUST send a PCErr message with
-Error-Type = 26 "Association Error", Error Value = TBD8 "SRPAG - SR Policy Candidate Path Identifiers Mismatch".
+Error-Type = 26 "Association Error", Error Value = TBD8 "SR Policy Candidate Path Identifiers Mismatch".
 SR Policy Candidate Path Identifiers consist of:</t>
 <t>
       <list style="symbols">
@@ -268,12 +286,13 @@ SR Policy Candidate Path Attributes consist of:</t>
       </list>
 </t>
 
-<t>As per the processing rules specified in section 5.4 of <xref target="RFC8697"/>, if a PCEP speaker does not support the SRPAG association type,
+<t>As per the processing rules specified in section 5.4 of <xref target="RFC8697"/>, if a PCEP speaker does not support the SRPAT,
 it MUST return a PCErr message with
 Error-Type = 26 "Association Error", Error-Value = 1 "Association-type is not supported".</t>
 
 <t>A given LSP MUST belong to at most one SRPAG, since an SR Policy Candidate Path cannot belong to multiple SR Policies.
-If a PCEP speaker receives a PCEP message with more than one SRPAG for the same LSP, then the PCEP speaker MUST send a PCErr message with
+If a PCEP speaker receives a PCEP message with more than one SRPAT ASSOCIATION for the same LSP,
+then the PCEP speaker MUST send a PCErr message with
 Error-Type = 26 "Association Error", Error-Value = 7 "Cannot join the association group".</t>
 
 <!--
@@ -294,10 +313,10 @@ Error-Type = 26 "Association Error", Error-Value = TBD9 "SRPAG - Path Setup Type
 
 </section> <!-- Procedure -->
 
-<section anchor="Association" title="SR Policy Association Group">
+<section anchor="Association" title="SR Policy Association">
 
 <t>Two ASSOCIATION object types for IPv4 and IPv6 are defined in <xref target="RFC8697"/>. The ASSOCIATION object includes "Association Type" indicating the type of the association group.
-This document adds a new Association Type = TBD1 "SR Policy Association" for SR Policy Association Group (SRPAG).
+This document adds a new Association Type = TBD1 "SR Policy Association".
 This Association Type is dynamic in nature, thus operator-configured Association
 Range MUST NOT be set for this Association type and MUST be ignored.</t>
 
@@ -339,7 +358,7 @@ the headend is encoded as the Association Source in the ASSOCIATION object and
 the color and endpoint are encoded as part of Extended Association ID TLV.
 </t>
 
-<t>For the SRPAG, the Association Parameters (see <xref target="Terminology"/>) consist of:</t>
+<t>The Association Parameters (see <xref target="Terminology"/>) consist of:</t>
 <t>
       <list style="symbols">
         <t>Association Type: set to TBD1 "SR Policy Association".</t>
@@ -381,10 +400,10 @@ then the PCC SHOULD accept the PCInit message and create the SR Policy Associati
 This value MAY be different from the one contained in the END-POINTS object, or in the LSP IDENTIFIERS TLV of the LSP object.
 This value is part of the tuple &#60;color, endpoint&#62; that identifies the SR Policy on a given headend.</t>
 
-<t>If the PCEP speaker receives an ASSOCIATION object with SR Policy Association type,
+<t>If the PCEP speaker receives an SRPAT ASSOCIATION
 whose Association Parameters do not follow the above specification,
 then the PCEP speaker MUST send PCErr message with
-Error-Type = 26 "Association Error", Error-Value = TBD7 "SRPAG - SR Policy Identifiers Mismatch".</t>
+Error-Type = 26 "Association Error", Error-Value = TBD7 "SR Policy Identifiers Mismatch".</t>
 
 <t>The purpose of choosing the Association Parameters in this way is to guarantee that there is no possibility of a race condition when multiple PCEP speakers want to create the same SR Policy at the same time. By adhering to this format, all PCEP speakers come up with the same Association Parameters independently of each other. Thus, there is no chance that different PCEP speakers will come up with different Association Parameters for the same SR Policy.</t>
 
@@ -392,7 +411,7 @@ Error-Type = 26 "Association Error", Error-Value = TBD7 "SRPAG - SR Policy Ident
 
 <section anchor="AssociationInformation" title="Association Information">
 
-<t>The ASSOCIATION object of SRPAG type contains the following TLVs:</t>
+<t>The SRPAT ASSOCIATION contains the following TLVs:</t>
 
 <t>
       <list style="symbols">
@@ -404,12 +423,13 @@ Error-Type = 26 "Association Error", Error-Value = TBD7 "SRPAG - SR Policy Ident
 </t>
 
 <t>Of these new TLVs, SRPOLICY-CPATH-ID TLV is mandatory.
-When a mandatory TLV is missing from the SRPAG ASSOCIATION object, the PCE MUST send a PCErr message with
-Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "SRPAG - Missing Mandatory TLV".</t>
+When a mandatory TLV is missing from the SRPAT ASSOCIATION object, the PCE MUST send a PCErr message with
+Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "Missing Mandatory TLV".</t>
 
 <section anchor="Policy-name-tlv" title="SR Policy Name TLV">
 
-<t>The SRPOLICY-POL-NAME TLV is an optional TLV for the SRPAG Association. At most one SRPOLICY-POL-NAME TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+<t>The SRPOLICY-POL-NAME TLV is an optional TLV for the SRPAT ASSOCIATION.
+At most one SRPOLICY-POL-NAME TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
 
 <figure anchor="SRPOLICY-POL-NAME-TLV-FORMAT" title="The SRPOLICY-POL-NAME TLV format">
 <artwork align="center"><![CDATA[
@@ -435,7 +455,8 @@ Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "SRPAG - Missing M
 
 <section anchor="Cpath-identifiers-tlv" title="SR Policy Candidate Path Identifiers TLV">
 
-<t>The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPAG Association. Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+<t>The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPAT ASSOCIATION.
+Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
 
 <figure anchor="SRPOLICY-CPATH-ID-TLV-FORMAT" title="The SRPOLICY-CPATH-ID TLV format">
 <artwork align="center"><![CDATA[
@@ -476,7 +497,8 @@ Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "SRPAG - Missing M
 
 <section anchor="SRPOLICY-CPATH-NAME" title="SR Policy Candidate Path Name TLV">
 
-<t>The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPAG Association. At most one SRPOLICY-CPATH-NAME TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+<t>The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPAT ASSOCIATION.
+At most one SRPOLICY-CPATH-NAME TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
 
 <figure anchor="SRPOLICY-CPATH-NAME-TLV-FORMAT" title="The SRPOLICY-CPATH-NAME TLV format">
 <artwork align="center"><![CDATA[
@@ -502,7 +524,8 @@ Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "SRPAG - Missing M
 
 <section anchor="Cpath-preference-tlv" title="SR Policy Candidate Path Preference TLV">
 
-<t>The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPAG Association. Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+<t>The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPAT ASSOCIATION.
+Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
 
 <figure anchor="SRPOLICY-CPATH-PREFERENCE-TLV-FORMAT" title="The SRPOLICY-CPATH-PREFERENCE TLV format">
 <artwork align="center"><![CDATA[
@@ -539,9 +562,9 @@ Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "SRPAG - Missing M
 <t>
 <list style="numbers">
 
-<t>PCC sends PCReq message to the PCE, encoding the SRPAG ASSOCIATION object and TLVs in the PCReq message.</t>
+<t>PCC sends PCReq message to the PCE, encoding the SRPAT ASSOCIATION and TLVs in the PCReq message.</t>
 
-<t>PCE returns the path in PCRep message, and echoes back the SRPAG object that was used in the computation.</t>
+<t>PCE returns the path in PCRep message, and echoes back the SRPAT ASSOCIATION.</t>
 
 </list>
 </t>
@@ -551,9 +574,9 @@ Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "SRPAG - Missing M
 <t>
 <list style="numbers">
 
-<t>PCC sends PCRpt message to the PCE, including the LSP object and the SRPAG ASSOCIATION object.</t>
+<t>PCC sends PCRpt message to the PCE, including the LSP object and the SRPAT ASSOCIATION.</t>
 
-<t>PCE computes path, possibly making use of the Association Information from the SRPAG ASSOCIATION object.</t>
+<t>PCE computes path, possibly making use of the Association Information from the SRPAT ASSOCIATION.</t>
 
 <t>PCE updates the SR policy candidate path's ERO using PCUpd message.</t>
 
@@ -569,7 +592,8 @@ Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "SRPAG - Missing M
 <t>
 <list style="numbers">
 
-<t>For each candidate path of the SR Policy, the PCC generates a different PLSP-ID and symbolic-name and sends multiple PCRpt messages (or one message with multiple LSP objects) to the PCE. Each LSP object is followed by SRPAG ASSOCIATION object with identical Color and Endpoint values. The Association Source is set to the IP address of the PCC and the Association ID is set to a number that PCC locally chose to represent the SR Policy.</t>
+<t>For each candidate path of the SR Policy, the PCC generates a different PLSP-ID and symbolic-name and sends multiple PCRpt messages (or one message with multiple LSP objects) to the PCE.
+Each LSP object is followed by SRPAT ASSOCIATION with identical Color and Endpoint values. The Association Source is set to the IP address of the PCC and the Association ID is set to a number that PCC locally chose to represent the SR Policy.</t>
 
 <t>PCE takes into account that all the LSPs belong to the same SR policy. PCE prioritizes computation for the highest preference LSP and sends PCUpd message(s) back to the PCC.</t>
 
@@ -589,11 +613,15 @@ Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "SRPAG - Missing M
 <t>
 <list style="numbers">
 
-<t>PCE sends PCInitiate message, containing the SRPAG Association object. The Association Source is set to the IP address of the PCC and the Association ID is set to 0, as described in <xref target="AssociationParameters"/>.</t>
+<t>PCE sends PCInitiate message, containing the SRPAT ASSOCIATION.
+The Association Source and the Association ID are set as described in <xref target="AssociationParameters"/>.</t>
 
-<t>PCC uses the color, endpoint and preference from the SRPAG object to create a new candidate path. If no SR policy exists to hold the candidate path, then a new SR policy is created to hold the new candidate-path. The Originator of the candidate path is set to be the address of the PCE that is sending the PCInitiate message.</t>
+<t>PCC uses the color, endpoint and preference from the SRPAT ASSOCIATION to create a new candidate path.
+If no SR policy exists to hold the candidate path, then a new SR policy is created to hold the new candidate-path.
+The Originator of the candidate path is set to be the address of the PCE that is sending the PCInitiate message.</t>
 
-<t>PCC sends a PCRpt message back to the PCE to report the newly created Candidate Path. The PCRpt message contains the SRPAG Association object. The Association Source is set to the IP address of the PCC and the Association ID is set to a number that PCC locally chose to represent the SR Policy.</t>
+<t>PCC sends a PCRpt message back to the PCE to report the newly created Candidate Path.
+The PCRpt message contains the SRPAT ASSOCIATION.</t>
 
 </list>
 </t>
@@ -620,11 +648,15 @@ Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "SRPAG - Missing M
 <t>
 <list style="numbers">
 
-<t>PCE sends a separate PCInitiate message for every candidate path that it wants to create, or it sends multiple LSP objects within a single PCInitiate message. The SRPAG Association object is sent for every LSP in the PCInitiate message. The Association Source is set to the IP address of the PCC and the Association ID is set to 0, as described in <xref target="AssociationParameters"/>.</t>
+<t>PCE sends a separate PCInitiate message for every candidate path that it wants to create, or it sends multiple LSP objects within a single PCInitiate message.
+The SRPAT ASSOCIATION is sent for every LSP in the PCInitiate message.
+The Association Source and the Association ID are set as described in <xref target="AssociationParameters"/>.</t>
 
 <t>PCC creates multiple candidate paths under the same SR policy, identified by Color and Endpoint.</t>
 
-<t>PCC sends a PCRpt message back to the PCE to report the newly created Candidate Path. The PCRpt message contains the SRPAG Association object. The Association Source is set to the IP address of the PCC and the Association ID is set to a number that PCC locally chose to represent the SR Policy.</t>
+<t>PCC sends a PCRpt message back to the PCE to report the newly created Candidate Path.
+The PCRpt message contains the SRPAT ASSOCIATION.
+The Association Source and the Association ID are set as described in <xref target="AssociationParameters"/>.</t>
 
 </list>
 </t>
@@ -698,18 +730,17 @@ IANA is requested to allocate new error values within the "PCEP-ERROR Object Err
 | 6          | Mandatory Object |                       | [RFC5440] |
 |            | Missing          |                       |           |
 +------------+------------------+-----------------------+-----------+
-|            |                  | TBD6: SRPAG - Missing | This.I-D  |
-|            |                  | Mandatory TLV         |           |
+|            |                  | TBD6: SR Policy       | This.I-D  |
+|            |                  | Missing Mandatory TLV |           |
 +------------+------------------+-----------------------+-----------+
 | 26         | Association      |                       | [RFC8697] |
 |            | Error            |                       |           |
 +------------+------------------+-----------------------+-----------+
-|            |                  | TBD7: SRPAG - SR      | This.I-D  |
-|            |                  | Policy Identifers     |           |
-|            |                  | Mismatch              |           |
+|            |                  | TBD7: SR Policy       | This.I-D  |
+|            |                  | Identifers Mismatch   |           |
 +------------+------------------+-----------------------+-----------+
-|            |                  | TBD8: SRPAG - SR      | This.I-D  |
-|            |                  | Policy Candidate Path |           |
+|            |                  | TBD8: SR Policy       | This.I-D  |
+|            |                  | Candidate Path        |           |
 |            |                  | Identifiers Mismatch  |           |
 +------------+------------------+-----------------------+-----------+
 
@@ -768,9 +799,12 @@ IANA is requested to allocate new error values within the "PCEP-ERROR Object Err
       security concerns beyond those discussed in <xref target="RFC5440"/>,
       <xref target='RFC8231'/>, <xref target="RFC8664"/>, <xref target="I-D.ietf-pce-segment-routing-ipv6"/> and <xref target='RFC8697'/> in itself.
       </t>
-     <t>The information carried in the SRPAG Association object, as per this document is related to SR Policy. 
-      It often reflects information
-    that can also be derived from the SR Database, but association provides a much easier grouping of related LSPs and messages. The SRPAG association could provides an adversary with the opportunity to eavesdrop on the relationship between the LSPs.  Thus securing the PCEP session using Transport Layer
+     <t>
+The information carried in the SRPAT ASSOCIATION, as per this document is related to SR Policy. 
+It often reflects information
+that can also be derived from the SR Database, but association provides a much easier grouping of related LSPs and messages.
+The SRPAT ASSOCIATION could provide an adversary with the opportunity to eavesdrop on the relationship between the LSPs.
+Thus securing the PCEP session using Transport Layer
    Security (TLS) <xref target="RFC8253"/>, as per the recommendations and
    best current practices in <xref target="RFC7525"/>, is RECOMMENDED.</t>
 </section> 
