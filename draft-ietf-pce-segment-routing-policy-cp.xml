@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-03" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-04" ipr="trust200902">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -45,7 +45,7 @@ they will automatically be output with "(if approved)" -->
 <!-- ***** FRONT MATTER ***** -->
 
   <front>
-    <title abbrev="SR Policy">
+    <title abbrev="PCEP SR Policy Association">
     PCEP extension to support Segment Routing Policy Candidate Paths</title>
 
     <author fullname="Mike Koldychev" initials="M." surname="Koldychev">
