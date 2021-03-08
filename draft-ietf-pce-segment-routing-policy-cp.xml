@@ -118,7 +118,7 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date month="February" year="2021" />
+    <date month="March" year="2021" />
 
     <workgroup>PCE Working Group</workgroup>
 
@@ -789,6 +789,22 @@ IANA is requested to allocate new error values within the "PCEP-ERROR Object Err
             <t>Coverage: Full.</t>
 
             <t>Contact: mkoldych@cisco.com</t>
+          </list></t>
+      </section>
+
+      <section anchor="Juniper" title="Juniper">
+        <t><list style="symbols">
+            <t>Organization: Juniper Networks</t>
+
+            <t>Implementation: Head-end and controller.</t>
+
+            <t>Description: An experimental code-point is currently used.</t>
+
+            <t>Maturity Level: Proof of concept.</t>
+
+            <t>Coverage: Partial.</t>
+
+            <t>Contact: cbarth@juniper.net</t>
           </list></t>
       </section>
 

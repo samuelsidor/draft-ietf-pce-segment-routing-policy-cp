@@ -5,14 +5,14 @@
 PCE Working Group                                           M. Koldychev
 Internet-Draft                                       Cisco Systems, Inc.
 Intended status: Standards Track                            S. Sivabalan
-Expires: September 1, 2021                             Ciena Corporation
+Expires: September 9, 2021                             Ciena Corporation
                                                                 C. Barth
                                                   Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                       February 28, 2021
+                                                           March 8, 2021
 
 
     PCEP extension to support Segment Routing Policy Candidate Paths
@@ -53,15 +53,15 @@ Status of This Memo
 
 
 
-Koldychev, et al.       Expires September 1, 2021               [Page 1]
+Koldychev, et al.       Expires September 9, 2021               [Page 1]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 1, 2021.
+   This Internet-Draft will expire on September 9, 2021.
 
 Copyright Notice
 
@@ -109,19 +109,20 @@ Table of Contents
 
 
 
-Koldychev, et al.       Expires September 1, 2021               [Page 2]
+Koldychev, et al.       Expires September 9, 2021               [Page 2]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
    8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  16
      8.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  17
+     8.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  17
    9.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
-   10. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  17
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  17
+   10. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  18
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  18
      11.2.  Informative References . . . . . . . . . . . . . . . . .  19
-   Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  19
+   Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  20
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
 
 1.  Introduction
@@ -161,15 +162,15 @@ Internet-Draft         PCEP SR Policy Association          February 2021
    PCEP extensions to signal additional information to map candidate
    paths to their SR policies.  Each candidate path maps to a unique
    PLSP-ID in PCEP.  By associating multiple candidate paths together, a
-   PCE becomes aware of the hierarchical structure of an SR policy.
 
 
 
-Koldychev, et al.       Expires September 1, 2021               [Page 3]
+Koldychev, et al.       Expires September 9, 2021               [Page 3]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
+   PCE becomes aware of the hierarchical structure of an SR policy.
    Thus the PCE can take computation and control decisions about the
    candidate paths, with the additional knowledge that these candidate
    paths belong to the same SR policy.  This is accomplished via the use
@@ -220,10 +221,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-
-Koldychev, et al.       Expires September 1, 2021               [Page 4]
+Koldychev, et al.       Expires September 9, 2021               [Page 4]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
 3.  Motivation
@@ -277,9 +277,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021               [Page 5]
+Koldychev, et al.       Expires September 9, 2021               [Page 5]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
 4.1.  Overview
@@ -333,9 +333,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021               [Page 6]
+Koldychev, et al.       Expires September 9, 2021               [Page 6]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
    "Association Error", Error Value = TBD8 "SR Policy Candidate Path
@@ -389,9 +389,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021               [Page 7]
+Koldychev, et al.       Expires September 9, 2021               [Page 7]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
 5.  SR Policy Association
@@ -445,9 +445,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021               [Page 8]
+Koldychev, et al.       Expires September 9, 2021               [Page 8]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
        0                   1                   2                   3
@@ -501,9 +501,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021               [Page 9]
+Koldychev, et al.       Expires September 9, 2021               [Page 9]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
    o  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
@@ -557,9 +557,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021              [Page 10]
+Koldychev, et al.       Expires September 9, 2021              [Page 10]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
        0                   1                   2                   3
@@ -613,9 +613,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021              [Page 11]
+Koldychev, et al.       Expires September 9, 2021              [Page 11]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
        0                   1                   2                   3
@@ -669,9 +669,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021              [Page 12]
+Koldychev, et al.       Expires September 9, 2021              [Page 12]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
 6.  Examples
@@ -725,9 +725,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021              [Page 13]
+Koldychev, et al.       Expires September 9, 2021              [Page 13]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
 6.3.  PCE Initiated SR Policy with single candidate-path
@@ -781,9 +781,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021              [Page 14]
+Koldychev, et al.       Expires September 9, 2021              [Page 14]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
    1.  PCE sends PCInitiate message, setting the R-flag in the LSP
@@ -837,9 +837,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021              [Page 15]
+Koldychev, et al.       Expires September 9, 2021              [Page 15]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
    +------------+------------------+-----------------------+-----------+
@@ -893,9 +893,9 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-Koldychev, et al.       Expires September 1, 2021              [Page 16]
+Koldychev, et al.       Expires September 9, 2021              [Page 16]
 
-Internet-Draft         PCEP SR Policy Association          February 2021
+Internet-Draft         PCEP SR Policy Association             March 2021
 
 
 8.1.  Cisco
@@ -911,6 +911,20 @@ Internet-Draft         PCEP SR Policy Association          February 2021
    o  Coverage: Full.
 
    o  Contact: mkoldych@cisco.com
+
+8.2.  Juniper
+
+   o  Organization: Juniper Networks
+
+   o  Implementation: Head-end and controller.
+
+   o  Description: An experimental code-point is currently used.
+
+   o  Maturity Level: Proof of concept.
+
+   o  Coverage: Partial.
+
+   o  Contact: cbarth@juniper.net
 
 9.  Security Considerations
 
@@ -929,6 +943,17 @@ Internet-Draft         PCEP SR Policy Association          February 2021
    the recommendations and best current practices in [RFC7525], is
    RECOMMENDED.
 
+
+
+
+
+
+
+Koldychev, et al.       Expires September 9, 2021              [Page 17]
+
+Internet-Draft         PCEP SR Policy Association             March 2021
+
+
 10.  Acknowledgement
 
    Would like to thank Stephane Litkowski, Praveen Kumar and Tom Petch
@@ -942,17 +967,6 @@ Internet-Draft         PCEP SR Policy Association          February 2021
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
-
-
-
-
-
-
-
-Koldychev, et al.       Expires September 1, 2021              [Page 17]
-
-Internet-Draft         PCEP SR Policy Association          February 2021
-
 
    [RFC5440]  Vasseur, JP., Ed. and JL. Le Roux, Ed., "Path Computation
               Element (PCE) Communication Protocol (PCEP)", RFC 5440,
@@ -986,6 +1000,16 @@ Internet-Draft         PCEP SR Policy Association          February 2021
               ietf-spring-segment-routing-policy-09 (work in progress),
               November 2020.
 
+
+
+
+
+
+Koldychev, et al.       Expires September 9, 2021              [Page 18]
+
+Internet-Draft         PCEP SR Policy Association             March 2021
+
+
    [RFC8697]  Minei, I., Crabbe, E., Sivabalan, S., Ananthakrishnan, H.,
               Dhody, D., and Y. Tanaka, "Path Computation Element
               Communication Protocol (PCEP) Extensions for Establishing
@@ -998,17 +1022,6 @@ Internet-Draft         PCEP SR Policy Association          February 2021
               Protocol (PCEP) Extensions for Segment Routing", RFC 8664,
               DOI 10.17487/RFC8664, December 2019,
               <https://www.rfc-editor.org/info/rfc8664>.
-
-
-
-
-
-
-
-Koldychev, et al.       Expires September 1, 2021              [Page 18]
-
-Internet-Draft         PCEP SR Policy Association          February 2021
-
 
    [I-D.koldychev-pce-operational]
               Koldychev, M., Sivabalan, S., Negi, M., Achaval, D., and
@@ -1041,6 +1054,18 @@ Internet-Draft         PCEP SR Policy Association          February 2021
               RFC 8253, DOI 10.17487/RFC8253, October 2017,
               <https://www.rfc-editor.org/info/rfc8253>.
 
+
+
+
+
+
+
+
+Koldychev, et al.       Expires September 9, 2021              [Page 19]
+
+Internet-Draft         PCEP SR Policy Association             March 2021
+
+
    [I-D.ietf-pce-segment-routing-ipv6]
               Li, C., Negi, M., Sivabalan, S., Koldychev, M.,
               Kaladharan, P., and Y. Zhu, "PCEP Extensions for Segment
@@ -1048,23 +1073,6 @@ Internet-Draft         PCEP SR Policy Association          February 2021
               segment-routing-ipv6-08 (work in progress), November 2020.
 
 Appendix A.  Contributors
-
-
-
-
-
-
-
-
-
-
-
-
-
-Koldychev, et al.       Expires September 1, 2021              [Page 19]
-
-Internet-Draft         PCEP SR Policy Association          February 2021
-
 
    Dhruv Dhody
    Huawei Technologies
@@ -1103,23 +1111,21 @@ Authors' Addresses
    Email: ssivabal@ciena.com
 
 
+
+
+
+
+
+
+Koldychev, et al.       Expires September 9, 2021              [Page 20]
+
+Internet-Draft         PCEP SR Policy Association             March 2021
+
+
    Colby Barth
    Juniper Networks, Inc.
 
    Email: cbarth@juniper.net
-
-
-
-
-
-
-
-
-
-
-Koldychev, et al.       Expires September 1, 2021              [Page 20]
-
-Internet-Draft         PCEP SR Policy Association          February 2021
 
 
    Shuping Peng
@@ -1167,10 +1173,4 @@ Internet-Draft         PCEP SR Policy Association          February 2021
 
 
 
-
-
-
-
-
-
-Koldychev, et al.       Expires September 1, 2021              [Page 21]
+Koldychev, et al.       Expires September 9, 2021              [Page 21]
