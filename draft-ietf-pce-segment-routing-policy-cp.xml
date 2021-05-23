@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-04" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-05" ipr="trust200902">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -118,7 +118,7 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date month="March" year="2021" />
+    <date month="May" year="2021" />
 
     <workgroup>PCE Working Group</workgroup>
 
@@ -240,7 +240,7 @@ However, the mapping between PCEP Tunnels and SR Policy Candidate Paths may be e
 The subject of encoding multiple Segment Lists within an SR Policy Candidate Path is described in <xref target="I-D.koldychev-pce-multipath"/>.</t>
 
 <t>
-This document defines a new Association Type called "SR Policy Association", of value TBD1, based on the generic ASSOCIATION object.
+This document defines a new Association Type called "SR Policy Association", of value 6 based on the generic ASSOCIATION object.
 The new Association Type is also called "SRPAT", for "SR Policy Association Type". 
 We say "SRPAT ASSOCIATION" to mean "ASSOCIATION object of type SR Policy Association".
 The group of LSPs that are part of the SR Policy Association is called "SRPAG", for "SR Policy Association Group".
@@ -316,7 +316,7 @@ Error-Type = 26 "Association Error", Error-Value = TBD9 "SRPAG - Path Setup Type
 <section anchor="Association" title="SR Policy Association">
 
 <t>Two ASSOCIATION object types for IPv4 and IPv6 are defined in <xref target="RFC8697"/>. The ASSOCIATION object includes "Association Type" indicating the type of the association group.
-This document adds a new Association Type = TBD1 "SR Policy Association".
+This document adds a new Association Type (6) "SR Policy Association".
 This Association Type is dynamic in nature, thus operator-configured Association
 Range MUST NOT be set for this Association type and MUST be ignored.</t>
 
@@ -339,7 +339,7 @@ Range MUST NOT be set for this Association type and MUST be ignored.</t>
 ]]></artwork>
 </figure>
 
-<t>Type: TBD2 for "SRPOLICY-POL-ID" TLV.</t>
+<t>Type: 56 for "SRPOLICY-POL-ID" TLV.</t>
 
 <t>Length: 8 or 20, depending on length of Endpoint (IPv4 or IPv6)</t>
 
@@ -361,7 +361,7 @@ the color and endpoint are encoded as part of Extended Association ID TLV.
 <t>The Association Parameters (see <xref target="Terminology"/>) consist of:</t>
 <t>
       <list style="symbols">
-        <t>Association Type: set to TBD1 "SR Policy Association".</t>
+        <t>Association Type: set to 6 "SR Policy Association".</t>
         <t>Association Source (IPv4/IPv6): set to the headend IP address.</t>
         <t>Association ID (16-bit): set to "1".</t>
         <t>Extended Association ID TLV: encodes the Color and Endpoint of the SR Policy.</t>
@@ -445,7 +445,7 @@ At most one SRPOLICY-POL-NAME TLV SHOULD be encoded by the sender and only the f
 ]]></artwork>
 </figure>
 
-<t>Type: TBD2 for "SRPOLICY-POL-NAME" TLV.</t>
+<t>Type: 56 for "SRPOLICY-POL-NAME" TLV.</t>
 
 <t>Length: indicates the length of the value portion of the TLV in octets and MUST be greater than 0. The TLV MUST be zero-padded so that the TLV is 4-octet aligned.</t>
 
@@ -479,7 +479,7 @@ Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the sender and only the firs
 ]]></artwork>
 </figure>
 
-<t>Type: TBD3 for "SRPOLICY-CPATH-ID" TLV.</t>
+<t>Type: 57 for "SRPOLICY-CPATH-ID" TLV.</t>
 
 <t>Length: 28.</t>
 
@@ -514,7 +514,7 @@ At most one SRPOLICY-CPATH-NAME TLV SHOULD be encoded by the sender and only the
 ]]></artwork>
 </figure>
 
-<t>Type: TBD4 for "SRPOLICY-CPATH-NAME" TLV.</t>
+<t>Type: 58 for "SRPOLICY-CPATH-NAME" TLV.</t>
 
 <t>Length: indicates the length of the value portion of the TLV in octets and MUST be greater than 0. The TLV MUST be zero-padded so that the TLV is 4-octet aligned.</t>
 
@@ -539,7 +539,7 @@ Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be encoded by the sender and only 
 ]]></artwork>
 </figure>
 
-<t>Type: TBD5 for "SRPOLICY-CPATH-PREFERENCE" TLV.</t>
+<t>Type: 59 for "SRPOLICY-CPATH-PREFERENCE" TLV.</t>
 
 <t>Length: 4.</t>
 
@@ -690,7 +690,7 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 +-----------+-------------------------------------------+-----------+
 | Type      | Name                                      | Reference |
 +-----------+-------------------------------------------+-----------+
-| TBD1      | SR Policy Association                     | This.I-D  |
+| 6         | SR Policy Association                     | This.I-D  |
 +-----------+-------------------------------------------+-----------+
 ]]></artwork>
       </figure>
@@ -705,13 +705,13 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 +-----------+-------------------------------------------+-----------+
 | Value     | Description                               | Reference |
 +-----------+-------------------------------------------+-----------+
-| TBD2      | SRPOLICY-POL-NAME                         | This.I-D  |
+| 56        | SRPOLICY-POL-NAME                         | This.I-D  |
 +-----------+-------------------------------------------+-----------+
-| TBD3      | SRPOLICY-CPATH-ID                         | This.I-D  |
+| 57        | SRPOLICY-CPATH-ID                         | This.I-D  |
 +-----------+-------------------------------------------+-----------+
-| TBD4      | SRPOLICY-CPATH-NAME                       | This.I-D  |
+| 58        | SRPOLICY-CPATH-NAME                       | This.I-D  |
 +-----------+-------------------------------------------+-----------+
-| TBD5      | SRPOLICY-CPATH-PREFERENCE                 | This.I-D  |
+| 59        | SRPOLICY-CPATH-PREFERENCE                 | This.I-D  |
 +-----------+-------------------------------------------+-----------+
 ]]></artwork>
       </figure>
