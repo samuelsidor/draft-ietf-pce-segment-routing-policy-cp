@@ -87,8 +87,11 @@ Table of Contents
      3.2.  Instantiation of SR policy candidate paths  . . . . . . .   5
      3.3.  Avoid computing lower preference candidate paths  . . . .   5
      3.4.  Minimal signaling overhead  . . . . . . . . . . . . . . .   5
-   4.  Procedure . . . . . . . . . . . . . . . . . . . . . . . . . .   5
+   4.  Procedure . . . . . . . . . . . . . . . . . . . . . . . . . .   6
      4.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .   6
+       4.1.1.  SR Policy Identifiers . . . . . . . . . . . . . . . .   6
+       4.1.2.  SR Policy Candidate Path Identifiers  . . . . . . . .   7
+       4.1.3.  SR Policy Candidate Path Attributes . . . . . . . . .   7
      4.2.  Multiple Optimization Objectives and Constraints  . . . .   7
    5.  SR Policy Association . . . . . . . . . . . . . . . . . . . .   8
      5.1.  Association Parameters  . . . . . . . . . . . . . . . . .   8
@@ -103,9 +106,6 @@ Table of Contents
      6.3.  PCE Initiated SR Policy with single candidate-path  . . .  14
      6.4.  PCE Initiated SR Policy with multiple candidate-paths . .  14
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  15
-     7.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  15
-     7.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  15
-     7.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  15
 
 
 
@@ -114,6 +114,9 @@ Koldychev, et al.       Expires November 24, 2021               [Page 2]
 Internet-Draft         PCEP SR Policy Association               May 2021
 
 
+     7.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  15
+     7.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  15
+     7.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  15
    8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  16
      8.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  17
      8.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  17
@@ -159,9 +162,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    An SR Policy contains one or more SR Policy Candidate Paths where one
    or more such paths can be computed via PCE.  This document specifies
-   PCEP extensions to signal additional information to map candidate
-   paths to their SR policies.  Each candidate path maps to a unique
-   PLSP-ID in PCEP.  By associating multiple candidate paths together, a
 
 
 
@@ -170,6 +170,9 @@ Koldychev, et al.       Expires November 24, 2021               [Page 3]
 Internet-Draft         PCEP SR Policy Association               May 2021
 
 
+   PCEP extensions to signal additional information to map candidate
+   paths to their SR policies.  Each candidate path maps to a unique
+   PLSP-ID in PCEP.  By associating multiple candidate paths together, a
    PCE becomes aware of the hierarchical structure of an SR policy.
    Thus the PCE can take computation and control decisions about the
    candidate paths, with the additional knowledge that these candidate
@@ -214,9 +217,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    PCEP:  Path Computation Element Protocol.
 
-   PCEP Tunnel:  The entity identified by the PLSP-ID, as per
-      [I-D.koldychev-pce-operational].
-
 
 
 
@@ -225,6 +225,9 @@ Koldychev, et al.       Expires November 24, 2021               [Page 4]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
+
+   PCEP Tunnel:  The entity identified by the PLSP-ID, as per
+      [I-D.koldychev-pce-operational].
 
 3.  Motivation
 
@@ -269,9 +272,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    Paths, then if the PCE wants to update one of those, only one set of
    PCUpd and PCRpt messages needs to be exchanged.
 
-4.  Procedure
-
-
 
 
 
@@ -281,6 +281,8 @@ Koldychev, et al.       Expires November 24, 2021               [Page 5]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
+
+4.  Procedure
 
 4.1.  Overview
 
@@ -307,57 +309,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    part of the SR Policy Association is called "SRPAG", for "SR Policy
    Association Group".
 
-   An SRPAT ASSOCIATION carries three pieces of information: SR Policy
-   Identifiers, SR Policy Candidate Path Identifiers, and SR Policy
-   Candidate Path Attributes.
-
-   SR Policy Identifiers uniquely identify the SR policy within the
-   context of the headend.  SR Policy Identifiers MUST be the same for
-   all SR Policy Candidate Paths in the same SRPAG.  SR Policy
-   Identifiers MUST NOT change for a given SR Policy Candidate Path
-   during its lifetime.  SR Policy Identifiers MUST be different for
-   different SRPAGs.  SR Policy Identifiers consist of:
-
-   o  Headend router where the SR Policy originates.
-
-   o  Color of SR Policy.
-
-   o  Endpoint of SR Policy.
-
-   SR Policy Candidate Path Identifiers uniquely identify the SR Policy
-   Candidate Path within the context of an SR Policy.  SR Policy
-   Candidate Path Identifiers MUST NOT change for a given LSP during its
-   lifetime.  SR Policy Candidate Path Identifiers MUST be different for
-   different LSPs within the same SRPAG.  When these rules are not
-   satisfied, the PCE MUST send a PCErr message with Error-Type = 26
-
-
-
-Koldychev, et al.       Expires November 24, 2021               [Page 6]
-
-Internet-Draft         PCEP SR Policy Association               May 2021
-
-
-   "Association Error", Error Value = TBD8 "SR Policy Candidate Path
-   Identifiers Mismatch".  SR Policy Candidate Path Identifiers consist
-   of:
-
-   o  Protocol Origin.
-
-   o  Originator.
-
-   o  Discriminator.
-
-   SR Policy Candidate Path Attributes carry non-key information about
-   the candidate path and MAY change during the lifetime of the LSP.  SR
-   Policy Candidate Path Attributes consist of:
-
-   o  Preference.
-
-   o  Optionally, the SR Policy Candidate Path name.
-
-   o  Optionally, the SR Policy name.
-
    As per the processing rules specified in section 5.4 of [RFC8697], if
    a PCEP speaker does not support the SRPAT, it MUST return a PCErr
    message with Error-Type = 26 "Association Error", Error-Value = 1
@@ -370,20 +321,69 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    with Error-Type = 26 "Association Error", Error-Value = 7 "Cannot
    join the association group".
 
+   An SRPAT ASSOCIATION carries three pieces of information: SR Policy
+   Identifiers, SR Policy Candidate Path Identifiers, and SR Policy
+   Candidate Path Attributes.
+
+4.1.1.  SR Policy Identifiers
+
+   SR Policy Identifiers uniquely identify the SR policy within the
+   context of the headend.  SR Policy Identifiers MUST be the same for
+   all SR Policy Candidate Paths in the same SRPAG.  SR Policy
+
+
+
+Koldychev, et al.       Expires November 24, 2021               [Page 6]
+
+Internet-Draft         PCEP SR Policy Association               May 2021
+
+
+   Identifiers MUST NOT change for a given SR Policy Candidate Path
+   during its lifetime.  SR Policy Identifiers MUST be different for
+   different SRPAGs.  SR Policy Identifiers consist of:
+
+   o  Headend router where the SR Policy originates.
+
+   o  Color of SR Policy.
+
+   o  Endpoint of SR Policy.
+
+4.1.2.  SR Policy Candidate Path Identifiers
+
+   SR Policy Candidate Path Identifiers uniquely identify the SR Policy
+   Candidate Path within the context of an SR Policy.  SR Policy
+   Candidate Path Identifiers MUST NOT change for a given LSP during its
+   lifetime.  SR Policy Candidate Path Identifiers MUST be different for
+   different LSPs within the same SRPAG.  When these rules are not
+   satisfied, the PCE MUST send a PCErr message with Error-Type = 26
+   "Association Error", Error Value = TBD8 "SR Policy Candidate Path
+   Identifiers Mismatch".  SR Policy Candidate Path Identifiers consist
+   of:
+
+   o  Protocol Origin.
+
+   o  Originator.
+
+   o  Discriminator.
+
+4.1.3.  SR Policy Candidate Path Attributes
+
+   SR Policy Candidate Path Attributes carry non-key information about
+   the candidate path and MAY change during the lifetime of the LSP.  SR
+   Policy Candidate Path Attributes consist of:
+
+   o  Preference.
+
+   o  Optionally, the SR Policy Candidate Path name.
+
+   o  Optionally, the SR Policy name.
+
 4.2.  Multiple Optimization Objectives and Constraints
 
    In certain scenarios, it is desired for each SR Policy Candidate Path
    to contain multiple sub-candidate paths, each of which has a
    different optimization objective and constraints.  Traffic is then
    sent ECMP or UCMP among these sub-candidate paths.
-
-   This is represented in PCEP by a many-to-one mapping between PCEP
-   Tunnels and SR Policy Candidate Paths.  This means that multiple PCEP
-   Tunnels are allocated for each SR Policy Candidate Path.  Each PCEP
-   Tunnel has its own optimization objective and constraints.  When a
-   single SR Policy Candidate Path contains multiple PCEP Tunnels, each
-   of these PCEP Tunnels MUST have identical values of Candidate Path
-   Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see Section 5.2.2.
 
 
 
@@ -393,6 +393,14 @@ Koldychev, et al.       Expires November 24, 2021               [Page 7]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
+
+   This is represented in PCEP by a many-to-one mapping between PCEP
+   Tunnels and SR Policy Candidate Paths.  This means that multiple PCEP
+   Tunnels are allocated for each SR Policy Candidate Path.  Each PCEP
+   Tunnel has its own optimization objective and constraints.  When a
+   single SR Policy Candidate Path contains multiple PCEP Tunnels, each
+   of these PCEP Tunnels MUST have identical values of Candidate Path
+   Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see Section 5.2.2.
 
 5.  SR Policy Association
 
@@ -434,14 +442,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    The 16-bit Association ID field in the ASSOCIATION object MUST be set
    to the value of "1".
 
-   The Extended Association ID TLV MUST be included and it MUST be in
-   the following format:
-
-
-
-
-
-
 
 
 
@@ -449,6 +449,9 @@ Koldychev, et al.       Expires November 24, 2021               [Page 8]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
+
+   The Extended Association ID TLV MUST be included and it MUST be in
+   the following format:
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -494,9 +497,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    o  SRPOLICY-POL-NAME TLV: (optional) encodes SR Policy Name string.
 
-   o  SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate
-      Path Identifiers.
-
 
 
 
@@ -505,6 +505,9 @@ Koldychev, et al.       Expires November 24, 2021               [Page 9]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
+
+   o  SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate
+      Path Identifiers.
 
    o  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
       Path string name.
@@ -550,9 +553,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPAT
    ASSOCIATION.  Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the
-   sender and only the first occurrence is processed and any others MUST
-   be ignored.
-
 
 
 
@@ -561,6 +561,9 @@ Koldychev, et al.       Expires November 24, 2021              [Page 10]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
+
+   sender and only the first occurrence is processed and any others MUST
+   be ignored.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -607,9 +610,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    ASSOCIATION.  At most one SRPOLICY-CPATH-NAME TLV SHOULD be encoded
    by the sender and only the first occurrence is processed and any
    others MUST be ignored.
-
-
-
 
 
 
