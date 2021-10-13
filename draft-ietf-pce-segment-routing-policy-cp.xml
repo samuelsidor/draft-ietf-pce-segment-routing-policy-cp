@@ -583,6 +583,33 @@ Only one SRPOLICY-PRIORITY TLV SHOULD be encoded by the sender and only the firs
 
 </section> <!-- Policy-priority-tlv -->
 
+<section anchor="Policy-enlp-tlv" title="SR Policy ENLP TLV">
+
+<t>The SRPOLICY-ENLP TLV is an optional TLV for the SRPAT ASSOCIATION.
+Only one SRPOLICY-ENLP TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+
+<figure anchor="SRPOLICY-ENLP-TLV-FORMAT" title="The SRPOLICY-ENLP TLV format">
+<artwork align="center"><![CDATA[
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |             Type              |             Length            |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |    ENLP        |                  Reserved                    |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+]]></artwork>
+</figure>
+
+<t>Type: TBD1 for "SRPOLICY-ENLP" TLV.</t>
+
+<t>Length: 4.</t>
+
+<t>ENLP (Explicit NULL Label Policy): As specified in Section 2.4.5 of <xref target="I-D.ietf-idr-segment-routing-te-policy"/>.</t>
+
+<t>Reserved: MUST be set to zero on transmission and ignored on receipt.</t>
+
+</section> <!-- Policy-priority-tlv -->
+
 </section> <!-- AssociationInformation -->
 
 </section> <!-- Association -->
@@ -881,6 +908,7 @@ Would like to thank Stephane Litkowski, Praveen Kumar and Tom Petch for review c
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8281.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7942.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-policy"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-idr-segment-routing-te-policy"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8697.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8664.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.koldychev-pce-operational"?>
