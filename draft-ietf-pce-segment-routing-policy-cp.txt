@@ -1194,6 +1194,14 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    Email: chengli13@huawei.com
 
+   Samuel Sidor
+   Cisco Systems, Inc.
+   Eurovea Central 3.
+   Pribinova 10
+   811 09 Bratislava
+   Slovakia
+
+   Email: ssidor@cisco.com
 
 Authors' Addresses
 
@@ -1215,14 +1223,6 @@ Authors' Addresses
    Email: ssivabal@ciena.com
 
 
-   Colby Barth
-   Juniper Networks, Inc.
-
-   Email: cbarth@juniper.net
-
-
-
-
 
 
 
@@ -1232,6 +1232,12 @@ Authors' Addresses
 Koldychev, et al.       Expires November 2, 2021               [Page 22]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
+
+
+   Colby Barth
+   Juniper Networks, Inc.
+
+   Email: cbarth@juniper.net
 
 
    Shuping Peng
@@ -1247,12 +1253,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    Nokia
 
    Email: hooman.bidgoli@nokia.com
-
-
-
-
-
-
 
 
 
