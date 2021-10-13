@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-05" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-06" ipr="trust200902">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -548,11 +548,40 @@ Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be encoded by the sender and only 
 
 <t>Length: 4.</t>
 
-<t>Preference: Numerical preference of the candidate path, as specified in <xref target="I-D.ietf-spring-segment-routing-policy"/> Section 2.7.</t>
+<t>Preference: Numerical preference of the candidate path, as specified in Section 2.7 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
 
-<t>If the TLV is missing, a default preference of 100 as specified in <xref target="I-D.ietf-spring-segment-routing-policy"/> is used.</t>
+<t>If the TLV is missing, a default Preference value of 100 is used, as specified in Section 2.7 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
 
 </section> <!-- Cpath-preference-tlv -->
+
+<section anchor="Policy-priority-tlv" title="SR Policy Priority TLV">
+
+<t>The SRPOLICY-PRIORITY TLV is an optional TLV for the SRPAT ASSOCIATION.
+Only one SRPOLICY-PRIORITY TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+
+<figure anchor="SRPOLICY-PRIORITY-TLV-FORMAT" title="The SRPOLICY-PRIORITY TLV format">
+<artwork align="center"><![CDATA[
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |             Type              |             Length            |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |    Priority    |                  Reserved                    |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+]]></artwork>
+</figure>
+
+<t>Type: TBD1 for "SRPOLICY-PRIORITY" TLV.</t>
+
+<t>Length: 4.</t>
+
+<t>Priority: Numerical recomputation priority, as specified in Section 2.12 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
+
+<t>Reserved: MUST be set to zero on transmission and ignored on receipt.</t>
+
+<t>If the TLV is missing, a default Priority value of 128 is used, as specified in Section 2.12 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
+
+</section> <!-- Policy-priority-tlv -->
 
 </section> <!-- AssociationInformation -->
 
@@ -717,6 +746,10 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 | 58        | SRPOLICY-CPATH-NAME                       | This.I-D  |
 +-----------+-------------------------------------------+-----------+
 | 59        | SRPOLICY-CPATH-PREFERENCE                 | This.I-D  |
++-----------+-------------------------------------------+-----------+
+| TBD1      | SRPOLICY-PRIORITY                         | This.I-D  |
++-----------+-------------------------------------------+-----------+
+| TBD2      | SRPOLICY-ENLP                             | This.I-D  |
 +-----------+-------------------------------------------+-----------+
 ]]></artwork>
       </figure>
