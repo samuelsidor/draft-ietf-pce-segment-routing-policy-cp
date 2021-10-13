@@ -720,7 +720,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
                   Figure 7: The SRPOLICY-ENLP TLV format
 
-   Type: TBD1 for "SRPOLICY-ENLP" TLV.
+   Type: TBD2 for "SRPOLICY-ENLP" TLV.
 
 
 

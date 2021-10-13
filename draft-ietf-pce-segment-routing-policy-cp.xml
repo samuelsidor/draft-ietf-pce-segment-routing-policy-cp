@@ -600,7 +600,7 @@ Only one SRPOLICY-ENLP TLV SHOULD be encoded by the sender and only the first oc
 ]]></artwork>
 </figure>
 
-<t>Type: TBD1 for "SRPOLICY-ENLP" TLV.</t>
+<t>Type: TBD2 for "SRPOLICY-ENLP" TLV.</t>
 
 <t>Length: 4.</t>
 
