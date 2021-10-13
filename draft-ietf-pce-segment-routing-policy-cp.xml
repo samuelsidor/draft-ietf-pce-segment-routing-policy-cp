@@ -246,7 +246,7 @@ We say "SRPAT ASSOCIATION" to mean "ASSOCIATION object of type SR Policy Associa
 The group of LSPs that are part of the SR Policy Association is called "SRPAG", for "SR Policy Association Group".
 </t>
 
-<t>As per the processing rules specified in section 5.4 of <xref target="RFC8697"/>, if a PCEP speaker does not support the SRPAT,
+<t>As per the processing rules specified in section 6.4 of <xref target="RFC8697"/>, if a PCEP speaker does not support the SRPAT,
 it MUST return a PCErr message with
 Error-Type = 26 "Association Error", Error-Value = 1 "Association-type is not supported".</t>
 
@@ -488,7 +488,7 @@ Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the sender and only the firs
 
 <t>Length: 28.</t>
 
-<t>Protocol Origin: 8-bit value that encodes the protocol origin, as specified in <xref target="I-D.ietf-spring-segment-routing-policy"/> Section 2.3.</t>
+<t>Protocol Origin: 8-bit value that encodes the protocol origin, as specified in <xref target="I-D.ietf-spring-segment-routing-policy"/> Section 2.3. Note that in PCInit messages, the Protocol Origin is always set to "PCEP".</t>
 
 <t>Reserved: MUST be set to zero on transmission and ignored on receipt.</t>
 
