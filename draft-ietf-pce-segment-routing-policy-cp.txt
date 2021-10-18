@@ -100,12 +100,12 @@ Table of Contents
        5.2.2.  SR Policy Candidate Path Identifiers TLV  . . . . . .  10
        5.2.3.  SR Policy Candidate Path Name TLV . . . . . . . . . .  11
        5.2.4.  SR Policy Candidate Path Preference TLV . . . . . . .  12
-       5.2.5.  SR Policy Priority TLV  . . . . . . . . . . . . . . .  13
-       5.2.6.  SR Policy ENLP TLV  . . . . . . . . . . . . . . . . .  13
-   6.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  14
-     6.1.  PCC Initiated SR Policy with single candidate-path  . . .  14
-     6.2.  PCC Initiated SR Policy with multiple candidate-paths . .  14
-     6.3.  PCE Initiated SR Policy with single candidate-path  . . .  15
+       5.2.5.  Computation Priority TLV  . . . . . . . . . . . . . .  13
+       5.2.6.  Explicit Null Label Policy (ENLP) TLV . . . . . . . .  13
+       5.2.7.  Invalidation TLV  . . . . . . . . . . . . . . . . . .  14
+   6.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  15
+     6.1.  PCC Initiated SR Policy with single candidate-path  . . .  15
+     6.2.  PCC Initiated SR Policy with multiple candidate-paths . .  15
 
 
 
@@ -114,21 +114,22 @@ Koldychev, et al.       Expires November 2, 2021                [Page 2]
 Internet-Draft         PCEP SR Policy Association               May 2021
 
 
-     6.4.  PCE Initiated SR Policy with multiple candidate-paths . .  15
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  16
-     7.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  16
-     7.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  16
-     7.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  17
-   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  18
-     8.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  18
-     8.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  18
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  19
-   10. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  19
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  19
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  19
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  21
-   Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  21
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  22
+     6.3.  PCE Initiated SR Policy with single candidate-path  . . .  16
+     6.4.  PCE Initiated SR Policy with multiple candidate-paths . .  16
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
+     7.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  17
+     7.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  17
+     7.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  18
+   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  19
+     8.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  19
+     8.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  19
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  20
+   10. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  20
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  20
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  22
+   Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  22
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  23
 
 1.  Introduction
 
@@ -161,7 +162,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    Segment Routing Policy for Traffic Engineering
    [I-D.ietf-spring-segment-routing-policy] details the concepts of SR
    Policy and approaches to steering traffic into an SR Policy.
-
 
 
 
@@ -309,7 +309,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    part of the SR Policy Association is called "SRPAG", for "SR Policy
    Association Group".
 
-   As per the processing rules specified in section 5.4 of [RFC8697], if
+   As per the processing rules specified in section 6.4 of [RFC8697], if
    a PCEP speaker does not support the SRPAT, it MUST return a PCErr
    message with Error-Type = 26 "Association Error", Error-Value = 1
    "Association-type is not supported".
@@ -570,7 +570,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |             Type              |             Length            |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      | Proto. Origin |                    Reserved                   |
+      | Proto. Origin |                      MBZ                      |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                         Originator ASN                        |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -590,8 +590,8 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    Protocol Origin: 8-bit value that encodes the protocol origin, as
    specified in [I-D.ietf-spring-segment-routing-policy] Section 2.3.
-
-   Reserved: MUST be set to zero on transmission and ignored on receipt.
+   Note that in PCInit messages, the Protocol Origin is always set to
+   "PCEP".
 
    Originator ASN: Represented as 4 byte number, part of the originator
    identifier, as specified in [I-D.ietf-spring-segment-routing-policy]
@@ -674,54 +674,54 @@ Koldychev, et al.       Expires November 2, 2021               [Page 12]
 Internet-Draft         PCEP SR Policy Association               May 2021
 
 
-5.2.5.  SR Policy Priority TLV
+5.2.5.  Computation Priority TLV
 
-   The SRPOLICY-PRIORITY TLV is an optional TLV for the SRPAT
-   ASSOCIATION.  Only one SRPOLICY-PRIORITY TLV SHOULD be encoded by the
-   sender and only the first occurrence is processed and any others MUST
-   be ignored.
+   The COMPUTATION-PRIORITY TLV is an optional TLV for the LSP object.
+   It is used to signal the numerical computation priority, as specified
+   in Section 2.12 of [I-D.ietf-spring-segment-routing-policy].  If the
+   TLV is absent from the LSP object, a default Priority value of 128 is
+   used.
+
+   Note: This TLV Is applicable to RSVP-TE Tunnel as well as to SR-TE
+   Policy.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |             Type              |             Length            |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |    Priority    |                  Reserved                    |
+      |    Priority    |                     MBZ                      |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                Figure 6: The SRPOLICY-PRIORITY TLV format
+               Figure 6: The COMPUTATION-PRIORITY TLV format
 
-   Type: TBD1 for "SRPOLICY-PRIORITY" TLV.
+   Type: TBD1 for "COMPUTATION-PRIORITY" TLV.
 
    Length: 4.
 
-   Priority: Numerical recomputation priority, as specified in
-   Section 2.12 of [I-D.ietf-spring-segment-routing-policy].
+   Priority: Numerical priority with which this LSP is to be recomputed
+   by the PCE upon topology change.
 
-   Reserved: MUST be set to zero on transmission and ignored on receipt.
+5.2.6.  Explicit Null Label Policy (ENLP) TLV
 
-   If the TLV is missing, a default Priority value of 128 is used, as
-   specified in Section 2.12 of
-   [I-D.ietf-spring-segment-routing-policy].
+   The ENLP TLV is an optional TLV for the LSP object.  It is used to
+   implement the "Explicit Null Label Policy", as specified in
+   Section 2.4.5 of [I-D.ietf-idr-segment-routing-te-policy].
 
-5.2.6.  SR Policy ENLP TLV
-
-   The SRPOLICY-ENLP TLV is an optional TLV for the SRPAT ASSOCIATION.
-   Only one SRPOLICY-ENLP TLV SHOULD be encoded by the sender and only
-   the first occurrence is processed and any others MUST be ignored.
+   Note: This TLV Is applicable to RSVP-TE Tunnel as well as to SR-TE
+   Policy.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |             Type              |             Length            |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |    ENLP        |                  Reserved                    |
+      |    ENLP        |                     MBZ                      |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                  Figure 7: The SRPOLICY-ENLP TLV format
+        Figure 7: The Explicit Null Label Policy (ENLP) TLV format
 
-   Type: TBD2 for "SRPOLICY-ENLP" TLV.
-
+   Type: TBD2 for "ENLP" TLV.
 
 
 
@@ -732,10 +732,62 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    Length: 4.
 
-   ENLP (Explicit NULL Label Policy): As specified in Section 2.4.5 of
+   ENLP (Explicit NULL Label Policy): same values as in Section 2.4.5 of
    [I-D.ietf-idr-segment-routing-te-policy].
 
-   Reserved: MUST be set to zero on transmission and ignored on receipt.
+5.2.7.  Invalidation TLV
+
+   The INVALIDATION TLV is an optional TLV for the LSP object.  It is
+   used to specify LSP behavior when the LSP is operationally down, in
+   particular to facilitate the "Drop upon invalid" behavior, specified
+   in Section 8.2 of [I-D.ietf-spring-segment-routing-policy].
+
+   Note: This TLV Is applicable to RSVP-TE Tunnel as well as to SR-TE
+   Policy.
+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |             Type              |             Length            |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |    Config     |    State      |              MBZ              |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+                   Figure 8: The INVALIDATION TLV format
+
+   Type: TBD3 for "INVALIDATION" TLV.
+
+   Length: 4.
+
+   Config: specifies the action to take when the LSP becomes invalid:
+
+   o  0: (default) bring down the LSP and forward traffic somewhere else
+      (i.e., IGP, etc.).
+
+   o  1: drop traffic when the LSP is invalid.
+
+   o  2-255: Reserved.
+
+   State: specifies the current state of the LSP:
+
+   o  0: (default) traffic is not being dropped.
+
+   o  1: traffic is being dropped, due to LSP being down and "Drop upon
+      invalid" being set.
+
+   o  2-255: Reserved.
+
+
+
+
+
+Koldychev, et al.       Expires November 2, 2021               [Page 14]
+
+Internet-Draft         PCEP SR Policy Association               May 2021
+
+
+   This field only has meaning when sent from PCC to the PCE in PCRpt
+   messages.  It is set to 0 when sent from PCE to PCC.
 
 6.  Examples
 
@@ -776,19 +828,19 @@ Internet-Draft         PCEP SR Policy Association               May 2021
        policy.  PCE prioritizes computation for the highest preference
        LSP and sends PCUpd message(s) back to the PCC.
 
-
-
-
-
-
-Koldychev, et al.       Expires November 2, 2021               [Page 14]
-
-Internet-Draft         PCEP SR Policy Association               May 2021
-
-
    3.  If a new candidate path is added on the PCC by the operator, then
        a new PLSP-ID and symbolic name is generated for that candidate
        path and a new PCRpt is sent to the PCE.
+
+
+
+
+
+
+Koldychev, et al.       Expires November 2, 2021               [Page 15]
+
+Internet-Draft         PCEP SR Policy Association               May 2021
+
 
    4.  If an existing candidate path is removed from the PCC by the
        operator, then that PLSP-ID is deleted from the PCE by sending
@@ -835,15 +887,17 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    2.  PCC creates multiple candidate paths under the same SR policy,
        identified by Color and Endpoint.
 
+   3.  PCC sends a PCRpt message back to the PCE to report the newly
+       created Candidate Path.  The PCRpt message contains the SRPAT
 
 
-Koldychev, et al.       Expires November 2, 2021               [Page 15]
+
+
+Koldychev, et al.       Expires November 2, 2021               [Page 16]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
 
-   3.  PCC sends a PCRpt message back to the PCE to report the newly
-       created Candidate Path.  The PCRpt message contains the SRPAT
        ASSOCIATION.  The Association Source and the Association ID are
        set as described in Section 5.1.
 
@@ -893,7 +947,9 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
 
 
-Koldychev, et al.       Expires November 2, 2021               [Page 16]
+
+
+Koldychev, et al.       Expires November 2, 2021               [Page 17]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
@@ -909,9 +965,11 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    +-----------+-------------------------------------------+-----------+
    | 59        | SRPOLICY-CPATH-PREFERENCE                 | This.I-D  |
    +-----------+-------------------------------------------+-----------+
-   | TBD1      | SRPOLICY-PRIORITY                         | This.I-D  |
+   | TBD1      | COMPUTATION-PRIORITY                      | This.I-D  |
    +-----------+-------------------------------------------+-----------+
-   | TBD2      | SRPOLICY-ENLP                             | This.I-D  |
+   | TBD2      | EXPLICIT-NULL-LABEL-POLICY                | This.I-D  |
+   +-----------+-------------------------------------------+-----------+
+   | TBD3      | INVALIDATION                              | This.I-D  |
    +-----------+-------------------------------------------+-----------+
 
 7.3.  PCEP Errors
@@ -947,9 +1005,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
 
 
-
-
-Koldychev, et al.       Expires November 2, 2021               [Page 17]
+Koldychev, et al.       Expires November 2, 2021               [Page 18]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
@@ -1005,7 +1061,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
 
 
-Koldychev, et al.       Expires November 2, 2021               [Page 18]
+Koldychev, et al.       Expires November 2, 2021               [Page 19]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
@@ -1061,7 +1117,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
 
 
-Koldychev, et al.       Expires November 2, 2021               [Page 19]
+Koldychev, et al.       Expires November 2, 2021               [Page 20]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
@@ -1117,7 +1173,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
 
 
-Koldychev, et al.       Expires November 2, 2021               [Page 20]
+Koldychev, et al.       Expires November 2, 2021               [Page 21]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
@@ -1173,7 +1229,7 @@ Appendix A.  Contributors
 
 
 
-Koldychev, et al.       Expires November 2, 2021               [Page 21]
+Koldychev, et al.       Expires November 2, 2021               [Page 22]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
@@ -1229,7 +1285,7 @@ Authors' Addresses
 
 
 
-Koldychev, et al.       Expires November 2, 2021               [Page 22]
+Koldychev, et al.       Expires November 2, 2021               [Page 23]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
@@ -1285,4 +1341,4 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
 
 
-Koldychev, et al.       Expires November 2, 2021               [Page 23]
+Koldychev, et al.       Expires November 2, 2021               [Page 24]

@@ -470,7 +470,7 @@ Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the sender and only the firs
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  | Proto. Origin |                    Reserved                   |
+  | Proto. Origin |                      MBZ                      |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |                         Originator ASN                        |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -489,8 +489,6 @@ Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the sender and only the firs
 <t>Length: 28.</t>
 
 <t>Protocol Origin: 8-bit value that encodes the protocol origin, as specified in <xref target="I-D.ietf-spring-segment-routing-policy"/> Section 2.3. Note that in PCInit messages, the Protocol Origin is always set to "PCEP".</t>
-
-<t>Reserved: MUST be set to zero on transmission and ignored on receipt.</t>
 
 <t>Originator ASN: Represented as 4 byte number, part of the originator identifier, as specified in <xref target="I-D.ietf-spring-segment-routing-policy"/> Section 2.4.</t>
 
@@ -554,61 +552,103 @@ Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be encoded by the sender and only 
 
 </section> <!-- Cpath-preference-tlv -->
 
-<section anchor="Policy-priority-tlv" title="SR Policy Priority TLV">
+<section anchor="Computation-priority-tlv" title="Computation Priority TLV">
 
-<t>The SRPOLICY-PRIORITY TLV is an optional TLV for the SRPAT ASSOCIATION.
-Only one SRPOLICY-PRIORITY TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+<t>The COMPUTATION-PRIORITY TLV is an optional TLV for the LSP object.
+It is used to signal the numerical computation priority, as specified in Section 2.12 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.
+If the TLV is absent from the LSP object, a default Priority value of 128 is used.</t>
 
-<figure anchor="SRPOLICY-PRIORITY-TLV-FORMAT" title="The SRPOLICY-PRIORITY TLV format">
+<t>Note: This TLV Is applicable to RSVP-TE Tunnel as well as to SR-TE Policy.</t>
+
+<figure anchor="COMPUTATION-PRIORITY-TLV-FORMAT" title="The COMPUTATION-PRIORITY TLV format">
 <artwork align="center"><![CDATA[
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |    Priority    |                  Reserved                    |
+  |    Priority    |                     MBZ                      |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
 </figure>
 
-<t>Type: TBD1 for "SRPOLICY-PRIORITY" TLV.</t>
+<t>Type: TBD1 for "COMPUTATION-PRIORITY" TLV.</t>
 
 <t>Length: 4.</t>
 
-<t>Priority: Numerical recomputation priority, as specified in Section 2.12 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
-
-<t>Reserved: MUST be set to zero on transmission and ignored on receipt.</t>
-
-<t>If the TLV is missing, a default Priority value of 128 is used, as specified in Section 2.12 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
+<t>Priority: Numerical priority with which this LSP is to be recomputed by the PCE upon topology change.</t>
 
 </section> <!-- Policy-priority-tlv -->
 
-<section anchor="Policy-enlp-tlv" title="SR Policy ENLP TLV">
+<section anchor="enlp-tlv" title="Explicit Null Label Policy (ENLP) TLV">
 
-<t>The SRPOLICY-ENLP TLV is an optional TLV for the SRPAT ASSOCIATION.
-Only one SRPOLICY-ENLP TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+<t>The ENLP TLV is an optional TLV for the LSP object.
+It is used to implement the "Explicit Null Label Policy", as specified in Section 2.4.5 of <xref target="I-D.ietf-idr-segment-routing-te-policy"/>.</t>
 
-<figure anchor="SRPOLICY-ENLP-TLV-FORMAT" title="The SRPOLICY-ENLP TLV format">
+<t>Note: This TLV Is applicable to RSVP-TE Tunnel as well as to SR-TE Policy.</t>
+
+<figure anchor="ENLP-TLV-FORMAT" title="The Explicit Null Label Policy (ENLP) TLV format">
 <artwork align="center"><![CDATA[
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |    ENLP        |                  Reserved                    |
+  |    ENLP        |                     MBZ                      |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
 </figure>
 
-<t>Type: TBD2 for "SRPOLICY-ENLP" TLV.</t>
+<t>Type: TBD2 for "ENLP" TLV.</t>
 
 <t>Length: 4.</t>
 
-<t>ENLP (Explicit NULL Label Policy): As specified in Section 2.4.5 of <xref target="I-D.ietf-idr-segment-routing-te-policy"/>.</t>
+<t>ENLP (Explicit NULL Label Policy): same values as in Section 2.4.5 of <xref target="I-D.ietf-idr-segment-routing-te-policy"/>.</t>
 
-<t>Reserved: MUST be set to zero on transmission and ignored on receipt.</t>
+</section> <!-- enlp-tlv -->
 
-</section> <!-- Policy-priority-tlv -->
+<section anchor="Invalidation-tlv" title="Invalidation TLV">
+
+<t>The INVALIDATION TLV is an optional TLV for the LSP object.
+It is used to specify LSP behavior when the LSP is operationally down, in particular to facilitate the "Drop upon invalid" behavior,
+specified in Section 8.2 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
+
+<t>Note: This TLV Is applicable to RSVP-TE Tunnel as well as to SR-TE Policy.</t>
+
+<figure anchor="INVALIDATION-TLV-FORMAT" title="The INVALIDATION TLV format">
+<artwork align="center"><![CDATA[
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |             Type              |             Length            |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |    Config     |    State      |              MBZ              |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+]]></artwork>
+</figure>
+
+<t>Type: TBD3 for "INVALIDATION" TLV.</t>
+
+<t>Length: 4.</t>
+
+<t>Config: specifies the action to take when the LSP becomes invalid:
+  <list style="symbols">
+    <t>0: (default) bring down the LSP and forward traffic somewhere else (i.e., IGP, etc.).</t>
+    <t>1: drop traffic when the LSP is invalid.</t>
+    <t>2-255: Reserved.</t>
+  </list>
+</t>
+
+<t>State: specifies the current state of the LSP:
+  <list style="symbols">
+    <t>0: (default) traffic is not being dropped.</t>
+    <t>1: traffic is being dropped, due to LSP being down and "Drop upon invalid" being set.</t>
+    <t>2-255: Reserved.</t>
+  </list>
+This field only has meaning when sent from PCC to the PCE in PCRpt messages. It is set to 0 when sent from PCE to PCC.
+</t>
+
+</section> <!-- Invalidation-tlv -->
 
 </section> <!-- AssociationInformation -->
 
@@ -774,9 +814,11 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 +-----------+-------------------------------------------+-----------+
 | 59        | SRPOLICY-CPATH-PREFERENCE                 | This.I-D  |
 +-----------+-------------------------------------------+-----------+
-| TBD1      | SRPOLICY-PRIORITY                         | This.I-D  |
+| TBD1      | COMPUTATION-PRIORITY                      | This.I-D  |
 +-----------+-------------------------------------------+-----------+
-| TBD2      | SRPOLICY-ENLP                             | This.I-D  |
+| TBD2      | EXPLICIT-NULL-LABEL-POLICY                | This.I-D  |
++-----------+-------------------------------------------+-----------+
+| TBD3      | INVALIDATION                              | This.I-D  |
 +-----------+-------------------------------------------+-----------+
 ]]></artwork>
       </figure>
