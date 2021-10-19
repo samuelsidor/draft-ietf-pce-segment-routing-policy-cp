@@ -100,12 +100,12 @@ Table of Contents
        5.2.2.  SR Policy Candidate Path Identifiers TLV  . . . . . .  11
        5.2.3.  SR Policy Candidate Path Name TLV . . . . . . . . . .  12
        5.2.4.  SR Policy Candidate Path Preference TLV . . . . . . .  12
-       5.2.5.  Computation Priority TLV  . . . . . . . . . . . . . .  13
-       5.2.6.  Explicit Null Label Policy (ENLP) TLV . . . . . . . .  13
-       5.2.7.  Invalidation TLV  . . . . . . . . . . . . . . . . . .  14
-       5.2.8.  Specified-BSID-only . . . . . . . . . . . . . . . . .  15
-   6.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  15
-     6.1.  PCC Initiated SR Policy with single candidate-path  . . .  15
+   6.  Generic Mechanisms  . . . . . . . . . . . . . . . . . . . . .  13
+     6.1.  Computation Priority TLV  . . . . . . . . . . . . . . . .  13
+     6.2.  Explicit Null Label Policy (ENLP) TLV . . . . . . . . . .  13
+     6.3.  Invalidation TLV  . . . . . . . . . . . . . . . . . . . .  14
+     6.4.  Specified-BSID-only . . . . . . . . . . . . . . . . . . .  15
+   7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  15
 
 
 
@@ -114,22 +114,23 @@ Koldychev, et al.       Expires November 2, 2021                [Page 2]
 Internet-Draft         PCEP SR Policy Association               May 2021
 
 
-     6.2.  PCC Initiated SR Policy with multiple candidate-paths . .  16
-     6.3.  PCE Initiated SR Policy with single candidate-path  . . .  16
-     6.4.  PCE Initiated SR Policy with multiple candidate-paths . .  17
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
-     7.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  17
-     7.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  18
-     7.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  18
-     7.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  19
-   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  19
-     8.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  20
-     8.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  20
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  20
-   10. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  21
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  21
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  21
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  22
+     7.1.  PCC Initiated SR Policy with single candidate-path  . . .  15
+     7.2.  PCC Initiated SR Policy with multiple candidate-paths . .  16
+     7.3.  PCE Initiated SR Policy with single candidate-path  . . .  16
+     7.4.  PCE Initiated SR Policy with multiple candidate-paths . .  17
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
+     8.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  17
+     8.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  18
+     8.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  18
+     8.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  19
+   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  19
+     9.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  20
+     9.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  20
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  20
+   11. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  21
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  21
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  21
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  22
    Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  23
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  24
 
@@ -160,7 +161,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    and a set of attributes (such as configuration parameters or
    behaviors) and is equally applicable to stateful PCE (active and
    passive modes) and stateless PCE.
-
 
 
 
@@ -682,16 +682,20 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    If the TLV is missing, a default Preference value of 100 is used, as
    specified in Section 2.7 of [I-D.ietf-spring-segment-routing-policy].
 
-5.2.5.  Computation Priority TLV
+6.  Generic Mechanisms
+
+   This section describes various mechanisms that are standardized for
+   SR Policies in [I-D.ietf-spring-segment-routing-policy], but are
+   equally applicable to other tunnel types, such as RSVP-TE tunnels.
+   Hence this section does not make use of the SRPAT ASSOCIATION.
+
+6.1.  Computation Priority TLV
 
    The COMPUTATION-PRIORITY TLV is an optional TLV for the LSP object.
    It is used to signal the numerical computation priority, as specified
    in Section 2.12 of [I-D.ietf-spring-segment-routing-policy].  If the
    TLV is absent from the LSP object, a default Priority value of 128 is
    used.
-
-   Note: This TLV Is applicable to RSVP-TE Tunnel as well as to SR-TE
-   Policy.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -710,15 +714,11 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    Priority: Numerical priority with which this LSP is to be recomputed
    by the PCE upon topology change.
 
-5.2.6.  Explicit Null Label Policy (ENLP) TLV
+6.2.  Explicit Null Label Policy (ENLP) TLV
 
    The ENLP TLV is an optional TLV for the LSP object.  It is used to
    implement the "Explicit Null Label Policy", as specified in
    Section 2.4.5 of [I-D.ietf-idr-segment-routing-te-policy].
-
-   Note: This functionality is applicable to RSVP-TE Tunnels as well as
-   to SR-TE Policies.
-
 
 
 
@@ -747,15 +747,12 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    ENLP (Explicit NULL Label Policy): same values as in Section 2.4.5 of
    [I-D.ietf-idr-segment-routing-te-policy].
 
-5.2.7.  Invalidation TLV
+6.3.  Invalidation TLV
 
    The INVALIDATION TLV is an optional TLV for the LSP object.  It is
    used to specify LSP behavior when the LSP is operationally down, in
    particular to facilitate the "Drop upon invalid" behavior, specified
    in Section 8.2 of [I-D.ietf-spring-segment-routing-policy].
-
-   Note: This functionality is applicable to RSVP-TE Tunnels as well as
-   to SR-TE Policies.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -778,6 +775,9 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    o  1: drop traffic when the LSP is invalid.
 
+   o  2-255: Reserved.
+
+   State: specifies the current state of the LSP:
 
 
 
@@ -785,10 +785,6 @@ Koldychev, et al.       Expires November 2, 2021               [Page 14]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
-
-   o  2-255: Reserved.
-
-   State: specifies the current state of the LSP:
 
    o  0: (default) traffic is not being dropped.
 
@@ -800,7 +796,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    This field only has meaning when sent from PCC to the PCE in PCRpt
    messages.  It is set to 0 when sent from PCE to PCC.
 
-5.2.8.  Specified-BSID-only
+6.4.  Specified-BSID-only
 
    Specified-BSID-only functionality is defined in Section 6.2.3 of
    [I-D.ietf-spring-segment-routing-policy].  When specified-BSID-only
@@ -809,9 +805,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    be operationally up.  If the binding SID cannot be allocated or
    programmed for some reason, then the LSP must stay down.
 
-   Note: This functionality is applicable to RSVP-TE Tunnels as well as
-   to SR-TE Policies.
-
    To signal specified-BSID-only, a new bit: S (Specified-BSID-only) is
    allocated in the "TE-PATH-BINDING TLV Flag field" of the TE-PATH-
    BINDING TLV.  When this bit is set for a particular BSID, it means
@@ -819,9 +812,9 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    possible to have a mix of BSIDs for the same LSP: some with S=1 and
    some with S=0.
 
-6.  Examples
+7.  Examples
 
-6.1.  PCC Initiated SR Policy with single candidate-path
+7.1.  PCC Initiated SR Policy with single candidate-path
 
    PCReq and PCRep messages are exchanged in the following sequence:
 
@@ -833,15 +826,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    PCRpt and PCUpd messages are exchanged in the following sequence:
 
-
-
-
-
-Koldychev, et al.       Expires November 2, 2021               [Page 15]
-
-Internet-Draft         PCEP SR Policy Association               May 2021
-
-
    1.  PCC sends PCRpt message to the PCE, including the LSP object and
        the SRPAT ASSOCIATION.
 
@@ -851,7 +835,14 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    3.  PCE updates the SR policy candidate path's ERO using PCUpd
        message.
 
-6.2.  PCC Initiated SR Policy with multiple candidate-paths
+
+
+Koldychev, et al.       Expires November 2, 2021               [Page 15]
+
+Internet-Draft         PCEP SR Policy Association               May 2021
+
+
+7.2.  PCC Initiated SR Policy with multiple candidate-paths
 
    PCRpt and PCUpd messages are exchanged in the following sequence:
 
@@ -875,7 +866,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
        operator, then that PLSP-ID is deleted from the PCE by sending
        PCRpt with the R-flag in the LSP object set.
 
-6.3.  PCE Initiated SR Policy with single candidate-path
+7.3.  PCE Initiated SR Policy with single candidate-path
 
    A candidate-path is created using the following steps:
 
@@ -890,14 +881,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
        candidate path is set to be the address of the PCE that is
        sending the PCInitiate message.
 
-
-
-
-Koldychev, et al.       Expires November 2, 2021               [Page 16]
-
-Internet-Draft         PCEP SR Policy Association               May 2021
-
-
    3.  PCC sends a PCRpt message back to the PCE to report the newly
        created Candidate Path.  The PCRpt message contains the SRPAT
        ASSOCIATION.
@@ -907,11 +890,19 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    1.  PCE sends PCInitiate message, setting the R-flag in the LSP
        object.
 
+
+
+
+Koldychev, et al.       Expires November 2, 2021               [Page 16]
+
+Internet-Draft         PCEP SR Policy Association               May 2021
+
+
    2.  PCC uses the PLSP-ID from the LSP object to find the candidate
        path and delete it.  If this is the last candidate path under the
        SR policy, then the containing SR policy is deleted as well.
 
-6.4.  PCE Initiated SR Policy with multiple candidate-paths
+7.4.  PCE Initiated SR Policy with multiple candidate-paths
 
    A candidate-path is created using the following steps:
 
@@ -937,14 +928,23 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    2.  PCC uses the PLSP-ID from the LSP object to find the candidate
        path and delete it.
 
-7.  IANA Considerations
+8.  IANA Considerations
 
-7.1.  Association Type
+8.1.  Association Type
 
    This document defines a new association type: SR Policy Association.
    IANA is requested to make the following codepoint assignment in the
    "ASSOCIATION Type Field" subregistry [RFC8697] within the "Path
    Computation Element Protocol (PCEP) Numbers" registry:
+
+   +-----------+-------------------------------------------+-----------+
+   | Type      | Name                                      | Reference |
+   +-----------+-------------------------------------------+-----------+
+   | 6         | SR Policy Association                     | This.I-D  |
+   +-----------+-------------------------------------------+-----------+
+
+
+
 
 
 
@@ -954,13 +954,7 @@ Koldychev, et al.       Expires November 2, 2021               [Page 17]
 Internet-Draft         PCEP SR Policy Association               May 2021
 
 
-   +-----------+-------------------------------------------+-----------+
-   | Type      | Name                                      | Reference |
-   +-----------+-------------------------------------------+-----------+
-   | 6         | SR Policy Association                     | This.I-D  |
-   +-----------+-------------------------------------------+-----------+
-
-7.2.  PCEP TLV Type Indicators
+8.2.  PCEP TLV Type Indicators
 
    This document defines four new TLVs for carrying additional
    information about SR policy and SR candidate paths.  IANA is
@@ -985,13 +979,19 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    | TBD3      | INVALIDATION                              | This.I-D  |
    +-----------+-------------------------------------------+-----------+
 
-7.3.  PCEP Errors
+8.3.  PCEP Errors
 
    This document defines one new Error-Value within the "Mandatory
    Object Missing" Error-Type and two new Error-Values within the
    "Association Error" Error-Type.  IANA is requested to allocate new
    error values within the "PCEP-ERROR Object Error Types and Values"
    sub-registry of the PCEP Numbers registry, as follows:
+
+
+
+
+
+
 
 
 
@@ -1031,7 +1031,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    +------------+------------------+-----------------------+-----------+
 
 
-7.4.  TE-PATH-BINDING TLV Flag field
+8.4.  TE-PATH-BINDING TLV Flag field
 
    IANA is requested to allocate new bit within the "TE-PATH-BINDING TLV
    Flag field" sub-registry of the PCEP Numbers registry, as follows:
@@ -1043,7 +1043,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    +--------------+----------------------------------------+-----------+
 
 
-8.  Implementation Status
+9.  Implementation Status
 
    [Note to the RFC Editor - remove this section before publication, as
    well as remove the reference to RFC 7942.]
@@ -1076,7 +1076,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    It is up to the individual working groups to use this information as
    they see fit".
 
-8.1.  Cisco
+9.1.  Cisco
 
    o  Organization: Cisco Systems
 
@@ -1090,7 +1090,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    o  Contact: mkoldych@cisco.com
 
-8.2.  Juniper
+9.2.  Juniper
 
    o  Organization: Juniper Networks
 
@@ -1104,7 +1104,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    o  Contact: cbarth@juniper.net
 
-9.  Security Considerations
+10.  Security Considerations
 
    This document defines one new type for association, which do not add
    any new security concerns beyond those discussed in [RFC5440],
@@ -1129,14 +1129,14 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    the recommendations and best current practices in [RFC7525], is
    RECOMMENDED.
 
-10.  Acknowledgement
+11.  Acknowledgement
 
    Would like to thank Stephane Litkowski, Praveen Kumar and Tom Petch
    for review comments.
 
-11.  References
+12.  References
 
-11.1.  Normative References
+12.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1215,7 +1215,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
               Signaling Multipath Information", draft-koldychev-pce-
               multipath-05 (work in progress), February 2021.
 
-11.2.  Informative References
+12.2.  Informative References
 
    [RFC4655]  Farrel, A., Vasseur, J., and J. Ash, "A Path Computation
               Element (PCE)-Based Architecture", RFC 4655,
