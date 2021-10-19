@@ -803,7 +803,7 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 5.2.8.  Specified-BSID-only
 
    Specified-BSID-only functionality is defined in Section 6.2.3 of
-   [I-D.ietf-spring-segment-routing-policy]..  When specified-BSID-only
+   [I-D.ietf-spring-segment-routing-policy].  When specified-BSID-only
    is enabled for a particular binding SID, it means that the given
    binding SID is required to be allocated and programmed for the LSP to
    be operationally up.  If the binding SID cannot be allocated or

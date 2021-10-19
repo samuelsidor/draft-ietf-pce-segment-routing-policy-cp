@@ -652,7 +652,7 @@ This field only has meaning when sent from PCC to the PCE in PCRpt messages. It 
 
 <section anchor="Specified-bsid-only" title="Specified-BSID-only">
 
-<t>Specified-BSID-only functionality is defined in Section 6.2.3 of <xref target="I-D.ietf-spring-segment-routing-policy"/>..
+<t>Specified-BSID-only functionality is defined in Section 6.2.3 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.
 When specified-BSID-only is enabled for a particular binding SID, it means that the given binding SID is required to be allocated and programmed for the LSP to be operationally up.
 If the binding SID cannot be allocated or programmed for some reason, then the LSP must stay down.</t>
 
