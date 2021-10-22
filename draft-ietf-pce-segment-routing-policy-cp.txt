@@ -793,8 +793,10 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    o  2-255: Reserved.
 
-   This field only has meaning when sent from PCC to the PCE in PCRpt
-   messages.  It is set to 0 when sent from PCE to PCC.
+   The "State" field only has meaning when sent from PCC to the PCE in
+   PCRpt messages, it is set to 0 when sent from PCE to PCC.  The
+   "Config" field is valid in both directions on the PCEP session, i.e.,
+   from PCC in PCRpt and from PCE in PCUpd and PCInit messages.
 
 6.4.  Specified-BSID-only
 
@@ -832,8 +834,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    2.  PCE computes path, possibly making use of the Association
        Information from the SRPAT ASSOCIATION.
 
-   3.  PCE updates the SR policy candidate path's ERO using PCUpd
-       message.
 
 
 
@@ -841,6 +841,9 @@ Koldychev, et al.       Expires November 2, 2021               [Page 15]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
+
+   3.  PCE updates the SR policy candidate path's ERO using PCUpd
+       message.
 
 7.2.  PCC Initiated SR Policy with multiple candidate-paths
 
@@ -887,9 +890,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
 
    A candidate-path is deleted using the following steps:
 
-   1.  PCE sends PCInitiate message, setting the R-flag in the LSP
-       object.
-
 
 
 
@@ -897,6 +897,9 @@ Koldychev, et al.       Expires November 2, 2021               [Page 16]
 
 Internet-Draft         PCEP SR Policy Association               May 2021
 
+
+   1.  PCE sends PCInitiate message, setting the R-flag in the LSP
+       object.
 
    2.  PCC uses the PLSP-ID from the LSP object to find the candidate
        path and delete it.  If this is the last candidate path under the
@@ -942,9 +945,6 @@ Internet-Draft         PCEP SR Policy Association               May 2021
    +-----------+-------------------------------------------+-----------+
    | 6         | SR Policy Association                     | This.I-D  |
    +-----------+-------------------------------------------+-----------+
-
-
-
 
 
 
