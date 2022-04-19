@@ -5,18 +5,18 @@
 PCE Working Group                                           M. Koldychev
 Internet-Draft                                       Cisco Systems, Inc.
 Intended status: Standards Track                            S. Sivabalan
-Expires: April 25, 2022                                Ciena Corporation
+Expires: October 21, 2022                              Ciena Corporation
                                                                 C. Barth
                                                   Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                        October 22, 2021
+                                                          April 19, 2022
 
 
     PCEP extension to support Segment Routing Policy Candidate Paths
-              draft-ietf-pce-segment-routing-policy-cp-06
+              draft-ietf-pce-segment-routing-policy-cp-07
 
 Abstract
 
@@ -53,19 +53,19 @@ Status of This Memo
 
 
 
-Koldychev, et al.        Expires April 25, 2022                 [Page 1]
+Koldychev, et al.       Expires October 21, 2022                [Page 1]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 25, 2022.
+   This Internet-Draft will expire on October 21, 2022.
 
 Copyright Notice
 
-   Copyright (c) 2021 IETF Trust and the persons identified as the
+   Copyright (c) 2022 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -105,32 +105,32 @@ Table of Contents
      6.2.  Explicit Null Label Policy (ENLP) TLV . . . . . . . . . .  13
      6.3.  Invalidation TLV  . . . . . . . . . . . . . . . . . . . .  14
      6.4.  Specified-BSID-only . . . . . . . . . . . . . . . . . . .  15
-   7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  15
+   7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  16
 
 
 
-Koldychev, et al.        Expires April 25, 2022                 [Page 2]
+Koldychev, et al.       Expires October 21, 2022                [Page 2]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
-     7.1.  PCC Initiated SR Policy with single candidate-path  . . .  15
+     7.1.  PCC Initiated SR Policy with single candidate-path  . . .  16
      7.2.  PCC Initiated SR Policy with multiple candidate-paths . .  16
-     7.3.  PCE Initiated SR Policy with single candidate-path  . . .  16
+     7.3.  PCE Initiated SR Policy with single candidate-path  . . .  17
      7.4.  PCE Initiated SR Policy with multiple candidate-paths . .  17
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
-     8.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  17
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
+     8.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  18
      8.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  18
-     8.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  18
+     8.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  19
      8.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  19
    9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  19
      9.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  20
      9.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  20
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  20
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  21
    11. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  21
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  21
      12.1.  Normative References . . . . . . . . . . . . . . . . . .  21
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  22
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  23
    Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  23
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  24
 
@@ -165,9 +165,9 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 
 
-Koldychev, et al.        Expires April 25, 2022                 [Page 3]
+Koldychev, et al.       Expires October 21, 2022                [Page 3]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
    Segment Routing Policy for Traffic Engineering
@@ -221,9 +221,9 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 
 
-Koldychev, et al.        Expires April 25, 2022                 [Page 4]
+Koldychev, et al.       Expires October 21, 2022                [Page 4]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
       route based on a network graph and applying computational
@@ -277,9 +277,9 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 
 
-Koldychev, et al.        Expires April 25, 2022                 [Page 5]
+Koldychev, et al.       Expires October 21, 2022                [Page 5]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
    Paths, then if the PCE wants to update one of those, only one set of
@@ -333,9 +333,9 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 
 
-Koldychev, et al.        Expires April 25, 2022                 [Page 6]
+Koldychev, et al.       Expires October 21, 2022                [Page 6]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 4.1.1.  SR Policy Identifiers
@@ -389,9 +389,9 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 
 
-Koldychev, et al.        Expires April 25, 2022                 [Page 7]
+Koldychev, et al.       Expires October 21, 2022                [Page 7]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 4.2.  Multiple Optimization Objectives and Constraints
@@ -445,9 +445,9 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 
 
-Koldychev, et al.        Expires April 25, 2022                 [Page 8]
+Koldychev, et al.       Expires October 21, 2022                [Page 8]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
    the PCC SHOULD accept the PCInit message and create the SR Policy
@@ -501,9 +501,9 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 
 
-Koldychev, et al.        Expires April 25, 2022                 [Page 9]
+Koldychev, et al.       Expires October 21, 2022                [Page 9]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 5.2.  Association Information
@@ -557,9 +557,9 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 
 
-Koldychev, et al.        Expires April 25, 2022                [Page 10]
+Koldychev, et al.       Expires October 21, 2022               [Page 10]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 5.2.2.  SR Policy Candidate Path Identifiers TLV
@@ -613,9 +613,9 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 
 
-Koldychev, et al.        Expires April 25, 2022                [Page 11]
+Koldychev, et al.       Expires October 21, 2022               [Page 11]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 5.2.3.  SR Policy Candidate Path Name TLV
@@ -669,9 +669,9 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 
 
-Koldychev, et al.        Expires April 25, 2022                [Page 12]
+Koldychev, et al.       Expires October 21, 2022               [Page 12]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
    Length: 4.
@@ -725,9 +725,9 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 
 
-Koldychev, et al.        Expires April 25, 2022                [Page 13]
+Koldychev, et al.       Expires October 21, 2022               [Page 13]
 
-Internet-Draft         PCEP SR Policy Association           October 2021
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
        0                   1                   2                   3
@@ -750,53 +750,71 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 6.3.  Invalidation TLV
 
    The INVALIDATION TLV is an optional TLV for the LSP object.  It is
-   used to specify LSP behavior when the LSP is operationally down, in
-   particular to facilitate the "Drop upon invalid" behavior, specified
-   in Section 8.2 of [I-D.ietf-spring-segment-routing-policy].
+   used to control traffic streering into the LSP during the time when
+   the LSP is operationally down/invalid.  In the context of SR Policy,
+   this TLV facilitate the "Drop upon invalid" behavior, specified in
+   Section 8.2 of [I-D.ietf-spring-segment-routing-policy].  Normally,
+   if the LSP is down/invalid then traffic that is originally destined
+   for that LSP is steered somewhere else, such as via IGP or via
+   another LSP.  The "Drop upon invalid" behavior specifies that such
+   traffic MUST NOT be re-routed and has to be dropped at the head-end.
+
+   In addition to the above, this TLV can also be used by the PCC to
+   report to the PCE various reasons for LSP being invalidated.
+   Invalidation reasons are represented by a set of flags.
+
+                               0 1 2 3 4 5 6 7
+                              +-+-+-+-+-+-+-+-+
+                              |       |V|P|F|U|
+                              +-+-+-+-+-+-+-+-+
+
+                   Figure 8: Invalidation Reasons Flags
+
+   o  U: Unknown - does not fit into any other categories below.
+
+   o  P: Path computation failure - no path was computed for the LSP.
+
+   o  F: First-hop resolution failure - head-end first hop resolution
+      has failed.
+
+
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 14]
+
+Internet-Draft         PCEP SR Policy Association             April 2022
+
+
+   o  V: Verification failure - OAM/PM/BFD path verification is has
+      indicated a broken path.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |             Type              |             Length            |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |    Config     |    State      |              MBZ              |
+      | Inval Reason  |   Drop Upon   |              MBZ              |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                   Figure 8: The INVALIDATION TLV format
+                   Figure 9: The INVALIDATION TLV format
 
    Type: TBD3 for "INVALIDATION" TLV.
 
    Length: 4.
 
-   Config: specifies the action to take when the LSP becomes invalid:
+   Inval Reason: contains "Invalidation Reason Flags" which encode the
+   reason why the LSP is currently invalidated.  This field can be set
+   to non-zero values only by the PCC, it MUST be set to 0 by the PCE
+   and ignored by the PCC.
 
-   o  0: (default) bring down the LSP and forward traffic somewhere else
-      (i.e., IGP, etc.).
-
-   o  1: drop traffic when the LSP is invalid.
-
-   o  2-255: Reserved.
-
-   State: specifies the current state of the LSP:
-
-
-
-Koldychev, et al.        Expires April 25, 2022                [Page 14]
-
-Internet-Draft         PCEP SR Policy Association           October 2021
-
-
-   o  0: (default) traffic is not being dropped.
-
-   o  1: traffic is being dropped, due to LSP being down and "Drop upon
-      invalid" being set.
-
-   o  2-255: Reserved.
-
-   The "State" field only has meaning when sent from PCC to the PCE in
-   PCRpt messages, it is set to 0 when sent from PCE to PCC.  The
-   "Config" field is valid in both directions on the PCEP session, i.e.,
-   from PCC in PCRpt and from PCE in PCUpd and PCInit messages.
+   Drop Upon: contains "Invalidation Reason Flags" which encode
+   conditions that SHOULD cause the LSP to drop traffic.  This field can
+   be set to non-zero values by both PCC and PCE.  This field MAY be set
+   to all 1's (0xFF) to indicate that the LSP is to go into Drop upon
+   invalid state for any reason.  I.e., when the PCE does not wish to
+   distinguish any reason for LSP invalidation and just simply wants it
+   to always "Drop upon invalid" for any reason.
 
 6.4.  Specified-BSID-only
 
@@ -813,6 +831,16 @@ Internet-Draft         PCEP SR Policy Association           October 2021
    that the BSID follows the Specified-BSID-only behavior.  It is
    possible to have a mix of BSIDs for the same LSP: some with S=1 and
    some with S=0.
+
+
+
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 15]
+
+Internet-Draft         PCEP SR Policy Association             April 2022
+
 
 7.  Examples
 
@@ -833,14 +861,6 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
    2.  PCE computes path, possibly making use of the Association
        Information from the SRPAT ASSOCIATION.
-
-
-
-
-Koldychev, et al.        Expires April 25, 2022                [Page 15]
-
-Internet-Draft         PCEP SR Policy Association           October 2021
-
 
    3.  PCE updates the SR policy candidate path's ERO using PCUpd
        message.
@@ -869,6 +889,15 @@ Internet-Draft         PCEP SR Policy Association           October 2021
        operator, then that PLSP-ID is deleted from the PCE by sending
        PCRpt with the R-flag in the LSP object set.
 
+
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 16]
+
+Internet-Draft         PCEP SR Policy Association             April 2022
+
+
 7.3.  PCE Initiated SR Policy with single candidate-path
 
    A candidate-path is created using the following steps:
@@ -890,14 +919,6 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
    A candidate-path is deleted using the following steps:
 
-
-
-
-Koldychev, et al.        Expires April 25, 2022                [Page 16]
-
-Internet-Draft         PCEP SR Policy Association           October 2021
-
-
    1.  PCE sends PCInitiate message, setting the R-flag in the LSP
        object.
 
@@ -909,11 +930,12 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
    A candidate-path is created using the following steps:
 
-   1.  PCE sends a separate PCInitiate message for every candidate path
-       that it wants to create, or it sends multiple LSP objects within
-       a single PCInitiate message.  The SRPAT ASSOCIATION is sent for
-       every LSP in the PCInitiate message.  The Association Source and
-       the Association ID are set as described in Section 5.1.
+   1.  PCE SHOULD send a separate PCInitiate message for every candidate
+       path that it wants to create, or it MAY send multiple LSP objects
+       within a single PCInitiate message.  The SRPAT ASSOCIATION is
+       sent for every LSP in the PCInitiate message.  The Association
+       Source and the Association ID are set as described in
+       Section 5.1.
 
    2.  PCC creates multiple candidate paths under the same SR policy,
        identified by Color and Endpoint.
@@ -924,6 +946,13 @@ Internet-Draft         PCEP SR Policy Association           October 2021
        set as described in Section 5.1.
 
    A candidate path is deleted using the following steps:
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 17]
+
+Internet-Draft         PCEP SR Policy Association             April 2022
+
 
    1.  PCE sends PCInitiate message, setting the R-flag in the LSP
        object.
@@ -945,14 +974,6 @@ Internet-Draft         PCEP SR Policy Association           October 2021
    +-----------+-------------------------------------------+-----------+
    | 6         | SR Policy Association                     | This.I-D  |
    +-----------+-------------------------------------------+-----------+
-
-
-
-
-Koldychev, et al.        Expires April 25, 2022                [Page 17]
-
-Internet-Draft         PCEP SR Policy Association           October 2021
-
 
 8.2.  PCEP TLV Type Indicators
 
@@ -979,6 +1000,16 @@ Internet-Draft         PCEP SR Policy Association           October 2021
    | TBD3      | INVALIDATION                              | This.I-D  |
    +-----------+-------------------------------------------+-----------+
 
+
+
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 18]
+
+Internet-Draft         PCEP SR Policy Association             April 2022
+
+
 8.3.  PCEP Errors
 
    This document defines one new Error-Value within the "Mandatory
@@ -986,29 +1017,6 @@ Internet-Draft         PCEP SR Policy Association           October 2021
    "Association Error" Error-Type.  IANA is requested to allocate new
    error values within the "PCEP-ERROR Object Error Types and Values"
    sub-registry of the PCEP Numbers registry, as follows:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Koldychev, et al.        Expires April 25, 2022                [Page 18]
-
-Internet-Draft         PCEP SR Policy Association           October 2021
-
 
    +------------+------------------+-----------------------+-----------+
    | Error-Type | Meaning          | Error-value           | Reference |
@@ -1050,6 +1058,14 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
    This section records the status of known implementations of the
    protocol defined by this specification at the time of posting of this
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 19]
+
+Internet-Draft         PCEP SR Policy Association             April 2022
+
+
    Internet-Draft, and is based on a proposal described in [RFC7942].
    The description of implementations in this section is intended to
    assist the IETF in its decision processes in progressing drafts to
@@ -1058,14 +1074,6 @@ Internet-Draft         PCEP SR Policy Association           October 2021
    has been spent to verify the information presented here that was
    supplied by IETF contributors.  This is not intended as, and must not
    be construed to be, a catalog of available implementations or their
-
-
-
-Koldychev, et al.        Expires April 25, 2022                [Page 19]
-
-Internet-Draft         PCEP SR Policy Association           October 2021
-
-
    features.  Readers are advised to note that other implementations may
    exist.
 
@@ -1104,6 +1112,16 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
    o  Contact: cbarth@juniper.net
 
+
+
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 20]
+
+Internet-Draft         PCEP SR Policy Association             April 2022
+
+
 10.  Security Considerations
 
    This document defines one new type for association, which do not add
@@ -1114,14 +1132,6 @@ Internet-Draft         PCEP SR Policy Association           October 2021
    The information carried in the SRPAT ASSOCIATION, as per this
    document is related to SR Policy.  It often reflects information that
    can also be derived from the SR Database, but association provides a
-
-
-
-Koldychev, et al.        Expires April 25, 2022                [Page 20]
-
-Internet-Draft         PCEP SR Policy Association           October 2021
-
-
    much easier grouping of related LSPs and messages.  The SRPAT
    ASSOCIATION could provide an adversary with the opportunity to
    eavesdrop on the relationship between the LSPs.  Thus securing the
@@ -1131,8 +1141,8 @@ Internet-Draft         PCEP SR Policy Association           October 2021
 
 11.  Acknowledgement
 
-   Would like to thank Stephane Litkowski, Praveen Kumar and Tom Petch
-   for review comments.
+   Would like to thank Stephane Litkowski, Boris Khasanov, Praveen Kumar
+   and Tom Petch for review and suggestions.
 
 12.  References
 
@@ -1158,6 +1168,16 @@ Internet-Draft         PCEP SR Policy Association           October 2021
               DOI 10.17487/RFC8231, September 2017,
               <https://www.rfc-editor.org/info/rfc8231>.
 
+
+
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 21]
+
+Internet-Draft         PCEP SR Policy Association             April 2022
+
+
    [RFC8281]  Crabbe, E., Minei, I., Sivabalan, S., and R. Varga, "Path
               Computation Element Communication Protocol (PCEP)
               Extensions for PCE-Initiated LSP Setup in a Stateful PCE
@@ -1169,26 +1189,17 @@ Internet-Draft         PCEP SR Policy Association           October 2021
               RFC 7942, DOI 10.17487/RFC7942, July 2016,
               <https://www.rfc-editor.org/info/rfc7942>.
 
-
-
-
-
-Koldychev, et al.        Expires April 25, 2022                [Page 21]
-
-Internet-Draft         PCEP SR Policy Association           October 2021
-
-
    [I-D.ietf-spring-segment-routing-policy]
               Filsfils, C., Talaulikar, K., Voyer, D., Bogdanov, A., and
               P. Mattes, "Segment Routing Policy Architecture", draft-
-              ietf-spring-segment-routing-policy-13 (work in progress),
-              May 2021.
+              ietf-spring-segment-routing-policy-22 (work in progress),
+              March 2022.
 
    [I-D.ietf-idr-segment-routing-te-policy]
               Previdi, S., Filsfils, C., Talaulikar, K., Mattes, P.,
-              Rosen, E., Jain, D., and S. Lin, "Advertising Segment
-              Routing Policies in BGP", draft-ietf-idr-segment-routing-
-              te-policy-13 (work in progress), June 2021.
+              Jain, D., and S. Lin, "Advertising Segment Routing
+              Policies in BGP", draft-ietf-idr-segment-routing-te-
+              policy-17 (work in progress), April 2022.
 
    [RFC8697]  Minei, I., Crabbe, E., Sivabalan, S., Ananthakrishnan, H.,
               Dhody, D., and Y. Tanaka, "Path Computation Element
@@ -1206,8 +1217,8 @@ Internet-Draft         PCEP SR Policy Association           October 2021
    [I-D.koldychev-pce-operational]
               Koldychev, M., Sivabalan, S., Peng, S., Achaval, D., and
               H. Kotni, "PCEP Operational Clarification", draft-
-              koldychev-pce-operational-04 (work in progress), August
-              2021.
+              koldychev-pce-operational-05 (work in progress), February
+              2022.
 
    [I-D.koldychev-pce-multipath]
               Koldychev, M., Sivabalan, S., Saad, T., Beeram, V. P.,
@@ -1215,24 +1226,20 @@ Internet-Draft         PCEP SR Policy Association           October 2021
               Signaling Multipath Information", draft-koldychev-pce-
               multipath-05 (work in progress), February 2021.
 
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 22]
+
+Internet-Draft         PCEP SR Policy Association             April 2022
+
+
 12.2.  Informative References
 
    [RFC4655]  Farrel, A., Vasseur, J., and J. Ash, "A Path Computation
               Element (PCE)-Based Architecture", RFC 4655,
               DOI 10.17487/RFC4655, August 2006,
               <https://www.rfc-editor.org/info/rfc4655>.
-
-
-
-
-
-
-
-
-Koldychev, et al.        Expires April 25, 2022                [Page 22]
-
-Internet-Draft         PCEP SR Policy Association           October 2021
-
 
    [RFC7525]  Sheffer, Y., Holz, R., and P. Saint-Andre,
               "Recommendations for Secure Use of Transport Layer
@@ -1250,9 +1257,38 @@ Internet-Draft         PCEP SR Policy Association           October 2021
               Li, C., Negi, M., Sivabalan, S., Koldychev, M.,
               Kaladharan, P., and Y. Zhu, "PCEP Extensions for Segment
               Routing leveraging the IPv6 data plane", draft-ietf-pce-
-              segment-routing-ipv6-09 (work in progress), May 2021.
+              segment-routing-ipv6-13 (work in progress), April 2022.
 
 Appendix A.  Contributors
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 23]
+
+Internet-Draft         PCEP SR Policy Association             April 2022
+
 
    Dhruv Dhody
    Huawei Technologies
@@ -1279,17 +1315,6 @@ Appendix A.  Contributors
 
    Email: ssidor@cisco.com
 
-
-
-
-
-
-
-Koldychev, et al.        Expires April 25, 2022                [Page 23]
-
-Internet-Draft         PCEP SR Policy Association           October 2021
-
-
 Authors' Addresses
 
    Mike Koldychev
@@ -1308,6 +1333,17 @@ Authors' Addresses
    Canada
 
    Email: ssivabal@ciena.com
+
+
+
+
+
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 24]
+
+Internet-Draft         PCEP SR Policy Association             April 2022
 
 
    Colby Barth
@@ -1341,4 +1377,24 @@ Authors' Addresses
 
 
 
-Koldychev, et al.        Expires April 25, 2022                [Page 24]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.       Expires October 21, 2022               [Page 25]

@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-06" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-07" ipr="trust200902">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -118,7 +118,7 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date month="October" year="2021" />
+    <date month="April" year="2022" />
 
     <workgroup>PCE Working Group</workgroup>
 
@@ -616,8 +616,39 @@ It is used to implement the "Explicit Null Label Policy", as specified in Sectio
 <section anchor="Invalidation-tlv" title="Invalidation TLV">
 
 <t>The INVALIDATION TLV is an optional TLV for the LSP object.
-It is used to specify LSP behavior when the LSP is operationally down, in particular to facilitate the "Drop upon invalid" behavior,
-specified in Section 8.2 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
+It is used to control traffic streering into the LSP
+during the time when the LSP is operationally down/invalid.
+In the context of SR Policy, this TLV facilitate 
+the "Drop upon invalid" behavior,
+specified in Section 8.2 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.
+Normally, if the LSP is down/invalid then traffic that is originally destined for that LSP
+is steered somewhere else, such as via IGP or via another LSP.
+The "Drop upon invalid" behavior specifies that such traffic MUST NOT be re-routed
+and has to be dropped at the head-end.
+</t>
+<t>
+In addition to the above, this TLV can also be used by the PCC to report to the PCE
+various reasons for LSP being invalidated.
+Invalidation reasons are represented by a set of flags.
+</t>
+
+<figure anchor="INVAL_FLAGS" title="Invalidation Reasons Flags">
+<artwork align="center"><![CDATA[
+   0 1 2 3 4 5 6 7 
+  +-+-+-+-+-+-+-+-+
+  |       |V|P|F|U|
+  +-+-+-+-+-+-+-+-+
+]]></artwork>
+</figure>
+
+<t>
+  <list style="symbols">
+    <t>U: Unknown - does not fit into any other categories below.</t>
+    <t>P: Path computation failure - no path was computed for the LSP.</t>
+    <t>F: First-hop resolution failure - head-end first hop resolution has failed.</t>
+    <t>V: Verification failure - OAM/PM/BFD path verification is has indicated a broken path.</t>
+  </list>
+</t>
 
 <figure anchor="INVALIDATION-TLV-FORMAT" title="The INVALIDATION TLV format">
 <artwork align="center"><![CDATA[
@@ -626,7 +657,7 @@ specified in Section 8.2 of <xref target="I-D.ietf-spring-segment-routing-policy
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |    Config     |    State      |              MBZ              |
+  | Inval Reason  |   Drop Upon   |              MBZ              |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
 </figure>
@@ -635,24 +666,19 @@ specified in Section 8.2 of <xref target="I-D.ietf-spring-segment-routing-policy
 
 <t>Length: 4.</t>
 
-<t>Config: specifies the action to take when the LSP becomes invalid:
-  <list style="symbols">
-    <t>0: (default) bring down the LSP and forward traffic somewhere else (i.e., IGP, etc.).</t>
-    <t>1: drop traffic when the LSP is invalid.</t>
-    <t>2-255: Reserved.</t>
-  </list>
+<t>Inval Reason: contains "Invalidation Reason Flags" which encode the 
+reason why the LSP is currently invalidated.
+This field can be set to non-zero values only by the PCC,
+it MUST be set to 0 by the PCE and ignored by the PCC.
 </t>
 
-<t>State: specifies the current state of the LSP:
-  <list style="symbols">
-    <t>0: (default) traffic is not being dropped.</t>
-    <t>1: traffic is being dropped, due to LSP being down and "Drop upon invalid" being set.</t>
-    <t>2-255: Reserved.</t>
-  </list>
-</t>
-<t>
-The "State" field only has meaning when sent from PCC to the PCE in PCRpt messages, it is set to 0 when sent from PCE to PCC.
-The "Config" field is valid in both directions on the PCEP session, i.e., from PCC in PCRpt and from PCE in PCUpd and PCInit messages.
+<t>Drop Upon: contains "Invalidation Reason Flags" which encode conditions
+that SHOULD cause the LSP to drop traffic.
+This field can be set to non-zero values by both PCC and PCE.
+This field MAY be set to all 1's (0xFF) to indicate that the LSP is to go into
+Drop upon invalid state for any reason. I.e., when the PCE does not wish to
+distinguish any reason for LSP invalidation and just simply wants it to
+always "Drop upon invalid" for any reason.
 </t>
 
 </section> <!-- Invalidation-tlv -->
@@ -766,7 +792,9 @@ The PCRpt message contains the SRPAT ASSOCIATION.</t>
 <t>
 <list style="numbers">
 
-<t>PCE sends a separate PCInitiate message for every candidate path that it wants to create, or it sends multiple LSP objects within a single PCInitiate message.
+<t>
+PCE SHOULD send a separate PCInitiate message for every candidate path that it wants to create, or it MAY send multiple LSP objects within a single PCInitiate message.
+
 The SRPAT ASSOCIATION is sent for every LSP in the PCInitiate message.
 The Association Source and the Association ID are set as described in <xref target="AssociationParameters"/>.</t>
 
@@ -968,7 +996,7 @@ Thus securing the PCEP session using Transport Layer
 
 <section anchor="Acknowledgement" title="Acknowledgement">
 <t>
-Would like to thank Stephane Litkowski, Praveen Kumar and Tom Petch for review comments.
+Would like to thank Stephane Litkowski, Boris Khasanov, Praveen Kumar and Tom Petch for review and suggestions.
 </t>
 </section> <!-- Acknowledgement -->
 
