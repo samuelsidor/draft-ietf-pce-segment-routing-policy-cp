@@ -625,6 +625,9 @@ Normally, if the LSP is down/invalid then traffic that is originally destined fo
 is steered somewhere else, such as via IGP or via another LSP.
 The "Drop upon invalid" behavior specifies that such traffic MUST NOT be re-routed
 and has to be dropped at the head-end.
+While in the "Drop upon invalid" state, the LSP operational state is "UP",
+as indicated by the O-flag in the LSP object.
+However the ERO object is empty, indicating that traffic is being dropped.
 </t>
 <t>
 In addition to the above, this TLV can also be used by the PCC to report to the PCE
@@ -646,7 +649,7 @@ Invalidation reasons are represented by a set of flags.
     <t>U: Unknown - does not fit into any other categories below.</t>
     <t>P: Path computation failure - no path was computed for the LSP.</t>
     <t>F: First-hop resolution failure - head-end first hop resolution has failed.</t>
-    <t>V: Verification failure - OAM/PM/BFD path verification is has indicated a broken path.</t>
+    <t>V: Verification failure - OAM/PM/BFD path verification has indicated a breakage.</t>
   </list>
 </t>
 
@@ -666,13 +669,13 @@ Invalidation reasons are represented by a set of flags.
 
 <t>Length: 4.</t>
 
-<t>Inval Reason: contains "Invalidation Reason Flags" which encode the 
-reason why the LSP is currently invalidated.
+<t>Inval Reason: contains "Invalidation Reasons Flags" which encode the 
+reason(s) why the LSP is currently invalidated.
 This field can be set to non-zero values only by the PCC,
 it MUST be set to 0 by the PCE and ignored by the PCC.
 </t>
 
-<t>Drop Upon: contains "Invalidation Reason Flags" which encode conditions
+<t>Drop Upon: contains "Invalidation Reasons Flags" for conditions
 that SHOULD cause the LSP to drop traffic.
 This field can be set to non-zero values by both PCC and PCE.
 This field MAY be set to all 1's (0xFF) to indicate that the LSP is to go into
