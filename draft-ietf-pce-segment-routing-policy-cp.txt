@@ -5,18 +5,18 @@
 PCE Working Group                                           M. Koldychev
 Internet-Draft                                       Cisco Systems, Inc.
 Intended status: Standards Track                            S. Sivabalan
-Expires: October 23, 2022                              Ciena Corporation
+Expires: April 27, 2023                                Ciena Corporation
                                                                 C. Barth
                                                   Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                          April 21, 2022
+                                                        October 24, 2022
 
 
     PCEP extension to support Segment Routing Policy Candidate Paths
-              draft-ietf-pce-segment-routing-policy-cp-07
+              draft-ietf-pce-segment-routing-policy-cp-08
 
 Abstract
 
@@ -53,15 +53,15 @@ Status of This Memo
 
 
 
-Koldychev, et al.       Expires October 23, 2022                [Page 1]
+Koldychev, et al.        Expires April 27, 2023                 [Page 1]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 23, 2022.
+   This Internet-Draft will expire on April 27, 2023.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Koldychev, et al.       Expires October 23, 2022                [Page 2]
+Koldychev, et al.        Expires April 27, 2023                 [Page 2]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
      7.1.  PCC Initiated SR Policy with single candidate-path  . . .  16
@@ -165,9 +165,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022                [Page 3]
+Koldychev, et al.        Expires April 27, 2023                 [Page 3]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
    Segment Routing Policy for Traffic Engineering
@@ -221,9 +221,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022                [Page 4]
+Koldychev, et al.        Expires April 27, 2023                 [Page 4]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
       route based on a network graph and applying computational
@@ -277,9 +277,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022                [Page 5]
+Koldychev, et al.        Expires April 27, 2023                 [Page 5]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
    Paths, then if the PCE wants to update one of those, only one set of
@@ -333,9 +333,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022                [Page 6]
+Koldychev, et al.        Expires April 27, 2023                 [Page 6]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 4.1.1.  SR Policy Identifiers
@@ -389,9 +389,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022                [Page 7]
+Koldychev, et al.        Expires April 27, 2023                 [Page 7]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 4.2.  Multiple Optimization Objectives and Constraints
@@ -445,9 +445,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022                [Page 8]
+Koldychev, et al.        Expires April 27, 2023                 [Page 8]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
    the PCC SHOULD accept the PCInit message and create the SR Policy
@@ -501,9 +501,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022                [Page 9]
+Koldychev, et al.        Expires April 27, 2023                 [Page 9]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 5.2.  Association Information
@@ -557,9 +557,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 10]
+Koldychev, et al.        Expires April 27, 2023                [Page 10]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 5.2.2.  SR Policy Candidate Path Identifiers TLV
@@ -613,9 +613,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 11]
+Koldychev, et al.        Expires April 27, 2023                [Page 11]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 5.2.3.  SR Policy Candidate Path Name TLV
@@ -669,9 +669,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 12]
+Koldychev, et al.        Expires April 27, 2023                [Page 12]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
    Length: 4.
@@ -725,9 +725,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 13]
+Koldychev, et al.        Expires April 27, 2023                [Page 13]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
        0                   1                   2                   3
@@ -781,9 +781,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 14]
+Koldychev, et al.        Expires April 27, 2023                [Page 14]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
    o  F: First-hop resolution failure - head-end first hop resolution
@@ -837,9 +837,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 15]
+Koldychev, et al.        Expires April 27, 2023                [Page 15]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 7.  Examples
@@ -893,9 +893,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 16]
+Koldychev, et al.        Expires April 27, 2023                [Page 16]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 7.3.  PCE Initiated SR Policy with single candidate-path
@@ -949,9 +949,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 17]
+Koldychev, et al.        Expires April 27, 2023                [Page 17]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
    1.  PCE sends PCInitiate message, setting the R-flag in the LSP
@@ -1005,9 +1005,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 18]
+Koldychev, et al.        Expires April 27, 2023                [Page 18]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 8.3.  PCEP Errors
@@ -1061,9 +1061,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 19]
+Koldychev, et al.        Expires April 27, 2023                [Page 19]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
    Internet-Draft, and is based on a proposal described in [RFC7942].
@@ -1117,9 +1117,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 20]
+Koldychev, et al.        Expires April 27, 2023                [Page 20]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 10.  Security Considerations
@@ -1173,9 +1173,9 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 21]
+Koldychev, et al.        Expires April 27, 2023                [Page 21]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
    [RFC8281]  Crabbe, E., Minei, I., Sivabalan, S., and R. Varga, "Path
@@ -1193,13 +1193,16 @@ Internet-Draft         PCEP SR Policy Association             April 2022
               Filsfils, C., Talaulikar, K., Voyer, D., Bogdanov, A., and
               P. Mattes, "Segment Routing Policy Architecture", draft-
               ietf-spring-segment-routing-policy-22 (work in progress),
-              March 2022.
+              March 2022, <https://www.ietf.org/archive/id/draft-ietf-
+              spring-segment-routing-policy-22.txt>.
 
    [I-D.ietf-idr-segment-routing-te-policy]
               Previdi, S., Filsfils, C., Talaulikar, K., Mattes, P.,
               Jain, D., and S. Lin, "Advertising Segment Routing
               Policies in BGP", draft-ietf-idr-segment-routing-te-
-              policy-17 (work in progress), April 2022.
+              policy-20 (work in progress), July 2022,
+              <https://www.ietf.org/archive/id/draft-ietf-idr-segment-
+              routing-te-policy-20.txt>.
 
    [RFC8697]  Minei, I., Crabbe, E., Sivabalan, S., Ananthakrishnan, H.,
               Dhody, D., and Y. Tanaka, "Path Computation Element
@@ -1217,22 +1220,27 @@ Internet-Draft         PCEP SR Policy Association             April 2022
    [I-D.koldychev-pce-operational]
               Koldychev, M., Sivabalan, S., Peng, S., Achaval, D., and
               H. Kotni, "PCEP Operational Clarification", draft-
-              koldychev-pce-operational-05 (work in progress), February
-              2022.
+              koldychev-pce-operational-06 (work in progress), July
+              2022, <https://www.ietf.org/archive/id/draft-koldychev-
+              pce-operational-06.txt>.
+
+
+
+
+
+
+Koldychev, et al.        Expires April 27, 2023                [Page 22]
+
+Internet-Draft         PCEP SR Policy Association           October 2022
+
 
    [I-D.koldychev-pce-multipath]
               Koldychev, M., Sivabalan, S., Saad, T., Beeram, V. P.,
               Bidgoli, H., Yadav, B., and S. Peng, "PCEP Extensions for
               Signaling Multipath Information", draft-koldychev-pce-
-              multipath-05 (work in progress), February 2021.
-
-
-
-
-Koldychev, et al.       Expires October 23, 2022               [Page 22]
-
-Internet-Draft         PCEP SR Policy Association             April 2022
-
+              multipath-05 (work in progress), February 2021,
+              <https://www.ietf.org/archive/id/draft-koldychev-pce-
+              multipath-05.txt>.
 
 12.2.  Informative References
 
@@ -1254,10 +1262,13 @@ Internet-Draft         PCEP SR Policy Association             April 2022
               <https://www.rfc-editor.org/info/rfc8253>.
 
    [I-D.ietf-pce-segment-routing-ipv6]
-              Li, C., Negi, M., Sivabalan, S., Koldychev, M.,
-              Kaladharan, P., and Y. Zhu, "PCEP Extensions for Segment
-              Routing leveraging the IPv6 data plane", draft-ietf-pce-
-              segment-routing-ipv6-13 (work in progress), April 2022.
+              Li(Editor), C., Negi, M. S., Sivabalan, S., Koldychev, M.,
+              Kaladharan, P., and Y. Zhu, "Path Computation Element
+              Communication Protocol (PCEP) Extensions for Segment
+              Routing leveraging the IPv6 dataplane", draft-ietf-pce-
+              segment-routing-ipv6-15 (work in progress), October 2022,
+              <https://datatracker.ietf.org/api/v1/doc/document/draft-
+              ietf-pce-segment-routing-ipv6/>.
 
 Appendix A.  Contributors
 
@@ -1274,20 +1285,9 @@ Appendix A.  Contributors
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-Koldychev, et al.       Expires October 23, 2022               [Page 23]
+Koldychev, et al.        Expires April 27, 2023                [Page 23]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
    Dhruv Dhody
@@ -1341,9 +1341,9 @@ Authors' Addresses
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 24]
+Koldychev, et al.        Expires April 27, 2023                [Page 24]
 
-Internet-Draft         PCEP SR Policy Association             April 2022
+Internet-Draft         PCEP SR Policy Association           October 2022
 
 
    Colby Barth
@@ -1397,4 +1397,4 @@ Internet-Draft         PCEP SR Policy Association             April 2022
 
 
 
-Koldychev, et al.       Expires October 23, 2022               [Page 25]
+Koldychev, et al.        Expires April 27, 2023                [Page 25]
