@@ -5,18 +5,18 @@
 PCE Working Group                                           M. Koldychev
 Internet-Draft                                       Cisco Systems, Inc.
 Intended status: Standards Track                            S. Sivabalan
-Expires: 6 April 2023                                  Ciena Corporation
+Expires: 4 September 2023                              Ciena Corporation
                                                                 C. Barth
                                                   Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                            October 2022
+                                                              March 2023
 
 
     PCEP extension to support Segment Routing Policy Candidate Paths
-              draft-ietf-pce-segment-routing-policy-cp-08
+              draft-ietf-pce-segment-routing-policy-cp-09
 
 Abstract
 
@@ -53,19 +53,19 @@ Status of This Memo
 
 
 
-Koldychev, et al.         Expires 6 April 2023                  [Page 1]
+Koldychev, et al.       Expires 4 September 2023                [Page 1]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 April 2023.
+   This Internet-Draft will expire on 2 September 2023.
 
 Copyright Notice
 
-   Copyright (c) 2022 IETF Trust and the persons identified as the
+   Copyright (c) 2023 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Koldychev, et al.         Expires 6 April 2023                  [Page 2]
+Koldychev, et al.       Expires 4 September 2023                [Page 2]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
      7.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  16
@@ -165,9 +165,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                  [Page 3]
+Koldychev, et al.       Expires 4 September 2023                [Page 3]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    more SR Candidate Paths.  By associating multiple SR Candidate Paths,
@@ -221,9 +221,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                  [Page 4]
+Koldychev, et al.       Expires 4 September 2023                [Page 4]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
 3.1.  Group Candidate Paths belonging to the same SR Policy
@@ -277,9 +277,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                  [Page 5]
+Koldychev, et al.       Expires 4 September 2023                [Page 5]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    The mapping between PCEP Associations and SR Policies is always one-
@@ -333,9 +333,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                  [Page 6]
+Koldychev, et al.       Expires 4 September 2023                [Page 6]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
 4.1.2.  SR Policy Candidate Path Identifiers
@@ -389,9 +389,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                  [Page 7]
+Koldychev, et al.       Expires 4 September 2023                [Page 7]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
 5.  SR Policy Association
@@ -445,9 +445,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                  [Page 8]
+Koldychev, et al.       Expires 4 September 2023                [Page 8]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
        0                   1                   2                   3
@@ -501,9 +501,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                  [Page 9]
+Koldychev, et al.       Expires 4 September 2023                [Page 9]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    *  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
@@ -557,9 +557,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 10]
+Koldychev, et al.       Expires 4 September 2023               [Page 10]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
        0                   1                   2                   3
@@ -613,9 +613,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 11]
+Koldychev, et al.       Expires 4 September 2023               [Page 11]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
        0                   1                   2                   3
@@ -669,9 +669,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 12]
+Koldychev, et al.       Expires 4 September 2023               [Page 12]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
 6.  Generic Mechanisms
@@ -725,9 +725,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 13]
+Koldychev, et al.       Expires 4 September 2023               [Page 13]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    Length: 4.
@@ -781,9 +781,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 14]
+Koldychev, et al.       Expires 4 September 2023               [Page 14]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
                    Figure 9: The INVALIDATION TLV format
@@ -837,9 +837,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 15]
+Koldychev, et al.       Expires 4 September 2023               [Page 15]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    +-----------+-------------------------------------------+-----------+
@@ -893,9 +893,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 16]
+Koldychev, et al.       Expires 4 September 2023               [Page 16]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    +------------+------------------+-----------------------+-----------+
@@ -949,9 +949,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 17]
+Koldychev, et al.       Expires 4 September 2023               [Page 17]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    According to [RFC7942], "this will allow reviewers and working groups
@@ -1005,9 +1005,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 18]
+Koldychev, et al.       Expires 4 September 2023               [Page 18]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    Layer Security (TLS) [RFC8253], as per the recommendations and best
@@ -1061,9 +1061,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 19]
+Koldychev, et al.       Expires 4 September 2023               [Page 19]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    [I-D.ietf-idr-segment-routing-te-policy]
@@ -1117,9 +1117,9 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 20]
+Koldychev, et al.       Expires 4 September 2023               [Page 20]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
               (DTLS)", RFC 7525, DOI 10.17487/RFC7525, May 2015,
@@ -1173,9 +1173,9 @@ Authors' Addresses
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 21]
+Koldychev, et al.       Expires 4 September 2023               [Page 21]
 
-Internet-Draft         PCEP SR Policy Association           October 2022
+Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    Mike Koldychev
@@ -1229,4 +1229,4 @@ Internet-Draft         PCEP SR Policy Association           October 2022
 
 
 
-Koldychev, et al.         Expires 6 April 2023                 [Page 22]
+Koldychev, et al.       Expires 4 September 2023               [Page 22]
