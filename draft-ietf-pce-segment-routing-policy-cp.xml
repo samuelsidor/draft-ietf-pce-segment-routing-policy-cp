@@ -588,7 +588,7 @@ It is used to implement the "Explicit Null Label Policy", as specified in Sectio
 <t>The INVALIDATION TLV is an optional TLV for the LSP object.
 It is used to control traffic streering into the LSP
 during the time when the LSP is operationally down/invalid.
-In the context of SR Policy, this TLV facilitate 
+In the context of SR Policy, this TLV facilitates 
 the "Drop upon invalid" behavior,
 specified in Section 8.2 of <xref target="RFC9256"/>.
 Normally, if the LSP is down/invalid then traffic that is originally destined for that LSP
@@ -616,7 +616,7 @@ Invalidation reasons are represented by a set of flags.
 
 <t>
   <list style="symbols">
-    <t>U: Unknown - does not fit into any other categories below.</t>
+    <t>G: Generic - does not fit into any other categories below.</t>
     <t>P: Path computation failure - no path was computed for the LSP.</t>
     <t>F: First-hop resolution failure - head-end first hop resolution has failed.</t>
     <t>V: Verification failure - OAM/PM/BFD path verification has indicated a breakage.</t>
@@ -646,12 +646,13 @@ it MUST be set to 0 by the PCE and ignored by the PCC.
 </t>
 
 <t>Drop Upon: contains "Invalidation Reasons Flags" for conditions
-that SHOULD cause the LSP to drop traffic.
+that MUST cause the LSP to drop traffic.
 This field can be set to non-zero values by both PCC and PCE.
-This field MAY be set to all 1's (0xFF) to indicate that the LSP is to go into
+When the G-flag is set, this indicates that the LSP is to go into
 Drop upon invalid state for any reason. I.e., when the PCE does not wish to
 distinguish any reason for LSP invalidation and just simply wants it to
 always "Drop upon invalid" for any reason.
+Note that when the G-flag is set, the values of the other flags are irrelevant.
 </t>
 
 </section> <!-- Invalidation-tlv -->
