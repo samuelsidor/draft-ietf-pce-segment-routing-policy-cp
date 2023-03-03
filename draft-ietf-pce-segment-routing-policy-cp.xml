@@ -159,7 +159,7 @@ The mechanism is applicable to all data planes of SR (MPLS, SRv6, etc.).
 <t>
 This document extends <xref target="RFC8664"/> to fully support the SR Policy construct.
 SR Policy is modeled in PCEP as an Association of one or more SR Candidate Paths.
-By associating multiple SR Candidate Paths, a PCE becomes aware of the hierarchical structure of an SR policy.
+By associating multiple SR Candidate Paths, a PCE becomes aware of the hierarchical structure of an SR Policy.
 Thus the PCE can take computation and control decisions about the Candidate Paths, with the additional knowledge that these Candidate Paths belong to the same SR Policy.
 This is accomplished via the use of the PCEP Association object with a new association type.
 </t>
@@ -172,7 +172,7 @@ This is accomplished via the use of the PCEP Association object with a new assoc
 
   <list style="hanging">
     
-     <t hangText="Endpoint:"> The IPv4 or IPv6 endpoint address of the SR policy in question, as described in <xref target="RFC9256"/>.</t>
+     <t hangText="Endpoint:"> The IPv4 or IPv6 endpoint address of the SR Policy in question, as described in <xref target="RFC9256"/>.</t>
 
      <t hangText="Association Parameters:"> As described in <xref target="RFC8697"/>, the combination of the mandatory fields Association Type, Association ID and Association Source in the ASSOCIATION object uniquely identify the association group.  If the optional TLVs - Global Association Source or Extended Association ID are included, then they MUST be included in combination with mandatory fields to uniquely identify the association group.</t>
 
@@ -198,7 +198,7 @@ This is accomplished via the use of the PCEP Association object with a new assoc
 <t>The SR Policy Association and its TLVs, defined in this document, allow PCEP speakers to exchange additional information about SR Policy Candidate Paths and their container SR Policy.
 </t>
 
-<section anchor="Motivation-group" title="Group Candidate Paths belonging to the same SR policy">
+<section anchor="Motivation-group" title="Group Candidate Paths belonging to the same SR Policy">
 
 <t>Since each SR Policy Candidate Path appears as a different Tunnel (identified via a PLSP-ID) in PCEP,
 it is useful to group together all the SR Policy Candidate Paths that belong to the same SR Policy.
@@ -206,7 +206,7 @@ Furthermore, it is useful for the PCE to have knowledge of the SR Policy related
 
 </section> <!-- Motivation-group -->
 
-<section anchor="Motivation-candidate-path" title="Instantiation of SR policy candidate paths">
+<section anchor="Motivation-candidate-path" title="Instantiation of SR Policy Candidate Paths">
 
 <t>A PCE needs to instantiate one or more SR Policy Candidate Paths on the PCC, as specified in <xref target="RFC8281"/>.
 Each SR Policy Candidate Path is identified by the tuple &#60;headend, color, endpoint, originator, discriminator, preference&#62;.
@@ -214,9 +214,9 @@ This draft provides a mechanism to signal this information in PCEP.</t>
 
 </section> <!-- Motivation-candidate-path -->
 
-<section anchor="Motivation-preference" title="Avoid computing lower preference candidate paths">
+<section anchor="Motivation-preference" title="Avoid computing lower preference Candidate Paths">
 
-<t>When a PCE knows that a given set of SR Policy Candidate Paths all belong to the same SR Policy, then path computation MAY be done on only the highest preference candidate-path(s).
+<t>When a PCE knows that a given set of SR Policy Candidate Paths all belong to the same SR Policy, then path computation MAY be done on only the highest preference Candidate Path(s).
 Path computation for lower preference paths is not necessary if one or two higher preference paths are already computed.
 Since computing their paths will not affect traffic steering, it MAY be postponed until the higher preference paths become invalid.</t>
 
@@ -224,7 +224,7 @@ Since computing their paths will not affect traffic steering, it MAY be postpone
 
 <section anchor="Motivation-signaling-overhead" title="Minimal signaling overhead">
 
-<t>When an SR Policy contains multiple SR Policy Candidate Paths computed by a PCE, such candidate paths can be created, updated and deleted independently of each other.
+<t>When an SR Policy contains multiple SR Policy Candidate Paths computed by a PCE, such Candidate Paths can be created, updated and deleted independently of each other.
 This is achieved by making each SR Policy Candidate Path correspond to a unique Tunnel (identified via PLSP-ID).
 For example, if an SR Policy has 4 SR Policy Candidate Paths, then if the PCE wants to update one of those, only one set of PCUpd and PCRpt messages needs to be exchanged.</t>
 
@@ -263,7 +263,7 @@ Error-Type = 26 "Association Error", Error-Value = 7 "Cannot join the associatio
 SR Policy Identifiers, SR Policy Candidate Path Identifiers, and SR Policy Candidate Path Attributes.</t>
 
 <section anchor="SRPolicyIdentifiers" title="SR Policy Identifiers">
-<t>SR Policy Identifiers uniquely identify the SR policy within the context of the headend.
+<t>SR Policy Identifiers uniquely identify the SR Policy within the context of the headend.
 SR Policy Identifiers MUST be the same for all SR Policy Candidate Paths in the same SRPA.
 SR Policy Identifiers MUST NOT change for a given SR Policy Candidate Path during its lifetime.
 SR Policy Identifiers MUST be different for different SRPAGs.
@@ -294,7 +294,7 @@ SR Policy Candidate Path Identifiers consist of:</t>
 </section>
 
 <section anchor="SRPolicyCandidatePathAttributes" title="SR Policy Candidate Path Attributes">
-<t>SR Policy Candidate Path Attributes carry non-key information about the candidate path and MAY change during the lifetime of the LSP.
+<t>SR Policy Candidate Path Attributes carry non-key information about the Candidate Path and MAY change during the lifetime of the LSP.
 SR Policy Candidate Path Attributes consist of:</t>
 <t>
       <list style="symbols">
@@ -309,7 +309,7 @@ SR Policy Candidate Path Attributes consist of:</t>
 
 <section anchor="MultipleObjectives" title="Multiple Optimization Objectives and Constraints">
 
-<t>In certain scenarios, it is desired for each SR Policy Candidate Path to contain multiple sub-candidate paths, each of which has a different optimization objective and constraints. Traffic is then sent ECMP or UCMP among these sub-candidate paths.</t>
+<t>In certain scenarios, it is desired for each SR Policy Candidate Path to contain multiple sub-Candidate Paths, each of which has a different optimization objective and constraints. Traffic is then sent ECMP or UCMP among these sub-Candidate Paths.</t>
 
 <t>This is represented in PCEP by a many-to-one mapping between PCEP Tunnels and SR Policy Candidate Paths. This means that multiple PCEP Tunnels are allocated for each SR Policy Candidate Path. Each PCEP Tunnel has its own optimization objective and constraints. When a single SR Policy Candidate Path contains multiple PCEP Tunnels, each of these PCEP Tunnels MUST have identical values of Candidate Path Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see <xref target="Cpath-identifiers-tlv"/>.</t>
 
@@ -464,7 +464,7 @@ Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the sender and only the firs
 
 <t>Originator Address: Represented as 128 bit value where IPv4 address are encoded in lowest 32 bits, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4.</t>
 
-<t>Discriminator: 32-bit value that encodes the Discriminator of the candidate path.</t>
+<t>Discriminator: 32-bit value that encodes the Discriminator of the Candidate Path.</t>
 
 </section> <!-- Cpath-identifiers-tlv -->
 
@@ -516,7 +516,7 @@ Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be encoded by the sender and only 
 
 <t>Length: 4.</t>
 
-<t>Preference: Numerical preference of the candidate path, as specified in Section 2.7 of <xref target="RFC9256"/>.</t>
+<t>Preference: Numerical preference of the Candidate Path, as specified in Section 2.7 of <xref target="RFC9256"/>.</t>
 
 <t>If the TLV is missing, a default Preference value of 100 is used, as specified in Section 2.7 of <xref target="RFC9256"/>.</t>
 
@@ -671,129 +671,6 @@ It is possible to have a mix of BSIDs for the same LSP: some with S=1 and some w
 
 </section> <!-- Generic-mechanisms -->
 
-<section anchor="Examples" title="Examples">
-
-<section anchor="Examples-pcc-initiated-single-path" title="PCC Initiated SR Policy with single candidate-path">
-
-<t>PCReq and PCRep messages are exchanged in the following sequence:</t>
-
-<t>
-<list style="numbers">
-
-<t>PCC sends PCReq message to the PCE, encoding the SRPA object and TLVs in the PCReq message.</t>
-
-<t>PCE returns the path in PCRep message, and echoes back the SRPA object.</t>
-
-</list>
-</t>
-
-<t>PCRpt and PCUpd messages are exchanged in the following sequence:</t>
-
-<t>
-<list style="numbers">
-
-<t>PCC sends PCRpt message to the PCE, including the LSP object and the SRPA object.</t>
-
-<t>PCE computes path, possibly making use of the Association Information from the SRPA.</t>
-
-<t>PCE updates the SR policy candidate path's ERO using PCUpd message.</t>
-
-</list>
-</t>
-
-</section> <!-- Examples-pcc-initiated-single-path -->
-
-<section anchor="Examples-pcc-initiated-multiple-path" title="PCC Initiated SR Policy with multiple candidate-paths">
-
-<t>PCRpt and PCUpd messages are exchanged in the following sequence:</t>
-
-<t>
-<list style="numbers">
-
-<t>For each candidate path of the SR Policy, the PCC generates a different PLSP-ID and symbolic-name and sends multiple PCRpt messages (or one message with multiple LSP objects) to the PCE.
-Each LSP object is followed by SRPA object with identical Color and Endpoint values. The Association Source is set to the IP address of the PCC and the Association ID is set to a number that PCC locally chose to represent the SR Policy.</t>
-
-<t>PCE takes into account that all the LSPs belong to the same SR policy. PCE prioritizes computation for the highest preference LSP and sends PCUpd message(s) back to the PCC.</t>
-
-<t>If a new candidate path is added on the PCC by the operator, then a new PLSP-ID and symbolic name is generated for that candidate path and a new PCRpt is sent to the PCE.</t>
-
-<t>If an existing candidate path is removed from the PCC by the operator, then that PLSP-ID is deleted from the PCE by sending PCRpt with the R-flag in the LSP object set.</t>
-
-</list>
-</t>
-
-</section> <!-- Examples-pcc-initiated-multiple-path -->
-
-<section anchor="Examples-pce-initiated-single-path" title="PCE Initiated SR Policy with single candidate-path">
-
-<t>A candidate-path is created using the following steps:</t>
-
-<t>
-<list style="numbers">
-
-<t>PCE sends PCInitiate message, containing the SRPA object.
-The Association Source and the Association ID are set as described in <xref target="AssociationParameters"/>.</t>
-
-<t>PCC uses the color, endpoint and preference from the SRPA to create a new candidate path.
-If no SR policy exists to hold the candidate path, then a new SR policy is created to hold the new candidate-path.
-The Originator of the candidate path is set to be the address of the PCE that is sending the PCInitiate message.</t>
-
-<t>PCC sends a PCRpt message back to the PCE to report the newly created Candidate Path.</t>
-
-</list>
-</t>
-
-<t>A candidate-path is deleted using the following steps:</t>
-
-<t>
-<list style="numbers">
-
-<t>PCE sends PCInitiate message, setting the R-flag in the LSP object.</t>
-
-<t>PCC uses the PLSP-ID from the LSP object to find the candidate path and delete it. If this is the last candidate path under the SR policy, then the containing SR policy is deleted as well.</t>
-
-</list>
-</t>
-
-
-</section> <!-- Examples-pce-initiated-single-path -->
-
-<section anchor="Examples-pce-initiated-multiple-path" title="PCE Initiated SR Policy with multiple candidate-paths">
-
-<t>A candidate-path is created using the following steps:</t>
-
-<t>
-<list style="numbers">
-
-<t>
-PCE SHOULD send a separate PCInitiate message for every candidate path that it wants to create, or it MAY send multiple LSP objects within a single PCInitiate message.
-
-The SRPA object is sent for every LSP in the PCInitiate message.
-The Association Source and the Association ID are set as described in <xref target="AssociationParameters"/>.</t>
-
-<t>PCC creates multiple candidate paths under the same SR policy, identified by Color and Endpoint.</t>
-
-<t>PCC sends a PCRpt message back to the PCE to report the newly created Candidate Path.</t>
-
-</list>
-</t>
-
-<t>A candidate path is deleted using the following steps:</t>
-
-<t>
-<list style="numbers">
-
-<t>PCE sends PCInitiate message, setting the R-flag in the LSP object.</t>
-
-<t>PCC uses the PLSP-ID from the LSP object to find the candidate path and delete it.</t>
-
-</list>
-</t>
-
-</section> <!-- Examples-pce-initiated-multiple-path -->
-
-</section> <!-- Examples -->
-
 <section title="IANA Considerations">
 
 <section title="Association Type">
@@ -815,7 +692,7 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 </section>
 
 <section title="PCEP TLV Type Indicators">
-<t>This document defines four new TLVs for carrying additional information about SR policy and SR candidate paths. IANA is requested to make the assignment of a new value for the existing "PCEP TLV Type Indicators" registry as follows:</t>
+<t>This document defines four new TLVs for carrying additional information about SR Policy and SR Candidate Paths. IANA is requested to make the assignment of a new value for the existing "PCEP TLV Type Indicators" registry as follows:</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
