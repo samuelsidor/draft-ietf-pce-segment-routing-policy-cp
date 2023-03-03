@@ -124,7 +124,12 @@ they will automatically be output with "(if approved)" -->
 
 <abstract>
 
-<t>This document introduces a mechanism to specify a Segment Routing (SR) policy, as a collection of SR candidate paths. An SR policy is identified by &#60;headend, color, endpoint&#62; tuple. An SR policy can contain one or more candidate paths where each candidate path is identified in PCEP by its uniquely assigned PLSP-ID. This document proposes extension to PCEP to support association among candidate paths of a given SR policy. The mechanism proposed in this document is applicable to both MPLS and IPv6 data planes of SR.</t>
+<t>A Segment Routing (SR) Policy (<xref target="RFC9256"/>) is a non-empty set of SR Candidate Paths, that all share the same &#60;headend, color, endpoint&#62; tuple.
+This document extends <xref target="RFC8664"/> to fully support the SR Policy construct.
+SR Policy is modeled in PCEP as an Association of one or more SR Candidate Paths.
+PCEP extensions are defined to signal additional attributes of an SR Policy, which are not covered by <xref target="RFC8664"/>.
+The mechanism is applicable to all data planes of SR (MPLS, SRv6, etc.).
+</t>
 
 </abstract> 
 
@@ -149,9 +154,15 @@ they will automatically be output with "(if approved)" -->
 
 <t>PCEP Extensions for Establishing Relationships Between Sets of LSPs <xref target="RFC8697"/> introduces a generic mechanism to create a grouping of LSPs which can then be used to define associations between a set of LSPs and a set of attributes (such as configuration parameters or behaviors) and is equally applicable to stateful PCE (active and passive modes) and stateless PCE.</t>
 
-<t>Segment Routing Policy for Traffic Engineering <xref target="I-D.ietf-spring-segment-routing-policy"/> details the concepts of SR Policy and approaches to steering traffic into an SR Policy.</t>
+<t>Segment Routing Policy for Traffic Engineering <xref target="RFC9256"/> details the concepts of SR Policy and approaches to steering traffic into an SR Policy.</t>
 
-<t>An SR Policy contains one or more SR Policy Candidate Paths where one or more such paths can be computed via PCE. This document specifies PCEP extensions to signal additional information to map candidate paths to their SR policies. Each candidate path maps to a unique PLSP-ID in PCEP. By associating multiple candidate paths together, a PCE becomes aware of the hierarchical structure of an SR policy. Thus the PCE can take computation and control decisions about the candidate paths, with the additional knowledge that these candidate paths belong to the same SR policy. This is accomplished via the use of the existing PCEP Association object, by defining a new association type specifically for associating SR candidate paths into a single SR policy.</t>
+<t>
+This document extends <xref target="RFC8664"/> to fully support the SR Policy construct.
+SR Policy is modeled in PCEP as an Association of one or more SR Candidate Paths.
+By associating multiple SR Candidate Paths, a PCE becomes aware of the hierarchical structure of an SR policy.
+Thus the PCE can take computation and control decisions about the Candidate Paths, with the additional knowledge that these Candidate Paths belong to the same SR Policy.
+This is accomplished via the use of the PCEP Association object with a new association type.
+</t>
 
 </section> <!-- Introduction -->
 
@@ -161,7 +172,7 @@ they will automatically be output with "(if approved)" -->
 
   <list style="hanging">
     
-     <t hangText="Endpoint:"> The IPv4 or IPv6 endpoint address of the SR policy in question, as described in <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
+     <t hangText="Endpoint:"> The IPv4 or IPv6 endpoint address of the SR policy in question, as described in <xref target="RFC9256"/>.</t>
 
      <t hangText="Association Parameters:"> As described in <xref target="RFC8697"/>, the combination of the mandatory fields Association Type, Association ID and Association Source in the ASSOCIATION object uniquely identify the association group.  If the optional TLVs - Global Association Source or Extended Association ID are included, then they MUST be included in combination with mandatory fields to uniquely identify the association group.</t>
 
@@ -237,7 +248,7 @@ PCEP Tunnels naturally map to SR Policy Candidate Paths and PCEP Associations na
 However, the mapping between PCEP Tunnels and SR Policy Candidate Paths may be either one-to-one, or many-to-one, see <xref target="MultipleObjectives"/>.</t>
 
 <t>Each SR Policy Candidate Path contains one or more Segment Lists.
-The subject of encoding multiple Segment Lists within an SR Policy Candidate Path is described in <xref target="I-D.koldychev-pce-multipath"/>.</t>
+The subject of encoding multiple Segment Lists within an SR Policy Candidate Path is described in <xref target="I-D.ietf-pce-multipath"/>.</t>
 
 <t>
 This document defines a new Association Type called "SR Policy Association", of value 6 based on the generic ASSOCIATION object.
@@ -350,14 +361,14 @@ Range MUST NOT be set for this Association type and MUST be ignored.</t>
 
 <t>Color: SR Policy color value.</t>
 
-<t>Endpoint: can be either IPv4 or IPv6, depending on whether the policy endpoint is IPv4 or IPv6. This value may be different from the one contained in the END-POINTS object, or in the LSP IDENTIFIERS TLV of the LSP object. Endpoint is meant to strictly correspond to the endpoint of the SR policy, as it is defined in <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
+<t>Endpoint: can be either IPv4 or IPv6, depending on whether the policy endpoint is IPv4 or IPv6. This value may be different from the one contained in the END-POINTS object, or in the LSP IDENTIFIERS TLV of the LSP object. Endpoint is meant to strictly correspond to the endpoint of the SR policy, as it is defined in <xref target="RFC9256"/>.</t>
 
 </section> --><!-- Policy-identifiers-tlv -->
 
 <section anchor="AssociationParameters" title="Association Parameters">
 
 <t>
-As per <xref target="I-D.ietf-spring-segment-routing-policy"/>,
+As per <xref target="RFC9256"/>,
 an SR Policy is identified through the tuple &#60;headend, color, endpoint&#62;.
 the headend is encoded as the Association Source in the ASSOCIATION object and
 the color and endpoint are encoded as part of Extended Association ID TLV.
@@ -373,7 +384,7 @@ the color and endpoint are encoded as part of Extended Association ID TLV.
       </list>
 </t>
 
-<t>The Association Source MUST be set to the headend value of the SR Policy, as defined in <xref target="I-D.ietf-spring-segment-routing-policy"/> Section 2.1.
+<t>The Association Source MUST be set to the headend value of the SR Policy, as defined in <xref target="RFC9256"/> Section 2.1.
 If the PCC receives a PCInit message for a non-existent SR Policy, where the Association Source is set not to the headend value but to some globally unique IP address that the PCC owns,
 then the PCC SHOULD accept the PCInit message and create the SR Policy Association with the Association Source that was sent in the PCInit message.</t>
 
@@ -454,7 +465,7 @@ At most one SRPOLICY-POL-NAME TLV SHOULD be encoded by the sender and only the f
 
 <t>Length: indicates the length of the value portion of the TLV in octets and MUST be greater than 0. The TLV MUST be zero-padded so that the TLV is 4-octet aligned.</t>
 
-<t>SR Policy Name: SR Policy name, as defined in <xref target="I-D.ietf-spring-segment-routing-policy"/>. It SHOULD be a string of printable ASCII characters, without a NULL terminator.</t>
+<t>SR Policy Name: SR Policy name, as defined in <xref target="RFC9256"/>. It SHOULD be a string of printable ASCII characters, without a NULL terminator.</t>
 
 </section> <!-- Policy-name-tlv -->
 
@@ -488,11 +499,11 @@ Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the sender and only the firs
 
 <t>Length: 28.</t>
 
-<t>Protocol Origin: 8-bit value that encodes the protocol origin, as specified in <xref target="I-D.ietf-spring-segment-routing-policy"/> Section 2.3. Note that in PCInit messages, the Protocol Origin is always set to "PCEP".</t>
+<t>Protocol Origin: 8-bit value that encodes the protocol origin, as specified in <xref target="RFC9256"/> Section 2.3. Note that in PCInit messages, the Protocol Origin is always set to "PCEP".</t>
 
-<t>Originator ASN: Represented as 4 byte number, part of the originator identifier, as specified in <xref target="I-D.ietf-spring-segment-routing-policy"/> Section 2.4.</t>
+<t>Originator ASN: Represented as 4 byte number, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4.</t>
 
-<t>Originator Address: Represented as 128 bit value where IPv4 address are encoded in lowest 32 bits, part of the originator identifier, as specified in <xref target="I-D.ietf-spring-segment-routing-policy"/> Section 2.4.</t>
+<t>Originator Address: Represented as 128 bit value where IPv4 address are encoded in lowest 32 bits, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4.</t>
 
 <t>Discriminator: 32-bit value that encodes the Discriminator of the candidate path.</t>
 
@@ -521,7 +532,7 @@ At most one SRPOLICY-CPATH-NAME TLV SHOULD be encoded by the sender and only the
 
 <t>Length: indicates the length of the value portion of the TLV in octets and MUST be greater than 0. The TLV MUST be zero-padded so that the TLV is 4-octet aligned.</t>
 
-<t>SR Policy Candidate Path Name: SR Policy Candidate Path Name, as defined in <xref target="I-D.ietf-spring-segment-routing-policy"/>. It SHOULD be a string of printable ASCII characters, without a NULL terminator.</t>
+<t>SR Policy Candidate Path Name: SR Policy Candidate Path Name, as defined in <xref target="RFC9256"/>. It SHOULD be a string of printable ASCII characters, without a NULL terminator.</t>
 
 </section> <!-- SRPOLICY-CPATH-NAME -->
 
@@ -546,9 +557,9 @@ Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be encoded by the sender and only 
 
 <t>Length: 4.</t>
 
-<t>Preference: Numerical preference of the candidate path, as specified in Section 2.7 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
+<t>Preference: Numerical preference of the candidate path, as specified in Section 2.7 of <xref target="RFC9256"/>.</t>
 
-<t>If the TLV is missing, a default Preference value of 100 is used, as specified in Section 2.7 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.</t>
+<t>If the TLV is missing, a default Preference value of 100 is used, as specified in Section 2.7 of <xref target="RFC9256"/>.</t>
 
 </section> <!-- Cpath-preference-tlv -->
 
@@ -558,14 +569,14 @@ Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be encoded by the sender and only 
 
 <section anchor="Generic-mechanisms" title="Generic Mechanisms">
 
-<t>This section describes various mechanisms that are standardized for SR Policies in <xref target="I-D.ietf-spring-segment-routing-policy"/>,
+<t>This section describes various mechanisms that are standardized for SR Policies in <xref target="RFC9256"/>,
 but are equally applicable to other tunnel types, such as RSVP-TE tunnels.
 Hence this section does not make use of the SRPAT ASSOCIATION.</t>
 
 <section anchor="Computation-priority-tlv" title="Computation Priority TLV">
 
 <t>The COMPUTATION-PRIORITY TLV is an optional TLV for the LSP object.
-It is used to signal the numerical computation priority, as specified in Section 2.12 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.
+It is used to signal the numerical computation priority, as specified in Section 2.12 of <xref target="RFC9256"/>.
 If the TLV is absent from the LSP object, a default Priority value of 128 is used.</t>
 
 <figure anchor="COMPUTATION-PRIORITY-TLV-FORMAT" title="The COMPUTATION-PRIORITY TLV format">
@@ -620,7 +631,7 @@ It is used to control traffic streering into the LSP
 during the time when the LSP is operationally down/invalid.
 In the context of SR Policy, this TLV facilitate 
 the "Drop upon invalid" behavior,
-specified in Section 8.2 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.
+specified in Section 8.2 of <xref target="RFC9256"/>.
 Normally, if the LSP is down/invalid then traffic that is originally destined for that LSP
 is steered somewhere else, such as via IGP or via another LSP.
 The "Drop upon invalid" behavior specifies that such traffic MUST NOT be re-routed
@@ -688,7 +699,7 @@ always "Drop upon invalid" for any reason.
 
 <section anchor="Specified-bsid-only" title="Specified-BSID-only">
 
-<t>Specified-BSID-only functionality is defined in Section 6.2.3 of <xref target="I-D.ietf-spring-segment-routing-policy"/>.
+<t>Specified-BSID-only functionality is defined in Section 6.2.3 of <xref target="RFC9256"/>.
 When specified-BSID-only is enabled for a particular binding SID, it means that the given binding SID is required to be allocated and programmed for the LSP to be operationally up.
 If the binding SID cannot be allocated or programmed for some reason, then the LSP must stay down.</t>
 
@@ -1014,18 +1025,18 @@ Would like to thank Stephane Litkowski, Boris Khasanov, Praveen Kumar and Tom Pe
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8231.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8281.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7942.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-policy"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-idr-segment-routing-te-policy"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9256.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-idr-segment-routing-te-policy.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8697.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8664.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.koldychev-pce-operational"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.koldychev-pce-multipath"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.koldychev-pce-operational.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-multipath.xml"?>
 </references>
 <references title="Informative References">
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.4655.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7525.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8253.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-segment-routing-ipv6"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-segment-routing-ipv6.xml"?>
   <!--<?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.sivabalan-pce-binding-label-sid"?>-->
 </references>
 <section title="Contributors">
