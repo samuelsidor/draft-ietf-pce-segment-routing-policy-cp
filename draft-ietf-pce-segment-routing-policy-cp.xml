@@ -146,22 +146,18 @@ The mechanism is applicable to all data planes of SR (MPLS, SRv6, etc.).
 
 <section anchor="Introduction" title="Introduction">
 
-<t>Path Computation Element (PCE) Communication Protocol (PCEP) <xref target="RFC5440"/> enables the communication between a Path Computation Client (PCC) and a Path Computation Element (PCE), or between two PCEs based on the PCE architecture <xref target="RFC4655"/>.</t>
-
-<t>PCEP Extensions for the Stateful PCE Model <xref target="RFC8231"/> describes a set of extensions to PCEP to enable active control of Multiprotocol Label Switching Traffic Engineering (MPLS-TE) and Generalized MPLS (GMPLS) tunnels.  <xref target="RFC8281"/> describes the setup and teardown of PCE-initiated LSPs under the active stateful PCE model, without the need for local configuration on the PCC, thus allowing for dynamic centralized control of a network.</t>
+<t>Segment Routing Policy for Traffic Engineering <xref target="RFC9256"/> details the concepts of SR Policy and approaches to steering traffic into an SR Policy.</t>
 
 <t>PCEP Extensions for Segment Routing <xref target="RFC8664"/> specifies extensions to the Path Computation Element Protocol (PCEP) that allow a stateful PCE to compute and initiate Traffic Engineering (TE) paths, as well as a PCC to request a path subject to certain constraint(s) and optimization criteria in SR networks.</t>
 
 <t>PCEP Extensions for Establishing Relationships Between Sets of LSPs <xref target="RFC8697"/> introduces a generic mechanism to create a grouping of LSPs which can then be used to define associations between a set of LSPs and a set of attributes (such as configuration parameters or behaviors) and is equally applicable to stateful PCE (active and passive modes) and stateless PCE.</t>
-
-<t>Segment Routing Policy for Traffic Engineering <xref target="RFC9256"/> details the concepts of SR Policy and approaches to steering traffic into an SR Policy.</t>
 
 <t>
 This document extends <xref target="RFC8664"/> to fully support the SR Policy construct.
 SR Policy is modeled in PCEP as an Association of one or more SR Candidate Paths.
 By associating multiple SR Candidate Paths, a PCE becomes aware of the hierarchical structure of an SR Policy.
 Thus the PCE can take computation and control decisions about the Candidate Paths, with the additional knowledge that these Candidate Paths belong to the same SR Policy.
-This is accomplished via the use of the PCEP Association object with a new association type.
+This is accomplished via the use of the PCEP Association object with a new association type and several new TLVs.
 </t>
 
 </section> <!-- Introduction -->
@@ -174,71 +170,25 @@ This is accomplished via the use of the PCEP Association object with a new assoc
     
      <t hangText="Endpoint:"> The IPv4 or IPv6 endpoint address of the SR Policy in question, as described in <xref target="RFC9256"/>.</t>
 
+     <t hangText="SRPA:"> SR Policy Association. PCEP ASSOCATION that describes the SR Policy. Can refer to the PCEP object or to the group of LSPs that belong to the Association. This should be clear from the context.</t>
+
      <t hangText="Association Parameters:"> As described in <xref target="RFC8697"/>, the combination of the mandatory fields Association Type, Association ID and Association Source in the ASSOCIATION object uniquely identify the association group.  If the optional TLVs - Global Association Source or Extended Association ID are included, then they MUST be included in combination with mandatory fields to uniquely identify the association group.</t>
 
      <t hangText="Association Information:"> As described in <xref target="RFC8697"/>, the ASSOCIATION object could also include other TLVs based on the association types, that provides non-key information.</t>
 
-     <t hangText="SRPA:"> SR Policy Association. PCEP ASSOCATION that describes the SR Policy. Can refer to the PCEP object or to the group of LSPs that belong to the Association. This should be clear from the context.</t>
-
-     <t hangText="PCC:"> Path Computation Client.  Any client application requesting a path computation to be performed by a Path Computation Element.</t>
-
-     <t hangText="PCE:"> Path Computation Element.  An entity (component, application, or network node) that is capable of computing a network path or route based on a network graph and applying computational constraints.</t>
-
-     <t hangText="PCEP:"> Path Computation Element Protocol.</t>
-
-     <t hangText="PCEP Tunnel:"> The entity identified by the PLSP-ID, as per <xref target="I-D.koldychev-pce-operational"/>.</t>
-    
       </list>
 </t>
 
 </section> <!-- Terminology -->
 
-<section anchor="Motivation" title="Motivation">
-
-<t>The SR Policy Association and its TLVs, defined in this document, allow PCEP speakers to exchange additional information about SR Policy Candidate Paths and their container SR Policy.
-</t>
-
-<section anchor="Motivation-group" title="Group Candidate Paths belonging to the same SR Policy">
-
-<t>Since each SR Policy Candidate Path appears as a different Tunnel (identified via a PLSP-ID) in PCEP,
-it is useful to group together all the SR Policy Candidate Paths that belong to the same SR Policy.
-Furthermore, it is useful for the PCE to have knowledge of the SR Policy related information such as color, endpoint, protocol origin, discriminator, and preference.</t>
-
-</section> <!-- Motivation-group -->
-
-<section anchor="Motivation-candidate-path" title="Instantiation of SR Policy Candidate Paths">
-
-<t>A PCE needs to instantiate one or more SR Policy Candidate Paths on the PCC, as specified in <xref target="RFC8281"/>.
-Each SR Policy Candidate Path is identified by the tuple &#60;headend, color, endpoint, originator, discriminator, preference&#62;.
-This draft provides a mechanism to signal this information in PCEP.</t>
-
-</section> <!-- Motivation-candidate-path -->
-
-<section anchor="Motivation-preference" title="Avoid computing lower preference Candidate Paths">
-
-<t>When a PCE knows that a given set of SR Policy Candidate Paths all belong to the same SR Policy, then path computation MAY be done on only the highest preference Candidate Path(s).
-Path computation for lower preference paths is not necessary if one or two higher preference paths are already computed.
-Since computing their paths will not affect traffic steering, it MAY be postponed until the higher preference paths become invalid.</t>
-
-</section> <!-- Motivation-preference -->
-
-<section anchor="Motivation-signaling-overhead" title="Minimal signaling overhead">
-
-<t>When an SR Policy contains multiple SR Policy Candidate Paths computed by a PCE, such Candidate Paths can be created, updated and deleted independently of each other.
-This is achieved by making each SR Policy Candidate Path correspond to a unique Tunnel (identified via PLSP-ID).
-For example, if an SR Policy has 4 SR Policy Candidate Paths, then if the PCE wants to update one of those, only one set of PCUpd and PCRpt messages needs to be exchanged.</t>
-
-</section> <!-- Motivation-signaling-overhead -->
-
-</section> <!-- Motivation -->
-
 <section anchor="Procedure" title="Procedure">
 
 <section anchor="Overview" title="Overview">
 
-<t>As per <xref target="RFC8697"/>, LSPs are placed into an association group. As per <xref target="I-D.koldychev-pce-operational"/>,
-LSPs are contained in PCEP Tunnels and a PCEP Tunnel is contained in an Association if all of its LSPs are in that Association.
-PCEP Tunnels naturally map to SR Policy Candidate Paths and PCEP Associations naturally map to SR Policies.</t>
+<t>
+As per <xref target="RFC8697"/>, LSPs are placed into an association group.
+PCEP Tunnels naturally map to SR Policy Candidate Paths and PCEP Associations naturally map to SR Policies.
+</t>
 
 <t>The mapping between PCEP Associations and SR Policies is always one-to-one.
 However, the mapping between PCEP Tunnels and SR Policy Candidate Paths may be either one-to-one, or many-to-one, see <xref target="MultipleObjectives"/>.</t>
@@ -877,17 +827,14 @@ Would like to thank Stephane Litkowski, Boris Khasanov, Praveen Kumar and Tom Pe
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.5440.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8231.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8281.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7942.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9256.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-idr-segment-routing-te-policy.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8697.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8664.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.koldychev-pce-operational.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-multipath.xml"?>
 </references>
 <references title="Informative References">
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.4655.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7525.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8253.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-segment-routing-ipv6.xml"?>
