@@ -357,11 +357,13 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    Color: SR Policy color value.
 
-   Endpoint: can be either IPv4 or IPv6, depending on whether the policy
-   endpoint is IPv4 or IPv6.  This value MAY be different from the one
-   contained in the END-POINTS object, or in the LSP IDENTIFIERS TLV of
-   the LSP object.  This value is part of the tuple <color, endpoint>
-   that identifies the SR Policy on a given headend.
+   Endpoint: can be either IPv4 or IPv6.  This value MAY be different
+   from the one contained in the END-POINTS object, or in the LSP-
+   IDENTIFIERS TLV of the LSP object.  When neither END-POINTS object or
+   LSP-IDENTIFIERS TLV are present, the PCEP speaker MUST use this
+   Endpoint value to resolve the intended end-point of the SR Policy.
+   This value is part of the tuple <color, endpoint> that identifies the
+   SR Policy on a given headend.
 
    If the PCEP speaker receives an SRPA object whose Association
    Parameters do not follow the above specification, then the PCEP
@@ -384,8 +386,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    *  SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate
       Path Identifiers.
-
-
 
 
 
