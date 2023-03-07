@@ -181,26 +181,17 @@ This is accomplished via the use of the PCEP Association object with a new assoc
 
 </section> <!-- Terminology -->
 
-<section anchor="Procedure" title="Procedure">
-
 <section anchor="Overview" title="Overview">
 
 <t>
-As per <xref target="RFC8697"/>, LSPs are placed into an association group.
-PCEP Tunnels naturally map to SR Policy Candidate Paths and PCEP Associations naturally map to SR Policies.
-</t>
-
-<t>The mapping between PCEP Associations and SR Policies is always one-to-one.
-However, the mapping between PCEP Tunnels and SR Policy Candidate Paths may be either one-to-one, or many-to-one, see <xref target="MultipleObjectives"/>.</t>
-
-<t>Each SR Policy Candidate Path contains one or more Segment Lists.
+The SR Policy is represented by a PCEP Association, called SR Policy Association (SRPA).
+The SR Candidate Paths within a given SR Policy are the PCEP LSPs within the SRPA.
+Each SR Policy Candidate Path contains one or more Segment Lists.
 The subject of encoding multiple Segment Lists within an SR Policy Candidate Path is described in <xref target="I-D.ietf-pce-multipath"/>.</t>
 
 <t>
 This document defines a new Association Type called "SR Policy Association" (SRPA), of value 6 based on the generic ASSOCIATION object.
-</t>
-
-<t>As per the processing rules specified in section 6.4 of <xref target="RFC8697"/>, if a PCEP speaker does not support SRPA,
+As per the processing rules specified in section 6.4 of <xref target="RFC8697"/>, if a PCEP speaker does not support SRPA,
 it MUST return a PCErr message with
 Error-Type = 26 "Association Error", Error-Value = 1 "Association-type is not supported".</t>
 
@@ -216,7 +207,7 @@ SR Policy Identifiers, SR Policy Candidate Path Identifiers, and SR Policy Candi
 <t>SR Policy Identifiers uniquely identify the SR Policy within the context of the headend.
 SR Policy Identifiers MUST be the same for all SR Policy Candidate Paths in the same SRPA.
 SR Policy Identifiers MUST NOT change for a given SR Policy Candidate Path during its lifetime.
-SR Policy Identifiers MUST be different for different SRPAGs.
+SR Policy Identifiers MUST be different for different SRPAs.
 SR Policy Identifiers consist of:</t>
 <t>
       <list style="symbols">
@@ -230,7 +221,7 @@ SR Policy Identifiers consist of:</t>
 <section anchor="SRPolicyCandidatePathIdentifiers" title="SR Policy Candidate Path Identifiers">
 <t>SR Policy Candidate Path Identifiers uniquely identify the SR Policy Candidate Path within the context of an SR Policy.
 SR Policy Candidate Path Identifiers MUST NOT change for a given LSP during its lifetime.
-SR Policy Candidate Path Identifiers MUST be different for different LSPs within the same SRPA.
+SR Policy Candidate Path Identifiers MUST be different for different Candidate Paths within the same SRPA.
 When these rules are not satisfied, the PCE MUST send a PCErr message with
 Error-Type = 26 "Association Error", Error Value = TBD8 "SR Policy Candidate Path Identifiers Mismatch".
 SR Policy Candidate Path Identifiers consist of:</t>
@@ -255,8 +246,6 @@ SR Policy Candidate Path Attributes consist of:</t>
 </t>
 </section>
 
-</section> <!-- Overview -->
-
 <section anchor="MultipleObjectives" title="Multiple Optimization Objectives and Constraints">
 
 <t>In certain scenarios, it is desired for each SR Policy Candidate Path to contain multiple sub-Candidate Paths, each of which has a different optimization objective and constraints. Traffic is then sent ECMP or UCMP among these sub-Candidate Paths.</t>
@@ -265,11 +254,12 @@ SR Policy Candidate Path Attributes consist of:</t>
 
 </section> <!-- MultipleObjectives -->
 
-</section> <!-- Procedure -->
+</section> <!-- Overview -->
 
 <section anchor="Association" title="SR Policy Association">
 
-<t>Two ASSOCIATION object types for IPv4 and IPv6 are defined in <xref target="RFC8697"/>. The ASSOCIATION object includes "Association Type" indicating the type of the association group.
+<t>Two ASSOCIATION object types for IPv4 and IPv6 are defined in <xref target="RFC8697"/>.
+The ASSOCIATION object includes "Association Type" indicating the type of the association group.
 This document adds a new Association Type (6) "SR Policy Association".
 This Association Type is dynamic in nature, thus operator-configured Association
 Range MUST NOT be set for this Association type and MUST be ignored.</t>
