@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-09" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-10" ipr="trust200902">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -118,13 +118,13 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date day="5" month="March" year="2023" />
+    <date day="7" month="March" year="2023" />
 
     <workgroup>PCE Working Group</workgroup>
 
 <abstract>
 
-<t>A Segment Routing (SR) Policy (<xref target="RFC9256"/>) is a non-empty set of SR Candidate Paths, that all share the same &#60;headend, color, endpoint&#62; tuple.
+<t>A Segment Routing (SR) Policy <xref target="RFC9256"/> is a non-empty set of SR Candidate Paths, that all share the same &#60;headend, color, endpoint&#62; tuple.
 This document extends <xref target="RFC8664"/> to fully support the SR Policy construct.
 SR Policy is modeled in PCEP as an Association of one or more SR Candidate Paths.
 PCEP extensions are defined to signal additional attributes of an SR Policy, which are not covered by <xref target="RFC8664"/>.
@@ -550,7 +550,7 @@ Invalidation reasons are represented by a set of flags.
 <artwork align="center"><![CDATA[
    0 1 2 3 4 5 6 7 
   +-+-+-+-+-+-+-+-+
-  |       |V|P|F|U|
+  |       |V|P|F|G|
   +-+-+-+-+-+-+-+-+
 ]]></artwork>
 </figure>
@@ -558,8 +558,8 @@ Invalidation reasons are represented by a set of flags.
 <t>
   <list style="symbols">
     <t>G: Generic - does not fit into any other categories below.</t>
-    <t>P: Path computation failure - no path was computed for the LSP.</t>
     <t>F: First-hop resolution failure - head-end first hop resolution has failed.</t>
+    <t>P: Path computation failure - no path was computed for the LSP.</t>
     <t>V: Verification failure - OAM/PM/BFD path verification has indicated a breakage.</t>
   </list>
 </t>
@@ -594,6 +594,17 @@ Drop upon invalid state for any reason. I.e., when the PCE does not wish to
 distinguish any reason for LSP invalidation and just simply wants it to
 always "Drop upon invalid" for any reason.
 Note that when the G-flag is set, the values of the other flags are irrelevant.
+</t>
+
+<t>
+Note that out of all the "Invalidation Reasons Flags", only the G-flag (Generic)
+MUST be supported.
+The other flags can simply be ignored if they are not supported by the PCEP speaker.
+For example, suppose the PCC only support P-flag and G-flag.
+When this PCC receives this TLV with Drop Upon set to 0x6 (P,F),
+then the PCC responds with Drop Upon = 0x4 (P).
+When this PCC receives this TLV with Drop Upon set to 0x7 (P,F,G),
+then the PCC responds with Drop Upon = 0x5 (P,G).
 </t>
 
 </section> <!-- Invalidation-tlv -->
