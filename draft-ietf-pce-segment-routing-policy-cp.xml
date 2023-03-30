@@ -442,6 +442,7 @@ The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPA object.
 
 <t>
 The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPA object.
+If the TLV is absent, then default Preference value of 100 is used, as per Section 2.7 of <xref target="RFC9256"/>.
 </t>
 
 <figure anchor="SRPOLICY-CPATH-PREFERENCE-TLV-FORMAT" title="The SRPOLICY-CPATH-PREFERENCE TLV format">
@@ -460,9 +461,7 @@ The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPA object.
 
 <t>Length: 4.</t>
 
-<t>Preference: Numerical preference of the Candidate Path, as specified in Section 2.7 of <xref target="RFC9256"/>.</t>
-
-<t>If the TLV is missing, a default Preference value of 100 is used, as specified in Section 2.7 of <xref target="RFC9256"/>.</t>
+<t>Preference: Numerical preference of the Candidate Path.</t>
 
 </section> <!-- Cpath-preference-tlv -->
 
@@ -472,7 +471,7 @@ The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPA object.
 
 <section anchor="Generic-mechanisms" title="Generic Mechanisms">
 
-<t>This section describes various mechanisms that are standardized for SR Policies in <xref target="RFC9256"/>,
+<t>This section describes mechanisms that are standardized for SR Policies in <xref target="RFC9256"/>,
 but are equally applicable to other tunnel types, such as RSVP-TE tunnels.
 Hence this section does not make use of the SRPA.</t>
 
@@ -535,18 +534,26 @@ during the time when the LSP is operationally down/invalid.
 In the context of SR Policy, this TLV facilitates 
 the "Drop upon invalid" behavior,
 specified in Section 8.2 of <xref target="RFC9256"/>.
-Normally, if the LSP is down/invalid then traffic that is originally destined for that LSP
-is steered somewhere else, such as via IGP or via another LSP.
-The "Drop upon invalid" behavior specifies that such traffic MUST NOT be re-routed
-and has to be dropped at the head-end.
-While in the "Drop upon invalid" state, the LSP operational state is "UP",
+Normally, if the LSP is down/invalid then it stops attracting traffic and
+traffic that is originally destined for that LSP
+is redirected somewhere else, such as via IGP or via another LSP.
+The "Drop upon invalid" behavior specifies that the LSP keeps attracting traffic
+and the traffic has to be dropped at the head-end.
+Such an LSP is said to be "in drop state".
+While in the drop state, the LSP operational state is "UP",
 as indicated by the O-flag in the LSP object.
-However the ERO object is empty, indicating that traffic is being dropped.
+However the ERO object MAY be empty, if no valid path has been computed.
 </t>
 <t>
-In addition to the above, this TLV can also be used by the PCC to report to the PCE
-various reasons for LSP being invalidated.
-Invalidation reasons are represented by a set of flags.
+The INVALIDATION TLV is used in both directions between PCEP peers:
+  <list style="symbols">
+    <t>PCE -> PCC: PCE specifies to the PCC under what conditions the LSP should enter the drop state.</t>
+    <t>PCC -> PCE: PCC reports under what conditions the LSP will enter the drop state and the PCC also reports whether the LSP is currently in the drop state and if so, for what reason.</t>
+  </list>
+</t>
+
+<t>
+Reasons for entering the drop state are represented by a set of flags.
 </t>
 
 <figure anchor="INVAL_FLAGS" title="Invalidation Reasons Flags">
@@ -590,12 +597,12 @@ it MUST be set to 0 by the PCE and ignored by the PCC.
 </t>
 
 <t>Drop Upon: contains "Invalidation Reasons Flags" for conditions
-that MUST cause the LSP to drop traffic.
+that SHOULD cause the LSP to enter drop state.
 This field can be set to non-zero values by both PCC and PCE.
 When the G-flag is set, this indicates that the LSP is to go into
 Drop upon invalid state for any reason. I.e., when the PCE does not wish to
 distinguish any reason for LSP invalidation and just simply wants it to
-always "Drop upon invalid" for any reason.
+always go into drop state whenever the LSP is down.
 Note that when the G-flag is set, the values of the other flags are irrelevant.
 </t>
 
