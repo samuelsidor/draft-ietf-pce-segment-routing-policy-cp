@@ -172,9 +172,9 @@ This is accomplished via the use of the PCEP Association object with a new assoc
 
      <t hangText="SRPA:"> SR Policy Association. PCEP ASSOCATION that describes the SR Policy. Can refer to the PCEP object or to the group of LSPs that belong to the Association. This should be clear from the context.</t>
 
-     <t hangText="Association Parameters:"> As described in <xref target="RFC8697"/>, the combination of the mandatory fields Association Type, Association ID and Association Source in the ASSOCIATION object uniquely identify the association group.  If the optional TLVs - Global Association Source or Extended Association ID are included, then they MUST be included in combination with mandatory fields to uniquely identify the association group.</t>
+     <t hangText="Association Parameters:"> As described in <xref target="RFC8697"/>, refers to the key data, that uniquely identifies the Association in the network.</t>
 
-     <t hangText="Association Information:"> As described in <xref target="RFC8697"/>, the ASSOCIATION object could also include other TLVs based on the association types, that provides non-key information.</t>
+     <t hangText="Association Information:"> As described in <xref target="RFC8697"/>, refers to the non-key information about the Association.</t>
 
       </list>
 </t>
@@ -796,7 +796,7 @@ Thus securing the PCEP session using Transport Layer
 
 <section anchor="Acknowledgement" title="Acknowledgement">
 <t>
-Would like to thank Stephane Litkowski, Boris Khasanov, Praveen Kumar and Tom Petch for review and suggestions.
+Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman, Praveen Kumar and Tom Petch for review and suggestions.
 </t>
 </section> <!-- Acknowledgement -->
 

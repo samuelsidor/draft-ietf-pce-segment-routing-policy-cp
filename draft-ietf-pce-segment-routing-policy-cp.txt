@@ -170,17 +170,11 @@ Koldychev, et al.       Expires 8 September 2023                [Page 3]
 Internet-Draft         PCEP SR Policy Association             March 2023
 
 
-   Association Parameters:  As described in [RFC8697], the combination
-      of the mandatory fields Association Type, Association ID and
-      Association Source in the ASSOCIATION object uniquely identify the
-      association group.  If the optional TLVs - Global Association
-      Source or Extended Association ID are included, then they MUST be
-      included in combination with mandatory fields to uniquely identify
-      the association group.
+   Association Parameters:  As described in [RFC8697], refers to the key
+      data, that uniquely identifies the Association in the network.
 
-   Association Information:  As described in [RFC8697], the ASSOCIATION
-      object could also include other TLVs based on the association
-      types, that provides non-key information.
+   Association Information:  As described in [RFC8697], refers to the
+      non-key information about the Association.
 
 3.  Overview
 
@@ -218,6 +212,12 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    during its lifetime.  SR Policy Identifiers MUST be different for
    different SRPAs.  SR Policy Identifiers consist of:
 
+   *  Headend router where the SR Policy originates.
+
+   *  Color of SR Policy.
+
+   *  Endpoint of SR Policy.
+
 
 
 
@@ -225,12 +225,6 @@ Koldychev, et al.       Expires 8 September 2023                [Page 4]
 
 Internet-Draft         PCEP SR Policy Association             March 2023
 
-
-   *  Headend router where the SR Policy originates.
-
-   *  Color of SR Policy.
-
-   *  Endpoint of SR Policy.
 
 3.2.  SR Policy Candidate Path Identifiers
 
@@ -274,6 +268,12 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    Tunnels are allocated for each SR Policy Candidate Path.  Each PCEP
    Tunnel has its own optimization objective and constraints.  When a
    single SR Policy Candidate Path contains multiple PCEP Tunnels, each
+   of these PCEP Tunnels MUST have identical values of Candidate Path
+   Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see Section 4.2.2.
+
+
+
+
 
 
 
@@ -281,9 +281,6 @@ Koldychev, et al.       Expires 8 September 2023                [Page 5]
 
 Internet-Draft         PCEP SR Policy Association             March 2023
 
-
-   of these PCEP Tunnels MUST have identical values of Candidate Path
-   Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see Section 4.2.2.
 
 4.  SR Policy Association
 
@@ -325,6 +322,9 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    The Extended Association ID TLV MUST be included and it MUST be in
    the following format:
+
+
+
 
 
 
@@ -903,8 +903,8 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
 9.  Acknowledgement
 
-   Would like to thank Stephane Litkowski, Boris Khasanov, Praveen Kumar
-   and Tom Petch for review and suggestions.
+   Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman,
+   Praveen Kumar and Tom Petch for review and suggestions.
 
 10.  References
 
