@@ -184,16 +184,17 @@ This is accomplished via the use of the PCEP Association object with a new assoc
 <section anchor="Overview" title="Overview">
 
 <t>
-The SR Policy is represented by a PCEP Association, called SR Policy Association (SRPA).
-The SR Candidate Paths within a given SR Policy are the PCEP LSPs within the SRPA.
-Each SR Policy Candidate Path contains one or more Segment Lists.
-The subject of encoding multiple Segment Lists within an SR Policy Candidate Path is described in <xref target="I-D.ietf-pce-multipath"/>.</t>
+The SR Policy is represented by a new type of PCEP Association, called the SR Policy Association (SRPA).
+The SR Candidate Paths of an SR Policy are the PCEP LSPs within the same SRPA.
+The subject of encoding multiple Segment Lists within an SR Policy Candidate Path is described in <xref target="I-D.ietf-pce-multipath"/>.
+</t>
 
 <t>
-This document defines a new Association Type called "SR Policy Association" (SRPA), of value 6 based on the generic ASSOCIATION object.
-As per the processing rules specified in section 6.4 of <xref target="RFC8697"/>, if a PCEP speaker does not support SRPA,
-it MUST return a PCErr message with
-Error-Type = 26 "Association Error", Error-Value = 1 "Association-type is not supported".</t>
+This document defines a new Association Type called "SR Policy Association" (SRPA), of value 6.
+A PCEP speaker that supports the SRPA MUST send the ASSOC-Type-List TLV, defined in <xref target="RFC8697"/> Section 4.1,
+containing the value 6, corresponding to the SRPA Association Type.
+Otherwise the PCEP speaker MUST assume that the remote PCEP peer does not support SRPA and MUST NOT send the SRPA to that remote peer.
+</t>
 
 <t>A given LSP MUST belong to at most one SRPA, since an SR Policy Candidate Path cannot belong to multiple SR Policies.
 If a PCEP speaker receives a PCEP message requesting to join more than one SRPA for the same LSP,
@@ -204,7 +205,7 @@ Error-Type = 26 "Association Error", Error-Value = 7 "Cannot join the associatio
 SR Policy Identifiers, SR Policy Candidate Path Identifiers, and SR Policy Candidate Path Attributes.</t>
 
 <section anchor="SRPolicyIdentifiers" title="SR Policy Identifiers">
-<t>SR Policy Identifiers uniquely identify the SR Policy within the context of the headend.
+<t>SR Policy Identifiers uniquely identify the SR Policy within the network.
 SR Policy Identifiers MUST be the same for all SR Policy Candidate Paths in the same SRPA.
 SR Policy Identifiers MUST NOT change for a given SR Policy Candidate Path during its lifetime.
 SR Policy Identifiers MUST be different for different SRPAs.
