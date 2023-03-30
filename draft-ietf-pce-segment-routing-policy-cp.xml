@@ -301,7 +301,7 @@ then the PCC SHOULD accept the PCInit message and create the SR Policy Associati
 
 <t>Length: Either 8 or 20, depending on whether IPv4 or IPv6 address is encoded in the Endpoint.</t>
 
-<t>Color: SR Policy color value.</t>
+<t>Color: SR Policy color value, non-zero as per <xref target="RFC9256"/> Section 2.1.</t>
 
 <t>Endpoint: can be either IPv4 or IPv6.
 This value MAY be different from the one contained in the END-POINTS object, or in the LSP-IDENTIFIERS TLV of the LSP object.

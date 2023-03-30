@@ -322,7 +322,7 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    Length: Either 8 or 20, depending on whether IPv4 or IPv6 address is
    encoded in the Endpoint.
 
-   Color: SR Policy color value.
+   Color: SR Policy color value, non-zero as per [RFC9256] Section 2.1.
 
    Endpoint: can be either IPv4 or IPv6.  This value MAY be different
    from the one contained in the END-POINTS object, or in the LSP-
