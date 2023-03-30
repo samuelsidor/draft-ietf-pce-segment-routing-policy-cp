@@ -600,7 +600,7 @@ Note that when the G-flag is set, the values of the other flags are irrelevant.
 Note that out of all the "Invalidation Reasons Flags", only the G-flag (Generic)
 MUST be supported.
 The other flags can simply be ignored if they are not supported by the PCEP speaker.
-For example, suppose the PCC only support P-flag and G-flag.
+For example, suppose the PCC only supports P-flag and G-flag.
 When this PCC receives this TLV with Drop Upon set to 0x6 (P,F),
 then the PCC responds with Drop Upon = 0x4 (P).
 When this PCC receives this TLV with Drop Upon set to 0x7 (P,F,G),
