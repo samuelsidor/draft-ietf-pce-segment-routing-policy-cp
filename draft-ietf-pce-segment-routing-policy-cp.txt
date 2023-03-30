@@ -85,27 +85,27 @@ Table of Contents
      3.1.  SR Policy Identifiers . . . . . . . . . . . . . . . . . .   4
      3.2.  SR Policy Candidate Path Identifiers  . . . . . . . . . .   5
      3.3.  SR Policy Candidate Path Attributes . . . . . . . . . . .   5
-     3.4.  Multiple Optimization Objectives and Constraints  . . . .   5
-   4.  SR Policy Association . . . . . . . . . . . . . . . . . . . .   6
-     4.1.  Association Parameters  . . . . . . . . . . . . . . . . .   6
+   4.  SR Policy Association . . . . . . . . . . . . . . . . . . . .   5
+     4.1.  Association Parameters  . . . . . . . . . . . . . . . . .   5
      4.2.  Association Information . . . . . . . . . . . . . . . . .   7
-       4.2.1.  SR Policy Name TLV  . . . . . . . . . . . . . . . . .   8
+       4.2.1.  SR Policy Name TLV  . . . . . . . . . . . . . . . . .   7
        4.2.2.  SR Policy Candidate Path Identifiers TLV  . . . . . .   8
        4.2.3.  SR Policy Candidate Path Name TLV . . . . . . . . . .   9
        4.2.4.  SR Policy Candidate Path Preference TLV . . . . . . .  10
-   5.  Generic Mechanisms  . . . . . . . . . . . . . . . . . . . . .  11
-     5.1.  Computation Priority TLV  . . . . . . . . . . . . . . . .  11
+   5.  Generic Mechanisms  . . . . . . . . . . . . . . . . . . . . .  10
+     5.1.  Computation Priority TLV  . . . . . . . . . . . . . . . .  10
      5.2.  Explicit Null Label Policy (ENLP) TLV . . . . . . . . . .  11
-     5.3.  Invalidation TLV  . . . . . . . . . . . . . . . . . . . .  12
+     5.3.  Invalidation TLV  . . . . . . . . . . . . . . . . . . . .  11
      5.4.  Specified-BSID-only . . . . . . . . . . . . . . . . . . .  13
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
-     6.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  14
-     6.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  14
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
+     6.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  13
+     6.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  13
      6.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  14
      6.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  15
    7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  15
-     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  16
+     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  15
      7.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  16
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  16
 
 
 
@@ -114,12 +114,11 @@ Koldychev, et al.       Expires 8 September 2023                [Page 2]
 Internet-Draft         PCEP SR Policy Association             March 2023
 
 
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  16
-   9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  17
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  17
+   9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  16
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  16
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  16
      10.2.  Informative References . . . . . . . . . . . . . . . . .  18
-   Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  19
+   Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  18
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  19
 
 1.  Introduction
@@ -161,6 +160,7 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    SRPA:  SR Policy Association.  PCEP ASSOCATION that describes the SR
       Policy.  Can refer to the PCEP object or to the group of LSPs that
       belong to the Association.  This should be clear from the context.
+
 
 
 
@@ -256,32 +256,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    *  Optionally, the SR Policy name.
 
-3.4.  Multiple Optimization Objectives and Constraints
-
-   In certain scenarios, it is desired for each SR Policy Candidate Path
-   to contain multiple sub-Candidate Paths, each of which has a
-   different optimization objective and constraints.  Traffic is then
-   sent ECMP or UCMP among these sub-Candidate Paths.
-
-   This is represented in PCEP by a many-to-one mapping between PCEP
-   Tunnels and SR Policy Candidate Paths.  This means that multiple PCEP
-   Tunnels are allocated for each SR Policy Candidate Path.  Each PCEP
-   Tunnel has its own optimization objective and constraints.  When a
-   single SR Policy Candidate Path contains multiple PCEP Tunnels, each
-   of these PCEP Tunnels MUST have identical values of Candidate Path
-   Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see Section 4.2.2.
-
-
-
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023                [Page 5]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
 4.  SR Policy Association
 
    Two ASSOCIATION object types for IPv4 and IPv6 are defined in
@@ -299,6 +273,14 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    encoded as part of Extended Association ID TLV.
 
    The Association Parameters (see Section 2) consist of:
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023                [Page 5]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
    *  Association Type: set to 6 "SR Policy Association".
 
@@ -322,21 +304,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    The Extended Association ID TLV MUST be included and it MUST be in
    the following format:
-
-
-
-
-
-
-
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023                [Page 6]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -362,6 +329,15 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    IDENTIFIERS TLV of the LSP object.  When neither END-POINTS object or
    LSP-IDENTIFIERS TLV are present, the PCEP speaker MUST use this
    Endpoint value to resolve the intended end-point of the SR Policy.
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023                [Page 6]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
    This value is part of the tuple <color, endpoint> that identifies the
    SR Policy on a given headend.
 
@@ -387,13 +363,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    *  SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate
       Path Identifiers.
 
-
-
-Koldychev, et al.       Expires 8 September 2023                [Page 7]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
    *  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
       Path string name.
 
@@ -411,6 +380,19 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    most one SRPOLICY-POL-NAME TLV SHOULD be encoded by the sender and
    only the first occurrence is processed and any others MUST be
    ignored.
+
+
+
+
+
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023                [Page 7]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -440,16 +422,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    only the first occurrence is processed and any others MUST be
    ignored.
 
-
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023                [Page 8]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -470,6 +442,13 @@ Internet-Draft         PCEP SR Policy Association             March 2023
                  Figure 3: The SRPOLICY-CPATH-ID TLV format
 
    Type: 57 for "SRPOLICY-CPATH-ID" TLV.
+
+
+
+Koldychev, et al.       Expires 8 September 2023                [Page 8]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
    Length: 28.
 
@@ -494,18 +473,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    and only the first occurrence is processed and any others MUST be
    ignored.
 
-
-
-
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023                [Page 9]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -527,6 +494,17 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    SR Policy Candidate Path Name: SR Policy Candidate Path Name, as
    defined in [RFC9256].  It SHOULD be a string of printable ASCII
    characters, without a NULL terminator.
+
+
+
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023                [Page 9]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
 4.2.4.  SR Policy Candidate Path Preference TLV
 
@@ -555,13 +533,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    If the TLV is missing, a default Preference value of 100 is used, as
    specified in Section 2.7 of [RFC9256].
 
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 10]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
 5.  Generic Mechanisms
 
    This section describes various mechanisms that are standardized for
@@ -583,6 +554,13 @@ Internet-Draft         PCEP SR Policy Association             March 2023
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |    Priority    |                     MBZ                      |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 10]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
                Figure 6: The COMPUTATION-PRIORITY TLV format
 
@@ -611,13 +589,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    Type: TBD2 for "ENLP" TLV.
 
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 11]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
    Length: 4.
 
    ENLP (Explicit NULL Label Policy): same values as in Section 2.4.5 of
@@ -637,6 +608,15 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    the LSP operational state is "UP", as indicated by the O-flag in the
    LSP object.  However the ERO object is empty, indicating that traffic
    is being dropped.
+
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 11]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
    In addition to the above, this TLV can also be used by the PCC to
    report to the PCE various reasons for LSP being invalidated.
@@ -667,13 +647,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
       | Inval Reason  |   Drop Upon   |              MBZ              |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 12]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
                    Figure 9: The INVALIDATION TLV format
 
    Type: TBD3 for "INVALIDATION" TLV.
@@ -693,6 +666,13 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    for LSP invalidation and just simply wants it to always "Drop upon
    invalid" for any reason.  Note that when the G-flag is set, the
    values of the other flags are irrelevant.
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 12]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
    Note that out of all the "Invalidation Reasons Flags", only the
    G-flag (Generic) MUST be supported.  The other flags can simply be
@@ -719,17 +699,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    possible to have a mix of BSIDs for the same LSP: some with S=1 and
    some with S=0.
 
-
-
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 13]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
 6.  IANA Considerations
 
 6.1.  Association Type
@@ -751,6 +720,15 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    information about SR Policy and SR Candidate Paths.  IANA is
    requested to make the assignment of a new value for the existing
    "PCEP TLV Type Indicators" registry as follows:
+
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 13]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
    +-----------+-------------------------------------------+-----------+
    | Value     | Description                               | Reference |
@@ -778,14 +756,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    error values within the "PCEP-ERROR Object Error Types and Values"
    sub-registry of the PCEP Numbers registry, as follows:
 
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 14]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
    +------------+------------------+-----------------------+-----------+
    | Error-Type | Meaning          | Error-value           | Reference |
    +------------+------------------+-----------------------+-----------+
@@ -805,6 +775,16 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    |            |                  | Candidate Path        |           |
    |            |                  | Identifiers Mismatch  |           |
    +------------+------------------+-----------------------+-----------+
+
+
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 14]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
 6.4.  TE-PATH-BINDING TLV Flag field
 
@@ -835,13 +815,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    features.  Readers are advised to note that other implementations may
    exist.
 
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 15]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
    According to [RFC7942], "this will allow reviewers and working groups
    to assign due consideration to documents that have the benefit of
    running code, which may serve as evidence of valuable experimentation
@@ -860,6 +833,14 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    *  Maturity Level: Proof of concept.
 
    *  Coverage: Full.
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 15]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
    *  Contact: mkoldych@cisco.com
 
@@ -890,14 +871,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    grouping of related LSPs and messages.  The SRPA could provide an
    adversary with the opportunity to eavesdrop on the relationship
    between the LSPs.  Thus securing the PCEP session using Transport
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 16]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
    Layer Security (TLS) [RFC8253], as per the recommendations and best
    current practices in [RFC7525], is RECOMMENDED.
 
@@ -917,6 +890,14 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    [RFC5440]  Vasseur, JP., Ed. and JL. Le Roux, Ed., "Path Computation
               Element (PCE) Communication Protocol (PCEP)", RFC 5440,
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 16]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
               DOI 10.17487/RFC5440, March 2009,
               <https://www.rfc-editor.org/info/rfc5440>.
 
@@ -945,15 +926,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
               Jain, D., and S. Lin, "Advertising Segment Routing
               Policies in BGP", Work in Progress, Internet-Draft, draft-
               ietf-idr-segment-routing-te-policy-20, 27 July 2022,
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 17]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
               <https://datatracker.ietf.org/doc/html/draft-ietf-idr-
               segment-routing-te-policy-20>.
 
@@ -974,6 +946,14 @@ Internet-Draft         PCEP SR Policy Association             March 2023
               Koldychev, M., Sivabalan, S., Saad, T., Beeram, V. P.,
               Bidgoli, H., Yadav, B., Peng, S., and G. S. Mishra, "PCEP
               Extensions for Signaling Multipath Information", Work in
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 17]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
               Progress, Internet-Draft, draft-ietf-pce-multipath-07, 14
               November 2022, <https://datatracker.ietf.org/doc/html/
               draft-ietf-pce-multipath-07>.
@@ -1001,6 +981,26 @@ Internet-Draft         PCEP SR Policy Association             March 2023
               March 2023, <https://datatracker.ietf.org/doc/html/draft-
               ietf-pce-segment-routing-ipv6-16>.
 
+Appendix A.  Contributors
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1009,8 +1009,6 @@ Koldychev, et al.       Expires 8 September 2023               [Page 18]
 
 Internet-Draft         PCEP SR Policy Association             March 2023
 
-
-Appendix A.  Contributors
 
    Dhruv Dhody
    Huawei Technologies
@@ -1057,6 +1055,8 @@ Authors' Addresses
    Email: ssivabal@ciena.com
 
 
+   Colby Barth
+   Juniper Networks, Inc.
 
 
 
@@ -1065,9 +1065,6 @@ Koldychev, et al.       Expires 8 September 2023               [Page 19]
 
 Internet-Draft         PCEP SR Policy Association             March 2023
 
-
-   Colby Barth
-   Juniper Networks, Inc.
 
    Email: cbarth@juniper.net
 
@@ -1086,6 +1083,9 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    Nokia
 
    Email: hooman.bidgoli@nokia.com
+
+
+
 
 
 
