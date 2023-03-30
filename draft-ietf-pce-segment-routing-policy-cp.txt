@@ -482,9 +482,7 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 4.2.4.  SR Policy Candidate Path Preference TLV
 
    The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPA
-   object.  Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be encoded by
-   the sender and only the first occurrence is processed and any others
-   MUST be ignored.
+   object.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -498,6 +496,8 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    Type: 59 for "SRPOLICY-CPATH-PREFERENCE" TLV.
 
+   Length: 4.
+
 
 
 
@@ -505,8 +505,6 @@ Koldychev, et al.       Expires 8 September 2023                [Page 9]
 
 Internet-Draft         PCEP SR Policy Association             March 2023
 
-
-   Length: 4.
 
    Preference: Numerical preference of the Candidate Path, as specified
    in Section 2.7 of [RFC9256].
@@ -550,6 +548,8 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    The ENLP TLV is an optional TLV for the LSP object.  It is used to
    implement the "Explicit Null Label Policy", as specified in
    Section 2.4.5 of [I-D.ietf-idr-segment-routing-te-policy].
+
+
 
 
 

@@ -440,8 +440,9 @@ The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPA object.
 
 <section anchor="Cpath-preference-tlv" title="SR Policy Candidate Path Preference TLV">
 
-<t>The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPA object.
-Only one SRPOLICY-CPATH-PREFERENCE TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+<t>
+The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPA object.
+</t>
 
 <figure anchor="SRPOLICY-CPATH-PREFERENCE-TLV-FORMAT" title="The SRPOLICY-CPATH-PREFERENCE TLV format">
 <artwork align="center"><![CDATA[
