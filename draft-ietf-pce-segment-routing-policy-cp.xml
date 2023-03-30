@@ -623,26 +623,6 @@ It is possible to have a mix of BSIDs for the same LSP: some with S=1 and some w
 
 </section> <!-- Generic-mechanisms -->
 
-<section anchor="RRO" title="Use of RRO object with SR Policy">
-
-<t><xref target="RFC8231"/> defines &#60;intended-path&#62; and &#60;actual-path&#62;, consisting of the ERO and RRO objects, respectively.
-<xref target="RFC8664"/> defines SR-ERO and SR-RRO sub-objects for SR-TE LSPs.
-<xref target="I-D.ietf-pce-segment-routing-ipv6"/> further defines SRv6-ERO and SRv6-RRO sub-objects for SRv6-TE paths.</t>
-
-<t>
-In RSVP-TE, the RRO is optional and its contents are populated hop-by-hop along the LSP using the Path and Resv messages.
-The RRO thus allows for collection of extra information about the intermediate hops, such as protection and loose hop expansion.
-In contrast to RSVP-TE, the SR Policy Architecture <xref target="RFC9256"/> does not currently make use of any hop-by-hop signaling.
-Thus, there is no clear mechanism by which to populate the RRO in SR Policy.
-</t>
- 
-<t>
-PCEP speakers SHOULD NOT send the RRO object for an SR Policy.
-If a PCEP speaker receives both ERO and RRO for the same SR LSP, it SHOULD ignore the RRO and interpret only the ERO.
-</t>
-
-</section> <!-- RRO -->
-
 <section title="IANA Considerations">
 
 <section title="Association Type">
