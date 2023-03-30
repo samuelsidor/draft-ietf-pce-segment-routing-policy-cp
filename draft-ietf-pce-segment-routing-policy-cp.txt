@@ -83,7 +83,7 @@ Table of Contents
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Overview  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
      3.1.  SR Policy Identifiers . . . . . . . . . . . . . . . . . .   4
-     3.2.  SR Policy Candidate Path Identifiers  . . . . . . . . . .   5
+     3.2.  SR Policy Candidate Path Identifiers  . . . . . . . . . .   4
      3.3.  SR Policy Candidate Path Attributes . . . . . . . . . . .   5
    4.  SR Policy Association . . . . . . . . . . . . . . . . . . . .   5
      4.1.  Association Parameters  . . . . . . . . . . . . . . . . .   5
@@ -91,10 +91,10 @@ Table of Contents
        4.2.1.  SR Policy Name TLV  . . . . . . . . . . . . . . . . .   7
        4.2.2.  SR Policy Candidate Path Identifiers TLV  . . . . . .   8
        4.2.3.  SR Policy Candidate Path Name TLV . . . . . . . . . .   9
-       4.2.4.  SR Policy Candidate Path Preference TLV . . . . . . .  10
+       4.2.4.  SR Policy Candidate Path Preference TLV . . . . . . .   9
    5.  Generic Mechanisms  . . . . . . . . . . . . . . . . . . . . .  10
      5.1.  Computation Priority TLV  . . . . . . . . . . . . . . . .  10
-     5.2.  Explicit Null Label Policy (ENLP) TLV . . . . . . . . . .  11
+     5.2.  Explicit Null Label Policy (ENLP) TLV . . . . . . . . . .  10
      5.3.  Invalidation TLV  . . . . . . . . . . . . . . . . . . . .  11
      5.4.  Specified-BSID-only . . . . . . . . . . . . . . . . . . .  13
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
@@ -184,21 +184,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    encoding multiple Segment Lists within an SR Policy Candidate Path is
    described in [I-D.ietf-pce-multipath].
 
-   This document defines a new Association Type called "SR Policy
-   Association" (SRPA), of value 6.  A PCEP speaker that supports the
-   SRPA MUST send the ASSOC-Type-List TLV, defined in [RFC8697]
-   Section 4.1, containing the value 6, corresponding to the SRPA
-   Association Type.  Otherwise the PCEP speaker MUST assume that the
-   remote PCEP peer does not support SRPA and MUST NOT send the SRPA to
-   that remote peer.
-
-   A given LSP MUST belong to at most one SRPA, since an SR Policy
-   Candidate Path cannot belong to multiple SR Policies.  If a PCEP
-   speaker receives a PCEP message requesting to join more than one SRPA
-   for the same LSP, then the PCEP speaker MUST send a PCErr message
-   with Error-Type = 26 "Association Error", Error-Value = 7 "Cannot
-   join the association group".
-
    An SRPA carries three pieces of information: SR Policy Identifiers,
    SR Policy Candidate Path Identifiers, and SR Policy Candidate Path
    Attributes.
@@ -218,14 +203,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    *  Endpoint of SR Policy.
 
-
-
-
-Koldychev, et al.       Expires 8 September 2023                [Page 4]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
 3.2.  SR Policy Candidate Path Identifiers
 
    SR Policy Candidate Path Identifiers uniquely identify the SR Policy
@@ -241,6 +218,13 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    *  Protocol Origin.
 
    *  Originator.
+
+
+
+Koldychev, et al.       Expires 8 September 2023                [Page 4]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
    *  Discriminator.
 
@@ -261,19 +245,35 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    Two ASSOCIATION object types for IPv4 and IPv6 are defined in
    [RFC8697].  The ASSOCIATION object includes "Association Type"
    indicating the type of the association group.  This document adds a
-   new Association Type (6) "SR Policy Association".  This Association
-   Type is dynamic in nature, thus operator-configured Association Range
-   MUST NOT be set for this Association type and MUST be ignored.
+   new Association Type (6) "SR Policy Association".
+
+   This Association Type is dynamic in nature, thus operator-configured
+   Association Range MUST NOT be set for this Association type and MUST
+   be ignored.
+
+   A PCEP speaker that supports the SRPA MUST send the ASSOC-Type-List
+   TLV, defined in [RFC8697] Section 4.1, containing the value (6),
+   corresponding to the SRPA Association Type.  Otherwise the PCEP
+   speaker MUST assume that the remote PCEP peer does not support SRPA
+   and MUST NOT send the SRPA to that remote peer.
+
+   A given LSP MUST belong to at most one SRPA, since an SR Policy
+   Candidate Path cannot belong to multiple SR Policies.  If a PCEP
+   speaker receives a PCEP message requesting to join more than one SRPA
+   for the same LSP, then the PCEP speaker MUST send a PCErr message
+   with Error-Type = 26 "Association Error", Error-Value = 7 "Cannot
+   join the association group".
 
 4.1.  Association Parameters
 
    As per [RFC9256], an SR Policy is identified through the tuple
-   <headend, color, endpoint>. the headend is encoded as the Association
-   Source in the ASSOCIATION object and the color and endpoint are
-   encoded as part of Extended Association ID TLV.
+   <headend, color, endpoint>.  The headend is encoded as the
+   Association Source in the ASSOCIATION object and the color and
+   endpoint are encoded as part of Extended Association ID TLV.
 
    The Association Parameters (see Section 2) consist of:
 
+   *  Association Type: set to 6 "SR Policy Association".
 
 
 
@@ -281,8 +281,6 @@ Koldychev, et al.       Expires 8 September 2023                [Page 5]
 
 Internet-Draft         PCEP SR Policy Association             March 2023
 
-
-   *  Association Type: set to 6 "SR Policy Association".
 
    *  Association Source (IPv4/IPv6): set to the headend IP address.
 
@@ -329,6 +327,8 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    IDENTIFIERS TLV of the LSP object.  When neither END-POINTS object or
    LSP-IDENTIFIERS TLV are present, the PCEP speaker MUST use this
    Endpoint value to resolve the intended end-point of the SR Policy.
+   This value is part of the tuple <color, endpoint> that identifies the
+   SR Policy on a given headend.
 
 
 
@@ -337,9 +337,6 @@ Koldychev, et al.       Expires 8 September 2023                [Page 6]
 
 Internet-Draft         PCEP SR Policy Association             March 2023
 
-
-   This value is part of the tuple <color, endpoint> that identifies the
-   SR Policy on a given headend.
 
    If the PCEP speaker receives an SRPA object whose Association
    Parameters do not follow the above specification, then the PCEP
@@ -376,23 +373,7 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
 4.2.1.  SR Policy Name TLV
 
-   The SRPOLICY-POL-NAME TLV is an optional TLV for the SRPA object.  At
-   most one SRPOLICY-POL-NAME TLV SHOULD be encoded by the sender and
-   only the first occurrence is processed and any others MUST be
-   ignored.
-
-
-
-
-
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023                [Page 7]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
+   The SRPOLICY-POL-NAME TLV is an optional TLV for the SRPA object.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -406,6 +387,13 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
                  Figure 2: The SRPOLICY-POL-NAME TLV format
 
+
+
+Koldychev, et al.       Expires 8 September 2023                [Page 7]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
    Type: 56 for "SRPOLICY-POL-NAME" TLV.
 
    Length: indicates the length of the value portion of the TLV in
@@ -418,9 +406,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 4.2.2.  SR Policy Candidate Path Identifiers TLV
 
    The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
-   Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the sender and
-   only the first occurrence is processed and any others MUST be
-   ignored.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -443,13 +428,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    Type: 57 for "SRPOLICY-CPATH-ID" TLV.
 
-
-
-Koldychev, et al.       Expires 8 September 2023                [Page 8]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
    Length: 28.
 
    Protocol Origin: 8-bit value that encodes the protocol origin, as
@@ -463,15 +441,21 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    are encoded in lowest 32 bits, part of the originator identifier, as
    specified in [RFC9256] Section 2.4.
 
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023                [Page 8]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
    Discriminator: 32-bit value that encodes the Discriminator of the
    Candidate Path.
 
 4.2.3.  SR Policy Candidate Path Name TLV
 
    The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPA object.
-   At most one SRPOLICY-CPATH-NAME TLV SHOULD be encoded by the sender
-   and only the first occurrence is processed and any others MUST be
-   ignored.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -495,17 +479,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    defined in [RFC9256].  It SHOULD be a string of printable ASCII
    characters, without a NULL terminator.
 
-
-
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023                [Page 9]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
 4.2.4.  SR Policy Candidate Path Preference TLV
 
    The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPA
@@ -524,6 +497,14 @@ Internet-Draft         PCEP SR Policy Association             March 2023
              Figure 5: The SRPOLICY-CPATH-PREFERENCE TLV format
 
    Type: 59 for "SRPOLICY-CPATH-PREFERENCE" TLV.
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023                [Page 9]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
    Length: 4.
 
@@ -555,13 +536,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
       |    Priority    |                     MBZ                      |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 10]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
                Figure 6: The COMPUTATION-PRIORITY TLV format
 
    Type: TBD1 for "COMPUTATION-PRIORITY" TLV.
@@ -576,6 +550,17 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    The ENLP TLV is an optional TLV for the LSP object.  It is used to
    implement the "Explicit Null Label Policy", as specified in
    Section 2.4.5 of [I-D.ietf-idr-segment-routing-te-policy].
+
+
+
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 10]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -609,15 +594,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    LSP object.  However the ERO object is empty, indicating that traffic
    is being dropped.
 
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 11]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
    In addition to the above, this TLV can also be used by the PCC to
    report to the PCE various reasons for LSP being invalidated.
    Invalidation reasons are represented by a set of flags.
@@ -633,6 +609,14 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    *  F: First-hop resolution failure - head-end first hop resolution
       has failed.
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 11]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
    *  P: Path computation failure - no path was computed for the LSP.
 
@@ -667,13 +651,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    invalid" for any reason.  Note that when the G-flag is set, the
    values of the other flags are irrelevant.
 
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 12]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
    Note that out of all the "Invalidation Reasons Flags", only the
    G-flag (Generic) MUST be supported.  The other flags can simply be
    ignored if they are not supported by the PCEP speaker.  For example,
@@ -682,6 +659,20 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    responds with Drop Upon = 0x4 (P).  When this PCC receives this TLV
    with Drop Upon set to 0x7 (P,F,G), then the PCC responds with Drop
    Upon = 0x5 (P,G).
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 12]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
 
 5.4.  Specified-BSID-only
 
@@ -720,6 +711,15 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    information about SR Policy and SR Candidate Paths.  IANA is
    requested to make the assignment of a new value for the existing
    "PCEP TLV Type Indicators" registry as follows:
+
+
+
+
+
+
+
+
+
 
 
 

@@ -189,18 +189,6 @@ The SR Candidate Paths of an SR Policy are the PCEP LSPs within the same SRPA.
 The subject of encoding multiple Segment Lists within an SR Policy Candidate Path is described in <xref target="I-D.ietf-pce-multipath"/>.
 </t>
 
-<t>
-This document defines a new Association Type called "SR Policy Association" (SRPA), of value 6.
-A PCEP speaker that supports the SRPA MUST send the ASSOC-Type-List TLV, defined in <xref target="RFC8697"/> Section 4.1,
-containing the value 6, corresponding to the SRPA Association Type.
-Otherwise the PCEP speaker MUST assume that the remote PCEP peer does not support SRPA and MUST NOT send the SRPA to that remote peer.
-</t>
-
-<t>A given LSP MUST belong to at most one SRPA, since an SR Policy Candidate Path cannot belong to multiple SR Policies.
-If a PCEP speaker receives a PCEP message requesting to join more than one SRPA for the same LSP,
-then the PCEP speaker MUST send a PCErr message with
-Error-Type = 26 "Association Error", Error-Value = 7 "Cannot join the association group".</t>
-
 <t>An SRPA carries three pieces of information:
 SR Policy Identifiers, SR Policy Candidate Path Identifiers, and SR Policy Candidate Path Attributes.</t>
 
@@ -251,18 +239,36 @@ SR Policy Candidate Path Attributes consist of:</t>
 
 <section anchor="Association" title="SR Policy Association">
 
-<t>Two ASSOCIATION object types for IPv4 and IPv6 are defined in <xref target="RFC8697"/>.
+<t>
+Two ASSOCIATION object types for IPv4 and IPv6 are defined in <xref target="RFC8697"/>.
 The ASSOCIATION object includes "Association Type" indicating the type of the association group.
 This document adds a new Association Type (6) "SR Policy Association".
+</t>
+
+<t>
 This Association Type is dynamic in nature, thus operator-configured Association
-Range MUST NOT be set for this Association type and MUST be ignored.</t>
+Range MUST NOT be set for this Association type and MUST be ignored.
+</t>
+
+<t>
+A PCEP speaker that supports the SRPA MUST send the ASSOC-Type-List TLV, defined in <xref target="RFC8697"/> Section 4.1,
+containing the value (6), corresponding to the SRPA Association Type.
+Otherwise the PCEP speaker MUST assume that the remote PCEP peer does not support SRPA and MUST NOT send the SRPA to that remote peer.
+</t>
+
+<t>
+A given LSP MUST belong to at most one SRPA, since an SR Policy Candidate Path cannot belong to multiple SR Policies.
+If a PCEP speaker receives a PCEP message requesting to join more than one SRPA for the same LSP,
+then the PCEP speaker MUST send a PCErr message with
+Error-Type = 26 "Association Error", Error-Value = 7 "Cannot join the association group".
+</t>
 
 <section anchor="AssociationParameters" title="Association Parameters">
 
 <t>
 As per <xref target="RFC9256"/>,
 an SR Policy is identified through the tuple &#60;headend, color, endpoint&#62;.
-the headend is encoded as the Association Source in the ASSOCIATION object and
+The headend is encoded as the Association Source in the ASSOCIATION object and
 the color and endpoint are encoded as part of Extended Association ID TLV.
 </t>
 
@@ -337,8 +343,9 @@ Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "Missing Mandatory
 
 <section anchor="Policy-name-tlv" title="SR Policy Name TLV">
 
-<t>The SRPOLICY-POL-NAME TLV is an optional TLV for the SRPA object.
-At most one SRPOLICY-POL-NAME TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+<t>
+The SRPOLICY-POL-NAME TLV is an optional TLV for the SRPA object.
+</t>
 
 <figure anchor="SRPOLICY-POL-NAME-TLV-FORMAT" title="The SRPOLICY-POL-NAME TLV format">
 <artwork align="center"><![CDATA[
@@ -364,8 +371,9 @@ At most one SRPOLICY-POL-NAME TLV SHOULD be encoded by the sender and only the f
 
 <section anchor="Cpath-identifiers-tlv" title="SR Policy Candidate Path Identifiers TLV">
 
-<t>The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
-Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+<t>
+The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
+</t>
 
 <figure anchor="SRPOLICY-CPATH-ID-TLV-FORMAT" title="The SRPOLICY-CPATH-ID TLV format">
 <artwork align="center"><![CDATA[
@@ -404,8 +412,9 @@ Only one SRPOLICY-CPATH-ID TLV SHOULD be encoded by the sender and only the firs
 
 <section anchor="SRPOLICY-CPATH-NAME" title="SR Policy Candidate Path Name TLV">
 
-<t>The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPA object.
-At most one SRPOLICY-CPATH-NAME TLV SHOULD be encoded by the sender and only the first occurrence is processed and any others MUST be ignored.</t>
+<t>
+The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPA object.
+</t>
 
 <figure anchor="SRPOLICY-CPATH-NAME-TLV-FORMAT" title="The SRPOLICY-CPATH-NAME TLV format">
 <artwork align="center"><![CDATA[
