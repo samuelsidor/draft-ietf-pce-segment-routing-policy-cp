@@ -189,8 +189,13 @@ The SR Candidate Paths of an SR Policy are the PCEP LSPs within the same SRPA.
 The subject of encoding multiple Segment Lists within an SR Policy Candidate Path is described in <xref target="I-D.ietf-pce-multipath"/>.
 </t>
 
-<t>An SRPA carries three pieces of information:
+<t>The SRPA carries three pieces of information:
 SR Policy Identifiers, SR Policy Candidate Path Identifiers, and SR Policy Candidate Path Attributes.</t>
+
+<t>
+Additional information is carried outside of SRPA:
+Computation Priority, Explicit Null Label Policy, Drop upon Invalid, and Specified-BSID-only.
+</t>
 
 <section anchor="SRPolicyIdentifiers" title="SR Policy Identifiers">
 <t>SR Policy Identifiers uniquely identify the SR Policy within the network.
@@ -311,9 +316,8 @@ then the PCC SHOULD accept the PCInit message and create the SR Policy Associati
 <t>Color: SR Policy color value, non-zero as per <xref target="RFC9256"/> Section 2.1.</t>
 
 <t>Endpoint: can be either IPv4 or IPv6.
-This value MAY be different from the one contained in the END-POINTS object, or in the LSP-IDENTIFIERS TLV of the LSP object.
-When neither END-POINTS object or LSP-IDENTIFIERS TLV are present, the PCEP speaker MUST use this Endpoint value to resolve the intended end-point of the SR Policy.
-This value is part of the tuple &#60;color, endpoint&#62; that identifies the SR Policy on a given headend.</t>
+This value MAY be different from the one contained in the END-POINTS object, or in the LSP-IDENTIFIERS TLV.
+</t>
 
 <t>If the PCEP speaker receives an SRPA object
 whose Association Parameters do not follow the above specification,
@@ -321,6 +325,17 @@ then the PCEP speaker MUST send PCErr message with
 Error-Type = 26 "Association Error", Error-Value = TBD7 "SR Policy Identifiers Mismatch".</t>
 
 <t>The purpose of choosing the Association Parameters in this way is to guarantee that there is no possibility of a race condition when multiple PCEP speakers want to create the same SR Policy at the same time. By adhering to this format, all PCEP speakers come up with the same Association Parameters independently of each other. Thus, there is no chance that different PCEP speakers will come up with different Association Parameters for the same SR Policy.</t>
+
+<t>
+The computed destination of the SR Policy Candidate Path MAY differ from the Endpoint contained in the &#60;headend, color, endpoint&#62; tuple.
+An example use case is to terminate the SR Policy before reaching the Endpoint and have decapsulated traffic go the rest of the way to the Endpoint node using the native IGP path(s).
+In this example, the destination of the SR Policy Candidate Paths will be some node before the Endpoint, but the Endpoint value is still used at the head-end to steer traffic with that Endpoint IP into the SR Policy.
+Destination of the SR Policy Candidate Path is signaled using the END-POINTS object and/or LSP-IDENTIFIERS TLV, as per the usual PCEP procedures.
+When both END-POINTS and LSP-IDENTIFIERS TLV are present and valid,
+the PCEP speaker SHOULD give preference to the END-POINTS object for extracting the destination.
+When neither END-POINTS object nor LSP-IDENTIFIERS TLV is present,
+the PCEP speaker SHOULD extract the destination from the Endpoint field in the SRPA Extended Association ID TLV.
+</t>
 
 </section> <!-- AssociationParameters -->
 
@@ -442,7 +457,7 @@ The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPA object.
 
 <t>
 The SRPOLICY-CPATH-PREFERENCE TLV is an optional TLV for the SRPA object.
-If the TLV is absent, then default Preference value of 100 is used, as per Section 2.7 of <xref target="RFC9256"/>.
+If the TLV is absent, then default Preference value is 100, as per Section 2.7 of <xref target="RFC9256"/>.
 </t>
 
 <figure anchor="SRPOLICY-CPATH-PREFERENCE-TLV-FORMAT" title="The SRPOLICY-CPATH-PREFERENCE TLV format">
