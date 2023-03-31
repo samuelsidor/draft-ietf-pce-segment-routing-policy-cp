@@ -102,10 +102,10 @@ Table of Contents
      6.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  14
      6.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  14
      6.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  15
-   7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  15
+     6.5.  SR Policy Candidate Path Protocol Origin field  . . . . .  15
+   7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  16
      7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  16
      7.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  16
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  16
 
 
 
@@ -114,12 +114,13 @@ Koldychev, et al.       Expires 8 September 2023                [Page 2]
 Internet-Draft         PCEP SR Policy Association             March 2023
 
 
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
    9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  17
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  17
      10.2.  Informative References . . . . . . . . . . . . . . . . .  18
    Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  19
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  19
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
 
 1.  Introduction
 
@@ -160,7 +161,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    SRPA:  SR Policy Association.  PCEP ASSOCATION that describes the SR
       Policy.  Can refer to the PCEP object or to the group of LSPs that
       belong to the Association.  This should be clear from the context.
-
 
 
 
@@ -817,6 +817,31 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    | 1            | Specified-BSID-only                    | This.I-D  |
    +--------------+----------------------------------------+-----------+
 
+6.5.  SR Policy Candidate Path Protocol Origin field
+
+   IANA is requested to create a new registry "SR Policy Candidate Path
+   Protocol Origin field".  New values are to be assigned by Standards
+   Action [RFC8236].
+
+   +------------+------------------------------------------------------+
+   | Value        | Description                                        |
+   +--------------+----------------------------------------------------+
+   | 10           | PCEP                                               |
+   +--------------+----------------------------------------------------+
+   | 20           | BGP SR Policy                                      |
+   +--------------+----------------------------------------------------+
+   | 30           | Configuration (CLI, YANG model via NETCONF, etc.)  |
+   +--------------+----------------------------------------------------+
+   | 251 - 255    | Private Use (not to be assigned by IANA)           |
+   +--------------+----------------------------------------------------+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 15]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
 7.  Implementation Status
 
    [Note to the RFC Editor - remove this section before publication, as
@@ -834,13 +859,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    be construed to be, a catalog of available implementations or their
    features.  Readers are advised to note that other implementations may
    exist.
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 15]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
 
    According to [RFC7942], "this will allow reviewers and working groups
    to assign due consideration to documents that have the benefit of
@@ -873,6 +891,13 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    *  Maturity Level: Proof of concept.
 
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 16]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
    *  Coverage: Partial.
 
    *  Contact: cbarth@juniper.net
@@ -890,14 +915,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    grouping of related LSPs and messages.  The SRPA could provide an
    adversary with the opportunity to eavesdrop on the relationship
    between the LSPs.  Thus securing the PCEP session using Transport
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 16]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
    Layer Security (TLS) [RFC8253], as per the recommendations and best
    current practices in [RFC7525], is RECOMMENDED.
 
@@ -924,6 +941,19 @@ Internet-Draft         PCEP SR Policy Association             March 2023
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+   [RFC8236]  Hao, F., Ed., "J-PAKE: Password-Authenticated Key Exchange
+              by Juggling", RFC 8236, DOI 10.17487/RFC8236, September
+              2017, <https://www.rfc-editor.org/info/rfc8236>.
+
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 17]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
    [RFC8231]  Crabbe, E., Minei, I., Medved, J., and R. Varga, "Path
               Computation Element Communication Protocol (PCEP)
               Extensions for Stateful PCE", RFC 8231,
@@ -945,15 +975,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
               Jain, D., and S. Lin, "Advertising Segment Routing
               Policies in BGP", Work in Progress, Internet-Draft, draft-
               ietf-idr-segment-routing-te-policy-20, 27 July 2022,
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 17]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
               <https://datatracker.ietf.org/doc/html/draft-ietf-idr-
               segment-routing-te-policy-20>.
 
@@ -980,6 +1001,15 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
 10.2.  Informative References
 
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 18]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
    [RFC7525]  Sheffer, Y., Holz, R., and P. Saint-Andre,
               "Recommendations for Secure Use of Transport Layer
               Security (TLS) and Datagram Transport Layer Security
@@ -1000,15 +1030,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
               Internet-Draft, draft-ietf-pce-segment-routing-ipv6-16, 6
               March 2023, <https://datatracker.ietf.org/doc/html/draft-
               ietf-pce-segment-routing-ipv6-16>.
-
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 18]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
 
 Appendix A.  Contributors
 
@@ -1037,6 +1058,14 @@ Appendix A.  Contributors
 
    Email: ssidor@cisco.com
 
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 19]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
 Authors' Addresses
 
    Mike Koldychev
@@ -1055,15 +1084,6 @@ Authors' Addresses
    Canada
 
    Email: ssivabal@ciena.com
-
-
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 19]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
 
 
    Colby Barth
@@ -1086,26 +1106,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    Nokia
 
    Email: hooman.bidgoli@nokia.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

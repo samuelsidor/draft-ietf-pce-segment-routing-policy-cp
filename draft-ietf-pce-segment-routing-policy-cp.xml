@@ -743,6 +743,29 @@ IANA is requested to allocate new bit within the "TE-PATH-BINDING TLV Flag field
 </t>
 </section>
 
+<section title="SR Policy Candidate Path Protocol Origin field">
+<t>
+IANA is requested to create a new registry "SR Policy Candidate Path Protocol Origin field".
+New values are to be assigned by Standards Action <xref target="RFC8236"/>.
+</t>
+<figure>
+        <artwork align="left"><![CDATA[
++------------+------------------------------------------------------+
+| Value        | Description                                        |
++--------------+----------------------------------------------------+
+| 10           | PCEP                                               |
++--------------+----------------------------------------------------+
+| 20           | BGP SR Policy                                      |
++--------------+----------------------------------------------------+
+| 30           | Configuration (CLI, YANG model via NETCONF, etc.)  |
++--------------+----------------------------------------------------+
+| 251 - 255    | Private Use (not to be assigned by IANA)           |
++--------------+----------------------------------------------------+
+
+]]></artwork>
+      </figure>
+</section>
+
 </section> 
 
 <section  title="Implementation Status">
@@ -833,6 +856,7 @@ Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman, Praveen Ku
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.5440.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8236.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8231.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7942.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9256.xml"?>
