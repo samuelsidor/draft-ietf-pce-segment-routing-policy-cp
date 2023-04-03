@@ -240,6 +240,14 @@ SR Policy Candidate Path Attributes consist of:</t>
 </t>
 </section>
 
+<section anchor="MultipleObjectives" title="Multiple Optimization Objectives and Constraints">
+
+<t>In certain scenarios, it is desired for each SR Policy Candidate Path to contain multiple sub-Candidate Paths, each of which has a different optimization objective and constraints. Traffic is then sent ECMP or UCMP among these sub-Candidate Paths.</t>
+
+<t>This is represented in PCEP by a many-to-one mapping between PCEP Tunnels and SR Policy Candidate Paths. This means that multiple PCEP Tunnels are allocated for each SR Policy Candidate Path. Each PCEP Tunnel has its own optimization objective and constraints. When a single SR Policy Candidate Path contains multiple PCEP Tunnels, each of these PCEP Tunnels MUST have identical values of Candidate Path Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see <xref target="Cpath-identifiers-tlv"/>.</t>
+
+</section> <!-- MultipleObjectives -->
+
 </section> <!-- Overview -->
 
 <section anchor="Association" title="SR Policy Association">
