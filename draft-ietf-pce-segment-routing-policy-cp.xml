@@ -735,7 +735,7 @@ IANA is requested to allocate new bit within the "TE-PATH-BINDING TLV Flag field
 +------------+------------------------------------------+-----------+
 | Bit position | Description                            | Reference |
 +--------------+----------------------------------------+-----------+
-| 1            | Specified-BSID-only                    | This.I-D  |
+| TBD9         | S (Specified-BSID-only)                | This.I-D  |
 +--------------+----------------------------------------+-----------+
 
 ]]></artwork>

@@ -814,7 +814,7 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    +------------+------------------------------------------+-----------+
    | Bit position | Description                            | Reference |
    +--------------+----------------------------------------+-----------+
-   | 1            | Specified-BSID-only                    | This.I-D  |
+   | TBD9         | S (Specified-BSID-only)                | This.I-D  |
    +--------------+----------------------------------------+-----------+
 
 6.5.  SR Policy Candidate Path Protocol Origin field
