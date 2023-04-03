@@ -193,8 +193,8 @@ The subject of encoding multiple Segment Lists within an SR Policy Candidate Pat
 SR Policy Identifiers, SR Policy Candidate Path Identifiers, and SR Policy Candidate Path Attributes.</t>
 
 <t>
-Additional information is carried outside of SRPA:
-Computation Priority, Explicit Null Label Policy, Drop upon Invalid, and Specified-BSID-only.
+Additional information is also carried outside of SRPA:
+Computation Priority, Explicit Null Label Policy, Drop upon Invalid behavior, and Specified-BSID-only.
 </t>
 
 <section anchor="SRPolicyIdentifiers" title="SR Policy Identifiers">
@@ -288,7 +288,7 @@ the color and endpoint are encoded as part of Extended Association ID TLV.
 </t>
 
 <t>The Association Source MUST be set to the headend value of the SR Policy, as defined in <xref target="RFC9256"/> Section 2.1.
-If the PCC receives a PCInit message for a non-existent SR Policy, where the Association Source is set not to the headend value but to some globally unique IP address that the PCC owns,
+If the PCC receives a PCInit message with the Association Source set not to the headend IP but to some globally unique IP address that the headend owns,
 then the PCC SHOULD accept the PCInit message and create the SR Policy Association with the Association Source that was sent in the PCInit message.</t>
 
 <t>The 16-bit Association ID field in the ASSOCIATION object MUST be set to the value of "1".</t>

@@ -188,8 +188,8 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    SR Policy Candidate Path Identifiers, and SR Policy Candidate Path
    Attributes.
 
-   Additional information is carried outside of SRPA: Computation
-   Priority, Explicit Null Label Policy, Drop upon Invalid, and
+   Additional information is also carried outside of SRPA: Computation
+   Priority, Explicit Null Label Policy, Drop upon Invalid behavior, and
    Specified-BSID-only.
 
 3.1.  SR Policy Identifiers
@@ -295,11 +295,11 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    The Association Source MUST be set to the headend value of the SR
    Policy, as defined in [RFC9256] Section 2.1.  If the PCC receives a
-   PCInit message for a non-existent SR Policy, where the Association
-   Source is set not to the headend value but to some globally unique IP
-   address that the PCC owns, then the PCC SHOULD accept the PCInit
-   message and create the SR Policy Association with the Association
-   Source that was sent in the PCInit message.
+   PCInit message with the Association Source set not to the headend IP
+   but to some globally unique IP address that the headend owns, then
+   the PCC SHOULD accept the PCInit message and create the SR Policy
+   Association with the Association Source that was sent in the PCInit
+   message.
 
    The 16-bit Association ID field in the ASSOCIATION object MUST be set
    to the value of "1".
