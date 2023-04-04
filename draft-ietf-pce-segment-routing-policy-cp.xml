@@ -423,13 +423,22 @@ The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
 
 <t>Length: 28.</t>
 
-<t>Protocol Origin: 8-bit value that encodes the protocol origin, as specified in <xref target="RFC9256"/> Section 2.3. Note that in PCInit messages, the Protocol Origin is always set to "PCEP".</t>
+<t>Protocol Origin: 8-bit value that encodes the protocol origin, as specified in <xref target="RFC9256"/> Section 2.3.
+Note that in PCInit messages, the Protocol Origin is always set to "PCEP".
+</t>
 
-<t>Originator ASN: Represented as 4 byte number, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4.</t>
+<t>Originator ASN: Represented as 4 byte number, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4.
+When sending PCInit, the PCE is acting as the originator and therefore SHOULD set this to an ASN that it belongs to.
+</t>
 
-<t>Originator Address: Represented as 128 bit value where IPv4 address are encoded in lowest 32 bits, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4.</t>
+<t>Originator Address: Represented as 128 bit value where IPv4 address are encoded in lowest 32 bits, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4.
+When sending PCInit, the PCE is acting as the originator and therefore SHOULD set this to an address that it owns.
+</t>
 
-<t>Discriminator: 32-bit value that encodes the Discriminator of the Candidate Path.</t>
+<t>Discriminator: 32-bit value that encodes the Discriminator of the Candidate Path.
+This is the field that mainly distinguishes different SR Candidate Paths, coming from the same originator.
+It is allowed to be any number in the 32-bit range.
+</t>
 
 </section> <!-- Cpath-identifiers-tlv -->
 
@@ -852,7 +861,7 @@ Thus securing the PCEP session using Transport Layer
 
 <section anchor="Acknowledgement" title="Acknowledgement">
 <t>
-Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman, Praveen Kumar and Tom Petch for review and suggestions.
+Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman, Alex Tokar, Praveen Kumar and Tom Petch for review and suggestions.
 </t>
 </section> <!-- Acknowledgement -->
 

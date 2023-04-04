@@ -91,7 +91,7 @@ Table of Contents
      4.2.  Association Information . . . . . . . . . . . . . . . . .   8
        4.2.1.  SR Policy Name TLV  . . . . . . . . . . . . . . . . .   8
        4.2.2.  SR Policy Candidate Path Identifiers TLV  . . . . . .   9
-       4.2.3.  SR Policy Candidate Path Name TLV . . . . . . . . . .   9
+       4.2.3.  SR Policy Candidate Path Name TLV . . . . . . . . . .  10
        4.2.4.  SR Policy Candidate Path Preference TLV . . . . . . .  10
    5.  Generic Mechanisms  . . . . . . . . . . . . . . . . . . . . .  11
      5.1.  Computation Priority TLV  . . . . . . . . . . . . . . . .  11
@@ -485,18 +485,18 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    the Protocol Origin is always set to "PCEP".
 
    Originator ASN: Represented as 4 byte number, part of the originator
-   identifier, as specified in [RFC9256] Section 2.4.
+   identifier, as specified in [RFC9256] Section 2.4.  When sending
+   PCInit, the PCE is acting as the originator and therefore SHOULD set
+   this to an ASN that it belongs to.
 
    Originator Address: Represented as 128 bit value where IPv4 address
    are encoded in lowest 32 bits, part of the originator identifier, as
-   specified in [RFC9256] Section 2.4.
+   specified in [RFC9256] Section 2.4.  When sending PCInit, the PCE is
+   acting as the originator and therefore SHOULD set this to an address
+   that it owns.
 
    Discriminator: 32-bit value that encodes the Discriminator of the
-   Candidate Path.
-
-4.2.3.  SR Policy Candidate Path Name TLV
-
-   The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPA object.
+   Candidate Path.  This is the field that mainly distinguishes
 
 
 
@@ -505,6 +505,13 @@ Koldychev, et al.       Expires 8 September 2023                [Page 9]
 
 Internet-Draft         PCEP SR Policy Association             March 2023
 
+
+   different SR Candidate Paths, coming from the same originator.  It is
+   allowed to be any number in the 32-bit range.
+
+4.2.3.  SR Policy Candidate Path Name TLV
+
+   The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPA object.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -548,19 +555,14 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    Length: 4.
 
-   Preference: Numerical preference of the Candidate Path.
-
-
-
-
-
-
 
 
 Koldychev, et al.       Expires 8 September 2023               [Page 10]
 
 Internet-Draft         PCEP SR Policy Association             March 2023
 
+
+   Preference: Numerical preference of the Candidate Path.
 
 5.  Generic Mechanisms
 
@@ -609,14 +611,14 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
          Figure 7: The Explicit Null Label Policy (ENLP) TLV format
 
-   Type: TBD2 for "ENLP" TLV.
-
 
 
 Koldychev, et al.       Expires 8 September 2023               [Page 11]
 
 Internet-Draft         PCEP SR Policy Association             March 2023
 
+
+   Type: TBD2 for "ENLP" TLV.
 
    Length: 4.
 
@@ -664,8 +666,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
       has failed.
 
    *  P: Path computation failure - no path was computed for the LSP.
-
-
 
 
 
@@ -933,7 +933,7 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 9.  Acknowledgement
 
    Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman,
-   Praveen Kumar and Tom Petch for review and suggestions.
+   Alex Tokar, Praveen Kumar and Tom Petch for review and suggestions.
 
 10.  References
 
