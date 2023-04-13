@@ -105,7 +105,7 @@ Table of Contents
      6.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  15
      6.5.  SR Policy Candidate Path Protocol Origin field  . . . . .  15
    7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  16
-     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  16
+     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  17
 
 
 
@@ -117,8 +117,8 @@ Internet-Draft         PCEP SR Policy Association             March 2023
      7.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  17
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
    9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  17
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  17
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  18
      10.2.  Informative References . . . . . . . . . . . . . . . . .  19
    Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  19
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
@@ -827,13 +827,13 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
 6.5.  SR Policy Candidate Path Protocol Origin field
 
-   IANA is requested to create a new registry "SR Policy Candidate Path
-   Protocol Origin field".  New values are to be assigned by Standards
-   Action [RFC8236].
-
-
-
-
+   This document requests IANA to maintain a new registry under "Segment
+   Routing Parameters" registry group with the allocation policy of
+   "Specification Required" [RFC8126] using the guidelines for
+   Designated Experts as specified in [RFC9256].  The new registry is
+   called "SR Policy Protocol Origin".  The registry contains the
+   following codepoints, with initial values, to be assigned by IANA
+   with the reference set to this document:
 
 
 
@@ -845,11 +845,21 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    +------------+------------------------------------------------------+
    | Value        | Description                                        |
    +--------------+----------------------------------------------------+
+   | 0            | Reserved (not to be used)                          |
+   +--------------+----------------------------------------------------+
+   | 1-9          | Unassigned                                         |
+   +--------------+----------------------------------------------------+
    | 10           | PCEP                                               |
+   +--------------+----------------------------------------------------+
+   | 11-19        | Unassigned                                         |
    +--------------+----------------------------------------------------+
    | 20           | BGP SR Policy                                      |
    +--------------+----------------------------------------------------+
+   | 21-29        |                                                    |
+   +--------------+----------------------------------------------------+
    | 30           | Configuration (CLI, YANG model via NETCONF, etc.)  |
+   +--------------+----------------------------------------------------+
+   | 31-250       | Unassigned                                         |
    +--------------+----------------------------------------------------+
    | 251 - 255    | Private Use (not to be assigned by IANA)           |
    +--------------+----------------------------------------------------+
@@ -879,6 +889,15 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    It is up to the individual working groups to use this information as
    they see fit".
 
+
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 16]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
 7.1.  Cisco
 
    *  Organization: Cisco Systems
@@ -890,13 +909,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    *  Maturity Level: Proof of concept.
 
    *  Coverage: Full.
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 16]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
 
    *  Contact: mkoldych@cisco.com
 
@@ -935,6 +947,13 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman,
    Alex Tokar, Praveen Kumar and Tom Petch for review and suggestions.
 
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 17]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
 10.  References
 
 10.1.  Normative References
@@ -946,14 +965,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    [RFC5440]  Vasseur, JP., Ed. and JL. Le Roux, Ed., "Path Computation
               Element (PCE) Communication Protocol (PCEP)", RFC 5440,
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 17]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
-
               DOI 10.17487/RFC5440, March 2009,
               <https://www.rfc-editor.org/info/rfc5440>.
 
@@ -991,6 +1002,14 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 
    [RFC8697]  Minei, I., Crabbe, E., Sivabalan, S., Ananthakrishnan, H.,
               Dhody, D., and Y. Tanaka, "Path Computation Element
+
+
+
+Koldychev, et al.       Expires 8 September 2023               [Page 18]
+
+Internet-Draft         PCEP SR Policy Association             March 2023
+
+
               Communication Protocol (PCEP) Extensions for Establishing
               Relationships between Sets of Label Switched Paths
               (LSPs)", RFC 8697, DOI 10.17487/RFC8697, January 2020,
@@ -1001,14 +1020,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
               Protocol (PCEP) Extensions for Segment Routing", RFC 8664,
               DOI 10.17487/RFC8664, December 2019,
               <https://www.rfc-editor.org/info/rfc8664>.
-
-
-
-
-Koldychev, et al.       Expires 8 September 2023               [Page 18]
-
-Internet-Draft         PCEP SR Policy Association             March 2023
-
 
    [I-D.ietf-pce-multipath]
               Koldychev, M., Sivabalan, S., Saad, T., Beeram, V. P.,
@@ -1042,17 +1053,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
               ietf-pce-segment-routing-ipv6-16>.
 
 Appendix A.  Contributors
-
-
-
-
-
-
-
-
-
-
-
 
 
 
