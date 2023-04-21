@@ -370,12 +370,9 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    steer traffic with that Endpoint IP into the SR Policy.  Destination
    of the SR Policy Candidate Path is signaled using the END-POINTS
    object and/or LSP-IDENTIFIERS TLV, as per the usual PCEP procedures.
-   When both END-POINTS and LSP-IDENTIFIERS TLV are present and valid,
-   the PCEP speaker SHOULD give preference to the END-POINTS object for
-   extracting the destination.  When neither END-POINTS object nor LSP-
-   IDENTIFIERS TLV is present, the PCEP speaker SHOULD extract the
-   destination from the Endpoint field in the SRPA Extended Association
-   ID TLV.
+   When neither END-POINTS object nor LSP-IDENTIFIERS TLV is present,
+   the PCEP speaker SHOULD extract the destination from the Endpoint
+   field in the SRPA Extended Association ID TLV.
 
 4.2.  Association Information
 
@@ -386,6 +383,9 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    *  SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate
       Path Identifiers.
 
+   *  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
+      Path string name.
+
 
 
 
@@ -394,9 +394,6 @@ Koldychev, et al.       Expires 8 September 2023                [Page 7]
 Internet-Draft         PCEP SR Policy Association             March 2023
 
 
-   *  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
-      Path string name.
-
    *  SRPOLICY-CPATH-PREFERENCE TLV: (optional) encodes SR Policy
       Candidate Path preference value.
 
@@ -404,6 +401,12 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    mandatory TLV is missing from the SRPA object, the PCE MUST send a
    PCErr message with Error-Type = 6 "Mandatory Object Missing", Error-
    Value = TBD6 "Missing Mandatory TLV".
+
+   Unless specifically stated otherwise, the TLVs listed in the
+   following sub-sections are assumed to be single instance.  Meaning,
+   only one instance of the TLV SHOULD be present in the object and only
+   the first instance of the TLV SHOULD be interpreted and subsequent
+   instances SHOULD be ignored.
 
 4.2.1.  SR Policy Name TLV
 
@@ -433,9 +436,6 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 4.2.2.  SR Policy Candidate Path Identifiers TLV
 
    The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
-
-
-
 
 
 
@@ -828,12 +828,12 @@ Internet-Draft         PCEP SR Policy Association             March 2023
 6.5.  SR Policy Candidate Path Protocol Origin field
 
    This document requests IANA to maintain a new registry under "Segment
-   Routing Parameters" registry group with the allocation policy of
-   "Specification Required" [RFC8126] using the guidelines for
-   Designated Experts as specified in [RFC9256].  The new registry is
-   called "SR Policy Protocol Origin".  The registry contains the
-   following codepoints, with initial values, to be assigned by IANA
-   with the reference set to this document:
+   Routing Parameters" registry group.  New values are to be assigned by
+   "Standards Action" [RFC8126].  The new registry is called "SR Policy
+   Protocol Origin".  The registry contains the following codepoints,
+   with initial values, to be assigned by IANA with the reference set to
+   this document:
+
 
 
 
@@ -855,7 +855,7 @@ Internet-Draft         PCEP SR Policy Association             March 2023
    +--------------+----------------------------------------------------+
    | 20           | BGP SR Policy                                      |
    +--------------+----------------------------------------------------+
-   | 21-29        |                                                    |
+   | 21-29        | Unassigned                                         |
    +--------------+----------------------------------------------------+
    | 30           | Configuration (CLI, YANG model via NETCONF, etc.)  |
    +--------------+----------------------------------------------------+
