@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-10" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-11" ipr="trust200902">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -118,7 +118,7 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date day="21" month="April" year="2023" />
+    <date day="12" month="June" year="2023" />
 
     <workgroup>PCE Working Group</workgroup>
 
@@ -504,11 +504,54 @@ If the TLV is absent, then default Preference value is 100, as per Section 2.7 o
 
 </section> <!-- Association -->
 
-<section anchor="Generic-mechanisms" title="Generic Mechanisms">
+<section anchor="Other-mechanisms" title="Other Mechanisms">
 
-<t>This section describes mechanisms that are standardized for SR Policies in <xref target="RFC9256"/>,
-but are equally applicable to other tunnel types, such as RSVP-TE tunnels.
-Hence this section does not make use of the SRPA.</t>
+<t>This section describes mechanisms that are standardized
+for SR Policies in <xref target="RFC9256"/>,
+but do not make use of the SRPA for signaling in PCEP.
+Since SRPA is not used, there needs to be a separate capability
+negotiation.</t>
+
+<section anchor="Capability-tlv" title="SR Policy Capability TLV">
+
+<t>
+The SR-POLICY-CAPABILITY TLV is an optional TLV for the OPEN object.
+It is used at session establishment time to learn the other PCEP peer's
+capabilities with respect to SR Policy.
+</t>
+
+<figure anchor="SR-POLICY-CAPABILITY-TLV-FORMAT" title="The SR-POLICY-CAPABILITY TLV format">
+<artwork align="center"><![CDATA[
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |             Type              |             Length            |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |                                                     |L|S|I|E|P|
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+]]></artwork>
+</figure>
+
+<t>Type: TBD4 for "SR-POLICY-CAPABLITY TLV.</t>
+
+<t>Length: 4.</t>
+
+<t>P-Flag: PCEP speaker supports the COMPUTATION-PRIORITY TLV with SR Policy,
+see <xref target="Computation-priority-tlv"/>.</t>
+
+<t>E-Flag: PCEP speaker supports the ENLP TLV with SR Policy,
+see <xref target="enlp-tlv"/>.</t>
+
+<t>I-Flag: PCEP speaker supports INVALIDATION TLV with SR Policy,
+see <xref target="Invalidation-tlv"/>.</t>
+
+<t>S-Flag: PCEP speaker supports "Specified-BSID-only" behavior with SR Policy,
+see <xref target="Specified-bsid-only"/>.</t>
+
+<t>L-Flag: PCEP speaker supports stateless (PCReq/PCRep) operations with SR Policy,
+see <xref target="Stateless-oper"/>.</t>
+
+</section> <!-- Capability-tlv -->
 
 <section anchor="Computation-priority-tlv" title="Computation Priority TLV">
 
@@ -666,7 +709,38 @@ It is possible to have a mix of BSIDs for the same LSP: some with S=1 and some w
 
 </section> <!-- Specified-bsid-only -->
 
-</section> <!-- Generic-mechanisms -->
+<section anchor="Stateless-oper" title="Stateless Operation">
+
+<t>
+<xref target="RFC8231"/> Section 5.8.2, allows delegation of an LSP in operationally down state,
+but at the same time mandates the use of PCReq, before sending PCRpt.
+For SR Policies, we make sending of PCReq OPTIONAL.
+Thus, this document modifies the procedure of <xref target="RFC8231"/> Section 5.8.2,
+but only with respect to SR Policy LSPs.
+Thus, when a PCC wants to delegate an SR Policy LSP, it MAY proceed directly to sending PCRpt,
+without first sending PCReq and waiting for PCRep.
+This has the advantage of reducing the number of PCEP messages and simplifying the implementation.
+</t>
+
+<t>
+Furthermore, a PCEP speaker is not required to support PCReq/PCRep at all for SR Policies.
+The PCEP speaker can indicate support for PCReq/PCRep via the "L-Flag" in
+the SR-POLICY-CAPABILITY TLV (See <xref target="Capability-tlv"/>).
+When this flag is cleared, or when the SR-POLICY-CAPABILITY TLV is absent,
+the given peer SHOULD NOT be sent PCReq/PCRep messages for SR Policy LSPs.
+Conversely, when this flag is set, the given peer is MAY receive
+PCReq/PCRep messages for SR Policy LSPs.
+</t>
+
+<t>
+The above applies only to SR Policy LSPs and does not affect other LSP types,
+such as RSVP-TE LSPs. For other LSP types, <xref target="RFC8231"/> Section 5.8.2
+continues to apply.
+</t>
+
+</section> <!-- Stateless-oper -->
+
+</section> <!-- Other mechanisms -->
 
 <section title="IANA Considerations">
 
@@ -709,6 +783,8 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 | TBD2      | EXPLICIT-NULL-LABEL-POLICY                | This.I-D  |
 +-----------+-------------------------------------------+-----------+
 | TBD3      | INVALIDATION                              | This.I-D  |
++-----------+-------------------------------------------+-----------+
+| TBD4      | SR-POLICY-CAPABILITY                      | This.I-D  |
 +-----------+-------------------------------------------+-----------+
 ]]></artwork>
       </figure>
@@ -889,7 +965,6 @@ Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman, Alex Tokar
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.5440.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8236.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8231.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7942.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9256.xml"?>
