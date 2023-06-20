@@ -5,14 +5,14 @@
 PCE Working Group                                           M. Koldychev
 Internet-Draft                                       Cisco Systems, Inc.
 Intended status: Standards Track                            S. Sivabalan
-Expires: 14 December 2023                              Ciena Corporation
+Expires: 22 December 2023                              Ciena Corporation
                                                                 C. Barth
                                                   Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                            12 June 2023
+                                                            20 June 2023
 
 
     PCEP extension to support Segment Routing Policy Candidate Paths
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Koldychev, et al.       Expires 14 December 2023                [Page 1]
+Koldychev, et al.       Expires 22 December 2023                [Page 1]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -61,7 +61,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 December 2023.
+   This Internet-Draft will expire on 22 December 2023.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Koldychev, et al.       Expires 14 December 2023                [Page 2]
+Koldychev, et al.       Expires 22 December 2023                [Page 2]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -165,7 +165,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023                [Page 3]
+Koldychev, et al.       Expires 22 December 2023                [Page 3]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -221,7 +221,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023                [Page 4]
+Koldychev, et al.       Expires 22 December 2023                [Page 4]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -277,7 +277,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023                [Page 5]
+Koldychev, et al.       Expires 22 December 2023                [Page 5]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -333,7 +333,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023                [Page 6]
+Koldychev, et al.       Expires 22 December 2023                [Page 6]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -389,7 +389,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023                [Page 7]
+Koldychev, et al.       Expires 22 December 2023                [Page 7]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -445,7 +445,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023                [Page 8]
+Koldychev, et al.       Expires 22 December 2023                [Page 8]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -501,7 +501,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023                [Page 9]
+Koldychev, et al.       Expires 22 December 2023                [Page 9]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -557,7 +557,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 10]
+Koldychev, et al.       Expires 22 December 2023               [Page 10]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -613,7 +613,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 11]
+Koldychev, et al.       Expires 22 December 2023               [Page 11]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -669,7 +669,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 12]
+Koldychev, et al.       Expires 22 December 2023               [Page 12]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -725,7 +725,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 13]
+Koldychev, et al.       Expires 22 December 2023               [Page 13]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -774,30 +774,29 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 5.6.  Stateless Operation
 
    [RFC8231] Section 5.8.2, allows delegation of an LSP in operationally
-   down state, but at the same time mandates the use of PCReq, before
-   sending PCRpt.  For SR Policies, we make sending of PCReq OPTIONAL.
-   Thus, this document modifies the procedure of [RFC8231]
-   Section 5.8.2, but only with respect to SR Policy LSPs.  Thus, when a
+   down state, but at the same time mandates the use of PCReq before
+   sending PCRpt.  This document modifies the procedure of [RFC8231]
+   Section 5.8.2, for SR Policies we make sending of PCReq before PCRpt
+   OPTIONAL.  Thus, when a PCC wants to delegate an SR Policy LSP, it
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 14]
+Koldychev, et al.       Expires 22 December 2023               [Page 14]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
 
-   PCC wants to delegate an SR Policy LSP, it MAY proceed directly to
-   sending PCRpt, without first sending PCReq and waiting for PCRep.
-   This has the advantage of reducing the number of PCEP messages and
-   simplifying the implementation.
+   MAY proceed directly to sending PCRpt, without first sending PCReq
+   and waiting for PCRep.  This has the advantage of reducing the number
+   of PCEP messages and simplifying the implementation.
 
    Furthermore, a PCEP speaker is not required to support PCReq/PCRep at
    all for SR Policies.  The PCEP speaker can indicate support for
    PCReq/PCRep via the "L-Flag" in the SR-POLICY-CAPABILITY TLV (See
    Section 5.1).  When this flag is cleared, or when the SR-POLICY-
    CAPABILITY TLV is absent, the given peer SHOULD NOT be sent PCReq/
-   PCRep messages for SR Policy LSPs.  Conversely, when this flag is
-   set, the given peer is MAY receive PCReq/PCRep messages for SR Policy
+   PCRep messages for SR Policy LSPs.  Conversely when this flag is set,
+   the peer can receive and process PCReq/PCRep messages for SR Policy
    LSPs.
 
    The above applies only to SR Policy LSPs and does not affect other
@@ -837,7 +836,8 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 15]
+
+Koldychev, et al.       Expires 22 December 2023               [Page 15]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -893,7 +893,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 16]
+Koldychev, et al.       Expires 22 December 2023               [Page 16]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -949,7 +949,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 17]
+Koldychev, et al.       Expires 22 December 2023               [Page 17]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -1005,7 +1005,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 18]
+Koldychev, et al.       Expires 22 December 2023               [Page 18]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -1061,7 +1061,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 19]
+Koldychev, et al.       Expires 22 December 2023               [Page 19]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -1117,7 +1117,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 20]
+Koldychev, et al.       Expires 22 December 2023               [Page 20]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -1173,7 +1173,7 @@ Authors' Addresses
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 21]
+Koldychev, et al.       Expires 22 December 2023               [Page 21]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
@@ -1229,4 +1229,4 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
 
 
-Koldychev, et al.       Expires 14 December 2023               [Page 22]
+Koldychev, et al.       Expires 22 December 2023               [Page 22]

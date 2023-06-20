@@ -118,7 +118,7 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date day="12" month="June" year="2023" />
+    <date day="20" month="June" year="2023" />
 
     <workgroup>PCE Working Group</workgroup>
 
@@ -713,10 +713,9 @@ It is possible to have a mix of BSIDs for the same LSP: some with S=1 and some w
 
 <t>
 <xref target="RFC8231"/> Section 5.8.2, allows delegation of an LSP in operationally down state,
-but at the same time mandates the use of PCReq, before sending PCRpt.
-For SR Policies, we make sending of PCReq OPTIONAL.
-Thus, this document modifies the procedure of <xref target="RFC8231"/> Section 5.8.2,
-but only with respect to SR Policy LSPs.
+but at the same time mandates the use of PCReq before sending PCRpt.
+This document modifies the procedure of <xref target="RFC8231"/> Section 5.8.2,
+for SR Policies we make sending of PCReq before PCRpt OPTIONAL.
 Thus, when a PCC wants to delegate an SR Policy LSP, it MAY proceed directly to sending PCRpt,
 without first sending PCReq and waiting for PCRep.
 This has the advantage of reducing the number of PCEP messages and simplifying the implementation.
@@ -728,7 +727,7 @@ The PCEP speaker can indicate support for PCReq/PCRep via the "L-Flag" in
 the SR-POLICY-CAPABILITY TLV (See <xref target="Capability-tlv"/>).
 When this flag is cleared, or when the SR-POLICY-CAPABILITY TLV is absent,
 the given peer SHOULD NOT be sent PCReq/PCRep messages for SR Policy LSPs.
-Conversely, when this flag is set, the given peer is MAY receive
+Conversely when this flag is set, the peer can receive and process
 PCReq/PCRep messages for SR Policy LSPs.
 </t>
 
