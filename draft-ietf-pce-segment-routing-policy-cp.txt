@@ -47,8 +47,8 @@ Status of This Memo
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at https://datatracker.ietf.org/drafts/current/.
 
-   Internet-Drafts are draft documents valid for a maximum of six months
-   and may be updated, replaced, or obsoleted by other documents at any
+
+
 
 
 
@@ -58,6 +58,8 @@ Koldychev, et al.       Expires 22 December 2023                [Page 1]
 Internet-Draft         PCEP SR Policy Association              June 2023
 
 
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
@@ -73,9 +75,9 @@ Copyright Notice
    license-info) in effect on the date of publication of this document.
    Please review these documents carefully, as they describe your rights
    and restrictions with respect to this document.  Code Components
-   extracted from this document must include Simplified BSD License text
-   as described in Section 4.e of the Trust Legal Provisions and are
-   provided without warranty as described in the Simplified BSD License.
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
 
 Table of Contents
 
@@ -99,13 +101,11 @@ Table of Contents
      5.3.  Explicit Null Label Policy (ENLP) TLV . . . . . . . . . .  12
      5.4.  Invalidation TLV  . . . . . . . . . . . . . . . . . . . .  12
      5.5.  Specified-BSID-only . . . . . . . . . . . . . . . . . . .  14
-     5.6.  Stateless Operation . . . . . . . . . . . . . . . . . . .  14
+     5.6.  Stateless Operation . . . . . . . . . . . . . . . . . . .  15
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  15
      6.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  15
      6.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  15
      6.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  16
-     6.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  17
-     6.5.  SR Policy Candidate Path Protocol Origin field  . . . . .  17
 
 
 
@@ -114,6 +114,8 @@ Koldychev, et al.       Expires 22 December 2023                [Page 2]
 Internet-Draft         PCEP SR Policy Association              June 2023
 
 
+     6.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  17
+     6.5.  SR Policy Candidate Path Protocol Origin field  . . . . .  17
    7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  17
      7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  18
      7.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  18
@@ -160,8 +162,6 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 
    Association Information:  As described in [RFC8697], refers to the
       non-key information about the Association.
-
-
 
 
 
@@ -270,10 +270,10 @@ Internet-Draft         PCEP SR Policy Association              June 2023
    speaker MUST assume that the remote PCEP peer does not support SRPA
    and MUST NOT send the SRPA to that remote peer.
 
-   A given LSP MUST belong to at most one SRPA, since an SR Policy
-   Candidate Path cannot belong to multiple SR Policies.  If a PCEP
-   speaker receives a PCEP message requesting to join more than one SRPA
-   for the same LSP, then the PCEP speaker MUST send a PCErr message
+
+
+
+
 
 
 
@@ -282,6 +282,10 @@ Koldychev, et al.       Expires 22 December 2023                [Page 5]
 Internet-Draft         PCEP SR Policy Association              June 2023
 
 
+   A given LSP MUST belong to at most one SRPA, since an SR Policy
+   Candidate Path cannot belong to multiple SR Policies.  If a PCEP
+   speaker receives a PCEP message requesting to join more than one SRPA
+   for the same LSP, then the PCEP speaker MUST send a PCErr message
    with Error-Type = 26 "Association Error", Error-Value = 7 "Cannot
    join the association group".
 
@@ -327,16 +331,16 @@ Internet-Draft         PCEP SR Policy Association              June 2023
       ~                           Endpoint                            ~
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                Figure 1: Extended Association ID TLV format
-
-   Type: Extended Association ID TLV, type = 31.
-
 
 
 Koldychev, et al.       Expires 22 December 2023                [Page 6]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
+
+                Figure 1: Extended Association ID TLV format
+
+   Type: Extended Association ID TLV, type = 31.
 
    Length: Either 8 or 20, depending on whether IPv4 or IPv6 address is
    encoded in the Endpoint.
@@ -383,16 +387,15 @@ Internet-Draft         PCEP SR Policy Association              June 2023
    *  SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate
       Path Identifiers.
 
-   *  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
-      Path string name.
-
-
 
 
 Koldychev, et al.       Expires 22 December 2023                [Page 7]
 
 Internet-Draft         PCEP SR Policy Association              June 2023
 
+
+   *  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
+      Path string name.
 
    *  SRPOLICY-CPATH-PREFERENCE TLV: (optional) encodes SR Policy
       Candidate Path preference value.
@@ -436,9 +439,6 @@ Internet-Draft         PCEP SR Policy Association              June 2023
 4.2.2.  SR Policy Candidate Path Identifiers TLV
 
    The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
-
-
-
 
 
 
@@ -771,13 +771,13 @@ Internet-Draft         PCEP SR Policy Association              June 2023
    possible to have a mix of BSIDs for the same LSP: some with S=1 and
    some with S=0.
 
-5.6.  Stateless Operation
 
-   [RFC8231] Section 5.8.2, allows delegation of an LSP in operationally
-   down state, but at the same time mandates the use of PCReq before
-   sending PCRpt.  This document modifies the procedure of [RFC8231]
-   Section 5.8.2, for SR Policies we make sending of PCReq before PCRpt
-   OPTIONAL.  Thus, when a PCC wants to delegate an SR Policy LSP, it
+
+
+
+
+
+
 
 
 
@@ -786,6 +786,13 @@ Koldychev, et al.       Expires 22 December 2023               [Page 14]
 Internet-Draft         PCEP SR Policy Association              June 2023
 
 
+5.6.  Stateless Operation
+
+   [RFC8231] Section 5.8.2, allows delegation of an LSP in operationally
+   down state, but at the same time mandates the use of PCReq before
+   sending PCRpt.  This document modifies the procedure of [RFC8231]
+   Section 5.8.2, for SR Policies we make sending of PCReq before PCRpt
+   OPTIONAL.  Thus, when a PCC wants to delegate an SR Policy LSP, it
    MAY proceed directly to sending PCRpt, without first sending PCReq
    and waiting for PCRep.  This has the advantage of reducing the number
    of PCEP messages and simplifying the implementation.
@@ -824,13 +831,6 @@ Internet-Draft         PCEP SR Policy Association              June 2023
    information about SR Policy and SR Candidate Paths.  IANA is
    requested to make the assignment of a new value for the existing
    "PCEP TLV Type Indicators" registry as follows:
-
-
-
-
-
-
-
 
 
 
@@ -1055,8 +1055,8 @@ Internet-Draft         PCEP SR Policy Association              June 2023
               DOI 10.17487/RFC8231, September 2017,
               <https://www.rfc-editor.org/info/rfc8231>.
 
-   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
-              Code: The Implementation Status Section", BCP 205,
+
+
 
 
 
@@ -1066,6 +1066,8 @@ Koldychev, et al.       Expires 22 December 2023               [Page 19]
 Internet-Draft         PCEP SR Policy Association              June 2023
 
 
+   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", BCP 205,
               RFC 7942, DOI 10.17487/RFC7942, July 2016,
               <https://www.rfc-editor.org/info/rfc7942>.
 
@@ -1111,9 +1113,7 @@ Internet-Draft         PCEP SR Policy Association              June 2023
               (DTLS)", RFC 7525, DOI 10.17487/RFC7525, May 2015,
               <https://www.rfc-editor.org/info/rfc7525>.
 
-   [RFC8253]  Lopez, D., Gonzalez de Dios, O., Wu, Q., and D. Dhody,
-              "PCEPS: Usage of TLS to Provide a Secure Transport for the
-              Path Computation Element Communication Protocol (PCEP)",
+
 
 
 
@@ -1122,6 +1122,9 @@ Koldychev, et al.       Expires 22 December 2023               [Page 20]
 Internet-Draft         PCEP SR Policy Association              June 2023
 
 
+   [RFC8253]  Lopez, D., Gonzalez de Dios, O., Wu, Q., and D. Dhody,
+              "PCEPS: Usage of TLS to Provide a Secure Transport for the
+              Path Computation Element Communication Protocol (PCEP)",
               RFC 8253, DOI 10.17487/RFC8253, October 2017,
               <https://www.rfc-editor.org/info/rfc8253>.
 
@@ -1130,9 +1133,9 @@ Internet-Draft         PCEP SR Policy Association              June 2023
               Kaladharan, P., and Y. Zhu, "Path Computation Element
               Communication Protocol (PCEP) Extensions for Segment
               Routing leveraging the IPv6 dataplane", Work in Progress,
-              Internet-Draft, draft-ietf-pce-segment-routing-ipv6-16, 6
-              March 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-pce-segment-routing-ipv6-16>.
+              Internet-Draft, draft-ietf-pce-segment-routing-ipv6-17, 27
+              June 2023, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-pce-segment-routing-ipv6-17>.
 
 Appendix A.  Contributors
 
@@ -1163,13 +1166,10 @@ Appendix A.  Contributors
 
 Authors' Addresses
 
-   Mike Koldychev
-   Cisco Systems, Inc.
-   2000 Innovation Drive
-   Kanata Ontario K2K 3E8
-   Canada
 
-   Email: mkoldych@cisco.com
+
+
+
 
 
 
@@ -1178,18 +1178,24 @@ Koldychev, et al.       Expires 22 December 2023               [Page 21]
 Internet-Draft         PCEP SR Policy Association              June 2023
 
 
+   Mike Koldychev
+   Cisco Systems, Inc.
+   2000 Innovation Drive
+   Kanata Ontario K2K 3E8
+   Canada
+   Email: mkoldych@cisco.com
+
+
    Siva Sivabalan
    Ciena Corporation
    385 Terry Fox Dr.
    Kanata Ontario K2K 0L1
    Canada
-
    Email: ssivabal@ciena.com
 
 
    Colby Barth
    Juniper Networks, Inc.
-
    Email: cbarth@juniper.net
 
 
@@ -1199,18 +1205,12 @@ Internet-Draft         PCEP SR Policy Association              June 2023
    Beijing
    100095
    China
-
    Email: pengshuping@huawei.com
 
 
    Hooman Bidgoli
    Nokia
-
    Email: hooman.bidgoli@nokia.com
-
-
-
-
 
 
 
