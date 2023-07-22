@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-11" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-12" ipr="trust200902">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -118,7 +118,7 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date day="20" month="June" year="2023" />
+    <date day="22" month="July" year="2023" />
 
     <workgroup>PCE Working Group</workgroup>
 
@@ -237,14 +237,6 @@ SR Policy Candidate Path Attributes consist of:</t>
       </list>
 </t>
 </section>
-
-<section anchor="MultipleObjectives" title="Multiple Optimization Objectives and Constraints">
-
-<t>In certain scenarios, it is desired for each SR Policy Candidate Path to contain multiple sub-Candidate Paths, each of which has a different optimization objective and constraints. Traffic is then sent ECMP or UCMP among these sub-Candidate Paths.</t>
-
-<t>This is represented in PCEP by a many-to-one mapping between PCEP Tunnels and SR Policy Candidate Paths. This means that multiple PCEP Tunnels are allocated for each SR Policy Candidate Path. Each PCEP Tunnel has its own optimization objective and constraints. When a single SR Policy Candidate Path contains multiple PCEP Tunnels, each of these PCEP Tunnels MUST have identical values of Candidate Path Identifiers, as encoded in SRPOLICY-CPATH-ID TLV, see <xref target="Cpath-identifiers-tlv"/>.</t>
-
-</section> <!-- MultipleObjectives -->
 
 </section> <!-- Overview -->
 
