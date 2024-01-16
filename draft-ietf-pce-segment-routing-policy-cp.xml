@@ -580,8 +580,12 @@ If the TLV is absent from the LSP object, a default Priority value of 128 is use
 
 <section anchor="enlp-tlv" title="Explicit Null Label Policy (ENLP) TLV">
 
-<t>The ENLP TLV is an optional TLV for the LSP object.
-It is used to implement the "Explicit Null Label Policy", as specified in Section 2.4.5 of <xref target="I-D.ietf-idr-segment-routing-te-policy"/>.</t>
+<t>
+    To steer an unlabeled IP packet into an SR policy, it is necessary to create a label stack for that packet, and push one or more labels onto that stack.
+    The Explicit NULL Label Policy (ENLP) TLV is an optional TLV used to indicate whether an Explicit NULL Label <xref target="RFC3032"/> must be pushed on an unlabeled IP packet before any other labels.
+    The contents of this TLV are used by the SRPM as described in section 4.1 of <xref target="RFC9256"/>.
+    If an ENLP TLV is not present, the decision of whether to push an Explicit NULL label on a given packet is a matter of local configuration.
+</t>
 
 <figure anchor="ENLP-TLV-FORMAT" title="The Explicit Null Label Policy (ENLP) TLV format">
 <artwork align="center"><![CDATA[
@@ -599,7 +603,44 @@ It is used to implement the "Explicit Null Label Policy", as specified in Sectio
 
 <t>Length: 4.</t>
 
-<t>ENLP (Explicit NULL Label Policy): same values as in Section 2.4.5 of <xref target="I-D.ietf-idr-segment-routing-te-policy"/>.</t>
+<t>
+  ENLP (Explicit NULL Label Policy): Indicates whether Explicit NULL labels are to be pushed on unlabeled IP packets
+  that are being steered into a given SR policy. This field has one of the following values:
+</t>
+
+<t>
+  <list style="symbols">
+    <t>
+    0: Reserved.
+    </t>
+
+    <t>
+    1: Push an IPv4 Explicit NULL label on an unlabeled IPv4 packet, but do not push an IPv6 Explicit NULL label on an unlabeled IPv6 packet.
+    </t>
+
+    <t>
+    2: Push an IPv6 Explicit NULL label on an unlabeled IPv6 packet, but do not push an IPv4 Explicit NULL label on an unlabeled IPv4 packet.
+    </t>
+
+    <t>
+    3: Push an IPv4 Explicit NULL label on an unlabeled IPv4 packet, and push an IPv6 Explicit NULL label on an unlabeled IPv6 packet.
+    </t>
+
+    <t>
+    4: Do not push an Explicit NULL label.
+    </t>
+
+    <t>
+    5 - 255: Reserved.
+    </t>
+  </list>
+</t>
+
+<t>
+    The ENLP reserved values may be used for future extensions and implementations SHOULD ignore the ENLP TLV with these values.
+    The behavior signaled in this TLV MAY be overridden by local configuration.
+    The section 4.1 of <xref target="RFC9256"/> describes the behavior on the headend for the handling of the explicit null label.
+</t>
 
 </section> <!-- enlp-tlv -->
 
@@ -937,7 +978,7 @@ be assigned by IANA with the reference set to this document:
 <section  title="Security Considerations">
       <t>This document defines one new type for ASSOCIATION object, which does not add any new
       security concerns beyond those discussed in <xref target="RFC5440"/>,
-      <xref target='RFC8231'/>, <xref target="RFC8664"/>, <xref target="I-D.ietf-pce-segment-routing-ipv6"/> and <xref target='RFC8697'/> in itself.
+      <xref target='RFC8231'/>, <xref target="RFC8664"/> and <xref target='RFC8697'/> in itself.
       </t>
      <t>
 The information carried in the SRPA object, as per this document is related to SR Policy. 
@@ -966,15 +1007,14 @@ Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman, Alex Tokar
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8231.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7942.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9256.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-idr-segment-routing-te-policy.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8697.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8664.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-multipath.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3032.xml"?>
 </references>
 <references title="Informative References">
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7525.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8253.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-segment-routing-ipv6.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-multipath.xml"?>
   <!--<?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.sivabalan-pce-binding-label-sid"?>-->
 </references>
 <section title="Contributors">

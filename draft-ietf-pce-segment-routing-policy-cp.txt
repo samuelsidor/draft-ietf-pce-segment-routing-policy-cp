@@ -93,19 +93,19 @@ Table of Contents
      5.1.  SR Policy Capability TLV  . . . . . . . . . . . . . . . .  10
      5.2.  Computation Priority TLV  . . . . . . . . . . . . . . . .  11
      5.3.  Explicit Null Label Policy (ENLP) TLV . . . . . . . . . .  12
-     5.4.  Invalidation TLV  . . . . . . . . . . . . . . . . . . . .  12
+     5.4.  Invalidation TLV  . . . . . . . . . . . . . . . . . . . .  13
      5.5.  Specified-BSID-only . . . . . . . . . . . . . . . . . . .  14
-     5.6.  Stateless Operation . . . . . . . . . . . . . . . . . . .  14
+     5.6.  Stateless Operation . . . . . . . . . . . . . . . . . . .  15
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  15
      6.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  15
-     6.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  15
+     6.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  16
      6.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  16
-     6.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  16
-     6.5.  SR Policy Candidate Path Protocol Origin field  . . . . .  16
-   7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  17
-     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  18
-     7.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  18
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  18
+     6.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  17
+     6.5.  SR Policy Candidate Path Protocol Origin field  . . . . .  17
+   7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  18
+     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  19
+     7.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  19
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  19
 
 
 
@@ -115,11 +115,11 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
    9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  19
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  19
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  19
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  20
-   Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  20
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  20
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  21
+   Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  21
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  22
 
 1.  Introduction
 
@@ -620,9 +620,15 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 5.3.  Explicit Null Label Policy (ENLP) TLV
 
-   The ENLP TLV is an optional TLV for the LSP object.  It is used to
-   implement the "Explicit Null Label Policy", as specified in
-   Section 2.4.5 of [I-D.ietf-idr-segment-routing-te-policy].
+   To steer an unlabeled IP packet into an SR policy, it is necessary to
+   create a label stack for that packet, and push one or more labels
+   onto that stack.  The Explicit NULL Label Policy (ENLP) TLV is an
+   optional TLV used to indicate whether an Explicit NULL Label
+   [RFC3032] must be pushed on an unlabeled IP packet before any other
+   labels.  The contents of this TLV are used by the SRPM as described
+   in section 4.1 of [RFC9256].  If an ENLP TLV is not present, the
+   decision of whether to push an Explicit NULL label on a given packet
+   is a matter of local configuration.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -638,8 +644,41 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
    Length: 4.
 
-   ENLP (Explicit NULL Label Policy): same values as in Section 2.4.5 of
-   [I-D.ietf-idr-segment-routing-te-policy].
+   ENLP (Explicit NULL Label Policy): Indicates whether Explicit NULL
+   labels are to be pushed on unlabeled IP packets that are being
+   steered into a given SR policy.  This field has one of the following
+   values:
+
+   *  0: Reserved.
+
+   *  1: Push an IPv4 Explicit NULL label on an unlabeled IPv4 packet,
+      but do not push an IPv6 Explicit NULL label on an unlabeled IPv6
+      packet.
+
+   *  2: Push an IPv6 Explicit NULL label on an unlabeled IPv6 packet,
+      but do not push an IPv4 Explicit NULL label on an unlabeled IPv4
+      packet.
+
+   *  3: Push an IPv4 Explicit NULL label on an unlabeled IPv4 packet,
+      and push an IPv6 Explicit NULL label on an unlabeled IPv6 packet.
+
+   *  4: Do not push an Explicit NULL label.
+
+   *  5 - 255: Reserved.
+
+
+
+
+Koldychev, et al.        Expires 23 January 2024               [Page 12]
+
+Internet-Draft         PCEP SR Policy Association              July 2023
+
+
+   The ENLP reserved values may be used for future extensions and
+   implementations SHOULD ignore the ENLP TLV with these values.  The
+   behavior signaled in this TLV MAY be overridden by local
+   configuration.  The section 4.1 of [RFC9256] describes the behavior
+   on the headend for the handling of the explicit null label.
 
 5.4.  Invalidation TLV
 
@@ -666,14 +705,6 @@ Internet-Draft         PCEP SR Policy Association              July 2023
       the drop state and the PCC also reports whether the LSP is
       currently in the drop state and if so, for what reason.
 
-
-
-
-Koldychev, et al.        Expires 23 January 2024               [Page 12]
-
-Internet-Draft         PCEP SR Policy Association              July 2023
-
-
    Reasons for entering the drop state are represented by a set of
    flags.
 
@@ -690,6 +721,14 @@ Internet-Draft         PCEP SR Policy Association              July 2023
       has failed.
 
    *  P: Path computation failure - no path was computed for the LSP.
+
+
+
+
+Koldychev, et al.        Expires 23 January 2024               [Page 13]
+
+Internet-Draft         PCEP SR Policy Association              July 2023
+
 
    *  V: Verification failure - OAM/PM/BFD path verification has
       indicated a breakage.
@@ -722,14 +761,6 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    state whenever the LSP is down.  Note that when the G-flag is set,
    the values of the other flags are irrelevant.
 
-
-
-
-Koldychev, et al.        Expires 23 January 2024               [Page 13]
-
-Internet-Draft         PCEP SR Policy Association              July 2023
-
-
    Note that out of all the "Invalidation Reasons Flags", only the
    G-flag (Generic) MUST be supported.  The other flags can simply be
    ignored if they are not supported by the PCEP speaker.  For example,
@@ -747,6 +778,13 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    allocated and programmed for the LSP to be operationally up.  If the
    binding SID cannot be allocated or programmed for some reason, then
    the LSP must stay down.
+
+
+
+Koldychev, et al.        Expires 23 January 2024               [Page 14]
+
+Internet-Draft         PCEP SR Policy Association              July 2023
+
 
    To signal specified-BSID-only, a new bit: S (Specified-BSID-only) is
    allocated in the "TE-PATH-BINDING TLV Flag field" of the TE-PATH-
@@ -779,13 +817,6 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    LSP types, such as RSVP-TE LSPs.  For other LSP types, [RFC8231]
    Section 5.8.2 continues to apply.
 
-
-
-Koldychev, et al.        Expires 23 January 2024               [Page 14]
-
-Internet-Draft         PCEP SR Policy Association              July 2023
-
-
 6.  IANA Considerations
 
 6.1.  Association Type
@@ -800,6 +831,16 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    +-----------+-------------------------------------------+-----------+
    | 6         | SR Policy Association                     | This.I-D  |
    +-----------+-------------------------------------------+-----------+
+
+
+
+
+
+
+Koldychev, et al.        Expires 23 January 2024               [Page 15]
+
+Internet-Draft         PCEP SR Policy Association              July 2023
+
 
 6.2.  PCEP TLV Type Indicators
 
@@ -828,20 +869,6 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    | TBD4      | SR-POLICY-CAPABILITY                      | This.I-D  |
    +-----------+-------------------------------------------+-----------+
 
-
-
-
-
-
-
-
-
-
-Koldychev, et al.        Expires 23 January 2024               [Page 15]
-
-Internet-Draft         PCEP SR Policy Association              July 2023
-
-
 6.3.  PCEP Errors
 
    This document defines one new Error-Value within the "Mandatory
@@ -849,6 +876,27 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    "Association Error" Error-Type.  IANA is requested to allocate new
    error values within the "PCEP-ERROR Object Error Types and Values"
    sub-registry of the PCEP Numbers registry, as follows:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.        Expires 23 January 2024               [Page 16]
+
+Internet-Draft         PCEP SR Policy Association              July 2023
+
 
    +------------+------------------+-----------------------+-----------+
    | Error-Type | Meaning          | Error-value           | Reference |
@@ -893,7 +941,15 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 16]
+
+
+
+
+
+
+
+
+Koldychev, et al.        Expires 23 January 2024               [Page 17]
 
 Internet-Draft         PCEP SR Policy Association              July 2023
 
@@ -949,7 +1005,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 17]
+Koldychev, et al.        Expires 23 January 2024               [Page 18]
 
 Internet-Draft         PCEP SR Policy Association              July 2023
 
@@ -987,8 +1043,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
    This document defines one new type for ASSOCIATION object, which does
    not add any new security concerns beyond those discussed in
-   [RFC5440], [RFC8231], [RFC8664], [I-D.ietf-pce-segment-routing-ipv6]
-   and [RFC8697] in itself.
+   [RFC5440], [RFC8231], [RFC8664] and [RFC8697] in itself.
 
    The information carried in the SRPA object, as per this document is
    related to SR Policy.  It often reflects information that can also be
@@ -999,21 +1054,17 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    Layer Security (TLS) [RFC8253], as per the recommendations and best
    current practices in [RFC7525], is RECOMMENDED.
 
-
-
-
-
-
-
-Koldychev, et al.        Expires 23 January 2024               [Page 18]
-
-Internet-Draft         PCEP SR Policy Association              July 2023
-
-
 9.  Acknowledgement
 
    Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman,
    Alex Tokar, Praveen Kumar and Tom Petch for review and suggestions.
+
+
+
+Koldychev, et al.        Expires 23 January 2024               [Page 19]
+
+Internet-Draft         PCEP SR Policy Association              July 2023
+
 
 10.  References
 
@@ -1049,23 +1100,6 @@ Internet-Draft         PCEP SR Policy Association              July 2023
               RFC 9256, DOI 10.17487/RFC9256, July 2022,
               <https://www.rfc-editor.org/info/rfc9256>.
 
-   [I-D.ietf-idr-segment-routing-te-policy]
-              Previdi, S., Filsfils, C., Talaulikar, K., Mattes, P., and
-              D. Jain, "Advertising Segment Routing Policies in BGP",
-              Work in Progress, Internet-Draft, draft-ietf-idr-segment-
-              routing-te-policy-26, 23 October 2023,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-idr-
-              segment-routing-te-policy-26>.
-
-
-
-
-
-Koldychev, et al.        Expires 23 January 2024               [Page 19]
-
-Internet-Draft         PCEP SR Policy Association              July 2023
-
-
    [RFC8697]  Minei, I., Crabbe, E., Sivabalan, S., Ananthakrishnan, H.,
               Dhody, D., and Y. Tanaka, "Path Computation Element
               Communication Protocol (PCEP) Extensions for Establishing
@@ -1079,14 +1113,19 @@ Internet-Draft         PCEP SR Policy Association              July 2023
               DOI 10.17487/RFC8664, December 2019,
               <https://www.rfc-editor.org/info/rfc8664>.
 
-   [I-D.ietf-pce-multipath]
-              Koldychev, M., Sivabalan, S., Saad, T., Beeram, V. P.,
-              Bidgoli, H., Yadav, B., Peng, S., and G. Mishra, "PCEP
-              Extensions for Signaling Multipath Information", Work in
-              Progress, Internet-Draft, draft-ietf-pce-multipath-10, 16
-              January 2024,
-              <https://datatracker.ietf.org/api/v1/doc/document/draft-
-              ietf-pce-multipath/>.
+
+
+
+
+Koldychev, et al.        Expires 23 January 2024               [Page 20]
+
+Internet-Draft         PCEP SR Policy Association              July 2023
+
+
+   [RFC3032]  Rosen, E., Tappan, D., Fedorkow, G., Rekhter, Y.,
+              Farinacci, D., Li, T., and A. Conta, "MPLS Label Stack
+              Encoding", RFC 3032, DOI 10.17487/RFC3032, January 2001,
+              <https://www.rfc-editor.org/info/rfc3032>.
 
 10.2.  Informative References
 
@@ -1102,14 +1141,14 @@ Internet-Draft         PCEP SR Policy Association              July 2023
               RFC 8253, DOI 10.17487/RFC8253, October 2017,
               <https://www.rfc-editor.org/info/rfc8253>.
 
-   [I-D.ietf-pce-segment-routing-ipv6]
-              Li, C., Kaladharan, P., Sivabalan, S., Koldychev, M., and
-              Y. Zhu, "Path Computation Element Communication Protocol
-              (PCEP) Extensions for Segment Routing leveraging the IPv6
-              dataplane", Work in Progress, Internet-Draft, draft-ietf-
-              pce-segment-routing-ipv6-20, 8 September 2023,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-pce-
-              segment-routing-ipv6-20>.
+   [I-D.ietf-pce-multipath]
+              Koldychev, M., Sivabalan, S., Saad, T., Beeram, V. P.,
+              Bidgoli, H., Yadav, B., Peng, S., and G. Mishra, "PCEP
+              Extensions for Signaling Multipath Information", Work in
+              Progress, Internet-Draft, draft-ietf-pce-multipath-10, 16
+              January 2024,
+              <https://datatracker.ietf.org/api/v1/doc/document/draft-
+              ietf-pce-multipath/>.
 
 Appendix A.  Contributors
 
@@ -1117,7 +1156,24 @@ Appendix A.  Contributors
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 20]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.        Expires 23 January 2024               [Page 21]
 
 Internet-Draft         PCEP SR Policy Association              July 2023
 
@@ -1173,7 +1229,7 @@ Authors' Addresses
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 21]
+Koldychev, et al.        Expires 23 January 2024               [Page 22]
 
 Internet-Draft         PCEP SR Policy Association              July 2023
 
@@ -1229,4 +1285,4 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 22]
+Koldychev, et al.        Expires 23 January 2024               [Page 23]
