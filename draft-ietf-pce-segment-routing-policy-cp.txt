@@ -20,14 +20,12 @@ Expires: 23 January 2024                               Ciena Corporation
 
 Abstract
 
-   A Segment Routing (SR) Policy [RFC9256] is a non-empty set of SR
-   Candidate Paths, that share the same <headend, color, endpoint>
-   tuple.  This document extends [RFC8664] to fully support the SR
-   Policy construct.  SR Policy is modeled in PCEP as an Association of
-   one or more SR Candidate Paths.  PCEP extensions are defined to
-   signal additional attributes of an SR Policy, which are not covered
-   by [RFC8664].  The mechanism is applicable to all data planes of SR
-   (MPLS, SRv6, etc.).
+   A Segment Routing (SR) Policy is a non-empty set of SR Candidate
+   Paths, that share the same <headend, color, endpoint> tuple.  SR
+   Policy is modeled in PCEP as an Association of one or more SR
+   Candidate Paths.  PCEP extensions are defined to signal additional
+   attributes of an SR Policy.  The mechanism is applicable to all data
+   planes of SR (MPLS, SRv6, etc.).
 
 Requirements Language
 
@@ -47,8 +45,10 @@ Status of This Memo
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at https://datatracker.ietf.org/drafts/current/.
 
-
-
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
 
 
 
@@ -57,11 +57,6 @@ Koldychev, et al.        Expires 23 January 2024                [Page 1]
 
 Internet-Draft         PCEP SR Policy Association              July 2023
 
-
-   Internet-Drafts are draft documents valid for a maximum of six months
-   and may be updated, replaced, or obsoleted by other documents at any
-   time.  It is inappropriate to use Internet-Drafts as reference
-   material or to cite them other than as "work in progress."
 
    This Internet-Draft will expire on 23 January 2024.
 
@@ -84,14 +79,14 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Overview  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
-     3.1.  SR Policy Identifiers . . . . . . . . . . . . . . . . . .   4
-     3.2.  SR Policy Candidate Path Identifiers  . . . . . . . . . .   4
+     3.1.  SR Policy Identifier  . . . . . . . . . . . . . . . . . .   4
+     3.2.  SR Policy Candidate Path Identifier . . . . . . . . . . .   4
      3.3.  SR Policy Candidate Path Attributes . . . . . . . . . . .   5
    4.  SR Policy Association . . . . . . . . . . . . . . . . . . . .   5
      4.1.  Association Parameters  . . . . . . . . . . . . . . . . .   5
      4.2.  Association Information . . . . . . . . . . . . . . . . .   7
        4.2.1.  SR Policy Name TLV  . . . . . . . . . . . . . . . . .   8
-       4.2.2.  SR Policy Candidate Path Identifiers TLV  . . . . . .   8
+       4.2.2.  SR Policy Candidate Path Identifier TLV . . . . . . .   8
        4.2.3.  SR Policy Candidate Path Name TLV . . . . . . . . . .   9
        4.2.4.  SR Policy Candidate Path Preference TLV . . . . . . .  10
    5.  Other Mechanisms  . . . . . . . . . . . . . . . . . . . . . .  10
@@ -106,6 +101,11 @@ Table of Contents
      6.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  15
      6.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  16
      6.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  16
+     6.5.  SR Policy Candidate Path Protocol Origin field  . . . . .  16
+   7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  17
+     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  18
+     7.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  18
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  18
 
 
 
@@ -114,11 +114,6 @@ Koldychev, et al.        Expires 23 January 2024                [Page 2]
 Internet-Draft         PCEP SR Policy Association              July 2023
 
 
-     6.5.  SR Policy Candidate Path Protocol Origin field  . . . . .  16
-   7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  17
-     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  18
-     7.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  18
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  18
    9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  19
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  19
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  19
@@ -165,6 +160,11 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
+
+
+
+
+
 Koldychev, et al.        Expires 23 January 2024                [Page 3]
 
 Internet-Draft         PCEP SR Policy Association              July 2023
@@ -178,22 +178,22 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    encoding multiple Segment Lists within an SR Policy Candidate Path is
    described in [I-D.ietf-pce-multipath].
 
-   The SRPA carries three pieces of information: SR Policy Identifiers,
-   SR Policy Candidate Path Identifiers, and SR Policy Candidate Path
-   Attributes.
+   The SRPA carries three pieces of information: SR Policy Identifier,
+   SR Policy Candidate Path Identifier, and SR Policy Candidate Path
+   Attribute(s).
 
    Additional information is also carried outside of SRPA: Computation
    Priority, Explicit Null Label Policy, Drop upon Invalid behavior, and
    Specified-BSID-only.
 
-3.1.  SR Policy Identifiers
+3.1.  SR Policy Identifier
 
-   SR Policy Identifiers uniquely identify the SR Policy within the
-   network.  SR Policy Identifiers MUST be the same for all SR Policy
-   Candidate Paths in the same SRPA.  SR Policy Identifiers MUST NOT
+   SR Policy Identifier uniquely identifies the SR Policy within the
+   network.  SR Policy Identifier MUST be the same for all SR Policy
+   Candidate Paths in the same SRPA.  SR Policy Identifier MUST NOT
    change for a given SR Policy Candidate Path during its lifetime.  SR
-   Policy Identifiers MUST be different for different SRPAs.  SR Policy
-   Identifiers consist of:
+   Policy Identifier MUST be different for different SRPAs.  SR Policy
+   Identifier consist of:
 
    *  Headend router where the SR Policy originates.
 
@@ -201,16 +201,16 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
    *  Endpoint of SR Policy.
 
-3.2.  SR Policy Candidate Path Identifiers
+3.2.  SR Policy Candidate Path Identifier
 
-   SR Policy Candidate Path Identifiers uniquely identify the SR Policy
+   SR Policy Candidate Path Identifier uniquely identifies the SR Policy
    Candidate Path within the context of an SR Policy.  SR Policy
-   Candidate Path Identifiers MUST NOT change for a given LSP during its
-   lifetime.  SR Policy Candidate Path Identifiers MUST be different for
-   different Candidate Paths within the same SRPA.  When these rules are
+   Candidate Path Identifier MUST NOT change for a given LSP during its
+   lifetime.  SR Policy Candidate Path Identifier MUST be different for
+   distinct Candidate Paths within the same SRPA.  When these rules are
    not satisfied, the PCE MUST send a PCErr message with Error-Type = 26
    "Association Error", Error Value = TBD8 "SR Policy Candidate Path
-   Identifiers Mismatch".  SR Policy Candidate Path Identifiers consist
+   Identifier Mismatch".  SR Policy Candidate Path Identifier consist
    of:
 
    *  Protocol Origin.
@@ -326,7 +326,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    If the PCEP speaker receives an SRPA object whose Association
    Parameters do not follow the above specification, then the PCEP
    speaker MUST send PCErr message with Error-Type = 26 "Association
-   Error", Error-Value = TBD7 "SR Policy Identifiers Mismatch".
+   Error", Error-Value = TBD7 "SR Policy Identifier Mismatch".
 
 
 
@@ -367,7 +367,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    *  SRPOLICY-POL-NAME TLV: (optional) encodes SR Policy Name string.
 
    *  SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate
-      Path Identifiers.
+      Path Identifier.
 
    *  SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate
       Path string name.
@@ -419,7 +419,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    SR Policy Name: SR Policy name, as defined in [RFC9256].  It SHOULD
    be a string of printable ASCII characters, without a NULL terminator.
 
-4.2.2.  SR Policy Candidate Path Identifiers TLV
+4.2.2.  SR Policy Candidate Path Identifier TLV
 
    The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
 
@@ -649,7 +649,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 5.4.  Invalidation TLV
 
    The INVALIDATION TLV is an optional TLV for the LSP object.  It is
-   used to control traffic streering into the LSP during the time when
+   used to control traffic steering into the LSP during the time when
    the LSP is operationally down/invalid.  In the context of SR Policy,
    this TLV facilitates the "Drop upon invalid" behavior, specified in
    Section 8.2 of [RFC9256].  Normally, if the LSP is down/invalid then
@@ -867,7 +867,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    +------------+------------------+-----------------------+-----------+
    |            |                  | TBD8: SR Policy       | This.I-D  |
    |            |                  | Candidate Path        |           |
-   |            |                  | Identifiers Mismatch  |           |
+   |            |                  | Identifier Mismatch   |           |
    +------------+------------------+-----------------------+-----------+
 
 6.4.  TE-PATH-BINDING TLV Flag field

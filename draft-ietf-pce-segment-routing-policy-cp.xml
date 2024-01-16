@@ -124,10 +124,10 @@ they will automatically be output with "(if approved)" -->
 
 <abstract>
 
-<t>A Segment Routing (SR) Policy <xref target="RFC9256"/> is a non-empty set of SR Candidate Paths, that share the same &#60;headend, color, endpoint&#62; tuple.
-This document extends <xref target="RFC8664"/> to fully support the SR Policy construct.
+<t>
+A Segment Routing (SR) Policy is a non-empty set of SR Candidate Paths, that share the same &#60;headend, color, endpoint&#62; tuple.
 SR Policy is modeled in PCEP as an Association of one or more SR Candidate Paths.
-PCEP extensions are defined to signal additional attributes of an SR Policy, which are not covered by <xref target="RFC8664"/>.
+PCEP extensions are defined to signal additional attributes of an SR Policy.
 The mechanism is applicable to all data planes of SR (MPLS, SRv6, etc.).
 </t>
 
@@ -188,19 +188,19 @@ The subject of encoding multiple Segment Lists within an SR Policy Candidate Pat
 </t>
 
 <t>The SRPA carries three pieces of information:
-SR Policy Identifiers, SR Policy Candidate Path Identifiers, and SR Policy Candidate Path Attributes.</t>
+SR Policy Identifier, SR Policy Candidate Path Identifier, and SR Policy Candidate Path Attribute(s).</t>
 
 <t>
 Additional information is also carried outside of SRPA:
 Computation Priority, Explicit Null Label Policy, Drop upon Invalid behavior, and Specified-BSID-only.
 </t>
 
-<section anchor="SRPolicyIdentifiers" title="SR Policy Identifiers">
-<t>SR Policy Identifiers uniquely identify the SR Policy within the network.
-SR Policy Identifiers MUST be the same for all SR Policy Candidate Paths in the same SRPA.
-SR Policy Identifiers MUST NOT change for a given SR Policy Candidate Path during its lifetime.
-SR Policy Identifiers MUST be different for different SRPAs.
-SR Policy Identifiers consist of:</t>
+<section anchor="SRPolicyIdentifier" title="SR Policy Identifier">
+<t>SR Policy Identifier uniquely identifies the SR Policy within the network.
+SR Policy Identifier MUST be the same for all SR Policy Candidate Paths in the same SRPA.
+SR Policy Identifier MUST NOT change for a given SR Policy Candidate Path during its lifetime.
+SR Policy Identifier MUST be different for different SRPAs.
+SR Policy Identifier consist of:</t>
 <t>
       <list style="symbols">
         <t>Headend router where the SR Policy originates.</t>
@@ -210,13 +210,13 @@ SR Policy Identifiers consist of:</t>
 </t>
 </section>
 
-<section anchor="SRPolicyCandidatePathIdentifiers" title="SR Policy Candidate Path Identifiers">
-<t>SR Policy Candidate Path Identifiers uniquely identify the SR Policy Candidate Path within the context of an SR Policy.
-SR Policy Candidate Path Identifiers MUST NOT change for a given LSP during its lifetime.
-SR Policy Candidate Path Identifiers MUST be different for different Candidate Paths within the same SRPA.
+<section anchor="SRPolicyCandidatePathIdentifier" title="SR Policy Candidate Path Identifier">
+<t>SR Policy Candidate Path Identifier uniquely identifies the SR Policy Candidate Path within the context of an SR Policy.
+SR Policy Candidate Path Identifier MUST NOT change for a given LSP during its lifetime.
+SR Policy Candidate Path Identifier MUST be different for distinct Candidate Paths within the same SRPA.
 When these rules are not satisfied, the PCE MUST send a PCErr message with
-Error-Type = 26 "Association Error", Error Value = TBD8 "SR Policy Candidate Path Identifiers Mismatch".
-SR Policy Candidate Path Identifiers consist of:</t>
+Error-Type = 26 "Association Error", Error Value = TBD8 "SR Policy Candidate Path Identifier Mismatch".
+SR Policy Candidate Path Identifier consist of:</t>
 <t>
       <list style="symbols">
         <t>Protocol Origin.</t>
@@ -320,7 +320,7 @@ This value MAY be different from the one contained in the END-POINTS object, or 
 <t>If the PCEP speaker receives an SRPA object
 whose Association Parameters do not follow the above specification,
 then the PCEP speaker MUST send PCErr message with
-Error-Type = 26 "Association Error", Error-Value = TBD7 "SR Policy Identifiers Mismatch".</t>
+Error-Type = 26 "Association Error", Error-Value = TBD7 "SR Policy Identifier Mismatch".</t>
 
 <t>The purpose of choosing the Association Parameters in this way is to guarantee that there is no possibility of a race condition when multiple PCEP speakers want to create the same SR Policy at the same time. By adhering to this format, all PCEP speakers come up with the same Association Parameters independently of each other. Thus, there is no chance that different PCEP speakers will come up with different Association Parameters for the same SR Policy.</t>
 
@@ -342,7 +342,7 @@ the PCEP speaker MUST extract the destination from the Endpoint field in the SRP
 <t>
       <list style="symbols">
         <t>SRPOLICY-POL-NAME TLV: (optional) encodes SR Policy Name string.</t>
-        <t>SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate Path Identifiers.</t>
+        <t>SRPOLICY-CPATH-ID TLV: (mandatory) encodes SR Policy Candidate Path Identifier.</t>
         <t>SRPOLICY-CPATH-NAME TLV: (optional) encodes SR Policy Candidate Path string name.</t>
         <t>SRPOLICY-CPATH-PREFERENCE TLV: (optional) encodes SR Policy Candidate Path preference value.</t>
       </list>
@@ -387,7 +387,7 @@ The SRPOLICY-POL-NAME TLV is an optional TLV for the SRPA object.
 
 </section> <!-- Policy-name-tlv -->
 
-<section anchor="Cpath-identifiers-tlv" title="SR Policy Candidate Path Identifiers TLV">
+<section anchor="Cpath-identifier-tlv" title="SR Policy Candidate Path Identifier TLV">
 
 <t>
 The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
@@ -435,7 +435,7 @@ This is the field that mainly distinguishes different SR Candidate Paths, coming
 It is allowed to be any number in the 32-bit range.
 </t>
 
-</section> <!-- Cpath-identifiers-tlv -->
+</section> <!-- Cpath-identifier-tlv -->
 
 <section anchor="SRPOLICY-CPATH-NAME" title="SR Policy Candidate Path Name TLV">
 
@@ -606,7 +606,7 @@ It is used to implement the "Explicit Null Label Policy", as specified in Sectio
 <section anchor="Invalidation-tlv" title="Invalidation TLV">
 
 <t>The INVALIDATION TLV is an optional TLV for the LSP object.
-It is used to control traffic streering into the LSP
+It is used to control traffic steering into the LSP
 during the time when the LSP is operationally down/invalid.
 In the context of SR Policy, this TLV facilitates 
 the "Drop upon invalid" behavior,
@@ -812,7 +812,7 @@ IANA is requested to allocate new error values within the "PCEP-ERROR Object Err
 +------------+------------------+-----------------------+-----------+
 |            |                  | TBD8: SR Policy       | This.I-D  |
 |            |                  | Candidate Path        |           |
-|            |                  | Identifiers Mismatch  |           |
+|            |                  | Identifier Mismatch   |           |
 +------------+------------------+-----------------------+-----------+
 
 ]]></artwork>
