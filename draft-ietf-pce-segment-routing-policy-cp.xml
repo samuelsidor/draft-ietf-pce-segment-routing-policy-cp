@@ -125,7 +125,7 @@ they will automatically be output with "(if approved)" -->
 <abstract>
 
 <t>
-A Segment Routing (SR) Policy is a non-empty set of SR Candidate Paths, that share the same &#60;headend, color, endpoint&#62; tuple.
+A Segment Routing (SR) Policy is a non-empty set of SR Candidate Paths, which share the same &#60;headend, color, endpoint&#62; tuple.
 SR Policy is modeled in PCEP as an Association of one or more SR Candidate Paths.
 PCEP extensions are defined to signal additional attributes of an SR Policy.
 The mechanism is applicable to all SR forwarding planes (MPLS, SRv6, etc.).
@@ -146,15 +146,15 @@ The mechanism is applicable to all SR forwarding planes (MPLS, SRv6, etc.).
 
 <section anchor="Introduction" title="Introduction">
 
-<t>PCEP Extensions for Segment Routing <xref target="RFC8664"/> specifies extensions that allow PCEP to work with basic SR-TE paths.</t>
-
-<t>PCEP Extensions for Establishing Relationships Between Sets of LSPs <xref target="RFC8697"/> introduces a generic mechanism to create a grouping of LSPs, called an Association.</t>
-
-<t>Segment Routing Policy for Traffic Engineering <xref target="RFC9256"/> introduces the SR Policy construct as a grouping of SR Candidate Paths.</t>
+<t>
+<xref target="RFC8664"/> specifies extensions that allow PCEP to work with basic SR-TE paths.
+<xref target="RFC8697"/> introduces a generic mechanism to create a grouping of LSPs, called an Association.
+<xref target="RFC9256"/> introduces the SR Policy construct as a grouping of SR Candidate Paths.
+</t>
 
 <t>
-This document extends <xref target="RFC8664"/> to fully support the SR Policy construct.
-SR Policy is modeled in PCEP as an Association and the SR Candidate Paths are the members of that Association.
+This document extends <xref target="RFC8664"/> to support signaling SR Policy Candidate Paths and their attributes.
+SR Policy is modeled in PCEP as an Association, where the SR Candidate Paths are the members of that Association.
 Thus the PCE can take computation and control decisions about the Candidate Paths, with the additional knowledge that these Candidate Paths belong to the same SR Policy.
 </t>
 
@@ -214,7 +214,7 @@ SR Policy Identifier consist of:</t>
 <t>SR Policy Candidate Path Identifier uniquely identifies the SR Policy Candidate Path within the context of an SR Policy.
 SR Policy Candidate Path Identifier MUST NOT change for a given LSP during its lifetime.
 SR Policy Candidate Path Identifier MUST be different for distinct Candidate Paths within the same SRPA.
-When these rules are not satisfied, the PCE MUST send a PCErr message with
+When these rules are not satisfied, the PCEP speaker MUST send a PCErr message with
 Error-Type = 26 "Association Error", Error Value = TBD8 "SR Policy Candidate Path Identifier Mismatch".
 SR Policy Candidate Path Identifier consist of:</t>
 <t>
@@ -280,7 +280,7 @@ the color and endpoint are encoded as part of Extended Association ID TLV.
       <list style="symbols">
         <t>Association Type: set to 6 "SR Policy Association".</t>
         <t>Association Source (IPv4/IPv6): set to the headend IP address.</t>
-        <t>Association ID (16-bit): set to "1".</t>
+        <t>Association ID (16-bit): set to "1" (this 16-bit field is not utilized, just set to a value).</t>
         <t>Extended Association ID TLV: encodes the Color and Endpoint of the SR Policy.</t>
       </list>
 </t>
@@ -349,7 +349,7 @@ the PCEP speaker MUST extract the destination from the Endpoint field in the SRP
 </t>
 
 <t>Of these new TLVs, SRPOLICY-CPATH-ID TLV is mandatory.
-When a mandatory TLV is missing from the SRPA object, the PCE MUST send a PCErr message with
+When a mandatory TLV is missing from the SRPA object, the PCEP speaker MUST send a PCErr message with
 Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "Missing SR Policy Mandatory TLV".</t>
 
 <t>
@@ -935,7 +935,7 @@ be assigned by IANA with the reference set to this document:
 </section> 
 
 <section  title="Security Considerations">
-      <t>This document defines one new type for association, which do not add any new
+      <t>This document defines one new type for ASSOCIATION object, which does not add any new
       security concerns beyond those discussed in <xref target="RFC5440"/>,
       <xref target='RFC8231'/>, <xref target="RFC8664"/>, <xref target="I-D.ietf-pce-segment-routing-ipv6"/> and <xref target='RFC8697'/> in itself.
       </t>
