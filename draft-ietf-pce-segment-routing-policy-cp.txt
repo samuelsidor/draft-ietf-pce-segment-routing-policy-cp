@@ -153,8 +153,8 @@ Internet-Draft         PCEP SR Policy Association              July 2023
       question, as described in [RFC9256].
 
    SRPA:  SR Policy Association.  PCEP ASSOCATION that describes the SR
-      Policy.  Can refer to the PCEP object or to the group of LSPs that
-      belong to the Association.  This should be clear from the context.
+      Policy.  Depending on discussion context, it refers to a PCEP
+      object or to a group of LSPs that belong to the Association.
 
    Association Parameters:  As described in [RFC8697], refers to the key
       data, that uniquely identifies the Association in the network.
@@ -357,8 +357,8 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    of the SR Policy Candidate Path is signaled using the END-POINTS
    object and/or LSP-IDENTIFIERS TLV, as per the usual PCEP procedures.
    When neither END-POINTS object nor LSP-IDENTIFIERS TLV is present,
-   the PCEP speaker SHOULD extract the destination from the Endpoint
-   field in the SRPA Extended Association ID TLV.
+   the PCEP speaker MUST extract the destination from the Endpoint field
+   in the SRPA Extended Association ID TLV.
 
 4.2.  Association Information
 
@@ -1050,12 +1050,12 @@ Internet-Draft         PCEP SR Policy Association              July 2023
               <https://www.rfc-editor.org/info/rfc9256>.
 
    [I-D.ietf-idr-segment-routing-te-policy]
-              Previdi, S., Filsfils, C., Talaulikar, K., Mattes, P.,
-              Jain, D., and S. Lin, "Advertising Segment Routing
-              Policies in BGP", Work in Progress, Internet-Draft, draft-
-              ietf-idr-segment-routing-te-policy-20, 27 July 2022,
+              Previdi, S., Filsfils, C., Talaulikar, K., Mattes, P., and
+              D. Jain, "Advertising Segment Routing Policies in BGP",
+              Work in Progress, Internet-Draft, draft-ietf-idr-segment-
+              routing-te-policy-26, 23 October 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-idr-
-              segment-routing-te-policy-20>.
+              segment-routing-te-policy-26>.
 
 
 
@@ -1081,11 +1081,12 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
    [I-D.ietf-pce-multipath]
               Koldychev, M., Sivabalan, S., Saad, T., Beeram, V. P.,
-              Bidgoli, H., Yadav, B., Peng, S., and G. S. Mishra, "PCEP
+              Bidgoli, H., Yadav, B., Peng, S., and G. Mishra, "PCEP
               Extensions for Signaling Multipath Information", Work in
-              Progress, Internet-Draft, draft-ietf-pce-multipath-08, 1
-              May 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-pce-multipath-08>.
+              Progress, Internet-Draft, draft-ietf-pce-multipath-10, 16
+              January 2024,
+              <https://datatracker.ietf.org/api/v1/doc/document/draft-
+              ietf-pce-multipath/>.
 
 10.2.  Informative References
 
@@ -1102,16 +1103,15 @@ Internet-Draft         PCEP SR Policy Association              July 2023
               <https://www.rfc-editor.org/info/rfc8253>.
 
    [I-D.ietf-pce-segment-routing-ipv6]
-              Li, C., Negi, M. S., Sivabalan, S., Koldychev, M.,
-              Kaladharan, P., and Y. Zhu, "Path Computation Element
-              Communication Protocol (PCEP) Extensions for Segment
-              Routing leveraging the IPv6 dataplane", Work in Progress,
-              Internet-Draft, draft-ietf-pce-segment-routing-ipv6-17, 27
-              June 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-pce-segment-routing-ipv6-17>.
+              Li, C., Kaladharan, P., Sivabalan, S., Koldychev, M., and
+              Y. Zhu, "Path Computation Element Communication Protocol
+              (PCEP) Extensions for Segment Routing leveraging the IPv6
+              dataplane", Work in Progress, Internet-Draft, draft-ietf-
+              pce-segment-routing-ipv6-20, 8 September 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-pce-
+              segment-routing-ipv6-20>.
 
 Appendix A.  Contributors
-
 
 
 
