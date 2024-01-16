@@ -46,7 +46,7 @@ they will automatically be output with "(if approved)" -->
 
   <front>
     <title abbrev="PCEP SR Policy Association">
-    PCEP extension to support Segment Routing Policy Candidate Paths</title>
+    PCEP Extensions for SR Policy Candidate Paths</title>
 
     <author fullname="Mike Koldychev" initials="M." surname="Koldychev">
       <organization>Cisco Systems, Inc.</organization>
@@ -128,7 +128,7 @@ they will automatically be output with "(if approved)" -->
 A Segment Routing (SR) Policy is a non-empty set of SR Candidate Paths, that share the same &#60;headend, color, endpoint&#62; tuple.
 SR Policy is modeled in PCEP as an Association of one or more SR Candidate Paths.
 PCEP extensions are defined to signal additional attributes of an SR Policy.
-The mechanism is applicable to all data planes of SR (MPLS, SRv6, etc.).
+The mechanism is applicable to all SR forwarding planes (MPLS, SRv6, etc.).
 </t>
 
 </abstract> 

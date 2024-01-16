@@ -15,7 +15,7 @@ Expires: 23 January 2024                               Ciena Corporation
                                                             22 July 2023
 
 
-    PCEP extension to support Segment Routing Policy Candidate Paths
+             PCEP Extensions for SR Policy Candidate Paths
               draft-ietf-pce-segment-routing-policy-cp-12
 
 Abstract
@@ -24,8 +24,8 @@ Abstract
    Paths, that share the same <headend, color, endpoint> tuple.  SR
    Policy is modeled in PCEP as an Association of one or more SR
    Candidate Paths.  PCEP extensions are defined to signal additional
-   attributes of an SR Policy.  The mechanism is applicable to all data
-   planes of SR (MPLS, SRv6, etc.).
+   attributes of an SR Policy.  The mechanism is applicable to all SR
+   forwarding planes (MPLS, SRv6, etc.).
 
 Requirements Language
 
