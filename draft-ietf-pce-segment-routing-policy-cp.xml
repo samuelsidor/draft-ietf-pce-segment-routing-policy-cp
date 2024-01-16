@@ -287,7 +287,7 @@ the color and endpoint are encoded as part of Extended Association ID TLV.
 
 <t>The Association Source MUST be set to the headend value of the SR Policy, as defined in <xref target="RFC9256"/> Section 2.1.
 If the PCC receives a PCInit message with the Association Source set not to the headend IP but to some globally unique IP address that the headend owns,
-then the PCC SHOULD accept the PCInit message and create the SR Policy Association with the Association Source that was sent in the PCInit message.</t>
+then the PCC SHOULD accept the PCInit message and create the SRPA with the Association Source that was sent in the PCInit message.</t>
 
 <t>The 16-bit Association ID field in the ASSOCIATION object MUST be set to the value of "1".</t>
 
@@ -504,6 +504,13 @@ but do not make use of the SRPA for signaling in PCEP.
 Since SRPA is not used, there needs to be a separate capability
 negotiation.</t>
 
+<t>
+Unless specifically stated otherwise, 
+the TLVs listed in the following sub-sections are assumed to be single instance.
+Meaning, only one instance of the TLV SHOULD be present in the object and 
+only the first instance of the TLV SHOULD be interpreted and subsequent instances SHOULD be ignored.
+</t>
+
 <section anchor="Capability-tlv" title="SR Policy Capability TLV">
 
 <t>
@@ -524,7 +531,7 @@ capabilities with respect to SR Policy.
 ]]></artwork>
 </figure>
 
-<t>Type: TBD4 for "SR-POLICY-CAPABLITY TLV.</t>
+<t>Type: TBD4 for "SR-POLICY-CAPABILITY TLV.</t>
 
 <t>Length: 4.</t>
 

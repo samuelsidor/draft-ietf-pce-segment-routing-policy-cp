@@ -97,14 +97,14 @@ Table of Contents
    5.  Other Mechanisms  . . . . . . . . . . . . . . . . . . . . . .  10
      5.1.  SR Policy Capability TLV  . . . . . . . . . . . . . . . .  10
      5.2.  Computation Priority TLV  . . . . . . . . . . . . . . . .  11
-     5.3.  Explicit Null Label Policy (ENLP) TLV . . . . . . . . . .  11
+     5.3.  Explicit Null Label Policy (ENLP) TLV . . . . . . . . . .  12
      5.4.  Invalidation TLV  . . . . . . . . . . . . . . . . . . . .  12
      5.5.  Specified-BSID-only . . . . . . . . . . . . . . . . . . .  14
      5.6.  Stateless Operation . . . . . . . . . . . . . . . . . . .  14
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  15
      6.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  15
      6.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  15
-     6.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  15
+     6.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  16
      6.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  16
 
 
@@ -291,9 +291,8 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    Policy, as defined in [RFC9256] Section 2.1.  If the PCC receives a
    PCInit message with the Association Source set not to the headend IP
    but to some globally unique IP address that the headend owns, then
-   the PCC SHOULD accept the PCInit message and create the SR Policy
-   Association with the Association Source that was sent in the PCInit
-   message.
+   the PCC SHOULD accept the PCInit message and create the SRPA with the
+   Association Source that was sent in the PCInit message.
 
    The 16-bit Association ID field in the ASSOCIATION object MUST be set
    to the value of "1".
@@ -328,6 +327,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    Parameters do not follow the above specification, then the PCEP
    speaker MUST send PCErr message with Error-Type = 26 "Association
    Error", Error-Value = TBD7 "SR Policy Identifiers Mismatch".
+
 
 
 
@@ -539,11 +539,28 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    in PCEP.  Since SRPA is not used, there needs to be a separate
    capability negotiation.
 
+   Unless specifically stated otherwise, the TLVs listed in the
+   following sub-sections are assumed to be single instance.  Meaning,
+   only one instance of the TLV SHOULD be present in the object and only
+   the first instance of the TLV SHOULD be interpreted and subsequent
+   instances SHOULD be ignored.
+
 5.1.  SR Policy Capability TLV
 
    The SR-POLICY-CAPABILITY TLV is an optional TLV for the OPEN object.
    It is used at session establishment time to learn the other PCEP
    peer's capabilities with respect to SR Policy.
+
+
+
+
+
+
+
+Koldychev, et al.        Expires 23 January 2024               [Page 10]
+
+Internet-Draft         PCEP SR Policy Association              July 2023
+
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -555,14 +572,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
                Figure 6: The SR-POLICY-CAPABILITY TLV format
 
-
-
-Koldychev, et al.        Expires 23 January 2024               [Page 10]
-
-Internet-Draft         PCEP SR Policy Association              July 2023
-
-
-   Type: TBD4 for "SR-POLICY-CAPABLITY TLV.
+   Type: TBD4 for "SR-POLICY-CAPABILITY TLV.
 
    Length: 4.
 
@@ -600,6 +610,14 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
    Type: TBD1 for "COMPUTATION-PRIORITY" TLV.
 
+
+
+
+Koldychev, et al.        Expires 23 January 2024               [Page 11]
+
+Internet-Draft         PCEP SR Policy Association              July 2023
+
+
    Length: 4.
 
    Priority: Numerical priority with which this LSP is to be recomputed
@@ -610,13 +628,6 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    The ENLP TLV is an optional TLV for the LSP object.  It is used to
    implement the "Explicit Null Label Policy", as specified in
    Section 2.4.5 of [I-D.ietf-idr-segment-routing-te-policy].
-
-
-
-Koldychev, et al.        Expires 23 January 2024               [Page 11]
-
-Internet-Draft         PCEP SR Policy Association              July 2023
-
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -656,23 +667,19 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    *  PCE -> PCC: PCE specifies to the PCC under what conditions the LSP
       should enter the drop state.
 
-   *  PCC -> PCE: PCC reports under what conditions the LSP will enter
-      the drop state and the PCC also reports whether the LSP is
-      currently in the drop state and if so, for what reason.
-
-   Reasons for entering the drop state are represented by a set of
-   flags.
-
-
-
-
-
 
 
 Koldychev, et al.        Expires 23 January 2024               [Page 12]
 
 Internet-Draft         PCEP SR Policy Association              July 2023
 
+
+   *  PCC -> PCE: PCC reports under what conditions the LSP will enter
+      the drop state and the PCC also reports whether the LSP is
+      currently in the drop state and if so, for what reason.
+
+   Reasons for entering the drop state are represented by a set of
+   flags.
 
                                0 1 2 3 4 5 6 7
                               +-+-+-+-+-+-+-+-+
@@ -715,13 +722,6 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    non-zero values by both PCC and PCE.  When the G-flag is set, this
    indicates that the LSP is to go into Drop upon invalid state for any
    reason.  I.e., when the PCE does not wish to distinguish any reason
-   for LSP invalidation and just simply wants it to always go into drop
-   state whenever the LSP is down.  Note that when the G-flag is set,
-   the values of the other flags are irrelevant.
-
-   Note that out of all the "Invalidation Reasons Flags", only the
-   G-flag (Generic) MUST be supported.  The other flags can simply be
-   ignored if they are not supported by the PCEP speaker.  For example,
 
 
 
@@ -730,6 +730,13 @@ Koldychev, et al.        Expires 23 January 2024               [Page 13]
 Internet-Draft         PCEP SR Policy Association              July 2023
 
 
+   for LSP invalidation and just simply wants it to always go into drop
+   state whenever the LSP is down.  Note that when the G-flag is set,
+   the values of the other flags are irrelevant.
+
+   Note that out of all the "Invalidation Reasons Flags", only the
+   G-flag (Generic) MUST be supported.  The other flags can simply be
+   ignored if they are not supported by the PCEP speaker.  For example,
    suppose the PCC only supports P-flag and G-flag.  When this PCC
    receives this TLV with Drop Upon set to 0x6 (P,F), then the PCC
    responds with Drop Upon = 0x4 (P).  When this PCC receives this TLV
@@ -772,19 +779,18 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    the peer can receive and process PCReq/PCRep messages for SR Policy
    LSPs.
 
-   The above applies only to SR Policy LSPs and does not affect other
-   LSP types, such as RSVP-TE LSPs.  For other LSP types, [RFC8231]
-   Section 5.8.2 continues to apply.
-
-6.  IANA Considerations
-
-
 
 
 Koldychev, et al.        Expires 23 January 2024               [Page 14]
 
 Internet-Draft         PCEP SR Policy Association              July 2023
 
+
+   The above applies only to SR Policy LSPs and does not affect other
+   LSP types, such as RSVP-TE LSPs.  For other LSP types, [RFC8231]
+   Section 5.8.2 continues to apply.
+
+6.  IANA Considerations
 
 6.1.  Association Type
 
@@ -826,13 +832,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    | TBD4      | SR-POLICY-CAPABILITY                      | This.I-D  |
    +-----------+-------------------------------------------+-----------+
 
-6.3.  PCEP Errors
 
-   This document defines one new Error-Value within the "Mandatory
-   Object Missing" Error-Type and two new Error-Values within the
-   "Association Error" Error-Type.  IANA is requested to allocate new
-   error values within the "PCEP-ERROR Object Error Types and Values"
-   sub-registry of the PCEP Numbers registry, as follows:
 
 
 
@@ -841,6 +841,14 @@ Koldychev, et al.        Expires 23 January 2024               [Page 15]
 
 Internet-Draft         PCEP SR Policy Association              July 2023
 
+
+6.3.  PCEP Errors
+
+   This document defines one new Error-Value within the "Mandatory
+   Object Missing" Error-Type and two new Error-Values within the
+   "Association Error" Error-Type.  IANA is requested to allocate new
+   error values within the "PCEP-ERROR Object Error Types and Values"
+   sub-registry of the PCEP Numbers registry, as follows:
 
    +------------+------------------+-----------------------+-----------+
    | Error-Type | Meaning          | Error-value           | Reference |
@@ -881,14 +889,6 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    Protocol Origin".  The registry contains the following codepoints,
    with initial values, to be assigned by IANA with the reference set to
    this document:
-
-
-
-
-
-
-
-
 
 
 
