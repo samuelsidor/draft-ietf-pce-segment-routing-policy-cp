@@ -350,7 +350,7 @@ the PCEP speaker MUST extract the destination from the Endpoint field in the SRP
 
 <t>Of these new TLVs, SRPOLICY-CPATH-ID TLV is mandatory.
 When a mandatory TLV is missing from the SRPA object, the PCE MUST send a PCErr message with
-Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "Missing Mandatory TLV".</t>
+Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "Missing SR Policy Mandatory TLV".</t>
 
 <t>
 Unless specifically stated otherwise, 
@@ -526,7 +526,7 @@ capabilities with respect to SR Policy.
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |                                                     |L|S|I|E|P|
+  |                             Flags                   |L|S|I|E|P|
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
 </figure>
@@ -801,8 +801,8 @@ IANA is requested to allocate new error values within the "PCEP-ERROR Object Err
 | 6          | Mandatory Object |                       | [RFC5440] |
 |            | Missing          |                       |           |
 +------------+------------------+-----------------------+-----------+
-|            |                  | TBD6: SR Policy       | This.I-D  |
-|            |                  | Missing Mandatory TLV |           |
+|            |                  | TBD6: Missing SR      | This.I-D  |
+|            |                  | Policy Mandatory TLV  |           |
 +------------+------------------+-----------------------+-----------+
 | 26         | Association      |                       | [RFC8697] |
 |            | Error            |                       |           |

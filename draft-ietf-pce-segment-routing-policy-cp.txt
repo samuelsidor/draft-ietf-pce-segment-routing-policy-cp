@@ -378,7 +378,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    Of these new TLVs, SRPOLICY-CPATH-ID TLV is mandatory.  When a
    mandatory TLV is missing from the SRPA object, the PCE MUST send a
    PCErr message with Error-Type = 6 "Mandatory Object Missing", Error-
-   Value = TBD6 "Missing Mandatory TLV".
+   Value = TBD6 "Missing SR Policy Mandatory TLV".
 
    Unless specifically stated otherwise, the TLVs listed in the
    following sub-sections are assumed to be single instance.  Meaning,
@@ -567,7 +567,7 @@ Internet-Draft         PCEP SR Policy Association              July 2023
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |             Type              |             Length            |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |                                                     |L|S|I|E|P|
+      |                             Flags                   |L|S|I|E|P|
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                Figure 6: The SR-POLICY-CAPABILITY TLV format
@@ -856,8 +856,8 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    | 6          | Mandatory Object |                       | [RFC5440] |
    |            | Missing          |                       |           |
    +------------+------------------+-----------------------+-----------+
-   |            |                  | TBD6: SR Policy       | This.I-D  |
-   |            |                  | Missing Mandatory TLV |           |
+   |            |                  | TBD6: Missing SR      | This.I-D  |
+   |            |                  | Policy Mandatory TLV  |           |
    +------------+------------------+-----------------------+-----------+
    | 26         | Association      |                       | [RFC8697] |
    |            | Error            |                       |           |
