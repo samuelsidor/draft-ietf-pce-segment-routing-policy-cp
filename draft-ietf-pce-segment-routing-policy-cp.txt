@@ -5,18 +5,18 @@
 PCE Working Group                                           M. Koldychev
 Internet-Draft                                       Cisco Systems, Inc.
 Intended status: Standards Track                            S. Sivabalan
-Expires: 23 January 2024                               Ciena Corporation
+Expires: 19 July 2024                                  Ciena Corporation
                                                                 C. Barth
                                                   Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                            22 July 2023
+                                                         16 January 2024
 
 
              PCEP Extensions for SR Policy Candidate Paths
-              draft-ietf-pce-segment-routing-policy-cp-12
+              draft-ietf-pce-segment-routing-policy-cp-13
 
 Abstract
 
@@ -53,16 +53,16 @@ Status of This Memo
 
 
 
-Koldychev, et al.        Expires 23 January 2024                [Page 1]
+Koldychev, et al.         Expires 19 July 2024                  [Page 1]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
-   This Internet-Draft will expire on 23 January 2024.
+   This Internet-Draft will expire on 19 July 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,12 +109,12 @@ Table of Contents
 
 
 
-Koldychev, et al.        Expires 23 January 2024                [Page 2]
+Koldychev, et al.         Expires 19 July 2024                  [Page 2]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
-   9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  19
+   9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  20
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  20
      10.2.  Informative References . . . . . . . . . . . . . . . . .  21
@@ -165,9 +165,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024                [Page 3]
+Koldychev, et al.         Expires 19 July 2024                  [Page 3]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    The SRPA carries three pieces of information: SR Policy Identifier,
@@ -221,9 +221,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024                [Page 4]
+Koldychev, et al.         Expires 19 July 2024                  [Page 4]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    *  Optionally, the SR Policy Candidate Path name.
@@ -277,9 +277,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024                [Page 5]
+Koldychev, et al.         Expires 19 July 2024                  [Page 5]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    The Association Source MUST be set to the headend value of the SR
@@ -333,9 +333,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024                [Page 6]
+Koldychev, et al.         Expires 19 July 2024                  [Page 6]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    The computed destination of the SR Policy Candidate Path MAY differ
@@ -389,9 +389,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024                [Page 7]
+Koldychev, et al.         Expires 19 July 2024                  [Page 7]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
        0                   1                   2                   3
@@ -445,14 +445,14 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024                [Page 8]
+Koldychev, et al.         Expires 19 July 2024                  [Page 8]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    Protocol Origin: 8-bit value that encodes the protocol origin, as
-   specified in [RFC9256] Section 2.3.  Note that in PCInit messages,
-   the Protocol Origin is always set to "PCEP".
+   specified in Section 6.5.  Note that in PCInit messages, the Protocol
+   Origin is always set to "PCEP".
 
    Originator ASN: Represented as 4 byte number, part of the originator
    identifier, as specified in [RFC9256] Section 2.4.  When sending
@@ -501,9 +501,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024                [Page 9]
+Koldychev, et al.         Expires 19 July 2024                  [Page 9]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
 4.2.4.  SR Policy Candidate Path Preference TLV
@@ -557,9 +557,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 10]
+Koldychev, et al.         Expires 19 July 2024                 [Page 10]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
                Figure 6: The SR-POLICY-CAPABILITY TLV format
@@ -613,9 +613,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 11]
+Koldychev, et al.         Expires 19 July 2024                 [Page 11]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
 5.3.  Explicit Null Label Policy (ENLP) TLV
@@ -669,9 +669,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 12]
+Koldychev, et al.         Expires 19 July 2024                 [Page 12]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    The ENLP reserved values may be used for future extensions and
@@ -725,9 +725,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 13]
+Koldychev, et al.         Expires 19 July 2024                 [Page 13]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    *  V: Verification failure - OAM/PM/BFD path verification has
@@ -781,9 +781,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 14]
+Koldychev, et al.         Expires 19 July 2024                 [Page 14]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    To signal specified-BSID-only, a new bit: S (Specified-BSID-only) is
@@ -837,9 +837,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 15]
+Koldychev, et al.         Expires 19 July 2024                 [Page 15]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
 6.2.  PCEP TLV Type Indicators
@@ -893,9 +893,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 16]
+Koldychev, et al.         Expires 19 July 2024                 [Page 16]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    +------------+------------------+-----------------------+-----------+
@@ -949,9 +949,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 17]
+Koldychev, et al.         Expires 19 July 2024                 [Page 17]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    +------------+------------------------------------------------------+
@@ -1005,9 +1005,9 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 18]
+Koldychev, et al.         Expires 19 July 2024                 [Page 18]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
 7.1.  Cisco
@@ -1029,11 +1029,12 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
    *  Organization: Juniper Networks
 
-   *  Implementation: Head-end and controller.
+   *  Implementation: PCC and PCE.
 
-   *  Description: An experimental code-point is currently used.
+   *  Description: Everything in -05 except SR Policy Name TLV and SR
+      Policy Candidate Path Name TLV.
 
-   *  Maturity Level: Proof of concept.
+   *  Maturity Level: Production.
 
    *  Coverage: Partial.
 
@@ -1054,17 +1055,21 @@ Internet-Draft         PCEP SR Policy Association              July 2023
    Layer Security (TLS) [RFC8253], as per the recommendations and best
    current practices in [RFC7525], is RECOMMENDED.
 
+
+
+
+
+
+
+Koldychev, et al.         Expires 19 July 2024                 [Page 19]
+
+Internet-Draft         PCEP SR Policy Association           January 2024
+
+
 9.  Acknowledgement
 
    Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman,
    Alex Tokar, Praveen Kumar and Tom Petch for review and suggestions.
-
-
-
-Koldychev, et al.        Expires 23 January 2024               [Page 19]
-
-Internet-Draft         PCEP SR Policy Association              July 2023
-
 
 10.  References
 
@@ -1107,20 +1112,21 @@ Internet-Draft         PCEP SR Policy Association              July 2023
               (LSPs)", RFC 8697, DOI 10.17487/RFC8697, January 2020,
               <https://www.rfc-editor.org/info/rfc8697>.
 
+
+
+
+
+
+Koldychev, et al.         Expires 19 July 2024                 [Page 20]
+
+Internet-Draft         PCEP SR Policy Association           January 2024
+
+
    [RFC8664]  Sivabalan, S., Filsfils, C., Tantsura, J., Henderickx, W.,
               and J. Hardwick, "Path Computation Element Communication
               Protocol (PCEP) Extensions for Segment Routing", RFC 8664,
               DOI 10.17487/RFC8664, December 2019,
               <https://www.rfc-editor.org/info/rfc8664>.
-
-
-
-
-
-Koldychev, et al.        Expires 23 January 2024               [Page 20]
-
-Internet-Draft         PCEP SR Policy Association              July 2023
-
 
    [RFC3032]  Rosen, E., Tappan, D., Fedorkow, G., Rekhter, Y.,
               Farinacci, D., Li, T., and A. Conta, "MPLS Label Stack
@@ -1167,15 +1173,9 @@ Appendix A.  Contributors
 
 
 
-
-
-
-
-
-
-Koldychev, et al.        Expires 23 January 2024               [Page 21]
+Koldychev, et al.         Expires 19 July 2024                 [Page 21]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    Dhruv Dhody
@@ -1210,7 +1210,7 @@ Authors' Addresses
    2000 Innovation Drive
    Kanata Ontario K2K 3E8
    Canada
-   Email: mkoldych@cisco.com
+   Email: mkoldych@proton.me
 
 
    Siva Sivabalan
@@ -1229,9 +1229,9 @@ Authors' Addresses
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 22]
+Koldychev, et al.         Expires 19 July 2024                 [Page 22]
 
-Internet-Draft         PCEP SR Policy Association              July 2023
+Internet-Draft         PCEP SR Policy Association           January 2024
 
 
    Shuping Peng
@@ -1285,4 +1285,4 @@ Internet-Draft         PCEP SR Policy Association              July 2023
 
 
 
-Koldychev, et al.        Expires 23 January 2024               [Page 23]
+Koldychev, et al.         Expires 19 July 2024                 [Page 23]
