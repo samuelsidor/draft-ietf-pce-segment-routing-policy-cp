@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-13" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-14" ipr="trust200902">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -118,7 +118,7 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date day="16" month="January" year="2024" />
+    <date day="9" month="February" year="2024" />
 
     <workgroup>PCE Working Group</workgroup>
 
@@ -514,12 +514,12 @@ only the first instance of the TLV SHOULD be interpreted and subsequent instance
 <section anchor="Capability-tlv" title="SR Policy Capability TLV">
 
 <t>
-The SR-POLICY-CAPABILITY TLV is an optional TLV for the OPEN object.
+The SRPOLICY-CAPABILITY TLV is an optional TLV for the OPEN object.
 It is used at session establishment time to learn the other PCEP peer's
 capabilities with respect to SR Policy.
 </t>
 
-<figure anchor="SR-POLICY-CAPABILITY-TLV-FORMAT" title="The SR-POLICY-CAPABILITY TLV format">
+<figure anchor="SRPOLICY-CAPABILITY-TLV-FORMAT" title="The SRPOLICY-CAPABILITY TLV format">
 <artwork align="center"><![CDATA[
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -531,7 +531,7 @@ capabilities with respect to SR Policy.
 ]]></artwork>
 </figure>
 
-<t>Type: TBD4 for "SR-POLICY-CAPABILITY TLV.</t>
+<t>Type: TBD4 for "SRPOLICY-CAPABILITY TLV.</t>
 
 <t>Length: 4.</t>
 
@@ -764,8 +764,8 @@ This has the advantage of reducing the number of PCEP messages and simplifying t
 <t>
 Furthermore, a PCEP speaker is not required to support PCReq/PCRep at all for SR Policies.
 The PCEP speaker can indicate support for PCReq/PCRep via the "L-Flag" in
-the SR-POLICY-CAPABILITY TLV (See <xref target="Capability-tlv"/>).
-When this flag is cleared, or when the SR-POLICY-CAPABILITY TLV is absent,
+the SRPOLICY-CAPABILITY TLV (See <xref target="Capability-tlv"/>).
+When this flag is cleared, or when the SRPOLICY-CAPABILITY TLV is absent,
 the given peer SHOULD NOT be sent PCReq/PCRep messages for SR Policy LSPs.
 Conversely when this flag is set, the peer can receive and process
 PCReq/PCRep messages for SR Policy LSPs.
@@ -823,7 +823,7 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 +-----------+-------------------------------------------+-----------+
 | TBD3      | INVALIDATION                              | This.I-D  |
 +-----------+-------------------------------------------+-----------+
-| TBD4      | SR-POLICY-CAPABILITY                      | This.I-D  |
+| TBD4      | SRPOLICY-CAPABILITY                       | This.I-D  |
 +-----------+-------------------------------------------+-----------+
 ]]></artwork>
       </figure>
