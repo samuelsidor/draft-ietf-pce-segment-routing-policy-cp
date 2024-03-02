@@ -3,11 +3,10 @@
 
 
 PCE Working Group                                           M. Koldychev
-Internet-Draft                                       Cisco Systems, Inc.
-Updates: 8231 (if approved)                                 S. Sivabalan
-Intended status: Standards Track                       Ciena Corporation
-Expires: 10 September 2024                                      C. Barth
-                                                  Juniper Networks, Inc.
+Internet-Draft                                              S. Sivabalan
+Updates: 8231 (if approved)                            Ciena Corporation
+Intended status: Standards Track                                C. Barth
+Expires: 10 September 2024                        Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
@@ -17,7 +16,7 @@ Expires: 10 September 2024                                      C. Barth
 
  Path Computation Element Communication Protocol (PCEP) Extensions for
               Segment Routing (SR) Policy Candidate Paths
-              draft-ietf-pce-segment-routing-policy-cp-14
+              draft-ietf-pce-segment-routing-policy-cp-15
 
 Abstract
 
@@ -48,6 +47,7 @@ Status of This Memo
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at https://datatracker.ietf.org/drafts/current/.
+
 
 
 
@@ -194,7 +194,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
    NOT change for a given SR Policy Candidate Path during its lifetime.
    SR Policy Identifier MUST be different for different SRPAs.  When
    these rules are not satisfied, the PCEP speaker MUST send a PCErr
-   message with Error-Type = 26 "Association Error", Error Value = TBD7
+   message with Error-Type = 26 "Association Error", Error Value = 20
    "SR Policy Identifier Mismatch".  SR Policy Identifier consist of:
 
    *  Headend router where the SR Policy originates.
@@ -211,9 +211,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
    lifetime.  SR Policy Candidate Path Identifier MUST be different for
    distinct Candidate Paths within the same SRPA.  When these rules are
    not satisfied, the PCEP speaker MUST send a PCErr message with Error-
-   Type = 26 "Association Error", Error Value = TBD8 "SR Policy
-   Candidate Path Identifier Mismatch".  SR Policy Candidate Path
-   Identifier consist of:
+   Type = 26 "Association Error", Error Value = 21 "SR Policy Candidate
+   Path Identifier Mismatch".  SR Policy Candidate Path Identifier
+   consist of:
 
    *  Protocol Origin.
 
@@ -348,7 +348,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
    If the PCEP speaker receives an SRPA object whose Association
    Parameters do not follow the above specification, then the PCEP
    speaker MUST send PCErr message with Error-Type = 26 "Association
-   Error", Error-Value = TBD7 "SR Policy Identifier Mismatch".
+   Error", Error-Value = 20 "SR Policy Identifier Mismatch".
 
    The purpose of choosing the Association Parameters in this way is to
    guarantee that there is no possibility of a race condition when
@@ -400,7 +400,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
    Out of these TLVs, the SRPOLICY-CPATH-ID TLV is mandatory, all others
    are optional.  When a mandatory TLV is missing from the SRPA object,
    the PCEP speaker MUST send a PCErr message with Error-Type = 6
-   "Mandatory Object Missing", Error-Value = TBD6 "Missing SR Policy
+   "Mandatory Object Missing", Error-Value = 21 "Missing SR Policy
    Mandatory TLV".
 
    This document specifies four new TLVs to be carried in the SRPA
@@ -589,7 +589,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
                 Figure 6: The SRPOLICY-CAPABILITY TLV format
 
-   Type: TBD4 for "SRPOLICY-CAPABILITY TLV.
+   Type: 71 for "SRPOLICY-CAPABILITY TLV.
 
    Length: 4.
 
@@ -638,7 +638,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
                Figure 7: The COMPUTATION-PRIORITY TLV format
 
-   Type: TBD1 for "COMPUTATION-PRIORITY" TLV.
+   Type: 68 for "COMPUTATION-PRIORITY" TLV.
 
    Length: 4.
 
@@ -674,7 +674,7 @@ Koldychev, et al.       Expires 10 September 2024              [Page 12]
 Internet-Draft               PCEP SR Policy                   March 2024
 
 
-   Type: TBD2 for "ENLP" TLV.
+   Type: 69 for "ENLP" TLV.
 
    Length: 4.
 
@@ -772,7 +772,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
                    Figure 10: The INVALIDATION TLV format
 
-   Type: TBD3 for "INVALIDATION" TLV.
+   Type: 70 for "INVALIDATION" TLV.
 
    Length: 4.
 
@@ -909,13 +909,13 @@ Internet-Draft               PCEP SR Policy                   March 2024
    +-----------+-------------------------------------------+-----------+
    | 59        | SRPOLICY-CPATH-PREFERENCE                 | This.I-D  |
    +-----------+-------------------------------------------+-----------+
-   | TBD1      | COMPUTATION-PRIORITY                      | This.I-D  |
+   | 68        | COMPUTATION-PRIORITY                      | This.I-D  |
    +-----------+-------------------------------------------+-----------+
-   | TBD2      | EXPLICIT-NULL-LABEL-POLICY                | This.I-D  |
+   | 69        | EXPLICIT-NULL-LABEL-POLICY                | This.I-D  |
    +-----------+-------------------------------------------+-----------+
-   | TBD3      | INVALIDATION                              | This.I-D  |
+   | 70        | INVALIDATION                              | This.I-D  |
    +-----------+-------------------------------------------+-----------+
-   | TBD4      | SRPOLICY-CAPABILITY                       | This.I-D  |
+   | 71        | SRPOLICY-CAPABILITY                       | This.I-D  |
    +-----------+-------------------------------------------+-----------+
 
 6.3.  PCEP Errors
@@ -932,16 +932,16 @@ Internet-Draft               PCEP SR Policy                   March 2024
    | 6          | Mandatory Object |                       | [RFC5440] |
    |            | Missing          |                       |           |
    +------------+------------------+-----------------------+-----------+
-   |            |                  | TBD6: Missing SR      | This.I-D  |
+   |            |                  | 21: Missing SR        | This.I-D  |
    |            |                  | Policy Mandatory TLV  |           |
    +------------+------------------+-----------------------+-----------+
    | 26         | Association      |                       | [RFC8697] |
    |            | Error            |                       |           |
    +------------+------------------+-----------------------+-----------+
-   |            |                  | TBD7: SR Policy       | This.I-D  |
+   |            |                  | 20: SR Policy         | This.I-D  |
    |            |                  | Identifers Mismatch   |           |
    +------------+------------------+-----------------------+-----------+
-   |            |                  | TBD8: SR Policy       | This.I-D  |
+   |            |                  | 21: SR Policy         | This.I-D  |
    |            |                  | Candidate Path        |           |
    |            |                  | Identifier Mismatch   |           |
    +------------+------------------+-----------------------+-----------+
@@ -962,7 +962,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
    +------------+------------------------------------------+-----------+
    | Bit position | Description                            | Reference |
    +--------------+----------------------------------------+-----------+
-   | TBD9         | S (Specified-BSID-only)                | This.I-D  |
+   | 1            | S (Specified-BSID-only)                | This.I-D  |
    +--------------+----------------------------------------+-----------+
 
 6.5.  SR Policy Candidate Path Protocol Origin field
@@ -1235,9 +1235,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
    Mike Koldychev
-   Cisco Systems, Inc.
-   2000 Innovation Drive
-   Kanata Ontario K2K 3E8
+   Ciena Corporation
+   385 Terry Fox Dr.
+   Kanata Ontario K2K 0L1
    Canada
    Email: mkoldych@proton.me
 

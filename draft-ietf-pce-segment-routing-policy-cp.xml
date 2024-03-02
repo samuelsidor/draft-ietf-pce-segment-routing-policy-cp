@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-14" ipr="trust200902" updates="8231">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-15" ipr="trust200902" updates="8231">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN"
@@ -49,13 +49,13 @@ they will automatically be output with "(if approved)" -->
     Path Computation Element Communication Protocol (PCEP) Extensions for Segment Routing (SR) Policy Candidate Paths</title>
 
     <author fullname="Mike Koldychev" initials="M." surname="Koldychev">
-      <organization>Cisco Systems, Inc.</organization>
+      <organization>Ciena Corporation</organization>
       <address>
         <postal>
-          <street>2000 Innovation Drive</street>
+          <street>385 Terry Fox Dr.</street>
           <city>Kanata</city>
           <region>Ontario</region>
-          <code>K2K 3E8</code>
+          <code>K2K 0L1</code>
           <country>Canada</country>
         </postal>
         <email>mkoldych@proton.me</email>
@@ -211,7 +211,7 @@ SR Policy Identifier MUST be the same for all SR Policy Candidate Paths in the s
 SR Policy Identifier MUST NOT change for a given SR Policy Candidate Path during its lifetime.
 SR Policy Identifier MUST be different for different SRPAs.
 When these rules are not satisfied, the PCEP speaker MUST send a PCErr message with
-Error-Type = 26 "Association Error", Error Value = TBD7 "SR Policy Identifier Mismatch".
+Error-Type = 26 "Association Error", Error Value = 20 "SR Policy Identifier Mismatch".
 SR Policy Identifier consist of:</t>
 <t>
       <list style="symbols">
@@ -227,7 +227,7 @@ SR Policy Identifier consist of:</t>
 SR Policy Candidate Path Identifier MUST NOT change for a given LSP during its lifetime.
 SR Policy Candidate Path Identifier MUST be different for distinct Candidate Paths within the same SRPA.
 When these rules are not satisfied, the PCEP speaker MUST send a PCErr message with
-Error-Type = 26 "Association Error", Error Value = TBD8 "SR Policy Candidate Path Identifier Mismatch".
+Error-Type = 26 "Association Error", Error Value = 21 "SR Policy Candidate Path Identifier Mismatch".
 SR Policy Candidate Path Identifier consist of:</t>
 <t>
       <list style="symbols">
@@ -342,7 +342,7 @@ This value MAY be different from the one contained in the Destination address fi
 <t>If the PCEP speaker receives an SRPA object
 whose Association Parameters do not follow the above specification,
 then the PCEP speaker MUST send PCErr message with
-Error-Type = 26 "Association Error", Error-Value = TBD7 "SR Policy Identifier Mismatch".</t>
+Error-Type = 26 "Association Error", Error-Value = 20 "SR Policy Identifier Mismatch".</t>
 
 <t>The purpose of choosing the Association Parameters in this way is to guarantee that there is no possibility of a race condition when multiple PCEP speakers want to associate the same SR Policy at the same time. By adhering to this format, all PCEP speakers come up with the same Association Parameters independently of each other based on the SR Policy <xref target="RFC9256"/> parameters. Thus, there is no chance that different PCEP speakers will come up with different Association Parameters for the same SR Policy.</t>
 
@@ -372,7 +372,7 @@ the PCEP speaker MUST extract the destination from the Endpoint field in the SRP
 
 <t>Out of these TLVs, the SRPOLICY-CPATH-ID TLV is mandatory, all others are optional.
 When a mandatory TLV is missing from the SRPA object, the PCEP speaker MUST send a PCErr message with
-Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "Missing SR Policy Mandatory TLV".</t>
+Error-Type = 6 "Mandatory Object Missing", Error-Value = 21 "Missing SR Policy Mandatory TLV".</t>
 
 <t>This document specifies four new TLVs to be carried in the SRPA object. Only one TLV instance of each type can be carried, and only the first occurrence is processed.  Any others MUST be ignored.</t>
 
@@ -546,7 +546,7 @@ capabilities with respect to SR Policy.
 ]]></artwork>
 </figure>
 
-<t>Type: TBD4 for "SRPOLICY-CAPABILITY TLV.</t>
+<t>Type: 71 for "SRPOLICY-CAPABILITY TLV.</t>
 
 <t>Length: 4.</t>
 
@@ -586,7 +586,7 @@ If the TLV is absent from the LSP object, a default Priority value of 128 is use
 ]]></artwork>
 </figure>
 
-<t>Type: TBD1 for "COMPUTATION-PRIORITY" TLV.</t>
+<t>Type: 68 for "COMPUTATION-PRIORITY" TLV.</t>
 
 <t>Length: 4.</t>
 
@@ -615,7 +615,7 @@ If the TLV is absent from the LSP object, a default Priority value of 128 is use
 ]]></artwork>
 </figure>
 
-<t>Type: TBD2 for "ENLP" TLV.</t>
+<t>Type: 69 for "ENLP" TLV.</t>
 
 <t>Length: 4.</t>
 
@@ -721,7 +721,7 @@ Reasons for entering the drop state are represented by a set of flags.
 ]]></artwork>
 </figure>
 
-<t>Type: TBD3 for "INVALIDATION" TLV.</t>
+<t>Type: 70 for "INVALIDATION" TLV.</t>
 
 <t>Length: 4.</t>
 
@@ -834,13 +834,13 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 +-----------+-------------------------------------------+-----------+
 | 59        | SRPOLICY-CPATH-PREFERENCE                 | This.I-D  |
 +-----------+-------------------------------------------+-----------+
-| TBD1      | COMPUTATION-PRIORITY                      | This.I-D  |
+| 68        | COMPUTATION-PRIORITY                      | This.I-D  |
 +-----------+-------------------------------------------+-----------+
-| TBD2      | EXPLICIT-NULL-LABEL-POLICY                | This.I-D  |
+| 69        | EXPLICIT-NULL-LABEL-POLICY                | This.I-D  |
 +-----------+-------------------------------------------+-----------+
-| TBD3      | INVALIDATION                              | This.I-D  |
+| 70        | INVALIDATION                              | This.I-D  |
 +-----------+-------------------------------------------+-----------+
-| TBD4      | SRPOLICY-CAPABILITY                       | This.I-D  |
+| 71        | SRPOLICY-CAPABILITY                       | This.I-D  |
 +-----------+-------------------------------------------+-----------+
 ]]></artwork>
       </figure>
@@ -859,16 +859,16 @@ IANA is requested to allocate new error values within the "PCEP-ERROR Object Err
 | 6          | Mandatory Object |                       | [RFC5440] |
 |            | Missing          |                       |           |
 +------------+------------------+-----------------------+-----------+
-|            |                  | TBD6: Missing SR      | This.I-D  |
+|            |                  | 21: Missing SR        | This.I-D  |
 |            |                  | Policy Mandatory TLV  |           |
 +------------+------------------+-----------------------+-----------+
 | 26         | Association      |                       | [RFC8697] |
 |            | Error            |                       |           |
 +------------+------------------+-----------------------+-----------+
-|            |                  | TBD7: SR Policy       | This.I-D  |
+|            |                  | 20: SR Policy         | This.I-D  |
 |            |                  | Identifers Mismatch   |           |
 +------------+------------------+-----------------------+-----------+
-|            |                  | TBD8: SR Policy       | This.I-D  |
+|            |                  | 21: SR Policy         | This.I-D  |
 |            |                  | Candidate Path        |           |
 |            |                  | Identifier Mismatch   |           |
 +------------+------------------+-----------------------+-----------+
@@ -887,7 +887,7 @@ IANA is requested to allocate new bit within the "TE-PATH-BINDING TLV Flag field
 +------------+------------------------------------------+-----------+
 | Bit position | Description                            | Reference |
 +--------------+----------------------------------------+-----------+
-| TBD9         | S (Specified-BSID-only)                | This.I-D  |
+| 1            | S (Specified-BSID-only)                | This.I-D  |
 +--------------+----------------------------------------+-----------+
 
 ]]></artwork>
