@@ -202,7 +202,7 @@ The subject of encoding multiple Segment Lists within an SR Policy Candidate Pat
 SR Policy Identifier, SR Policy Candidate Path Identifier, and SR Policy Candidate Path Attribute(s).</t>
 
 <t>
-This document also specify some additional information that is not encoded as part of SRPA: Computation Priority, Explicit Null Label Policy, Drop upon Invalid behavior, and Specified-BSID-only.
+This document also specifies some additional information that is not encoded as part of SRPA: Computation Priority, Explicit Null Label Policy, Drop-upon-invalid behavior, and Specified-BSID-only.
 </t>
 
 <section anchor="SRPolicyIdentifier" title="SR Policy Identifier">
@@ -665,13 +665,13 @@ If the TLV is absent from the LSP object, a default Priority value of 128 is use
 <t>The INVALIDATION TLV is an optional TLV for the LSP object.
 It is used to control traffic steering into the LSP
 during the time when the LSP is operationally down/invalid.
-In the context of SR Policy, this TLV facilitates
-the "Drop upon invalid" behavior,
+In the context of SR Policy, this TLV facilitates 
+the Drop-upon-invalid behavior,
 specified in Section 8.2 of <xref target="RFC9256"/>.
 Normally, if the LSP is down/invalid then it stops attracting traffic and
-traffic that is originally destined for that LSP
+traffic that would have been destined to that LSP
 is redirected somewhere else, such as via IGP or via another LSP.
-The "Drop upon invalid" behavior specifies that the LSP keeps attracting traffic
+The Drop-upon-invalid behavior specifies that the LSP keeps attracting traffic
 and the traffic has to be dropped at the head-end.
 Such an LSP is said to be "in drop state".
 While in the drop state, the LSP operational state is "UP",
@@ -681,31 +681,8 @@ However the ERO object MAY be empty, if no valid path has been computed.
 <t>
 The INVALIDATION TLV is used in both directions between PCEP peers:
   <list style="symbols">
-    <t>PCE -> PCC: PCE specifies to the PCC under what conditions the LSP should enter the drop state.</t>
-    <t>PCC -> PCE: PCC reports under what conditions the LSP will enter the drop state and the PCC also reports whether the LSP is currently in the drop state and if so, for what reason.</t>
-  </list>
-</t>
-
-<t>
-Reasons for entering the drop state are represented by a set of flags.
-</t>
-
-<figure anchor="INVAL_FLAGS" title="Invalidation Reasons Flags">
-<artwork align="center"><![CDATA[
-   0 1 2 3 4 5 6 7
-  +-+-+-+-+-+-+-+-+
-  |       |V|P|F|G|
-  +-+-+-+-+-+-+-+-+
-]]></artwork>
-</figure>
-
-<t>
-  <list style="symbols">
-    <t>G: Generic - does not fit into any other categories below.</t>
-    <t>F: First-hop resolution failure - head-end first hop resolution has failed.</t>
-    <t>P: Path computation failure - no path was computed for the LSP.</t>
-    <t>V: Verification failure - OAM/PM/BFD path verification has indicated a breakage.</t>
-    <t>The unassigned bits in the Flag octet MUST be set to zero upon transmission and MUST be ignored upon receipt.</t>
+    <t>PCE -> PCC: PCE specifies to the PCC whether to enable or disable Drop-upon-invalid (Config).</t>
+    <t>PCC -> PCE: PCC reports the current setting of the Drop-upon-invalid (Config) and also whether the LSP is currently in the drop state (Oper).</t>
   </list>
 </t>
 
@@ -716,7 +693,7 @@ Reasons for entering the drop state are represented by a set of flags.
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  | Inval Reason  |   Drop Upon   |              MBZ              |
+  |   Oper        |   Config      |              MBZ              |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
 </figure>
@@ -725,32 +702,66 @@ Reasons for entering the drop state are represented by a set of flags.
 
 <t>Length: 4.</t>
 
-<t>Inval Reason: contains "Invalidation Reasons Flags" which encode the
-reason(s) why the LSP is currently invalidated.
+<t>Oper: encodes the current state of
+the LSP, i.e., whether it is actively dropping traffic right now.
 This field can be set to non-zero values only by the PCC,
-it MUST be set to 0 by the PCE and ignored by the PCC.
+it MUST be set to 0 by the PCE and SHOULD be ignored by the PCC.
 </t>
 
-<t>Drop Upon: contains "Invalidation Reasons Flags" for conditions
-that SHOULD cause the LSP to enter drop state.
-This field can be set to non-zero values by both PCC and PCE.
-When the G-flag is set, this indicates that the LSP is to go into
-Drop upon invalid state for any reason. I.e., when the PCE does not wish to
-distinguish any reason for LSP invalidation and just simply wants it to
-always go into drop state whenever the LSP is down.
-Note that when the G-flag is set, the values of the other flags are irrelevant.
+<figure anchor="OPER_INVAL_FLAGS" title="Oper state of Drop-upon-invalid feature">
+<artwork align="center"><![CDATA[
+   0 1 2 3 4 5 6 7 
+  +-+-+-+-+-+-+-+-+
+  |             |D|
+  +-+-+-+-+-+-+-+-+
+]]></artwork>
+</figure>
+
+<t>
+  <list style="symbols">
+    <t>D: dropping - the LSP is currently attracting traffic and actively dropping it.</t>
+    <t>The unassigned bits in the Flag octet MUST be set to zero upon transmission and MUST be ignored upon receipt.</t>
+  </list>
+</t>
+
+<t>Config: encodes the current setting of the Drop-upon-invalid feature.
+</t>
+
+<figure anchor="CONFIG_INVAL_FLAGS" title="Config state of Drop-upon-invalid feature">
+<artwork align="center"><![CDATA[
+   0 1 2 3 4 5 6 7 
+  +-+-+-+-+-+-+-+-+
+  |             |D|
+  +-+-+-+-+-+-+-+-+
+]]></artwork>
+</figure>
+
+<t>
+  <list style="symbols">
+    <t>D: drop enabled - the Candidate Path has Drop-upon-invalid feature enabled.</t>
+    <t>The unassigned bits in the Flag octet MUST be set to zero upon transmission and MUST be ignored upon receipt.</t>
+  </list>
+</t>
+
+<section anchor="Invalidation-per-policy" title="Drop-upon-invalid applies to SR Policy">
+
+<t>
+The Drop-upon-invalid feature is somewhat special among the other SR Policy features in the way that it is enabled/disabled.
+This feature is enabled only on the whole SR Policy, not on a particular Candidate Path of that SR Policy,
+i.e., when ANY Candidate Path has Drop-upon-invalid enabled, it means that essentially the whole SR Policy has the feature enabled.
+As stated in <xref target="RFC9256"/> Section 8.1, the SR Policy is invalid when all its Candidate Paths are invalid,
+therefore all Candidate Paths MUST be attempted for bringup before the SR Policy is declared invalid.
 </t>
 
 <t>
-Note that out of all the "Invalidation Reasons Flags", only the G-flag (Generic)
-MUST be supported.
-The other flags can simply be ignored if they are not supported by the PCEP speaker.
-For example, suppose the PCC only supports P-flag and G-flag.
-When this PCC receives this TLV with Drop Upon set to 0x6 (P,F),
-then the PCC responds with Drop Upon = 0x4 (P).
-When this PCC receives this TLV with Drop Upon set to 0x7 (P,F,G),
-then the PCC responds with Drop Upon = 0x5 (P,G).
+Once all the Candidate Paths of the SR Policy have become invalid, then the SR Policy checks whether ANY of the Candidate Paths
+have Drop-upon-invalid enabled.
+If so, SR Policy enters the drop state and "activates" the highest preference Candidate Path which has
+the Drop-upon-invalid enabled.
+Note that only one Candidate Path needs to be reported to the PCE with the D (dropping) flag set.
 </t>
+
+</section> <!-- Invalidation-per-policy -->
 
 </section> <!-- Invalidation-tlv -->
 
