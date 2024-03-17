@@ -134,7 +134,10 @@ they will automatically be output with "(if approved)" -->
 
    This document specifies Path Computation Element Communication
    Protocol (PCEP) extension to associate candidate paths of the SR
-   Policy. It applies equally to the SR-MPLS and Segment Routing over
+   Policy.
+   This document updates <xref target="RFC 8231"> to allow
+   stateful bringup of an SR LSP, without using PCReq/PCRep messages.
+   This document applies to the SR-MPLS and Segment Routing over
    IPv6 (SRv6) instantiations of segment routing.
 </t>
 
@@ -777,8 +780,8 @@ It is possible to have a mix of BSIDs for the same LSP: some with S=1 and some w
 <t>
 <xref target="RFC8231"/> Section 5.8.2, allows delegation of an LSP in operationally down state,
 but at the same time mandates the use of PCReq before sending PCRpt.
-This document modifies the procedure of <xref target="RFC8231"/> Section 5.8.2,
-for SR Policies we make sending of PCReq before PCRpt OPTIONAL.
+This document updates <xref target="RFC8231"/> Section 5.8.2,
+by making this section not applicable to SR Policy LSPs.
 Thus, when a PCC wants to delegate an SR Policy LSP, it MAY proceed directly to sending PCRpt,
 without first sending PCReq and waiting for PCRep.
 This has the advantage of reducing the number of PCEP messages and simplifying the implementation.
@@ -999,16 +1002,10 @@ be assigned by IANA with the reference set to this document:
 </section>
 
 <section  title="Security Considerations">
-      <t>This document defines one new type for ASSOCIATION object, which does not add any new
-      security concerns beyond those discussed in <xref target="RFC5440"/>,
-      <xref target='RFC8231'/>, <xref target="RFC8664"/> and <xref target='RFC8697'/> in itself.
-      </t>
-     <t>
-The information carried in the SRPA object, as per this document is related to SR Policy.
-It often reflects information
-that can also be derived from the SR Database, but association provides a much easier grouping of related LSPs and messages.
-The SRPA could provide an adversary with the opportunity to eavesdrop on the relationship between the LSPs.
-Thus securing the PCEP session using Transport Layer
+  <t>The information carried in the newly defined SRPA object and TLVs
+  could provide an eavesdropper with additional information about the
+  SR Policy.
+  Thus securing the PCEP session using Transport Layer
    Security (TLS) <xref target="RFC8253"/>, as per the recommendations and
    best current practices in <xref target="RFC7525"/>, is RECOMMENDED.</t>
 </section>
