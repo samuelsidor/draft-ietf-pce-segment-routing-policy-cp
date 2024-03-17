@@ -306,9 +306,7 @@ the color and endpoint are encoded as part of the Extended Association ID TLV.
       </list>
 </t>
 
-<t>The Association Source MUST be set to the headend value of the SR Policy, as defined in <xref target="RFC9256"/> Section 2.1.
-If the PCC receives a PCInit message with the Association Source set not to the headend IP but to some globally unique IP address that the headend owns,
-then the PCC SHOULD accept the PCInit message and create the SRPA with the Association Source that was sent in the PCInit message.</t>
+<t>The Association Source MUST be set to the headend value of the SR Policy, as defined in <xref target="RFC9256"/> Section 2.1.</t>
 
 <t>The 16-bit Association ID field in the ASSOCIATION object MUST be set to the value of "1".</t>
 
