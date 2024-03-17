@@ -269,9 +269,9 @@ SR Policy Candidate Path Attributes consist of:</t>
 
 <section anchor="Association" title="SR Policy Association">
 <t>
-   As per [RFC8697], LSPs are associated with other LSPs with which they
+   As per <xref target="RFC8697">, LSPs are associated with other LSPs with which they
    interact by adding them to a common association group.  As described
-   in [RFC8697], the association group is uniquely identified by the
+   in <xref target="RFC8697">, the association group is uniquely identified by the
    combination of the following fields in the ASSOCIATION object:
    Association Type, Association ID, Association Source, and (if
    present) Global Association Source or Extended Association ID,
@@ -918,7 +918,7 @@ IANA is requested to allocate new bit within the "TE-PATH-BINDING TLV Flag field
 <t>
 This document requests IANA to maintain a new registry under
 "Segment Routing" registry group.
-New values are to be assigned by "Standards Action" [RFC8126].
+    New values are to be assigned by "Standards Action" <xref target="RFC8126">.
 The new subregistry is requested to be created under it be called "SR Policy Protocol Origin".
 The subregistry contains the following codepoints, with initial values, to
 be assigned by IANA with the reference set to this document:
