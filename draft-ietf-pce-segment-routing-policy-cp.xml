@@ -3,7 +3,7 @@
 which is available here: http://xml.resource.org. -->
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 <!-- One method to get references from the online citation libraries.
-There has to be one entity for each item to be referenced. 
+There has to be one entity for each item to be referenced.
 An alternate method (rfc include) is described in the references. -->
 
 <!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
@@ -13,7 +13,7 @@ An alternate method (rfc include) is described in the references. -->
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <!-- used by XSLT processors -->
-<!-- For a complete list and description of processing instructions (PIs), 
+<!-- For a complete list and description of processing instructions (PIs),
 please see http://xml.resource.org/authoring/README.html. -->
 <!-- Below are generally applicable Processing Instructions (PIs) that most I-Ds might want to use.
 (Here they are set differently than their defaults in xml2rfc v1.32) -->
@@ -29,24 +29,24 @@ please see http://xml.resource.org/authoring/README.html. -->
 <!-- use symbolic references tags, i.e, [RFC2119] instead of [1] -->
 <?rfc sortrefs="no" ?>
 <!-- sort the reference entries alphabetically -->
-<!-- control vertical white space 
+<!-- control vertical white space
 (using these PIs as follows is recommended by the RFC Editor) -->
 <?rfc compact="yes" ?>
 <!-- do not start each main section on a new page -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-14" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-14" ipr="trust200902" updates="8231">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
-you can add the attributes updates="NNNN" and obsoletes="NNNN" 
+you can add the attributes updates="NNNN" and obsoletes="NNNN"
 they will automatically be output with "(if approved)" -->
 
 <!-- ***** FRONT MATTER ***** -->
 
   <front>
-    <title abbrev="PCEP SR Policy Association">
-    PCEP Extensions for SR Policy Candidate Paths</title>
+    <title abbrev="PCEP SR Policy">
+    Path Computation Element Communication Protocol (PCEP) Extensions for Segment Routing (SR) Policy Candidate Paths</title>
 
     <author fullname="Mike Koldychev" initials="M." surname="Koldychev">
       <organization>Cisco Systems, Inc.</organization>
@@ -118,20 +118,27 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date day="9" month="February" year="2024" />
+    <date day="9" month="March" year="2024" />
 
     <workgroup>PCE Working Group</workgroup>
 
 <abstract>
 
 <t>
-A Segment Routing (SR) Policy is a non-empty set of SR Candidate Paths, which share the same &#60;headend, color, endpoint&#62; tuple.
-SR Policy is modeled in PCEP as an Association of one or more SR Candidate Paths.
-PCEP extensions are defined to signal additional attributes of an SR Policy.
-The mechanism is applicable to all SR forwarding planes (MPLS, SRv6, etc.).
+   Segment Routing (SR) allows a node to steer a packet flow along any
+   path. SR Policy is an ordered list of segments (i.e.,
+   instructions) that represent a source-routed policy.  Packet flows
+   are steered into an SR Policy on a node where it is instantiated
+   called a headend node. An SR Policy is made of one or more candidate
+   paths.
+
+   This document specifies Path Computation Element Communication
+   Protocol (PCEP) extension to associate candidate paths of the SR
+   Policy. It applies equally to the SR-MPLS and Segment Routing over
+   IPv6 (SRv6) instantiations of segment routing.
 </t>
 
-</abstract> 
+</abstract>
 
 <note title="Requirements Language">
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
@@ -165,12 +172,16 @@ Thus the PCE can take computation and control decisions about the Candidate Path
 <t>The following terminologies are used in this document:
 
   <list style="hanging">
-    
+
      <t hangText="Endpoint:"> The IPv4 or IPv6 endpoint address of the SR Policy in question, as described in <xref target="RFC9256"/>.</t>
 
-     <t hangText="SRPA:"> SR Policy Association. PCEP ASSOCATION that describes the SR Policy. Depending on discussion context, it refers to a PCEP object or to a group of LSPs that belong to the Association.</t>
+     <t hangText="SRPA:"> SR Policy Association. A new association type 'SR Policy
+   Association' is used to group candidate paths belonging to the SR
+   Policy. Depending on discussion context, it can refer to the PCEP
+   ASSOCIATION object of SR Policy type or to a group of LSPs that
+   belong to the association. </t>
 
-     <t hangText="Association Parameters:"> As described in <xref target="RFC8697"/>, refers to the key data, that uniquely identifies the Association in the network.</t>
+     <t hangText="Association Parameters:"> As described in <xref target="RFC8697"/>, refers to the key data, that uniquely identifies the Association.</t>
 
      <t hangText="Association Information:"> As described in <xref target="RFC8697"/>, refers to the non-key information about the Association.</t>
 
@@ -191,15 +202,16 @@ The subject of encoding multiple Segment Lists within an SR Policy Candidate Pat
 SR Policy Identifier, SR Policy Candidate Path Identifier, and SR Policy Candidate Path Attribute(s).</t>
 
 <t>
-Additional information is also carried outside of SRPA:
-Computation Priority, Explicit Null Label Policy, Drop upon Invalid behavior, and Specified-BSID-only.
+This document also specify some additional information that is not encoded as part of SRPA: Computation Priority, Explicit Null Label Policy, Drop upon Invalid behavior, and Specified-BSID-only.
 </t>
 
 <section anchor="SRPolicyIdentifier" title="SR Policy Identifier">
-<t>SR Policy Identifier uniquely identifies the SR Policy within the network.
+<t>SR Policy Identifier uniquely identifies the SR Policy <xref target="RFC9256"/> within the network.
 SR Policy Identifier MUST be the same for all SR Policy Candidate Paths in the same SRPA.
 SR Policy Identifier MUST NOT change for a given SR Policy Candidate Path during its lifetime.
 SR Policy Identifier MUST be different for different SRPAs.
+When these rules are not satisfied, the PCEP speaker MUST send a PCErr message with
+Error-Type = 26 "Association Error", Error Value = TBD7 "SR Policy Identifier Mismatch".
 SR Policy Identifier consist of:</t>
 <t>
       <list style="symbols">
@@ -241,11 +253,17 @@ SR Policy Candidate Path Attributes consist of:</t>
 </section> <!-- Overview -->
 
 <section anchor="Association" title="SR Policy Association">
-
 <t>
-Two ASSOCIATION object types for IPv4 and IPv6 are defined in <xref target="RFC8697"/>.
-The ASSOCIATION object includes "Association Type" indicating the type of the association group.
-This document adds a new Association Type (6) "SR Policy Association".
+   As per [RFC8697], LSPs are associated with other LSPs with which they
+   interact by adding them to a common association group.  As described
+   in [RFC8697], the association group is uniquely identified by the
+   combination of the following fields in the ASSOCIATION object:
+   Association Type, Association ID, Association Source, and (if
+   present) Global Association Source or Extended Association ID,
+   referred to as Association Parameters.
+</t>
+<t>
+<xref target="RFC8697"/> specify the ASSOCIATION Object with two Object-Types for IPv4 and IPv6 which includes the field "Association Type". This document defines a new Association type (6) "SR Policy Association" for SRPA.
 </t>
 
 <t>
@@ -254,9 +272,14 @@ Range MUST NOT be set for this Association type and MUST be ignored.
 </t>
 
 <t>
-A PCEP speaker that supports the SRPA MUST send the ASSOC-Type-List TLV, defined in <xref target="RFC8697"/> Section 4.1,
-containing the value (6), corresponding to the SRPA Association Type.
-Otherwise the PCEP speaker MUST assume that the remote PCEP peer does not support SRPA and MUST NOT send the SRPA to that remote peer.
+<xref target="RFC8697"/> specifies the mechanism for the capability advertisement of
+   the Association Types supported by a PCEP speaker by defining an
+   ASSOC-Type-List TLV to be carried within an OPEN object. This
+   capability exchange for the SR Policy Association Types MUST
+   be done before using the SRPA.  Thus, the
+   PCEP speaker MUST include the SRPA Type (6) in
+   the ASSOC-Type-List TLV and MUST receive the same from the PCEP peer
+   before using SRPA.
 </t>
 
 <t>
@@ -271,8 +294,8 @@ Error-Type = 26 "Association Error", Error-Value = 7 "Cannot join the associatio
 <t>
 As per <xref target="RFC9256"/>,
 an SR Policy is identified through the tuple &#60;headend, color, endpoint&#62;.
-The headend is encoded as the Association Source in the ASSOCIATION object and
-the color and endpoint are encoded as part of Extended Association ID TLV.
+The headend is encoded in the 'Association Source' field in the ASSOCIATION object and
+the color and endpoint are encoded as part of the Extended Association ID TLV.
 </t>
 
 <t>The Association Parameters (see <xref target="Terminology"/>) consist of:</t>
@@ -280,7 +303,7 @@ the color and endpoint are encoded as part of Extended Association ID TLV.
       <list style="symbols">
         <t>Association Type: set to 6 "SR Policy Association".</t>
         <t>Association Source (IPv4/IPv6): set to the headend IP address.</t>
-        <t>Association ID (16-bit): set to "1" (this 16-bit field is not utilized, just set to a value).</t>
+        <t>Association ID (16-bit): set to "1" (this 16-bit field is not utilized, just set to a fixed value).</t>
         <t>Extended Association ID TLV: encodes the Color and Endpoint of the SR Policy.</t>
       </list>
 </t>
@@ -307,25 +330,24 @@ then the PCC SHOULD accept the PCInit message and create the SRPA with the Assoc
 ]]></artwork>
 </figure>
 
-<t>Type: Extended Association ID TLV, type = 31.</t>
+<t>Type: Extended Association ID TLV, type = 31 <xref target="RFC8697"/>.</t>
 
-<t>Length: Either 8 or 20, depending on whether IPv4 or IPv6 address is encoded in the Endpoint.</t>
+<t>Length: Either 8 or 20, depending on whether IPv4 or IPv6 address is encoded in the Endpoint field.</t>
 
 <t>Color: SR Policy color value, non-zero as per <xref target="RFC9256"/> Section 2.1.</t>
 
 <t>Endpoint: can be either IPv4 or IPv6.
-This value MAY be different from the one contained in the END-POINTS object, or in the LSP-IDENTIFIERS TLV.
-</t>
+This value MAY be different from the one contained in the Destination address field in the END-POINTS object, or in the Tunnel Endpoint Address field in the LSP-IDENTIFIERS TLV.</t>
 
 <t>If the PCEP speaker receives an SRPA object
 whose Association Parameters do not follow the above specification,
 then the PCEP speaker MUST send PCErr message with
 Error-Type = 26 "Association Error", Error-Value = TBD7 "SR Policy Identifier Mismatch".</t>
 
-<t>The purpose of choosing the Association Parameters in this way is to guarantee that there is no possibility of a race condition when multiple PCEP speakers want to create the same SR Policy at the same time. By adhering to this format, all PCEP speakers come up with the same Association Parameters independently of each other. Thus, there is no chance that different PCEP speakers will come up with different Association Parameters for the same SR Policy.</t>
+<t>The purpose of choosing the Association Parameters in this way is to guarantee that there is no possibility of a race condition when multiple PCEP speakers want to associate the same SR Policy at the same time. By adhering to this format, all PCEP speakers come up with the same Association Parameters independently of each other based on the SR Policy <xref target="RFC9256"/> parameters. Thus, there is no chance that different PCEP speakers will come up with different Association Parameters for the same SR Policy.</t>
 
 <t>
-The computed destination of the SR Policy Candidate Path MAY differ from the Endpoint contained in the &#60;headend, color, endpoint&#62; tuple.
+The last hop of the computed SR Policy Candidate Path MAY differ from the Endpoint contained in the &#60;headend, color, endpoint&#62; tuple.
 An example use case is to terminate the SR Policy before reaching the Endpoint and have decapsulated traffic go the rest of the way to the Endpoint node using the native IGP path(s).
 In this example, the destination of the SR Policy Candidate Paths will be some node before the Endpoint, but the Endpoint value is still used at the head-end to steer traffic with that Endpoint IP into the SR Policy.
 Destination of the SR Policy Candidate Path is signaled using the END-POINTS object and/or LSP-IDENTIFIERS TLV, as per the usual PCEP procedures.
@@ -337,7 +359,7 @@ the PCEP speaker MUST extract the destination from the Endpoint field in the SRP
 
 <section anchor="AssociationInformation" title="Association Information">
 
-<t>The SRPA object contains the following TLVs:</t>
+<t>The SRPA object may carry the following TLVs:</t>
 
 <t>
       <list style="symbols">
@@ -348,16 +370,11 @@ the PCEP speaker MUST extract the destination from the Endpoint field in the SRP
       </list>
 </t>
 
-<t>Of these new TLVs, SRPOLICY-CPATH-ID TLV is mandatory.
+<t>Out of these TLVs, the SRPOLICY-CPATH-ID TLV is mandatory, all others are optional.
 When a mandatory TLV is missing from the SRPA object, the PCEP speaker MUST send a PCErr message with
 Error-Type = 6 "Mandatory Object Missing", Error-Value = TBD6 "Missing SR Policy Mandatory TLV".</t>
 
-<t>
-Unless specifically stated otherwise, 
-the TLVs listed in the following sub-sections are assumed to be single instance.
-Meaning, only one instance of the TLV SHOULD be present in the object and 
-only the first instance of the TLV SHOULD be interpreted and subsequent instances SHOULD be ignored.
-</t>
+<t>This document specifies four new TLVs to be carried in the SRPA object. Only one TLV instance of each type can be carried, and only the first occurrence is processed.  Any others MUST be ignored.</t>
 
 <section anchor="Policy-name-tlv" title="SR Policy Name TLV">
 
@@ -419,20 +436,19 @@ The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
 <t>Length: 28.</t>
 
 <t>Protocol Origin: 8-bit value that encodes the protocol origin, as specified in <xref target="protocol_origin"/>.
-Note that in PCInit messages, the Protocol Origin is always set to "PCEP".
+Note that in PCInitiate message <xref target="RFC8281"/>, the Protocol Origin is always set to 10 (PCEP). </t>
+
+<t>MBZ: Must be zero.</t>
+
+<t>Originator ASN: Represented as 4-byte number, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4. If 2-byte ASNs are in use, the low-order 16 bits is used, and the high-order bits are set to 0.
+When sending PCInitiate message <xref target="RFC8281"/>, the PCE is acting as the originator and therefore SHOULD set this to an ASN that it belongs to.
 </t>
 
-<t>Originator ASN: Represented as 4 byte number, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4.
-When sending PCInit, the PCE is acting as the originator and therefore SHOULD set this to an ASN that it belongs to.
+<t>Originator Address: Represented as 128-bit value where IPv4 address is encoded in lowest 32 bits and high-order bits are set to 0, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4. When sending PCInitiate message, the PCE is acting as the originator and therefore SHOULD set this to an address that it owns.
 </t>
 
-<t>Originator Address: Represented as 128 bit value where IPv4 address are encoded in lowest 32 bits, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4.
-When sending PCInit, the PCE is acting as the originator and therefore SHOULD set this to an address that it owns.
-</t>
-
-<t>Discriminator: 32-bit value that encodes the Discriminator of the Candidate Path.
-This is the field that mainly distinguishes different SR Candidate Paths, coming from the same originator.
-It is allowed to be any number in the 32-bit range.
+<t>Discriminator: 32-bit value that encodes the Discriminator of the Candidate Path, as specified in <xref target="RFC9256"/> Section 2.5.
+This is the field that mainly distinguishes different SR Candidate Paths, coming from the same originator. It is allowed to be any number in the 32-bit range.
 </t>
 
 </section> <!-- Cpath-identifier-tlv -->
@@ -488,7 +504,7 @@ If the TLV is absent, then default Preference value is 100, as per Section 2.7 o
 
 <t>Length: 4.</t>
 
-<t>Preference: Numerical preference of the Candidate Path.</t>
+<t>Preference: Numerical preference of the Candidate Path as defined in Section 2.7 of <xref target="RFC9256"/>.</t>
 
 </section> <!-- Cpath-preference-tlv -->
 
@@ -505,10 +521,9 @@ Since SRPA is not used, there needs to be a separate capability
 negotiation.</t>
 
 <t>
-Unless specifically stated otherwise, 
-the TLVs listed in the following sub-sections are assumed to be single instance.
-Meaning, only one instance of the TLV SHOULD be present in the object and 
-only the first instance of the TLV SHOULD be interpreted and subsequent instances SHOULD be ignored.
+   This document specifies four new TLVs to be carried in the OPEN or LSP object.
+   Only one TLV instance of each type can be carried, and only the first
+   occurrence is processed.  Any others MUST be ignored.
 </t>
 
 <section anchor="Capability-tlv" title="SR Policy Capability TLV">
@@ -535,8 +550,7 @@ capabilities with respect to SR Policy.
 
 <t>Length: 4.</t>
 
-<t>P-Flag: PCEP speaker supports the COMPUTATION-PRIORITY TLV with SR Policy,
-see <xref target="Computation-priority-tlv"/>.</t>
+<t>P-flag: If set to '1' by a PCEP speaker, the P flag indicates that the PCEP speaker supports the handling of COMPUTATION-PRIORITY TLV for the SR Policy, see <xref target="Computation-priority-tlv"/>.</t>
 
 <t>E-Flag: PCEP speaker supports the ENLP TLV with SR Policy,
 see <xref target="enlp-tlv"/>.</t>
@@ -549,6 +563,8 @@ see <xref target="Specified-bsid-only"/>.</t>
 
 <t>L-Flag: PCEP speaker supports stateless (PCReq/PCRep) operations with SR Policy,
 see <xref target="Stateless-oper"/>.</t>
+
+<t>Unassigned bits MUST be set to '0' on transmission and MUST be ignored on receipt.</t>
 
 </section> <!-- Capability-tlv -->
 
@@ -649,7 +665,7 @@ If the TLV is absent from the LSP object, a default Priority value of 128 is use
 <t>The INVALIDATION TLV is an optional TLV for the LSP object.
 It is used to control traffic steering into the LSP
 during the time when the LSP is operationally down/invalid.
-In the context of SR Policy, this TLV facilitates 
+In the context of SR Policy, this TLV facilitates
 the "Drop upon invalid" behavior,
 specified in Section 8.2 of <xref target="RFC9256"/>.
 Normally, if the LSP is down/invalid then it stops attracting traffic and
@@ -676,7 +692,7 @@ Reasons for entering the drop state are represented by a set of flags.
 
 <figure anchor="INVAL_FLAGS" title="Invalidation Reasons Flags">
 <artwork align="center"><![CDATA[
-   0 1 2 3 4 5 6 7 
+   0 1 2 3 4 5 6 7
   +-+-+-+-+-+-+-+-+
   |       |V|P|F|G|
   +-+-+-+-+-+-+-+-+
@@ -689,6 +705,7 @@ Reasons for entering the drop state are represented by a set of flags.
     <t>F: First-hop resolution failure - head-end first hop resolution has failed.</t>
     <t>P: Path computation failure - no path was computed for the LSP.</t>
     <t>V: Verification failure - OAM/PM/BFD path verification has indicated a breakage.</t>
+    <t>The unassigned bits in the Flag octet MUST be set to zero upon transmission and MUST be ignored upon receipt.</t>
   </list>
 </t>
 
@@ -708,7 +725,7 @@ Reasons for entering the drop state are represented by a set of flags.
 
 <t>Length: 4.</t>
 
-<t>Inval Reason: contains "Invalidation Reasons Flags" which encode the 
+<t>Inval Reason: contains "Invalidation Reasons Flags" which encode the
 reason(s) why the LSP is currently invalidated.
 This field can be set to non-zero values only by the PCC,
 it MUST be set to 0 by the PCE and ignored by the PCC.
@@ -743,7 +760,7 @@ then the PCC responds with Drop Upon = 0x5 (P,G).
 When specified-BSID-only is enabled for a particular binding SID, it means that the given binding SID is required to be allocated and programmed for the LSP to be operationally up.
 If the binding SID cannot be allocated or programmed for some reason, then the LSP must stay down.</t>
 
-<t>To signal specified-BSID-only, a new bit: S (Specified-BSID-only) is allocated in the "TE-PATH-BINDING TLV Flag field" of the TE-PATH-BINDING TLV.
+<t>To signal specified-BSID-only, a new bit: S (Specified-BSID-only) is allocated in the "TE-PATH-BINDING TLV Flag field" of the TE-PATH-BINDING TLV <xref target="I-D.ietf-pce-binding-label-sid"/>.
 When this bit is set for a particular BSID, it means that the BSID follows the Specified-BSID-only behavior.
 It is possible to have a mix of BSIDs for the same LSP: some with S=1 and some with S=0.</t>
 
@@ -802,7 +819,7 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 </section>
 
 <section title="PCEP TLV Type Indicators">
-<t>This document defines four new TLVs for carrying additional information about SR Policy and SR Candidate Paths. IANA is requested to make the assignment of a new value for the existing "PCEP TLV Type Indicators" registry as follows:</t>
+<t>This document defines eight new TLVs for carrying additional information about SR Policy and SR Candidate Paths. IANA is requested to make the assignment of a new value for the existing "PCEP TLV Type Indicators" subregistry as follows:</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
@@ -832,7 +849,7 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 
 <section title="PCEP Errors">
 <t>This document defines one new Error-Value within the "Mandatory Object Missing" Error-Type and two new Error-Values within the "Association Error" Error-Type.
-IANA is requested to allocate new error values within the "PCEP-ERROR Object Error Types and Values" sub-registry of the PCEP Numbers registry, as follows:</t>
+IANA is requested to allocate new error values within the "PCEP-ERROR Object Error Types and Values" subregistry of the PCEP Numbers registry, as follows:</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
@@ -863,7 +880,7 @@ IANA is requested to allocate new error values within the "PCEP-ERROR Object Err
 
 <section title="TE-PATH-BINDING TLV Flag field">
 <t>
-IANA is requested to allocate new bit within the "TE-PATH-BINDING TLV Flag field" sub-registry of the PCEP Numbers registry, as follows:</t>
+IANA is requested to allocate new bit within the "TE-PATH-BINDING TLV Flag field" subregistry of the PCEP Numbers registry, as follows:</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
@@ -880,11 +897,11 @@ IANA is requested to allocate new bit within the "TE-PATH-BINDING TLV Flag field
 
 <section anchor="protocol_origin" title="SR Policy Candidate Path Protocol Origin field">
 <t>
-This document requests IANA to maintain a new registry under 
-"Segment Routing Parameters" registry group.
+This document requests IANA to maintain a new registry under
+"Segment Routing" registry group.
 New values are to be assigned by "Standards Action" [RFC8126].
-The new registry is called "SR Policy Protocol Origin".  
-The registry contains the following codepoints, with initial values, to
+The new subregistry is requested to be created under it be called "SR Policy Protocol Origin".
+The subregistry contains the following codepoints, with initial values, to
 be assigned by IANA with the reference set to this document:
 </t>
 <figure>
@@ -914,7 +931,7 @@ be assigned by IANA with the reference set to this document:
       </figure>
 </section>
 
-</section> 
+</section>
 
 <section  title="Implementation Status">
       <t>[Note to the RFC Editor - remove this section before publication, as
@@ -932,7 +949,7 @@ be assigned by IANA with the reference set to this document:
       be construed to be, a catalog of available implementations or their
       features. Readers are advised to note that other implementations may
       exist.</t>
- 
+
 
       <t>According to <xref target="RFC7942"/>, "this will allow reviewers and
       working groups to assign due consideration to documents that have the
@@ -973,7 +990,7 @@ be assigned by IANA with the reference set to this document:
           </list></t>
       </section>
 
-</section> 
+</section>
 
 <section  title="Security Considerations">
       <t>This document defines one new type for ASSOCIATION object, which does not add any new
@@ -981,14 +998,14 @@ be assigned by IANA with the reference set to this document:
       <xref target='RFC8231'/>, <xref target="RFC8664"/> and <xref target='RFC8697'/> in itself.
       </t>
      <t>
-The information carried in the SRPA object, as per this document is related to SR Policy. 
+The information carried in the SRPA object, as per this document is related to SR Policy.
 It often reflects information
 that can also be derived from the SR Database, but association provides a much easier grouping of related LSPs and messages.
 The SRPA could provide an adversary with the opportunity to eavesdrop on the relationship between the LSPs.
 Thus securing the PCEP session using Transport Layer
    Security (TLS) <xref target="RFC8253"/>, as per the recommendations and
    best current practices in <xref target="RFC7525"/>, is RECOMMENDED.</t>
-</section> 
+</section>
 
 <section anchor="Acknowledgement" title="Acknowledgement">
 <t>
@@ -1005,27 +1022,29 @@ Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman, Alex Tokar
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.5440.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8231.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8281.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7942.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9256.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8697.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8664.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3032.xml"?>
-</references>
-<references title="Informative References">
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7525.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8253.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-binding-label-sid.xml"?>
+</references>
+<references title="Informative References">
+
   <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-multipath.xml"?>
   <!--<?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.sivabalan-pce-binding-label-sid"?>-->
 </references>
+
 <section title="Contributors">
     <t><figure><artwork>
 Dhruv Dhody
-Huawei Technologies
-Divyashree Techno Park, Whitefield
-Bangalore, Karnataka  560066
+Huawei
 India
 
-Email: dhruv.ietf@gmail.com 
+Email: dhruv.ietf@gmail.com
 
 Cheng Li
 Huawei Technologies
@@ -1033,7 +1052,7 @@ Huawei Campus, No. 156 Beiqing Rd.
 Beijing, 10095
 China
 
-Email: chengli13@huawei.com     
+Email: chengli13@huawei.com
 
 Samuel Sidor
 Cisco Systems, Inc.
@@ -1043,7 +1062,7 @@ Pribinova 10
 Slovakia
 
 Email: ssidor@cisco.com
-    </artwork></figure></t>  
+    </artwork></figure></t>
 
 
 </section> <!-- Contributors -->
