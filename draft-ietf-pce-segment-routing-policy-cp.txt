@@ -255,10 +255,6 @@ Internet-Draft               PCEP SR Policy                   March 2024
    document defines a new Association type (6) "SR Policy Association"
    for SRPA.
 
-   This Association Type is dynamic in nature, thus operator-configured
-   Association Range MUST NOT be set for this Association type and MUST
-   be ignored.
-
    [RFC8697] specifies the mechanism for the capability advertisement of
    the Association Types supported by a PCEP speaker by defining an
    ASSOC-Type-List TLV to be carried within an OPEN object.  This
@@ -273,6 +269,10 @@ Internet-Draft               PCEP SR Policy                   March 2024
    for the same LSP, then the PCEP speaker MUST send a PCErr message
    with Error-Type = 26 "Association Error", Error-Value = 7 "Cannot
    join the association group".
+
+
+
+
 
 
 

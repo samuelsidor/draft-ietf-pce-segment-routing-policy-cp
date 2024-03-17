@@ -267,11 +267,6 @@ SR Policy Candidate Path Attributes consist of:</t>
 </t>
 
 <t>
-This Association Type is dynamic in nature, thus operator-configured Association
-Range MUST NOT be set for this Association type and MUST be ignored.
-</t>
-
-<t>
 <xref target="RFC8697"/> specifies the mechanism for the capability advertisement of
    the Association Types supported by a PCEP speaker by defining an
    ASSOC-Type-List TLV to be carried within an OPEN object. This
