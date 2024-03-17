@@ -168,6 +168,18 @@ SR Policy is modeled in PCEP as an Association, where the SR Candidate Paths are
 Thus the PCE can take computation and control decisions about the Candidate Paths, with the additional knowledge that these Candidate Paths belong to the same SR Policy.
 </t>
 
+<t>Segment Routing Policy for Traffic Engineering <xref target="RFC9256"/> details the concepts of SR Policy and approaches to steering traffic into an SR Policy.</t>
+
+<t>PCEP Extensions for Segment Routing <xref target="RFC8664"/> specifies extensions to the Path Computation Element Protocol (PCEP) that allow a stateful PCE to compute and initiate Traffic Engineering (TE) paths, as well as a PCC to request a path subject to certain constraint(s) and optimization criteria in SR networks.</t>
+
+<t>PCEP Extensions for Establishing Relationships Between Sets of LSPs <xref target="RFC8697"/> introduces a generic mechanism to create a grouping of LSPs which can then be used to define associations between a set of LSPs and a set of attributes (such as configuration parameters or behaviors) and is equally applicable to stateful PCE (active and passive modes) and stateless PCE.</t>
+
+<t>
+This document extends <xref target="RFC8664"/> to support signaling SR Policy Candidate Paths and their attributes.
+SR Policy is modeled in PCEP as an Association, where the SR Candidate Paths are the members of that Association.
+Thus the PCE can take computation and control decisions about the Candidate Paths, with the additional knowledge that these Candidate Paths belong to the same SR Policy.
+This is accomplished via the use of the PCEP Association object with a new association type and several new TLVs.
+</t>
 </section> <!-- Introduction -->
 
 <section anchor="Terminology" title="Terminology">
