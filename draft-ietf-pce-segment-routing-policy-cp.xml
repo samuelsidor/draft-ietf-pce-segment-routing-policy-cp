@@ -118,7 +118,7 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date day="9" month="March" year="2024" />
+    <date day="17" month="March" year="2024" />
 
     <workgroup>PCE Working Group</workgroup>
 
@@ -131,14 +131,16 @@ they will automatically be output with "(if approved)" -->
    are steered into an SR Policy on a node where it is instantiated
    called a headend node. An SR Policy is made of one or more candidate
    paths.
+</t>
 
+<t>
    This document specifies Path Computation Element Communication
    Protocol (PCEP) extension to associate candidate paths of the SR
    Policy.
-   This document updates <xref target="RFC8231"/> to allow
+   Additionally, this document updates <xref target="RFC8231"/> to allow
    stateful bringup of an SR LSP, without using PCReq/PCRep messages.
-   This document applies to the SR-MPLS and Segment Routing over
-   IPv6 (SRv6) instantiations of segment routing.
+   This document is applicable to both Segment Routing over MPLS and
+   to Segment Routing over IPv6 (SRv6).
 </t>
 
 </abstract>
@@ -962,7 +964,7 @@ be assigned by IANA with the reference set to this document:
 +----------+--------------------------------------------------------+
 | 3        | Push an IPv4 Explicit NULL label on an unlabeled IPv4  |
 |          | packet, and push an IPv6 Explicit NULL label on an     |
-|	     		 | unlabeled IPv6 packet.                                 |
+|          | unlabeled IPv6 packet.                                 |
 +----------+--------------------------------------------------------+
 | 4        | Do not push an Explicit NULL label.                    |
 +----------+--------------------------------------------------------+

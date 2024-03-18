@@ -6,12 +6,12 @@ PCE Working Group                                           M. Koldychev
 Internet-Draft                                              S. Sivabalan
 Updates: 8231 (if approved)                            Ciena Corporation
 Intended status: Standards Track                                C. Barth
-Expires: 10 September 2024                        Juniper Networks, Inc.
+Expires: 18 September 2024                        Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                            9 March 2024
+                                                           17 March 2024
 
 
  Path Computation Element Communication Protocol (PCEP) Extensions for
@@ -24,13 +24,14 @@ Abstract
    path.  SR Policy is an ordered list of segments (i.e., instructions)
    that represent a source-routed policy.  Packet flows are steered into
    an SR Policy on a node where it is instantiated called a headend
-   node.  An SR Policy is made of one or more candidate paths.  This
-   document specifies Path Computation Element Communication Protocol
-   (PCEP) extension to associate candidate paths of the SR Policy.  This
-   document updates [RFC8231] to allow stateful bringup of an SR LSP,
-   without using PCReq/PCRep messages.  This document applies to the SR-
-   MPLS and Segment Routing over IPv6 (SRv6) instantiations of segment
-   routing.
+   node.  An SR Policy is made of one or more candidate paths.
+
+   This document specifies Path Computation Element Communication
+   Protocol (PCEP) extension to associate candidate paths of the SR
+   Policy.  Additionally, this document updates [RFC8231] to allow
+   stateful bringup of an SR LSP, without using PCReq/PCRep messages.
+   This document is applicable to both Segment Routing over MPLS and to
+   Segment Routing over IPv6 (SRv6).
 
 Requirements Language
 
@@ -52,8 +53,7 @@ Status of This Memo
 
 
 
-
-Koldychev, et al.       Expires 10 September 2024               [Page 1]
+Koldychev, et al.       Expires 18 September 2024               [Page 1]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -63,7 +63,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 September 2024.
+   This Internet-Draft will expire on 18 September 2024.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Koldychev, et al.       Expires 10 September 2024               [Page 2]
+Koldychev, et al.       Expires 18 September 2024               [Page 2]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -165,7 +165,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024               [Page 3]
+Koldychev, et al.       Expires 18 September 2024               [Page 3]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -221,7 +221,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024               [Page 4]
+Koldychev, et al.       Expires 18 September 2024               [Page 4]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -277,7 +277,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024               [Page 5]
+Koldychev, et al.       Expires 18 September 2024               [Page 5]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -333,7 +333,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024               [Page 6]
+Koldychev, et al.       Expires 18 September 2024               [Page 6]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -389,7 +389,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024               [Page 7]
+Koldychev, et al.       Expires 18 September 2024               [Page 7]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -445,7 +445,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024               [Page 8]
+Koldychev, et al.       Expires 18 September 2024               [Page 8]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -501,7 +501,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024               [Page 9]
+Koldychev, et al.       Expires 18 September 2024               [Page 9]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -557,7 +557,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 10]
+Koldychev, et al.       Expires 18 September 2024              [Page 10]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -613,7 +613,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 11]
+Koldychev, et al.       Expires 18 September 2024              [Page 11]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -669,7 +669,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 12]
+Koldychev, et al.       Expires 18 September 2024              [Page 12]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -708,7 +708,10 @@ Internet-Draft               PCEP SR Policy                   March 2024
    labels.  The contents of this TLV are used by the SRPM as described
    in section 4.1 of [RFC9256].  If an ENLP TLV is not present, the
    decision of whether to push an Explicit NULL label on a given packet
-   is a matter of local configuration.
+   is a matter of local configuration.  Note that Explicit Null is
+   currently only defined for SR MPLS and not for SRv6.  Therefore the
+   PCEP speaker SHOULD ignore the presence of this TLV for SRv6
+   Policies.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -720,15 +723,14 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
          Figure 8: The Explicit Null Label Policy (ENLP) TLV format
 
-   Type: 69 for "ENLP" TLV.
 
 
-
-
-Koldychev, et al.       Expires 10 September 2024              [Page 13]
+Koldychev, et al.       Expires 18 September 2024              [Page 13]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
+
+   Type: 69 for "ENLP" TLV.
 
    Length: 4.
 
@@ -776,15 +778,15 @@ Internet-Draft               PCEP SR Policy                   March 2024
       |   Oper        |   Config      |              MBZ              |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                   Figure 9: The INVALIDATION TLV format
 
 
 
-
-Koldychev, et al.       Expires 10 September 2024              [Page 14]
+Koldychev, et al.       Expires 18 September 2024              [Page 14]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
+
+                   Figure 9: The INVALIDATION TLV format
 
    Type: 70 for "INVALIDATION" TLV.
 
@@ -832,15 +834,16 @@ Internet-Draft               PCEP SR Policy                   March 2024
    invalid enabled, it means that essentially the whole SR Policy has
    the feature enabled.  As stated in [RFC9256] Section 8.1, the SR
    Policy is invalid when all its Candidate Paths are invalid, therefore
-   all Candidate Paths MUST be attempted for bringup before the SR
-   Policy is declared invalid.
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 15]
+Koldychev, et al.       Expires 18 September 2024              [Page 15]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
+
+   all Candidate Paths MUST be attempted for bringup before the SR
+   Policy is declared invalid.
 
    Once all the Candidate Paths of the SR Policy have become invalid,
    then the SR Policy checks whether ANY of the Candidate Paths have
@@ -885,18 +888,19 @@ Internet-Draft               PCEP SR Policy                   March 2024
    the peer can receive and process PCReq/PCRep messages for SR Policy
    LSPs.
 
-   The above applies only to SR Policy LSPs and does not affect other
-   LSP types, such as RSVP-TE LSPs.  For other LSP types, [RFC8231]
-   Section 5.8.2 continues to apply.
 
 
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 16]
+Koldychev, et al.       Expires 18 September 2024              [Page 16]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
+
+   The above applies only to SR Policy LSPs and does not affect other
+   LSP types, such as RSVP-TE LSPs.  For other LSP types, [RFC8231]
+   Section 5.8.2 continues to apply.
 
 6.  IANA Considerations
 
@@ -945,11 +949,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-
-
-
-
-Koldychev, et al.       Expires 10 September 2024              [Page 17]
+Koldychev, et al.       Expires 18 September 2024              [Page 17]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -1005,7 +1005,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 18]
+Koldychev, et al.       Expires 18 September 2024              [Page 18]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -1061,32 +1061,32 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 19]
+Koldychev, et al.       Expires 18 September 2024              [Page 19]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
 
-+----------+--------------------------------------------------------+
-| Value    | Description                                            |
-+----------+--------------------------------------------------------+
-| 0        | Reserved (not to be used).                             |
-+----------+--------------------------------------------------------+
-| 1        | Push an IPv4 Explicit NULL label on an unlabeled IPv4  |
-|          | packet, but do not push an IPv6 Explicit NULL label on |
-|          | an unlabeled IPv6 packet.                              |
-+----------+--------------------------------------------------------+
-| 2        | Push an IPv6 Explicit NULL label on an unlabeled IPv6  |
-|          | packet, but do not push an IPv4 Explicit NULL label on |
-|          | an unlabeled IPv4 packet.                              |
-+----------+--------------------------------------------------------+
-| 3        | Push an IPv4 Explicit NULL label on an unlabeled IPv4  |
-|          | packet, and push an IPv6 Explicit NULL label on an     |
-|                        | unlabeled IPv6 packet.                                 |
-+----------+--------------------------------------------------------+
-| 4        | Do not push an Explicit NULL label.                    |
-+----------+--------------------------------------------------------+
-| 5 - 255  | Reserved.                                              |
-+----------+--------------------------------------------------------+
+   +----------+--------------------------------------------------------+
+   | Value    | Description                                            |
+   +----------+--------------------------------------------------------+
+   | 0        | Reserved (not to be used).                             |
+   +----------+--------------------------------------------------------+
+   | 1        | Push an IPv4 Explicit NULL label on an unlabeled IPv4  |
+   |          | packet, but do not push an IPv6 Explicit NULL label on |
+   |          | an unlabeled IPv6 packet.                              |
+   +----------+--------------------------------------------------------+
+   | 2        | Push an IPv6 Explicit NULL label on an unlabeled IPv6  |
+   |          | packet, but do not push an IPv4 Explicit NULL label on |
+   |          | an unlabeled IPv4 packet.                              |
+   +----------+--------------------------------------------------------+
+   | 3        | Push an IPv4 Explicit NULL label on an unlabeled IPv4  |
+   |          | packet, and push an IPv6 Explicit NULL label on an     |
+   |          | unlabeled IPv6 packet.                                 |
+   +----------+--------------------------------------------------------+
+   | 4        | Do not push an Explicit NULL label.                    |
+   +----------+--------------------------------------------------------+
+   | 5 - 255  | Reserved.                                              |
+   +----------+--------------------------------------------------------+
 
 7.  Implementation Status
 
@@ -1117,7 +1117,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 20]
+Koldychev, et al.       Expires 18 September 2024              [Page 20]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -1173,7 +1173,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 21]
+Koldychev, et al.       Expires 18 September 2024              [Page 21]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -1229,7 +1229,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 22]
+Koldychev, et al.       Expires 18 September 2024              [Page 22]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -1285,7 +1285,7 @@ Appendix A.  Contributors
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 23]
+Koldychev, et al.       Expires 18 September 2024              [Page 23]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -1341,7 +1341,7 @@ Authors' Addresses
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 24]
+Koldychev, et al.       Expires 18 September 2024              [Page 24]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
@@ -1397,4 +1397,4 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 10 September 2024              [Page 25]
+Koldychev, et al.       Expires 18 September 2024              [Page 25]
