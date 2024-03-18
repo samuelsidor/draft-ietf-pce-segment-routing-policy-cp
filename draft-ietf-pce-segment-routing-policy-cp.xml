@@ -135,7 +135,7 @@ they will automatically be output with "(if approved)" -->
    This document specifies Path Computation Element Communication
    Protocol (PCEP) extension to associate candidate paths of the SR
    Policy.
-   This document updates <xref target="RFC 8231"> to allow
+   This document updates <xref target="RFC8231"/> to allow
    stateful bringup of an SR LSP, without using PCReq/PCRep messages.
    This document applies to the SR-MPLS and Segment Routing over
    IPv6 (SRv6) instantiations of segment routing.
@@ -269,9 +269,9 @@ SR Policy Candidate Path Attributes consist of:</t>
 
 <section anchor="Association" title="SR Policy Association">
 <t>
-   As per <xref target="RFC8697">, LSPs are associated with other LSPs with which they
+   As per <xref target="RFC8697"/>, LSPs are associated with other LSPs with which they
    interact by adding them to a common association group.  As described
-   in <xref target="RFC8697">, the association group is uniquely identified by the
+   in <xref target="RFC8697"/>, the association group is uniquely identified by the
    combination of the following fields in the ASSOCIATION object:
    Association Type, Association ID, Association Source, and (if
    present) Global Association Source or Extended Association ID,
@@ -620,6 +620,7 @@ If the TLV is absent from the LSP object, a default Priority value of 128 is use
     The Explicit NULL Label Policy (ENLP) TLV is an optional TLV used to indicate whether an Explicit NULL Label <xref target="RFC3032"/> must be pushed on an unlabeled IP packet before any other labels.
     The contents of this TLV are used by the SRPM as described in section 4.1 of <xref target="RFC9256"/>.
     If an ENLP TLV is not present, the decision of whether to push an Explicit NULL label on a given packet is a matter of local configuration.
+Note that Explicit Null is currently only defined for SR MPLS and not for SRv6. Therefore the PCEP speaker SHOULD ignore the presence of this TLV for SRv6 Policies.
 </t>
 
 <figure anchor="ENLP-TLV-FORMAT" title="The Explicit Null Label Policy (ENLP) TLV format">
@@ -640,35 +641,8 @@ If the TLV is absent from the LSP object, a default Priority value of 128 is use
 
 <t>
   ENLP (Explicit NULL Label Policy): Indicates whether Explicit NULL labels are to be pushed on unlabeled IP packets
-  that are being steered into a given SR policy. This field has one of the following values:
-</t>
-
-<t>
-  <list style="symbols">
-    <t>
-    0: Reserved.
-    </t>
-
-    <t>
-    1: Push an IPv4 Explicit NULL label on an unlabeled IPv4 packet, but do not push an IPv6 Explicit NULL label on an unlabeled IPv6 packet.
-    </t>
-
-    <t>
-    2: Push an IPv6 Explicit NULL label on an unlabeled IPv6 packet, but do not push an IPv4 Explicit NULL label on an unlabeled IPv4 packet.
-    </t>
-
-    <t>
-    3: Push an IPv4 Explicit NULL label on an unlabeled IPv4 packet, and push an IPv6 Explicit NULL label on an unlabeled IPv6 packet.
-    </t>
-
-    <t>
-    4: Do not push an Explicit NULL label.
-    </t>
-
-    <t>
-    5 - 255: Reserved.
-    </t>
-  </list>
+  that are being steered into a given SR policy.
+  The values of this field are specified in section <xref target="enlp_value"/>.
 </t>
 
 <t>
@@ -929,7 +903,7 @@ IANA is requested to allocate new bit within the "TE-PATH-BINDING TLV Flag field
 <t>
 This document requests IANA to maintain a new registry under
 "Segment Routing" registry group.
-    New values are to be assigned by "Standards Action" <xref target="RFC8126">.
+    New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
 The new subregistry is requested to be created under it be called "SR Policy Protocol Origin".
 The subregistry contains the following codepoints, with initial values, to
 be assigned by IANA with the reference set to this document:
@@ -961,6 +935,42 @@ be assigned by IANA with the reference set to this document:
       </figure>
 </section>
 
+<section anchor="enlp_value" title="SR Policy Explicit Null Label Policy field">
+<t>
+This document requests IANA to maintain a new registry under
+"Segment Routing" registry group.
+    New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
+The new subregistry is requested to be created under it be called
+"SR Policy Explicit Null Label Policy".
+The subregistry contains the following codepoints, with initial values, to
+be assigned by IANA with the reference set to this document:
+</t>
+<figure>
+        <artwork align="left"><![CDATA[
++----------+--------------------------------------------------------+
+| Value    | Description                                            |
++----------+--------------------------------------------------------+
+| 0        | Reserved (not to be used).                             |
++----------+--------------------------------------------------------+
+| 1        | Push an IPv4 Explicit NULL label on an unlabeled IPv4  |
+|          | packet, but do not push an IPv6 Explicit NULL label on |
+|          | an unlabeled IPv6 packet.                              |
++----------+--------------------------------------------------------+
+| 2        | Push an IPv6 Explicit NULL label on an unlabeled IPv6  |
+|          | packet, but do not push an IPv4 Explicit NULL label on |
+|          | an unlabeled IPv4 packet.                              |
++----------+--------------------------------------------------------+
+| 3        | Push an IPv4 Explicit NULL label on an unlabeled IPv4  |
+|          | packet, and push an IPv6 Explicit NULL label on an     |
+|	     		 | unlabeled IPv6 packet.                                 |
++----------+--------------------------------------------------------+
+| 4        | Do not push an Explicit NULL label.                    |
++----------+--------------------------------------------------------+
+| 5 - 255  | Reserved.                                              |
++----------+--------------------------------------------------------+
+]]></artwork>
+      </figure>
+</section>
 </section>
 
 <section  title="Implementation Status">
@@ -1054,6 +1064,7 @@ Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman, Alex Tokar
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3032.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7525.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8253.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-binding-label-sid.xml"?>
 </references>
 <references title="Informative References">
