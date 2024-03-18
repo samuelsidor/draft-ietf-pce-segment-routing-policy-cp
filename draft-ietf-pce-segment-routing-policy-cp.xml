@@ -449,10 +449,10 @@ Note that in PCInitiate message <xref target="RFC8281"/>, the Protocol Origin is
 <t>MBZ: Must be zero.</t>
 
 <t>Originator ASN: Represented as 4-byte number, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4. If 2-byte ASNs are in use, the low-order 16 bits is used, and the high-order bits are set to 0.
-When sending PCInitiate message <xref target="RFC8281"/>, the PCE is acting as the originator and therefore SHOULD set this to an ASN that it belongs to.
+When sending PCInitiate message <xref target="RFC8281"/>, the PCE is acting as the originator and therefore MUST set this to an ASN that it belongs to.
 </t>
 
-<t>Originator Address: Represented as 128-bit value where IPv4 address is encoded in lowest 32 bits and high-order bits are set to 0, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4. When sending PCInitiate message, the PCE is acting as the originator and therefore SHOULD set this to an address that it owns.
+<t>Originator Address: Represented as 128-bit value where IPv4 address is encoded in lowest 32 bits and high-order bits are set to 0, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4. When sending PCInitiate message, the PCE is acting as the originator and therefore MUST set this to an address that it owns.
 </t>
 
 <t>Discriminator: 32-bit value that encodes the Discriminator of the Candidate Path, as specified in <xref target="RFC9256"/> Section 2.5.
@@ -558,19 +558,30 @@ capabilities with respect to SR Policy.
 
 <t>Length: 4.</t>
 
-<t>P-flag: If set to '1' by a PCEP speaker, the P flag indicates that the PCEP speaker supports the handling of COMPUTATION-PRIORITY TLV for the SR Policy, see <xref target="Computation-priority-tlv"/>.</t>
+<t>P-flag: If set to '1' by a PCEP speaker, the P flag indicates that the PCEP speaker supports the handling of COMPUTATION-PRIORITY TLV for the SR Policy,
+see <xref target="Computation-priority-tlv"/>.
+If this flag is not set, then the PCEP speaker MUST NOT send the COMPUTATION-PRIORITY TLV and SHOULD ignore it on receipt.
+</t>
 
-<t>E-Flag: PCEP speaker supports the ENLP TLV with SR Policy,
-see <xref target="enlp-tlv"/>.</t>
+<t>E-Flag: If set to '1' by a PCEP speaker, the E flag indicates that the PCEP speaker supports the handling of ENLP TLV for the SR Policy,
+  see <xref target="enlp-tlv"/>.
+If this flag is not set, then the PCEP speaker MUST NOT send the ENLP TLV and SHOULD ignore it on receipt.
+</t>
 
-<t>I-Flag: PCEP speaker supports INVALIDATION TLV with SR Policy,
-see <xref target="Invalidation-tlv"/>.</t>
+<t>I-Flag: If set to '1' by a PCEP speaker, the I flag indicates that the PCEP speaker supports the handling of INVALIDATION TLV for the SR Policy,
+  see <xref target="Invalidation-tlv"/>.
+If this flag is not set, then the PCEP speaker MUST NOT send the INVALIDATION TLV and SHOULD ignore it on receipt.
+</t>
 
-<t>S-Flag: PCEP speaker supports "Specified-BSID-only" behavior with SR Policy,
-see <xref target="Specified-bsid-only"/>.</t>
+<t>S-Flag: If set to '1' by a PCEP speaker, the S flag indicates that the PCEP speaker supports the handling of "Specified-BSID-only" behavior for the SR Policy,
+  see <xref target="Specified-bsid-only"/>.
+If this flag is not set, then the PCEP speaker MUST NOT set the Specified-BSID-only flag in the TE-PATH-BINDING TLV and SHOULD ignore it on receipt.
+</t>
 
-<t>L-Flag: PCEP speaker supports stateless (PCReq/PCRep) operations with SR Policy,
-see <xref target="Stateless-oper"/>.</t>
+<t>L-Flag: If set to '1' by a PCEP speaker, the L flag indicates that the PCEP speaker supports the stateless (PCReq/PCRep) operations for the SR Policy,
+  see <xref target="Stateless-oper"/>.
+  If the PCE did not set this flag then the PCC SHOULD NOT send PCReq messages to this PCE for the SR Policy.
+</t>
 
 <t>Unassigned bits MUST be set to '0' on transmission and MUST be ignored on receipt.</t>
 
