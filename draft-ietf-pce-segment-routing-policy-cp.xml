@@ -137,7 +137,7 @@ they will automatically be output with "(if approved)" -->
    This document specifies Path Computation Element Communication
    Protocol (PCEP) extension to associate candidate paths of the SR
    Policy.
-   Additionally, this document updates <xref target="RFC8231"/> to allow
+   Additionally, this document updates RFC8231 to allow
    stateful bringup of an SR LSP, without using PCReq/PCRep messages.
    This document is applicable to both Segment Routing over MPLS and
    to Segment Routing over IPv6 (SRv6).
@@ -743,13 +743,13 @@ it MUST be set to 0 by the PCE and SHOULD be ignored by the PCC.
 <t>
 The Drop-upon-invalid feature is somewhat special among the other SR Policy features in the way that it is enabled/disabled.
 This feature is enabled only on the whole SR Policy, not on a particular Candidate Path of that SR Policy,
-i.e., when ANY Candidate Path has Drop-upon-invalid enabled, it means that essentially the whole SR Policy has the feature enabled.
+i.e., when any Candidate Path has Drop-upon-invalid enabled, it means that essentially the whole SR Policy has the feature enabled.
 As stated in <xref target="RFC9256"/> Section 8.1, the SR Policy is invalid when all its Candidate Paths are invalid,
 therefore all Candidate Paths MUST be attempted for bringup before the SR Policy is declared invalid.
 </t>
 
 <t>
-Once all the Candidate Paths of the SR Policy have become invalid, then the SR Policy checks whether ANY of the Candidate Paths
+Once all the Candidate Paths of the SR Policy have become invalid, then the SR Policy checks whether any of the Candidate Paths
 have Drop-upon-invalid enabled.
 If so, SR Policy enters the drop state and "activates" the highest preference Candidate Path which has
 the Drop-upon-invalid enabled.
@@ -903,9 +903,14 @@ IANA is requested to allocate new bit within the "TE-PATH-BINDING TLV Flag field
 
 <section anchor="protocol_origin" title="SR Policy Candidate Path Protocol Origin field">
 <t>
+Note to IANA (RFC editor to remove this before publication): The new registry creation request below is also present in the draft-ietf-idr-bgp-ls-sr-policy.
+IANA is requested to process the registry creation via the first of these two documents to reach publication stage and the authors of the other document would
+update the IANA considerations suitably.
+</t>
+<t>
 This document requests IANA to maintain a new registry under
 "Segment Routing" registry group.
-    New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
+New values are to be assigned by "Specification Required" <xref target="RFC8126"/>.
 The new subregistry is requested to be created under it be called "SR Policy Protocol Origin".
 The subregistry contains the following codepoints, with initial values, to
 be assigned by IANA with the reference set to this document:
@@ -1040,7 +1045,7 @@ be assigned by IANA with the reference set to this document:
   SR Policy.
   Thus securing the PCEP session using Transport Layer
    Security (TLS) <xref target="RFC8253"/>, as per the recommendations and
-   best current practices in <xref target="RFC7525"/>, is RECOMMENDED.</t>
+   best current practices in <xref target="RFC9325"/>, is RECOMMENDED.</t>
 </section>
 
 <section anchor="Acknowledgement" title="Acknowledgement">
@@ -1064,7 +1069,7 @@ Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman, Alex Tokar
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8697.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8664.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3032.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7525.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9325.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8253.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-binding-label-sid.xml"?>

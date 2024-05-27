@@ -28,7 +28,7 @@ Abstract
 
    This document specifies Path Computation Element Communication
    Protocol (PCEP) extension to associate candidate paths of the SR
-   Policy.  Additionally, this document updates [RFC8231] to allow
+   Policy.  Additionally, this document updates RFC8231 to allow
    stateful bringup of an SR LSP, without using PCReq/PCRep messages.
    This document is applicable to both Segment Routing over MPLS and to
    Segment Routing over IPv6 (SRv6).
@@ -830,7 +830,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
    The Drop-upon-invalid feature is somewhat special among the other SR
    Policy features in the way that it is enabled/disabled.  This feature
    is enabled only on the whole SR Policy, not on a particular Candidate
-   Path of that SR Policy, i.e., when ANY Candidate Path has Drop-upon-
+   Path of that SR Policy, i.e., when any Candidate Path has Drop-upon-
    invalid enabled, it means that essentially the whole SR Policy has
    the feature enabled.  As stated in [RFC9256] Section 8.1, the SR
    Policy is invalid when all its Candidate Paths are invalid, therefore
@@ -846,7 +846,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
    Policy is declared invalid.
 
    Once all the Candidate Paths of the SR Policy have become invalid,
-   then the SR Policy checks whether ANY of the Candidate Paths have
+   then the SR Policy checks whether any of the Candidate Paths have
    Drop-upon-invalid enabled.  If so, SR Policy enters the drop state
    and "activates" the highest preference Candidate Path which has the
    Drop-upon-invalid enabled.  Note that only one Candidate Path needs
@@ -995,12 +995,12 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 6.5.  SR Policy Candidate Path Protocol Origin field
 
-   This document requests IANA to maintain a new registry under "Segment
-   Routing" registry group.  New values are to be assigned by "Standards
-   Action" [RFC8126].  The new subregistry is requested to be created
-   under it be called "SR Policy Protocol Origin".  The subregistry
-   contains the following codepoints, with initial values, to be
-   assigned by IANA with the reference set to this document:
+   Note to IANA (RFC editor to remove this before publication): The new
+   registry creation request below is also present in the draft-ietf-
+   idr-bgp-ls-sr-policy.  IANA is requested to process the registry
+   creation via the first of these two documents to reach publication
+   stage and the authors of the other document would update the IANA
+   considerations suitably.
 
 
 
@@ -1009,6 +1009,13 @@ Koldychev, et al.       Expires 18 September 2024              [Page 18]
 
 Internet-Draft               PCEP SR Policy                   March 2024
 
+
+   This document requests IANA to maintain a new registry under "Segment
+   Routing" registry group.  New values are to be assigned by
+   "Specification Required" [RFC8126].  The new subregistry is requested
+   to be created under it be called "SR Policy Protocol Origin".  The
+   subregistry contains the following codepoints, with initial values,
+   to be assigned by IANA with the reference set to this document:
 
    +------------+------------------------------------------------------+
    | Value        | Description                                        |
@@ -1040,13 +1047,6 @@ Internet-Draft               PCEP SR Policy                   March 2024
    under it be called "SR Policy Explicit Null Label Policy".  The
    subregistry contains the following codepoints, with initial values,
    to be assigned by IANA with the reference set to this document:
-
-
-
-
-
-
-
 
 
 
@@ -1158,7 +1158,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
    could provide an eavesdropper with additional information about the
    SR Policy.  Thus securing the PCEP session using Transport Layer
    Security (TLS) [RFC8253], as per the recommendations and best current
-   practices in [RFC7525], is RECOMMENDED.
+   practices in [RFC9325], is RECOMMENDED.
 
 9.  Acknowledgement
 
@@ -1239,11 +1239,11 @@ Internet-Draft               PCEP SR Policy                   March 2024
               Encoding", RFC 3032, DOI 10.17487/RFC3032, January 2001,
               <https://www.rfc-editor.org/info/rfc3032>.
 
-   [RFC7525]  Sheffer, Y., Holz, R., and P. Saint-Andre,
+   [RFC9325]  Sheffer, Y., Saint-Andre, P., and T. Fossati,
               "Recommendations for Secure Use of Transport Layer
               Security (TLS) and Datagram Transport Layer Security
-              (DTLS)", RFC 7525, DOI 10.17487/RFC7525, May 2015,
-              <https://www.rfc-editor.org/info/rfc7525>.
+              (DTLS)", BCP 195, RFC 9325, DOI 10.17487/RFC9325, November
+              2022, <https://www.rfc-editor.org/info/rfc9325>.
 
    [RFC8253]  Lopez, D., Gonzalez de Dios, O., Wu, Q., and D. Dhody,
               "PCEPS: Usage of TLS to Provide a Secure Transport for the
@@ -1270,9 +1270,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
               Koldychev, M., Sivabalan, S., Saad, T., Beeram, V. P.,
               Bidgoli, H., Yadav, B., Peng, S., and G. S. Mishra, "PCEP
               Extensions for Signaling Multipath Information", Work in
-              Progress, Internet-Draft, draft-ietf-pce-multipath-10, 16
-              January 2024, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-pce-multipath-10>.
+              Progress, Internet-Draft, draft-ietf-pce-multipath-11, 8
+              April 2024, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-pce-multipath-11>.
 
 Appendix A.  Contributors
 
