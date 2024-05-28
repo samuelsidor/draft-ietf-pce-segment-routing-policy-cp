@@ -6,17 +6,17 @@ PCE Working Group                                           M. Koldychev
 Internet-Draft                                              S. Sivabalan
 Updates: 8231 (if approved)                            Ciena Corporation
 Intended status: Standards Track                                C. Barth
-Expires: 18 September 2024                        Juniper Networks, Inc.
+Expires: 29 November 2024                         Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                           17 March 2024
+                                                             28 May 2024
 
 
  Path Computation Element Communication Protocol (PCEP) Extensions for
               Segment Routing (SR) Policy Candidate Paths
-              draft-ietf-pce-segment-routing-policy-cp-15
+              draft-ietf-pce-segment-routing-policy-cp-16
 
 Abstract
 
@@ -27,11 +27,11 @@ Abstract
    node.  An SR Policy is made of one or more candidate paths.
 
    This document specifies Path Computation Element Communication
-   Protocol (PCEP) extension to associate candidate paths of the SR
-   Policy.  Additionally, this document updates RFC8231 to allow
-   stateful bringup of an SR LSP, without using PCReq/PCRep messages.
-   This document is applicable to both Segment Routing over MPLS and to
-   Segment Routing over IPv6 (SRv6).
+   Protocol (PCEP) extension to signal candidate paths of the SR Policy.
+   Additionally, this document updates RFC8231 to allow stateful bringup
+   of an SR LSP, without using PCReq/PCRep messages.  This document is
+   applicable to both Segment Routing over MPLS and to Segment Routing
+   over IPv6 (SRv6).
 
 Requirements Language
 
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Koldychev, et al.       Expires 18 September 2024               [Page 1]
+Koldychev, et al.       Expires 29 November 2024                [Page 1]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
    Internet-Drafts are draft documents valid for a maximum of six months
@@ -63,7 +63,7 @@ Internet-Draft               PCEP SR Policy                   March 2024
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 September 2024.
+   This Internet-Draft will expire on 29 November 2024.
 
 Copyright Notice
 
@@ -82,12 +82,12 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
-   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Overview  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
-     3.1.  SR Policy Identifier  . . . . . . . . . . . . . . . . . .   5
+     3.1.  SR Policy Identifier  . . . . . . . . . . . . . . . . . .   4
      3.2.  SR Policy Candidate Path Identifier . . . . . . . . . . .   5
      3.3.  SR Policy Candidate Path Attributes . . . . . . . . . . .   5
-   4.  SR Policy Association . . . . . . . . . . . . . . . . . . . .   6
+   4.  SR Policy Association . . . . . . . . . . . . . . . . . . . .   5
      4.1.  Association Parameters  . . . . . . . . . . . . . . . . .   6
      4.2.  Association Information . . . . . . . . . . . . . . . . .   8
        4.2.1.  SR Policy Name TLV  . . . . . . . . . . . . . . . . .   8
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Koldychev, et al.       Expires 18 September 2024               [Page 2]
+Koldychev, et al.       Expires 29 November 2024                [Page 2]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
      6.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  18
@@ -130,58 +130,54 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 1.  Introduction
 
-   [RFC8664] specifies extensions that allow PCEP to work with basic SR-
-   TE paths.  [RFC8697] introduces a generic mechanism to create a
-   grouping of LSPs, called an Association.  [RFC9256] introduces the SR
-   Policy construct as a grouping of SR Candidate Paths.
-
-   This document extends [RFC8664] to support signaling SR Policy
-   Candidate Paths and their attributes.  SR Policy is modeled in PCEP
-   as an Association, where the SR Candidate Paths are the members of
-   that Association.  Thus the PCE can take computation and control
-   decisions about the Candidate Paths, with the additional knowledge
-   that these Candidate Paths belong to the same SR Policy.
-
-   Segment Routing Policy for Traffic Engineering [RFC9256] details the
-   concepts of SR Policy and approaches to steering traffic into an SR
-   Policy.
+   Segment Routing Policy Architecture [RFC9256] details the concepts of
+   SR Policy and approaches to steering traffic into an SR Policy.
 
    PCEP Extensions for Segment Routing [RFC8664] specifies extensions to
    the Path Computation Element Protocol (PCEP) that allow a stateful
    PCE to compute and initiate Traffic Engineering (TE) paths, as well
    as a PCC to request a path subject to certain constraint(s) and
-   optimization criteria in SR networks.
+   optimization criteria in SR networks.  Although [RFC8664] was
+   originally used to create SR-TE tunnels, these are not proper SR
+   Policies and lack many important features and details.
 
-   PCEP Extensions for Establishing Relationships Between Sets of LSPs
-   [RFC8697] introduces a generic mechanism to create a grouping of LSPs
-   which can then be used to define associations between a set of LSPs
-   and a set of attributes (such as configuration parameters or
-   behaviors) and is equally applicable to stateful PCE (active and
-   passive modes) and stateless PCE.
+   PCEP Extensions for Establishing Relationships Between Sets of PCEP
+   LSPs [RFC8697] introduces a generic mechanism to create a grouping of
+   LSPs which is called an Association.
 
    This document extends [RFC8664] to support signaling SR Policy
-   Candidate Paths and their attributes.  SR Policy is modeled in PCEP
-   as an Association, where the SR Candidate Paths are the members of
-
-
-
-Koldychev, et al.       Expires 18 September 2024               [Page 3]
-
-Internet-Draft               PCEP SR Policy                   March 2024
-
-
-   that Association.  Thus the PCE can take computation and control
-   decisions about the Candidate Paths, with the additional knowledge
-   that these Candidate Paths belong to the same SR Policy.  This is
-   accomplished via the use of the PCEP Association object with a new
-   association type and several new TLVs.
+   Candidate Paths as PCEP LSPs and to signal Candidate Path membership
+   in an SR Policy by means of the Association mechanism.  The PCEP
+   Association corresponds to the SR Policy and the PCEP LSP corresponds
+   to the Candidate Path.  The unit of signaling in PCEP is the LSP,
+   thus all the information is carried at the Candidate Path level.
 
 2.  Terminology
 
    The following terminologies are used in this document:
 
-   Endpoint:  The IPv4 or IPv6 endpoint address of the SR Policy in
-      question, as described in [RFC9256].
+   Endpoint:  The IPv4 or IPv6 endpoint address of an SR Policy, as
+      described in [RFC9256] Section 2.1.
+
+   Color:  The 32-bit color of an SR Policy, as described in [RFC9256]
+      Section 2.1.
+
+
+
+
+Koldychev, et al.       Expires 29 November 2024                [Page 3]
+
+Internet-Draft               PCEP SR Policy                     May 2024
+
+
+   Protocol-Origin:  Protocol that was used to create the Candidate
+      Path, as described in [RFC9256] Section 2.3.
+
+   Originator:  Device that created the Candidate Path, as described in
+      [RFC9256] Section 2.4.
+
+   Discriminator:  Distinguishes Candidate Paths created by the same
+      device, as described in [RFC9256] Section 2.5.
 
    SRPA:  SR Policy Association.  A new association type 'SR Policy
       Association' is used to group candidate paths belonging to the SR
@@ -211,21 +207,6 @@ Internet-Draft               PCEP SR Policy                   March 2024
    encoded as part of SRPA: Computation Priority, Explicit Null Label
    Policy, Drop-upon-invalid behavior, and Specified-BSID-only.
 
-
-
-
-
-
-
-
-
-
-
-Koldychev, et al.       Expires 18 September 2024               [Page 4]
-
-Internet-Draft               PCEP SR Policy                   March 2024
-
-
 3.1.  SR Policy Identifier
 
    SR Policy Identifier uniquely identifies the SR Policy [RFC9256]
@@ -237,11 +218,19 @@ Internet-Draft               PCEP SR Policy                   March 2024
    message with Error-Type = 26 "Association Error", Error Value = 20
    "SR Policy Identifier Mismatch".  SR Policy Identifier consist of:
 
+
+
+
+Koldychev, et al.       Expires 29 November 2024                [Page 4]
+
+Internet-Draft               PCEP SR Policy                     May 2024
+
+
    *  Headend router where the SR Policy originates.
 
-   *  Color of SR Policy.
+   *  Color of SR Policy ([RFC9256] Section 2.1).
 
-   *  Endpoint of SR Policy.
+   *  Endpoint of SR Policy ([RFC9256] Section 2.1).
 
 3.2.  SR Policy Candidate Path Identifier
 
@@ -255,32 +244,23 @@ Internet-Draft               PCEP SR Policy                   March 2024
    Path Identifier Mismatch".  SR Policy Candidate Path Identifier
    consist of:
 
-   *  Protocol Origin.
+   *  Protocol Origin ([RFC9256] Section 2.3).
 
-   *  Originator.
+   *  Originator ([RFC9256] Section 2.4).
 
-   *  Discriminator.
+   *  Discriminator ([RFC9256] Section 2.5).
 
 3.3.  SR Policy Candidate Path Attributes
 
-   SR Policy Candidate Path Attributes carry non-key information about
-   the Candidate Path and MAY change during the lifetime of the LSP.  SR
-   Policy Candidate Path Attributes consist of:
+   SR Policy Candidate Path Attributes carry optional, non-key
+   information about the Candidate Path and MAY change during the
+   lifetime of the LSP.  SR Policy Candidate Path Attributes consist of:
 
-   *  Preference.
+   *  Candidate Path preference.
 
-   *  Optionally, the SR Policy Candidate Path name.
+   *  Candidate Path name.
 
-   *  Optionally, the SR Policy name.
-
-
-
-
-
-Koldychev, et al.       Expires 18 September 2024               [Page 5]
-
-Internet-Draft               PCEP SR Policy                   March 2024
-
+   *  SR Policy name.
 
 4.  SR Policy Association
 
@@ -291,6 +271,16 @@ Internet-Draft               PCEP SR Policy                   March 2024
    Association Type, Association ID, Association Source, and (if
    present) Global Association Source or Extended Association ID,
    referred to as Association Parameters.
+
+
+
+
+
+
+Koldychev, et al.       Expires 29 November 2024                [Page 5]
+
+Internet-Draft               PCEP SR Policy                     May 2024
+
 
    [RFC8697] specify the ASSOCIATION Object with two Object-Types for
    IPv4 and IPv6 which includes the field "Association Type".  This
@@ -321,31 +311,32 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
    The Association Parameters (see Section 2) consist of:
 
-   *  Association Type: set to 6 "SR Policy Association".
+   *  Association Type: Part of the base ASSOCIATION object.  Set to 6
+      "SR Policy Association".
 
-   *  Association Source (IPv4/IPv6): set to the headend IP address.
+   *  Association Source (IPv4/IPv6): Part of the base ASSOCIATION
+      object.  Set to the headend value of the SR Policy, as defined in
+      [RFC9256] Section 2.1.
 
-   *  Association ID (16-bit): set to "1" (this 16-bit field is not
-      utilized, just set to a fixed value).
+   *  Association ID (16-bit): Part of the base ASSOCIATION object.
+      Always set to the numeric value "1".  This 16-bit field does not
+      store meaningful data, because neither the Color nor the Endpoint
+      can fit in it.
 
-   *  Extended Association ID TLV: encodes the Color and Endpoint of the
-      SR Policy.
+   *  Extended Association ID TLV: Mandatory TLV of the ASSOCIATION
+      object.  Encodes the Color and Endpoint of the SR Policy.  MUST be
+      in the format specified in Figure 1.
 
 
 
-Koldychev, et al.       Expires 18 September 2024               [Page 6]
+
+
+
+
+Koldychev, et al.       Expires 29 November 2024                [Page 6]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
-
-   The Association Source MUST be set to the headend value of the SR
-   Policy, as defined in [RFC9256] Section 2.1.
-
-   The 16-bit Association ID field in the ASSOCIATION object MUST be set
-   to the value of "1".
-
-   The Extended Association ID TLV MUST be included and it MUST be in
-   the following format:
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -385,15 +376,6 @@ Internet-Draft               PCEP SR Policy                   March 2024
    chance that different PCEP speakers will come up with different
    Association Parameters for the same SR Policy.
 
-
-
-
-
-Koldychev, et al.       Expires 18 September 2024               [Page 7]
-
-Internet-Draft               PCEP SR Policy                   March 2024
-
-
    The last hop of the computed SR Policy Candidate Path MAY differ from
    the Endpoint contained in the <headend, color, endpoint> tuple.  An
    example use case is to terminate the SR Policy before reaching the
@@ -404,9 +386,21 @@ Internet-Draft               PCEP SR Policy                   March 2024
    steer traffic with that Endpoint IP into the SR Policy.  Destination
    of the SR Policy Candidate Path is signaled using the END-POINTS
    object and/or LSP-IDENTIFIERS TLV, as per the usual PCEP procedures.
+
+
+
+Koldychev, et al.       Expires 29 November 2024                [Page 7]
+
+Internet-Draft               PCEP SR Policy                     May 2024
+
+
    When neither END-POINTS object nor LSP-IDENTIFIERS TLV is present,
    the PCEP speaker MUST extract the destination from the Endpoint field
    in the SRPA Extended Association ID TLV.
+
+   SR Policy with Color-Only steering is signaled with the End-Point
+   value set to null, i.e., 0.0.0.0 for IPv4 or :: for IPv6, see
+   [RFC9256] Section 8.8.1.
 
 4.2.  Association Information
 
@@ -437,19 +431,6 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
    The SRPOLICY-POL-NAME TLV is an optional TLV for the SRPA object.
 
-
-
-
-
-
-
-
-
-Koldychev, et al.       Expires 18 September 2024               [Page 8]
-
-Internet-Draft               PCEP SR Policy                   March 2024
-
-
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -461,6 +442,13 @@ Internet-Draft               PCEP SR Policy                   March 2024
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                  Figure 2: The SRPOLICY-POL-NAME TLV format
+
+
+
+Koldychev, et al.       Expires 29 November 2024                [Page 8]
+
+Internet-Draft               PCEP SR Policy                     May 2024
+
 
    Type: 56 for "SRPOLICY-POL-NAME" TLV.
 
@@ -498,26 +486,34 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
    Length: 28.
 
-
-
-
-Koldychev, et al.       Expires 18 September 2024               [Page 9]
-
-Internet-Draft               PCEP SR Policy                   March 2024
-
-
    Protocol Origin: 8-bit value that encodes the protocol origin, as
    specified in Section 6.5.  Note that in PCInitiate message [RFC8281],
    the Protocol Origin is always set to 10 (PCEP).
 
    MBZ: Must be zero.
 
+
+
+
+
+
+
+
+
+
+Koldychev, et al.       Expires 29 November 2024                [Page 9]
+
+Internet-Draft               PCEP SR Policy                     May 2024
+
+
    Originator ASN: Represented as 4-byte number, part of the originator
    identifier, as specified in [RFC9256] Section 2.4.  If 2-byte ASNs
    are in use, the low-order 16 bits is used, and the high-order bits
    are set to 0.  When sending PCInitiate message [RFC8281], the PCE is
-   acting as the originator and therefore MUST set this to an ASN that
-   it belongs to.
+   the originator of the Candidate Path.  AS number is not a PCE concept
+   and PCE is not required to have one for itself.  If the PCE has its
+   AS number, then it SHOULD set it, otherwise the AS number can be set
+   to 0.
 
    Originator Address: Represented as 128-bit value where IPv4 address
    is encoded in lowest 32 bits and high-order bits are set to 0, part
@@ -553,18 +549,18 @@ Internet-Draft               PCEP SR Policy                   March 2024
    octets and MUST be greater than 0.  The TLV MUST be zero-padded so
    that the TLV is 4-octet aligned.
 
-
-
-
-
-Koldychev, et al.       Expires 18 September 2024              [Page 10]
-
-Internet-Draft               PCEP SR Policy                   March 2024
-
-
    SR Policy Candidate Path Name: SR Policy Candidate Path Name, as
    defined in [RFC9256].  It SHOULD be a string of printable ASCII
    characters, without a NULL terminator.
+
+
+
+
+
+Koldychev, et al.       Expires 29 November 2024               [Page 10]
+
+Internet-Draft               PCEP SR Policy                     May 2024
+
 
 4.2.4.  SR Policy Candidate Path Preference TLV
 
@@ -602,9 +598,12 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 5.1.  SR Policy Capability TLV
 
-   The SRPOLICY-CAPABILITY TLV is an optional TLV for the OPEN object.
-   It is used at session establishment time to learn the other PCEP
-   peer's capabilities with respect to SR Policy.
+   The SRPOLICY-CAPABILITY TLV is a TLV for the OPEN object.  It is used
+   at session establishment to learn the peer's capabilities with
+   respect to SR Policy.  Implementations that support SR Policy MUST
+   include SRPOLICY-CAPABILITY TLV in the OPEN object.  In addition, the
+   ASSOC-Type-List TLV containing SRPA Type (6) MUST be present in the
+   OPEN object, as specified in Section 4.
 
 
 
@@ -613,9 +612,10 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 11]
+
+Koldychev, et al.       Expires 29 November 2024               [Page 11]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
        0                   1                   2                   3
@@ -669,9 +669,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 12]
+Koldychev, et al.       Expires 29 November 2024               [Page 12]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
 5.2.  Computation Priority TLV
@@ -725,9 +725,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 13]
+Koldychev, et al.       Expires 29 November 2024               [Page 13]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
    Type: 69 for "ENLP" TLV.
@@ -781,9 +781,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 14]
+Koldychev, et al.       Expires 29 November 2024               [Page 14]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
                    Figure 9: The INVALIDATION TLV format
@@ -837,9 +837,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 15]
+Koldychev, et al.       Expires 29 November 2024               [Page 15]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
    all Candidate Paths MUST be attempted for bringup before the SR
@@ -893,9 +893,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 16]
+Koldychev, et al.       Expires 29 November 2024               [Page 16]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
    The above applies only to SR Policy LSPs and does not affect other
@@ -949,9 +949,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 17]
+Koldychev, et al.       Expires 29 November 2024               [Page 17]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
 6.3.  PCEP Errors
@@ -1005,9 +1005,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 18]
+Koldychev, et al.       Expires 29 November 2024               [Page 18]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
    This document requests IANA to maintain a new registry under "Segment
@@ -1041,12 +1041,19 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 6.6.  SR Policy Explicit Null Label Policy field
 
+   Note to IANA (RFC editor to remove this before publication): The new
+   registry creation request below is also present in the draft-ietf-
+   idr-sr-policy-safi.  IANA is requested to process the registry
+   creation via the first of these two documents to reach publication
+   stage and the authors of the other document would update the IANA
+   considerations suitably.
+
    This document requests IANA to maintain a new registry under "Segment
-   Routing" registry group.  New values are to be assigned by "Standards
-   Action" [RFC8126].  The new subregistry is requested to be created
-   under it be called "SR Policy Explicit Null Label Policy".  The
-   subregistry contains the following codepoints, with initial values,
-   to be assigned by IANA with the reference set to this document:
+   Routing Parameters" registry group.  New values are to be assigned by
+   "Standards Action" [RFC8126].  The new subregistry is requested to be
+   created under it be called "SR Policy ENLP Values".  The subregistry
+   contains the following codepoints, with initial values, to be
+   assigned by IANA with the reference set to this document:
 
 
 
@@ -1054,16 +1061,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-
-
-
-
-
-
-
-Koldychev, et al.       Expires 18 September 2024              [Page 19]
+Koldychev, et al.       Expires 29 November 2024               [Page 19]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
    +----------+--------------------------------------------------------+
@@ -1117,9 +1117,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 20]
+Koldychev, et al.       Expires 29 November 2024               [Page 20]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
 7.1.  Cisco
@@ -1162,8 +1162,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 9.  Acknowledgement
 
-   Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman,
-   Alex Tokar, Praveen Kumar and Tom Petch for review and suggestions.
+   Would like to thank Ketan Talaulikar, Dhruv Dhody, Stephane
+   Litkowski, Boris Khasanov, Abdul Rehman, Alex Tokar, Praveen Kumar
+   and Tom Petch for review and suggestions.
 
 10.  References
 
@@ -1172,10 +1173,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-
-Koldychev, et al.       Expires 18 September 2024              [Page 21]
+Koldychev, et al.       Expires 29 November 2024               [Page 21]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
@@ -1229,9 +1229,9 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 22]
+Koldychev, et al.       Expires 29 November 2024               [Page 22]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
    [RFC3032]  Rosen, E., Tappan, D., Fedorkow, G., Rekhter, Y.,
@@ -1285,9 +1285,9 @@ Appendix A.  Contributors
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 23]
+Koldychev, et al.       Expires 29 November 2024               [Page 23]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
    Dhruv Dhody
@@ -1341,9 +1341,9 @@ Authors' Addresses
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 24]
+Koldychev, et al.       Expires 29 November 2024               [Page 24]
 
-Internet-Draft               PCEP SR Policy                   March 2024
+Internet-Draft               PCEP SR Policy                     May 2024
 
 
    Colby Barth
@@ -1397,4 +1397,4 @@ Internet-Draft               PCEP SR Policy                   March 2024
 
 
 
-Koldychev, et al.       Expires 18 September 2024              [Page 25]
+Koldychev, et al.       Expires 29 November 2024               [Page 25]

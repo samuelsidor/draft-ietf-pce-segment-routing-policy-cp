@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-15" ipr="trust200902" updates="8231">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-16" ipr="trust200902" updates="8231">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN"
@@ -118,7 +118,7 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date day="17" month="March" year="2024" />
+    <date day="28" month="May" year="2024" />
 
     <workgroup>PCE Working Group</workgroup>
 
@@ -135,7 +135,7 @@ they will automatically be output with "(if approved)" -->
 
 <t>
    This document specifies Path Computation Element Communication
-   Protocol (PCEP) extension to associate candidate paths of the SR
+   Protocol (PCEP) extension to signal candidate paths of the SR
    Policy.
    Additionally, this document updates RFC8231 to allow
    stateful bringup of an SR LSP, without using PCReq/PCRep messages.
@@ -158,29 +158,19 @@ they will automatically be output with "(if approved)" -->
 
 <section anchor="Introduction" title="Introduction">
 
-<t>
-<xref target="RFC8664"/> specifies extensions that allow PCEP to work with basic SR-TE paths.
-<xref target="RFC8697"/> introduces a generic mechanism to create a grouping of LSPs, called an Association.
-<xref target="RFC9256"/> introduces the SR Policy construct as a grouping of SR Candidate Paths.
+<t>Segment Routing Policy Architecture <xref target="RFC9256"/> details the concepts of SR Policy and approaches to steering traffic into an SR Policy.</t>
+
+<t>PCEP Extensions for Segment Routing <xref target="RFC8664"/> specifies extensions to the Path Computation Element Protocol (PCEP) that allow a stateful PCE to compute and initiate Traffic Engineering (TE) paths, as well as a PCC to request a path subject to certain constraint(s) and optimization criteria in SR networks.
+Although <xref target="RFC8664"/> was originally used to create SR-TE tunnels, these are not proper SR Policies and lack many important features and details.
 </t>
 
-<t>
-This document extends <xref target="RFC8664"/> to support signaling SR Policy Candidate Paths and their attributes.
-SR Policy is modeled in PCEP as an Association, where the SR Candidate Paths are the members of that Association.
-Thus the PCE can take computation and control decisions about the Candidate Paths, with the additional knowledge that these Candidate Paths belong to the same SR Policy.
-</t>
-
-<t>Segment Routing Policy for Traffic Engineering <xref target="RFC9256"/> details the concepts of SR Policy and approaches to steering traffic into an SR Policy.</t>
-
-<t>PCEP Extensions for Segment Routing <xref target="RFC8664"/> specifies extensions to the Path Computation Element Protocol (PCEP) that allow a stateful PCE to compute and initiate Traffic Engineering (TE) paths, as well as a PCC to request a path subject to certain constraint(s) and optimization criteria in SR networks.</t>
-
-<t>PCEP Extensions for Establishing Relationships Between Sets of LSPs <xref target="RFC8697"/> introduces a generic mechanism to create a grouping of LSPs which can then be used to define associations between a set of LSPs and a set of attributes (such as configuration parameters or behaviors) and is equally applicable to stateful PCE (active and passive modes) and stateless PCE.</t>
+<t>PCEP Extensions for Establishing Relationships Between Sets of PCEP LSPs <xref target="RFC8697"/> introduces a generic mechanism to create a grouping of LSPs which is called an Association.</t>
 
 <t>
-This document extends <xref target="RFC8664"/> to support signaling SR Policy Candidate Paths and their attributes.
-SR Policy is modeled in PCEP as an Association, where the SR Candidate Paths are the members of that Association.
-Thus the PCE can take computation and control decisions about the Candidate Paths, with the additional knowledge that these Candidate Paths belong to the same SR Policy.
-This is accomplished via the use of the PCEP Association object with a new association type and several new TLVs.
+This document extends <xref target="RFC8664"/> to support signaling SR Policy Candidate Paths as PCEP LSPs and to signal Candidate Path membership in
+an SR Policy by means of the Association mechanism.
+The PCEP Association corresponds to the SR Policy and the PCEP LSP corresponds to the Candidate Path.
+The unit of signaling in PCEP is the LSP, thus all the information is carried at the Candidate Path level.
 </t>
 </section> <!-- Introduction -->
 
@@ -190,7 +180,15 @@ This is accomplished via the use of the PCEP Association object with a new assoc
 
   <list style="hanging">
 
-     <t hangText="Endpoint:"> The IPv4 or IPv6 endpoint address of the SR Policy in question, as described in <xref target="RFC9256"/>.</t>
+     <t hangText="Endpoint:"> The IPv4 or IPv6 endpoint address of an SR Policy, as described in <xref target="RFC9256"/> Section 2.1.</t>
+
+     <t hangText="Color:"> The 32-bit color of an SR Policy, as described in <xref target="RFC9256"/> Section 2.1.</t>
+
+     <t hangText="Protocol-Origin:"> Protocol that was used to create the Candidate Path, as described in <xref target="RFC9256"/> Section 2.3.</t>
+
+     <t hangText="Originator:"> Device that created the Candidate Path, as described in <xref target="RFC9256"/> Section 2.4.</t>
+
+     <t hangText="Discriminator:"> Distinguishes Candidate Paths created by the same device, as described in <xref target="RFC9256"/> Section 2.5.</t>
 
      <t hangText="SRPA:"> SR Policy Association. A new association type 'SR Policy
    Association' is used to group candidate paths belonging to the SR
@@ -233,8 +231,8 @@ SR Policy Identifier consist of:</t>
 <t>
       <list style="symbols">
         <t>Headend router where the SR Policy originates.</t>
-        <t>Color of SR Policy.</t>
-        <t>Endpoint of SR Policy.</t>
+        <t>Color of SR Policy (<xref target="RFC9256"/> Section 2.1).</t>
+        <t>Endpoint of SR Policy (<xref target="RFC9256"/> Section 2.1).</t>
       </list>
 </t>
 </section>
@@ -248,21 +246,21 @@ Error-Type = 26 "Association Error", Error Value = 21 "SR Policy Candidate Path 
 SR Policy Candidate Path Identifier consist of:</t>
 <t>
       <list style="symbols">
-        <t>Protocol Origin.</t>
-        <t>Originator.</t>
-        <t>Discriminator.</t>
+        <t>Protocol Origin (<xref target="RFC9256"/> Section 2.3).</t>
+        <t>Originator (<xref target="RFC9256"/> Section 2.4).</t>
+        <t>Discriminator (<xref target="RFC9256"/> Section 2.5).</t>
       </list>
 </t>
 </section>
 
 <section anchor="SRPolicyCandidatePathAttributes" title="SR Policy Candidate Path Attributes">
-<t>SR Policy Candidate Path Attributes carry non-key information about the Candidate Path and MAY change during the lifetime of the LSP.
+<t>SR Policy Candidate Path Attributes carry optional, non-key information about the Candidate Path and MAY change during the lifetime of the LSP.
 SR Policy Candidate Path Attributes consist of:</t>
 <t>
       <list style="symbols">
-        <t>Preference.</t>
-        <t>Optionally, the SR Policy Candidate Path name.</t>
-        <t>Optionally, the SR Policy name.</t>
+        <t>Candidate Path preference.</t>
+        <t>Candidate Path name.</t>
+        <t>SR Policy name.</t>
       </list>
 </t>
 </section>
@@ -313,18 +311,12 @@ the color and endpoint are encoded as part of the Extended Association ID TLV.
 <t>The Association Parameters (see <xref target="Terminology"/>) consist of:</t>
 <t>
       <list style="symbols">
-        <t>Association Type: set to 6 "SR Policy Association".</t>
-        <t>Association Source (IPv4/IPv6): set to the headend IP address.</t>
-        <t>Association ID (16-bit): set to "1" (this 16-bit field is not utilized, just set to a fixed value).</t>
-        <t>Extended Association ID TLV: encodes the Color and Endpoint of the SR Policy.</t>
+        <t>Association Type: Part of the base ASSOCIATION object. Set to 6 "SR Policy Association".</t>
+        <t>Association Source (IPv4/IPv6): Part of the base ASSOCIATION object. Set to the headend value of the SR Policy, as defined in <xref target="RFC9256"/> Section 2.1.</t>
+        <t>Association ID (16-bit): Part of the base ASSOCIATION object. Always set to the numeric value "1". This 16-bit field does not store meaningful data, because neither the Color nor the Endpoint can fit in it.</t>
+	<t>Extended Association ID TLV: Mandatory TLV of the ASSOCIATION object. Encodes the Color and Endpoint of the SR Policy. MUST be in the format specified in <xref target="Extended-Association-ID-TLV-FORMAT"/>.</t>
       </list>
 </t>
-
-<t>The Association Source MUST be set to the headend value of the SR Policy, as defined in <xref target="RFC9256"/> Section 2.1.</t>
-
-<t>The 16-bit Association ID field in the ASSOCIATION object MUST be set to the value of "1".</t>
-
-<t>The Extended Association ID TLV MUST be included and it MUST be in the following format:</t>
 
 <figure anchor="Extended-Association-ID-TLV-FORMAT" title="Extended Association ID TLV format">
 <artwork align="center"><![CDATA[
@@ -363,6 +355,10 @@ In this example, the destination of the SR Policy Candidate Paths will be some n
 Destination of the SR Policy Candidate Path is signaled using the END-POINTS object and/or LSP-IDENTIFIERS TLV, as per the usual PCEP procedures.
 When neither END-POINTS object nor LSP-IDENTIFIERS TLV is present,
 the PCEP speaker MUST extract the destination from the Endpoint field in the SRPA Extended Association ID TLV.
+</t>
+
+<t>
+SR Policy with Color-Only steering is signaled with the End-Point value set to null, i.e., 0.0.0.0 for IPv4 or :: for IPv6, see <xref target="RFC9256"/> Section 8.8.1. 
 </t>
 
 </section> <!-- AssociationParameters -->
@@ -451,7 +447,9 @@ Note that in PCInitiate message <xref target="RFC8281"/>, the Protocol Origin is
 <t>MBZ: Must be zero.</t>
 
 <t>Originator ASN: Represented as 4-byte number, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4. If 2-byte ASNs are in use, the low-order 16 bits is used, and the high-order bits are set to 0.
-When sending PCInitiate message <xref target="RFC8281"/>, the PCE is acting as the originator and therefore MUST set this to an ASN that it belongs to.
+When sending PCInitiate message <xref target="RFC8281"/>, the PCE is the originator of the Candidate Path.
+AS number is not a PCE concept and PCE is not required to have one for itself.
+If the PCE has its AS number, then it SHOULD set it, otherwise the AS number can be set to 0.
 </t>
 
 <t>Originator Address: Represented as 128-bit value where IPv4 address is encoded in lowest 32 bits and high-order bits are set to 0, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4. When sending PCInitiate message, the PCE is acting as the originator and therefore MUST set this to an address that it owns.
@@ -539,9 +537,11 @@ negotiation.</t>
 <section anchor="Capability-tlv" title="SR Policy Capability TLV">
 
 <t>
-The SRPOLICY-CAPABILITY TLV is an optional TLV for the OPEN object.
-It is used at session establishment time to learn the other PCEP peer's
+The SRPOLICY-CAPABILITY TLV is a TLV for the OPEN object.
+It is used at session establishment to learn the peer's
 capabilities with respect to SR Policy.
+Implementations that support SR Policy MUST include SRPOLICY-CAPABILITY TLV in the OPEN object.
+In addition, the ASSOC-Type-List TLV containing SRPA Type (6) MUST be present in the OPEN object, as specified in <xref target="Association"/>.
 </t>
 
 <figure anchor="SRPOLICY-CAPABILITY-TLV-FORMAT" title="The SRPOLICY-CAPABILITY TLV format">
@@ -944,11 +944,15 @@ be assigned by IANA with the reference set to this document:
 
 <section anchor="enlp_value" title="SR Policy Explicit Null Label Policy field">
 <t>
+Note to IANA (RFC editor to remove this before publication): The new registry creation request below is also present in the draft-ietf-idr-sr-policy-safi.
+IANA is requested to process the registry creation via the first of these two documents to reach publication stage and the authors of the other document would update the IANA considerations suitably.
+</t>
+<t>
 This document requests IANA to maintain a new registry under
-"Segment Routing" registry group.
-    New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
+"Segment Routing Parameters" registry group.
+New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
 The new subregistry is requested to be created under it be called
-"SR Policy Explicit Null Label Policy".
+"SR Policy ENLP Values".
 The subregistry contains the following codepoints, with initial values, to
 be assigned by IANA with the reference set to this document:
 </t>
@@ -1050,7 +1054,7 @@ be assigned by IANA with the reference set to this document:
 
 <section anchor="Acknowledgement" title="Acknowledgement">
 <t>
-Would like to thank Stephane Litkowski, Boris Khasanov, Abdul Rehman, Alex Tokar, Praveen Kumar and Tom Petch for review and suggestions.
+Would like to thank Ketan Talaulikar, Dhruv Dhody, Stephane Litkowski, Boris Khasanov, Abdul Rehman, Alex Tokar, Praveen Kumar and Tom Petch for review and suggestions.
 </t>
 </section> <!-- Acknowledgement -->
 
