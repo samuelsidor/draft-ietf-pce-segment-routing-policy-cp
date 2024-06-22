@@ -702,6 +702,7 @@ The INVALIDATION TLV is used in both directions between PCEP peers:
 the LSP, i.e., whether it is actively dropping traffic right now.
 This field can be set to non-zero values only by the PCC,
 it MUST be set to 0 by the PCE and SHOULD be ignored by the PCC.
+See Section <xref target="inval_drop_oper_iana"/> for IANA information.
 </t>
 
 <figure anchor="OPER_INVAL_FLAGS" title="Oper state of Drop-upon-invalid feature">
@@ -721,6 +722,7 @@ it MUST be set to 0 by the PCE and SHOULD be ignored by the PCC.
 </t>
 
 <t>Config: encodes the current setting of the Drop-upon-invalid feature.
+See Section <xref target="inval_drop_config_iana"/> for IANA information.
 </t>
 
 <figure anchor="CONFIG_INVAL_FLAGS" title="Config state of Drop-upon-invalid feature">
@@ -986,6 +988,45 @@ be assigned by IANA with the reference set to this document:
 ]]></artwork>
       </figure>
 </section>
+
+<section anchor="inval_drop_oper_iana" title="SR Policy Invalidation Drop Operational State">
+<t>
+This document requests IANA to maintain a new registry to manage the Operational flags field of the INVALIDATION TLV, called "SR Policy Invalidation Operational Flags".
+New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
+</t>
+<figure>
+        <artwork align="left"><![CDATA[
++----------+--------------------------------------------------------+
+| Value    | Description                                            |
++----------+--------------------------------------------------------+
+| 0 - 6    | Reserved.                                              |
++----------+--------------------------------------------------------+
+| 7        | D: dropping - the LSP is currently attracting traffic  |
+|          | and actively dropping it.                              |
++----------+--------------------------------------------------------+
+]]></artwork>
+      </figure>
+</section>
+
+<section anchor="inval_drop_config_iana" title="SR Policy Invalidation Drop Configuration State">
+<t>
+This document requests IANA to maintain a new registry to manage the Configuration flags field of the INVALIDATION TLV, called "SR Policy Invalidation Configuration Flags".
+New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
+</t>
+<figure>
+        <artwork align="left"><![CDATA[
++----------+--------------------------------------------------------+
+| Value    | Description                                            |
++----------+--------------------------------------------------------+
+| 0 - 6    | Reserved.                                              |
++----------+--------------------------------------------------------+
+| 7        | D: drop enabled - the Candidate Path has               |
+|          | Drop-upon-invalid feature enabled.                     |
++----------+--------------------------------------------------------+
+]]></artwork>
+      </figure>
+</section>
+
 </section>
 
 <section  title="Implementation Status">
