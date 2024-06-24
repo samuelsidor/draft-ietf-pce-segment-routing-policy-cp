@@ -104,7 +104,7 @@ Table of Contents
      6.5.  SR Policy Candidate Path Protocol Origin field  . . . . .  19
      6.6.  SR Policy Explicit Null Label Policy field  . . . . . . .  20
      6.7.  SR Policy Invalidation Drop Operational State . . . . . .  21
-     6.8.  SR Policy Invalidation Drop Configuration State . . . . .  21
+     6.8.  SR Policy Invalidation Drop Configuration State . . . . .  22
    7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  22
 
 
@@ -114,7 +114,7 @@ Koldychev, et al.        Expires 5 December 2024                [Page 2]
 Internet-Draft               PCEP SR Policy                    June 2024
 
 
-     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  22
+     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  23
      7.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  23
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  23
    9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  23
@@ -1149,23 +1149,23 @@ Internet-Draft               PCEP SR Policy                    June 2024
    This document requests IANA to maintain a new registry to manage the
    Operational flags field of the INVALIDATION TLV, called "SR Policy
    Invalidation Operational Flags".  New values are to be assigned by
-   "Standards Action" [RFC8126].
+   "Standards Action" [RFC8126].  Each bit should be tracked with the
+   following qualities.
+
+   *  Bit (counting from bit 0 as the most significant bit).
+
+   *  Description.
+
+   *  Reference.
 
    +----------+--------------------------------------------------------+
-   | Value    | Description                                            |
+   | Bit   | Description                                   | Reference |
    +----------+--------------------------------------------------------+
-   | 0 - 6    | Reserved.                                              |
+   | 0 - 6 | Reserved.                                     | This.I-D  |
    +----------+--------------------------------------------------------+
-   | 7        | D: dropping - the LSP is currently attracting traffic  |
-   |          | and actively dropping it.                              |
+   | 7     | D: dropping - the LSP is currently attracting | This.I-D  |
+   |       | traffic and actively dropping it.             |           |
    +----------+--------------------------------------------------------+
-
-6.8.  SR Policy Invalidation Drop Configuration State
-
-   This document requests IANA to maintain a new registry to manage the
-   Configuration flags field of the INVALIDATION TLV, called "SR Policy
-   Invalidation Configuration Flags".  New values are to be assigned by
-   "Standards Action" [RFC8126].
 
 
 
@@ -1178,13 +1178,27 @@ Koldychev, et al.        Expires 5 December 2024               [Page 21]
 Internet-Draft               PCEP SR Policy                    June 2024
 
 
+6.8.  SR Policy Invalidation Drop Configuration State
+
+   This document requests IANA to maintain a new registry to manage the
+   Configuration flags field of the INVALIDATION TLV, called "SR Policy
+   Invalidation Configuration Flags".  New values are to be assigned by
+   "Standards Action" [RFC8126].  Each bit should be tracked with the
+   following qualities.
+
+   *  Bit (counting from bit 0 as the most significant bit).
+
+   *  Description.
+
+   *  Reference.
+
    +----------+--------------------------------------------------------+
-   | Value    | Description                                            |
+   | Bit   | Description                                   | Reference |
    +----------+--------------------------------------------------------+
-   | 0 - 6    | Reserved.                                              |
+   | 0 - 6 | Reserved.                                     | This.I-D  |
    +----------+--------------------------------------------------------+
-   | 7        | D: drop enabled - the Candidate Path has               |
-   |          | Drop-upon-invalid feature enabled.                     |
+   | 7     | D: drop enabled - the Drop-upon-invalid is    | This.I-D  |
+   |       | enabled on the LSP.                           |           |
    +----------+--------------------------------------------------------+
 
 7.  Implementation Status
@@ -1212,6 +1226,14 @@ Internet-Draft               PCEP SR Policy                    June 2024
    It is up to the individual working groups to use this information as
    they see fit".
 
+
+
+
+Koldychev, et al.        Expires 5 December 2024               [Page 22]
+
+Internet-Draft               PCEP SR Policy                    June 2024
+
+
 7.1.  Cisco
 
    *  Organization: Cisco Systems
@@ -1226,13 +1248,6 @@ Internet-Draft               PCEP SR Policy                    June 2024
    *  Coverage: Full.
 
    *  Contact: ssidor@cisco.com
-
-
-
-Koldychev, et al.        Expires 5 December 2024               [Page 22]
-
-Internet-Draft               PCEP SR Policy                    June 2024
-
 
 7.2.  Juniper
 
@@ -1267,6 +1282,14 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 10.1.  Normative References
 
+
+
+
+Koldychev, et al.        Expires 5 December 2024               [Page 23]
+
+Internet-Draft               PCEP SR Policy                    June 2024
+
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -1280,15 +1303,6 @@ Internet-Draft               PCEP SR Policy                    June 2024
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
-
-
-
-
-
-Koldychev, et al.        Expires 5 December 2024               [Page 23]
-
-Internet-Draft               PCEP SR Policy                    June 2024
-
 
    [RFC8231]  Crabbe, E., Minei, I., Medved, J., and R. Varga, "Path
               Computation Element Communication Protocol (PCEP)
@@ -1325,6 +1339,13 @@ Internet-Draft               PCEP SR Policy                    June 2024
               DOI 10.17487/RFC8664, December 2019,
               <https://www.rfc-editor.org/info/rfc8664>.
 
+
+
+Koldychev, et al.        Expires 5 December 2024               [Page 24]
+
+Internet-Draft               PCEP SR Policy                    June 2024
+
+
    [RFC3032]  Rosen, E., Tappan, D., Fedorkow, G., Rekhter, Y.,
               Farinacci, D., Li, T., and A. Conta, "MPLS Label Stack
               Encoding", RFC 3032, DOI 10.17487/RFC3032, January 2001,
@@ -1335,16 +1356,6 @@ Internet-Draft               PCEP SR Policy                    June 2024
               Security (TLS) and Datagram Transport Layer Security
               (DTLS)", BCP 195, RFC 9325, DOI 10.17487/RFC9325, November
               2022, <https://www.rfc-editor.org/info/rfc9325>.
-
-
-
-
-
-
-Koldychev, et al.        Expires 5 December 2024               [Page 24]
-
-Internet-Draft               PCEP SR Policy                    June 2024
-
 
    [RFC8253]  Lopez, D., Gonzalez de Dios, O., Wu, Q., and D. Dhody,
               "PCEPS: Usage of TLS to Provide a Secure Transport for the
@@ -1376,17 +1387,6 @@ Internet-Draft               PCEP SR Policy                    June 2024
               ietf-pce-multipath-11>.
 
 Appendix A.  Contributors
-
-
-
-
-
-
-
-
-
-
-
 
 
 
