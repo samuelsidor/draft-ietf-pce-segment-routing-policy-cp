@@ -6,12 +6,12 @@ PCE Working Group                                           M. Koldychev
 Internet-Draft                                              S. Sivabalan
 Updates: 8231 (if approved)                            Ciena Corporation
 Intended status: Standards Track                                C. Barth
-Expires: 5 December 2024                          Juniper Networks, Inc.
+Expires: 26 December 2024                         Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                             3 June 2024
+                                                            24 June 2024
 
 
  Path Computation Element Communication Protocol (PCEP) Extensions for
@@ -49,11 +49,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 December 2024.
+   This Internet-Draft will expire on 26 December 2024.
 
 
 
-Koldychev, et al.        Expires 5 December 2024                [Page 1]
+Koldychev, et al.       Expires 26 December 2024                [Page 1]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Koldychev, et al.        Expires 5 December 2024                [Page 2]
+Koldychev, et al.       Expires 26 December 2024                [Page 2]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -165,7 +165,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024                [Page 3]
+Koldychev, et al.       Expires 26 December 2024                [Page 3]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -221,7 +221,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024                [Page 4]
+Koldychev, et al.       Expires 26 December 2024                [Page 4]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -277,7 +277,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024                [Page 5]
+Koldychev, et al.       Expires 26 December 2024                [Page 5]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -333,7 +333,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024                [Page 6]
+Koldychev, et al.       Expires 26 December 2024                [Page 6]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -389,7 +389,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024                [Page 7]
+Koldychev, et al.       Expires 26 December 2024                [Page 7]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -445,7 +445,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024                [Page 8]
+Koldychev, et al.       Expires 26 December 2024                [Page 8]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -501,7 +501,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024                [Page 9]
+Koldychev, et al.       Expires 26 December 2024                [Page 9]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -557,7 +557,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 10]
+Koldychev, et al.       Expires 26 December 2024               [Page 10]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -613,7 +613,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 11]
+Koldychev, et al.       Expires 26 December 2024               [Page 11]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -669,7 +669,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 12]
+Koldychev, et al.       Expires 26 December 2024               [Page 12]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -725,7 +725,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 13]
+Koldychev, et al.       Expires 26 December 2024               [Page 13]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -781,7 +781,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 14]
+Koldychev, et al.       Expires 26 December 2024               [Page 14]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -837,7 +837,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 15]
+Koldychev, et al.       Expires 26 December 2024               [Page 15]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -893,7 +893,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 16]
+Koldychev, et al.       Expires 26 December 2024               [Page 16]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -949,7 +949,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 17]
+Koldychev, et al.       Expires 26 December 2024               [Page 17]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -1005,7 +1005,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 18]
+Koldychev, et al.       Expires 26 December 2024               [Page 18]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -1061,7 +1061,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 19]
+Koldychev, et al.       Expires 26 December 2024               [Page 19]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -1117,7 +1117,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 20]
+Koldychev, et al.       Expires 26 December 2024               [Page 20]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -1158,14 +1158,14 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
    *  Reference.
 
-   +----------+--------------------------------------------------------+
+   +-------+-----------------------------------------------+-----------+
    | Bit   | Description                                   | Reference |
-   +----------+--------------------------------------------------------+
-   | 0 - 6 | Reserved.                                     | This.I-D  |
-   +----------+--------------------------------------------------------+
+   +-------+-----------------------------------------------+-----------+
+   | 0 - 6 | Unassigned                                    | This.I-D  |
+   +-------+-----------------------------------------------+-----------+
    | 7     | D: dropping - the LSP is currently attracting | This.I-D  |
    |       | traffic and actively dropping it.             |           |
-   +----------+--------------------------------------------------------+
+   +-------+-----------------------------------------------+-----------+
 
 
 
@@ -1173,7 +1173,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 21]
+Koldychev, et al.       Expires 26 December 2024               [Page 21]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -1192,14 +1192,14 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
    *  Reference.
 
-   +----------+--------------------------------------------------------+
+   +-------+-----------------------------------------------+-----------+
    | Bit   | Description                                   | Reference |
-   +----------+--------------------------------------------------------+
-   | 0 - 6 | Reserved.                                     | This.I-D  |
-   +----------+--------------------------------------------------------+
+   +-------+-----------------------------------------------+-----------+
+   | 0 - 6 | Unassigned.                                   | This.I-D  |
+   +-------+-----------------------------------------------+-----------+
    | 7     | D: drop enabled - the Drop-upon-invalid is    | This.I-D  |
    |       | enabled on the LSP.                           |           |
-   +----------+--------------------------------------------------------+
+   +-------+-----------------------------------------------+-----------+
 
 7.  Implementation Status
 
@@ -1229,7 +1229,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 22]
+Koldychev, et al.       Expires 26 December 2024               [Page 22]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -1285,7 +1285,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 23]
+Koldychev, et al.       Expires 26 December 2024               [Page 23]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -1341,7 +1341,7 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 24]
+Koldychev, et al.       Expires 26 December 2024               [Page 24]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -1397,7 +1397,7 @@ Appendix A.  Contributors
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 25]
+Koldychev, et al.       Expires 26 December 2024               [Page 25]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -1453,7 +1453,7 @@ Authors' Addresses
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 26]
+Koldychev, et al.       Expires 26 December 2024               [Page 26]
 
 Internet-Draft               PCEP SR Policy                    June 2024
 
@@ -1509,4 +1509,4 @@ Internet-Draft               PCEP SR Policy                    June 2024
 
 
 
-Koldychev, et al.        Expires 5 December 2024               [Page 27]
+Koldychev, et al.       Expires 26 December 2024               [Page 27]
