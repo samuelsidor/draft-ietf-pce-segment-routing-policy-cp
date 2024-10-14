@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-17" ipr="trust200902" updates="8231">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-18" ipr="trust200902" updates="8231">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN"
@@ -118,7 +118,7 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date day="24" month="June" year="2024" />
+    <date day="14" month="October" year="2024" />
 
     <workgroup>PCE Working Group</workgroup>
 
@@ -450,7 +450,7 @@ Note that in the PCInitiate message <xref target="RFC8281"/>, the Protocol Origi
 <t>Originator ASN: Represented as a 4-byte number, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4. If 2-byte ASNs are in use, the low-order 16 bits are used, and the high-order bits are set to 0.
 When sending a PCInitiate message <xref target="RFC8281"/>, the PCE is the originator of the Candidate Path.
 AS number is not a PCE concept and PCE is not required to have one for itself.
-If the PCE has its AS number, then it SHOULD set it, otherwise the AS number can be set to 0.
+If the PCE has its AS number, then it MUST set it, otherwise the AS number can be set to 0.
 </t>
 
 <t>Originator Address: Represented as a 128-bit value where IPv4 address is encoded in the lowest 32 bits and high-order bits are set to 0, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4. When sending a PCInitiate message, the PCE is acting as the originator and therefore MUST set this to an address that it owns.
@@ -612,7 +612,7 @@ If the TLV is absent from the LSP object and the P-flag in the SRPOLICY-CAPABILI
 
 <t>Length: 4.</t>
 
-<t>Priority: Numerical priority with which this LSP is to be recomputed by the PCE upon topology change.</t>
+<t>Priority: Numerical priority with which this LSP is to be recomputed by the PCE upon topology change. Lowest value is the highest priority. The default value of priority is 128 (if this TLV is absent), see Section 2.12 of <xref target="RFC9256"/>.</t>
 
 </section> <!-- Computation-priority-tlv -->
 
@@ -623,7 +623,7 @@ If the TLV is absent from the LSP object and the P-flag in the SRPOLICY-CAPABILI
     The Explicit NULL Label Policy (ENLP) TLV is an optional TLV used to indicate whether an Explicit NULL Label <xref target="RFC3032"/> must be pushed on an unlabeled IP packet before any other labels.
     The contents of this TLV are used by the SR Policy Manager (SRPM) as described in section 4.1 of <xref target="RFC9256"/>.
     If an ENLP TLV is not present, the decision of whether to push an Explicit NULL label on a given packet is a matter of local configuration.
-Note that Explicit Null is currently only defined for SR MPLS and not for SRv6. Therefore the PCEP speaker SHOULD ignore the presence of this TLV for SRv6 Policies.
+Note that Explicit Null is currently only defined for SR MPLS and not for SRv6. Therefore the PCEP speaker MUST ignore the presence of this TLV for SRv6 Policies.
 </t>
 
 <figure anchor="ENLP-TLV-FORMAT" title="The Explicit Null Label Policy (ENLP) TLV format">
@@ -701,7 +701,7 @@ The INVALIDATION TLV is used in both directions between PCEP peers:
 <t>Oper: encodes the current state of
 the LSP, i.e., whether it is actively dropping traffic right now.
 This field can be set to non-zero values only by the PCC,
-it MUST be set to 0 by the PCE and SHOULD be ignored by the PCC.
+it MUST be set to 0 by the PCE and MUST be ignored by the PCC.
 See Section <xref target="inval_drop_oper_iana"/> for IANA information.
 </t>
 
@@ -812,8 +812,8 @@ continues to apply.
 <section title="Association Type">
 <t>This document defines a new association type: SR Policy Association.
 IANA is requested to confirm the following early allocated codepoint assignment in the
-"ASSOCIATION Type Field" subregistry <xref target="RFC8697"/> within
-the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
+"ASSOCIATION Type Field" registry <xref target="RFC8697"/> within
+the "Path Computation Element Protocol (PCEP) Numbers" registry group:</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
@@ -828,7 +828,7 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 </section>
 
 <section title="PCEP TLV Type Indicators">
-<t>This document defines eight new TLVs for carrying additional information about SR Policy and SR Candidate Paths. IANA is requested to confirm the early allocated assignment of a new value for the existing "PCEP TLV Type Indicators" subregistry as follows:</t>
+<t>This document defines eight new TLVs for carrying additional information about SR Policy and SR Candidate Paths. IANA is requested to confirm the early allocated assignment of a new value for the existing "PCEP TLV Type Indicators" registry as follows:</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
@@ -858,7 +858,7 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry:</t>
 
 <section title="PCEP Errors">
 <t>This document defines one new Error-Value within the "Mandatory Object Missing" Error-Type and two new Error-Values within the "Association Error" Error-Type.
-IANA is requested to confirm the early allocated new error values within the "PCEP-ERROR Object Error Types and Values" subregistry of the PCEP Numbers registry, as follows:</t>
+IANA is requested to confirm the early allocated new error values within the "PCEP-ERROR Object Error Types and Values" registry of the "Path Computation Element Protocol (PCEP) Numbers" registry group, as follows:</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
@@ -889,7 +889,7 @@ IANA is requested to confirm the early allocated new error values within the "PC
 
 <section title="TE-PATH-BINDING TLV Flag field">
 <t>
-IANA is requested to confirm the early allocated new bit within the "TE-PATH-BINDING TLV Flag field" subregistry of the PCEP Numbers registry, as follows:</t>
+IANA is requested to confirm the early allocated new bit within the "TE-PATH-BINDING TLV Flag field" registry of the "Path Computation Element Protocol (PCEP) Numbers" registry group, as follows:</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
@@ -912,38 +912,37 @@ update the IANA considerations suitably. Note that draft-ietf-idr-bgp-ls-sr-poli
 allocates different values in BGP.
 </t>
 <t>
-This document requests IANA to maintain a new registry under
-"Segment Routing" registry group.
+This document requests IANA to maintain a new registry under "Segment Routing Parameters" registry group.
+The new registry is called "SR Policy Protocol Origin".
 New values are to be assigned by "Specification Required" <xref target="RFC8126"/>
 using the guidelines for Designated Experts as specified in <xref target="RFC9256"/>.
-The new subregistry is requested to be created under it be called "SR Policy Protocol Origin".
-The subregistry contains the following codepoints, with initial values, to
-be assigned by IANA with the reference set to this document:
+The registry contains the following codepoints:
 </t>
 <figure>
         <artwork align="left"><![CDATA[
-+------------+------------------------------------------------------+
-| Value        | Description                                        |
-+--------------+----------------------------------------------------+
-| 0            | Reserved (not to be used)                          |
-+--------------+----------------------------------------------------+
-| 1-9          | Unassigned                                         |
-+--------------+----------------------------------------------------+
-| 10           | PCEP (in PCEP)                                     |
-+--------------+----------------------------------------------------+
-| 11-19        | Unassigned                                         |
-+--------------+----------------------------------------------------+
-| 20           | BGP SR Policy (in PCEP)                            |
-+--------------+----------------------------------------------------+
-| 21-29        | Unassigned                                         |
-+--------------+----------------------------------------------------+
-| 30           | Configuration (CLI, YANG model via NETCONF, etc.)  |
-|              | (in PCEP)                                          |
-+--------------+----------------------------------------------------+
-| 31-250       | Unassigned                                         |
-+--------------+----------------------------------------------------+
-| 251 - 255    | Private Use (not to be assigned by IANA)           |
-+--------------+----------------------------------------------------+
++--------------+----------------------------------------+-----------+
+| Value        | Description                            | Reference |
++--------------+----------------------------------------+-----------+
+| 0            | Reserved (not to be used)              | This.I-D  |
++--------------+----------------------------------------+-----------+
+| 1-9          | Unassigned                             | This.I-D  |
++--------------+----------------------------------------+-----------+
+| 10           | PCEP (in PCEP)                         | This.I-D  |
++--------------+----------------------------------------+-----------+
+| 11-19        | Unassigned                             | This.I-D  |
++--------------+----------------------------------------+-----------+
+| 20           | BGP SR Policy (in PCEP)                | This.I-D  |
++--------------+----------------------------------------+-----------+
+| 21-29        | Unassigned                             | This.I-D  |
++--------------+----------------------------------------+-----------+
+| 30           | Configuration (CLI, YANG model via     | This.I-D  |
+|              | NETCONF, etc.) (in PCEP)               |           |
++--------------+----------------------------------------+-----------+
+| 31-250       | Unassigned                             | This.I-D  |
++--------------+----------------------------------------+-----------+
+| 251 - 255    | Private Use (not to be assigned by     | This.I-D  |
+|              | |ANA)                                  |           |
++--------------+----------------------------------------+-----------+
 ]]></artwork>
       </figure>
 </section>
@@ -954,44 +953,45 @@ Note to IANA (RFC editor to remove this before publication): The new registry cr
 IANA is requested to process the registry creation via the first of these two documents to reach the publication stage and the authors of the other document would update the IANA considerations suitably.
 </t>
 <t>
-This document requests IANA to maintain a new registry under
-"Segment Routing Parameters" registry group.
+This document requests IANA to maintain a new registry under "Segment Routing Parameters" registry group.
+The new registry is called "SR Policy ENLP Values".
 New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
-The new subregistry is requested to be created under it, to be called
-"SR Policy ENLP Values".
-The subregistry contains the following codepoints, with initial values, to
-be assigned by IANA with the reference set to this document:
+The registry contains the following codepoints:
 </t>
 <figure>
         <artwork align="left"><![CDATA[
-+----------+--------------------------------------------------------+
-| Value    | Description                                            |
-+----------+--------------------------------------------------------+
-| 0        | Reserved (not to be used).                             |
-+----------+--------------------------------------------------------+
-| 1        | Push an IPv4 Explicit NULL label on an unlabeled IPv4  |
-|          | packet, but do not push an IPv6 Explicit NULL label on |
-|          | an unlabeled IPv6 packet.                              |
-+----------+--------------------------------------------------------+
-| 2        | Push an IPv6 Explicit NULL label on an unlabeled IPv6  |
-|          | packet, but do not push an IPv4 Explicit NULL label on |
-|          | an unlabeled IPv4 packet.                              |
-+----------+--------------------------------------------------------+
-| 3        | Push an IPv4 Explicit NULL label on an unlabeled IPv4  |
-|          | packet, and push an IPv6 Explicit NULL label on an     |
-|          | unlabeled IPv6 packet.                                 |
-+----------+--------------------------------------------------------+
-| 4        | Do not push an Explicit NULL label.                    |
-+----------+--------------------------------------------------------+
-| 5 - 255  | Reserved.                                              |
-+----------+--------------------------------------------------------+
++----------+--------------------------------------------+-----------+
+| Value    | Description                                | Reference |
++----------+--------------------------------------------+-----------+
+| 0        | Reserved (not to be used).                 | This.I-D  |
++----------+--------------------------------------------+-----------+
+| 1        | Push an IPv4 Explicit NULL label on an     | This.I-D  |
+|          | unlabeled IPv4 packet, but do not push an  |           |
+|          | IPv6 Explicit NULL label on an unlabeled   |           |
+|          | IPv6 packet.                               |           |
++----------+--------------------------------------------+-----------+
+| 2        | Push an IPv6 Explicit NULL label on an     | This.I-D  |
+|          | unlabeled IPv6 packet, but do not push an  |           |
+|          | IPv4 Explicit NULL label on an unlabeled   |           |
+|          | IPv4 packet.                               |           |
++----------+--------------------------------------------+-----------+
+| 3        | Push an IPv4 Explicit NULL label on an     | This.I-D  |
+|          | unlabeled IPv4 packet, and push an IPv6    |           |
+|          | Explicit NULL label on an unlabeled IPv6   |           |
+|          | packet.                                    |           |
++----------+--------------------------------------------+-----------+
+| 4        | Do not push an Explicit NULL label.        | This.I-D  |
++----------+--------------------------------------------+-----------+
+| 5 - 255  | Reserved.                                  | This.I-D  |
++----------+--------------------------------------------+-----------+
 ]]></artwork>
       </figure>
 </section>
 
 <section anchor="inval_drop_oper_iana" title="SR Policy Invalidation Drop Operational State">
 <t>
-This document requests IANA to maintain a new registry to manage the Operational flags field of the INVALIDATION TLV, called "SR Policy Invalidation Operational Flags".
+This document requests IANA to maintain a new registry under "Segment Routing Parameters" registry group.
+The new registry is called "SR Policy Invalidation Operational Flags".
 New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
 Each bit should be tracked with the following qualities.
   <list style="symbols">
@@ -1016,7 +1016,8 @@ Each bit should be tracked with the following qualities.
 
 <section anchor="inval_drop_config_iana" title="SR Policy Invalidation Drop Configuration State">
 <t>
-This document requests IANA to maintain a new registry to manage the Configuration flags field of the INVALIDATION TLV, called "SR Policy Invalidation Configuration Flags".
+This document requests IANA to maintain a new registry under "Segment Routing Parameters" registry group.
+The new registry is called "SR Policy Invalidation Configuration Flags".
 New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
 Each bit should be tracked with the following qualities.
   <list style="symbols">
@@ -1104,9 +1105,12 @@ Each bit should be tracked with the following qualities.
   <t>The information carried in the newly defined SRPA object and TLVs
   could provide an eavesdropper with additional information about the
   SR Policy.
-  Thus securing the PCEP session using the Transport Layer
-   Security (TLS) <xref target="RFC8253"/>, as per the recommendations and
-   best current practices in <xref target="RFC9325"/>, is RECOMMENDED.</t>
+  </t>
+  <t>
+  The security considerations described in <xref target="RFC5440"/>,
+  <xref target="RFC8231"/>, <xref target="RFC8281"/>, <xref target="RFC8664"/>
+  and <xref target="RFC9256"/> are applicable to this specification.
+  </t>
 </section>
 
 <section anchor="Acknowledgement" title="Acknowledgement">
@@ -1130,8 +1134,6 @@ Would like to thank Ketan Talaulikar, Dhruv Dhody, Stephane Litkowski, Boris Kha
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8697.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8664.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3032.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9325.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8253.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-binding-label-sid.xml"?>
 </references>
