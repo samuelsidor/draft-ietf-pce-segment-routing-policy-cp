@@ -1,0 +1,4 @@
+1) Samuel's email about specified BSID - https://mailarchive.ietf.org/arch/msg/pce/qzayAGUDHAEiMLF7gQ14AiknPe0/
+2) IANA issue spotted by Ketan - https://mailarchive.ietf.org/arch/msg/pce/LYcDSaRpj6A6EFp6OR4c91-dmXg/
+3) GENART review - https://mailarchive.ietf.org/arch/msg/last-call/VwVwGch5xwV4V8j7fShNuASs7Vk/
+4) Marina's email that led to addition of error handling text ("RE: [EXTERNAL] Re: The question about draft-ietf-pce-segment-routing-policy-cp-18 draft")
