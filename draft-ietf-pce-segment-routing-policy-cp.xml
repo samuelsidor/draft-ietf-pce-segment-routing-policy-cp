@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-18" ipr="trust200902" updates="8231">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-19" ipr="trust200902" updates="8231">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN"
@@ -62,8 +62,6 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-
-
     <author fullname="Siva Sivabalan" initials="S." surname="Sivabalan">
       <organization>Ciena Corporation</organization>
       <address>
@@ -75,6 +73,19 @@ they will automatically be output with "(if approved)" -->
           <country>Canada</country>
         </postal>
         <email>ssivabal@ciena.com</email>
+      </address>
+    </author>
+
+    <author fullname="Samuel Sidor" initials="S." surname="Sidor">
+      <organization>Cisco Systems, Inc.</organization>
+      <address>
+        <postal>
+          <street>Eurovea Central 3.</street>
+          <city>Bratislava</city>
+          <code>811 09</code>
+          <country>Slovakia</country>
+        </postal>
+        <email>ssidor@cisco.com</email>
       </address>
     </author>
 
@@ -118,7 +129,7 @@ they will automatically be output with "(if approved)" -->
       </address>
     </author>
 
-    <date day="14" month="October" year="2024" />
+    <date/>
 
     <workgroup>PCE Working Group</workgroup>
 
@@ -218,7 +229,11 @@ The subject of encoding multiple Segment Lists within an SR Policy Candidate Pat
 SR Policy Identifier, SR Policy Candidate Path Identifier, and SR Policy Candidate Path Attribute(s).</t>
 
 <t>
-This document also specifies some additional information that is not encoded as part of SRPA: Computation Priority, Explicit Null Label Policy, Drop-upon-invalid behavior, and Specified-BSID-only.
+This document also specifies some additional information that is not encoded as part of SRPA: Computation Priority, Explicit Null Label Policy and Drop-upon-invalid behavior.
+</t>
+
+<t>
+This document does not propose any extension for the use of Binding Segment Identifier (BSID) with SR Policy; the existing behavior is documented in <xref target="RFC9604"/>.
 </t>
 
 <section anchor="SRPolicyIdentifier" title="SR Policy Identifier">
@@ -552,7 +567,7 @@ In addition, the ASSOC-Type-List TLV containing SRPA Type (6) MUST be present in
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |                             Flags                   |L|S|I|E|P|
+  |                             Flags                   |L| |I|E|P|
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
 </figure>
@@ -574,11 +589,6 @@ If this flag is not set, then the PCEP speaker MUST NOT send the ENLP TLV and SH
 <t>I-Flag: If set to '1' by a PCEP speaker, the I flag indicates that the PCEP speaker supports the handling of INVALIDATION TLV for the SR Policy,
   see <xref target="Invalidation-tlv"/>.
 If this flag is not set, then the PCEP speaker MUST NOT send the INVALIDATION TLV and SHOULD ignore it on receipt.
-</t>
-
-<t>S-Flag: If set to '1' by a PCEP speaker, the S flag indicates that the PCEP speaker supports the handling of "Specified-BSID-only" behavior for the SR Policy,
-  see <xref target="Specified-bsid-only"/>.
-If this flag is not set, then the PCEP speaker MUST NOT set the Specified-BSID-only flag in the TE-PATH-BINDING TLV and SHOULD ignore it on receipt.
 </t>
 
 <t>L-Flag: If set to '1' by a PCEP speaker, the L flag indicates that the PCEP speaker supports the stateless (PCReq/PCRep) operations for the SR Policy,
@@ -763,18 +773,6 @@ Note that only one Candidate Path needs to be reported to the PCE with the D (dr
 
 </section> <!-- Invalidation-tlv -->
 
-<section anchor="Specified-bsid-only" title="Specified-BSID-only">
-
-<t>Specified-BSID-only functionality is defined in Section 6.2.3 of <xref target="RFC9256"/>.
-When specified-BSID-only is enabled for a particular binding SID, it means that the given binding SID is required to be allocated and programmed for the LSP to be operationally up.
-If the binding SID cannot be allocated or programmed for some reason, then the LSP must stay down.</t>
-
-<t>To signal specified-BSID-only, a new bit: S (Specified-BSID-only) is allocated in the "TE-PATH-BINDING TLV Flag field" of the TE-PATH-BINDING TLV <xref target="I-D.ietf-pce-binding-label-sid"/>.
-When this bit is set for a particular BSID, it means that the BSID follows the Specified-BSID-only behavior.
-It is possible to have a mix of BSIDs for the same LSP: some with S=1 and some with S=0.</t>
-
-</section> <!-- Specified-bsid-only -->
-
 <section anchor="Stateless-oper" title="Stateless Operation">
 
 <t>
@@ -889,14 +887,16 @@ IANA is requested to confirm the early allocated new error values within the "PC
 
 <section title="TE-PATH-BINDING TLV Flag field">
 <t>
-IANA is requested to confirm the early allocated new bit within the "TE-PATH-BINDING TLV Flag field" registry of the "Path Computation Element Protocol (PCEP) Numbers" registry group, as follows:</t>
+An earlier version of this document added new bit within the "TE-PATH-BINDING TLV Flag field" registry of the "Path Computation Element Protocol (PCEP) Numbers" registry group, which was also early allocated by the IANA.</t>
+<t>
+IANA is requested to cancel the early allocation made which is not needed anymore.  As per the instructions from the chairs, please mark it as deprecated.</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
 +------------+------------------------------------------+-----------+
 | Bit position | Description                            | Reference |
 +--------------+----------------------------------------+-----------+
-| 1            | S (Specified-BSID-only)                | This.I-D  |
+| 1            | Deprecated (Specified-BSID-only)       | This.I-D  |
 +--------------+----------------------------------------+-----------+
 
 ]]></artwork>
@@ -912,9 +912,9 @@ update the IANA considerations suitably. Note that draft-ietf-idr-bgp-ls-sr-poli
 allocates different values in BGP.
 </t>
 <t>
-This document requests IANA to maintain a new registry under "Segment Routing Parameters" registry group.
+This document requests IANA to maintain a new registry under "Segment Routing" registry group.
 The new registry is called "SR Policy Protocol Origin".
-New values are to be assigned by "Specification Required" <xref target="RFC8126"/>
+New values are to be assigned by "Expert Review" <xref target="RFC8126"/>
 using the guidelines for Designated Experts as specified in <xref target="RFC9256"/>.
 The registry contains the following codepoints:
 </t>
@@ -982,7 +982,7 @@ The registry contains the following codepoints:
 +----------+--------------------------------------------+-----------+
 | 4        | Do not push an Explicit NULL label.        | This.I-D  |
 +----------+--------------------------------------------+-----------+
-| 5 - 255  | Reserved.                                  | This.I-D  |
+| 5 - 255  | Unassigned                                 | This.I-D  |
 +----------+--------------------------------------------+-----------+
 ]]></artwork>
       </figure>
@@ -990,7 +990,7 @@ The registry contains the following codepoints:
 
 <section anchor="inval_drop_oper_iana" title="SR Policy Invalidation Drop Operational State">
 <t>
-This document requests IANA to maintain a new registry under "Segment Routing Parameters" registry group.
+This document requests IANA to maintain a new registry under "Path Computation Element Protocol (PCEP) Numbers" registry group.
 The new registry is called "SR Policy Invalidation Operational Flags".
 New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
 Each bit should be tracked with the following qualities.
@@ -1016,7 +1016,7 @@ Each bit should be tracked with the following qualities.
 
 <section anchor="inval_drop_config_iana" title="SR Policy Invalidation Drop Configuration State">
 <t>
-This document requests IANA to maintain a new registry under "Segment Routing Parameters" registry group.
+This document requests IANA to maintain a new registry under "Path Computation Element Protocol (PCEP) Numbers" registry group.
 The new registry is called "SR Policy Invalidation Configuration Flags".
 New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
 Each bit should be tracked with the following qualities.
@@ -1115,7 +1115,7 @@ Each bit should be tracked with the following qualities.
 
 <section anchor="Acknowledgement" title="Acknowledgement">
 <t>
-Would like to thank Ketan Talaulikar, Dhruv Dhody, Stephane Litkowski, Boris Khasanov, Abdul Rehman, Alex Tokar, Praveen Kumar and Tom Petch for review and suggestions.
+Would like to thank Ketan Talaulikar, Dhruv Dhody, Stephane Litkowski, Boris Khasanov, Abdul Rehman, Zoey Rose, Praveen Kumar and Tom Petch for review and suggestions.
 </t>
 </section> <!-- Acknowledgement -->
 
@@ -1135,12 +1135,12 @@ Would like to thank Ketan Talaulikar, Dhruv Dhody, Stephane Litkowski, Boris Kha
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8664.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3032.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-binding-label-sid.xml"?>
+  
 </references>
 <references title="Informative References">
 
   <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-multipath.xml"?>
-  <!--<?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.sivabalan-pce-binding-label-sid"?>-->
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9604.xml"?>
 </references>
 
 <section title="Contributors">
@@ -1159,14 +1159,10 @@ China
 
 Email: chengli13@huawei.com
 
-Samuel Sidor
+Zafar Ali
 Cisco Systems, Inc.
-Eurovea Central 3.
-Pribinova 10
-811 09 Bratislava
-Slovakia
 
-Email: ssidor@cisco.com
+Email: zali@cisco.com
 
 Rajesh Melarcode
 Cisco Systems, Inc.
