@@ -557,8 +557,13 @@ The SRPOLICY-CAPABILITY TLV is a TLV for the OPEN object.
 It is used at session establishment to learn the peer's
 capabilities with respect to SR Policy.
 Implementations that support SR Policy MUST include SRPOLICY-CAPABILITY TLV in the OPEN object.
-In addition, the ASSOC-Type-List TLV containing SRPA Type (6) MUST be present in the OPEN object, as specified in <xref target="Association"/>.
-</t>
+In addition, the ASSOC-Type-List TLV containing SRPA Type (6) MUST be present in the OPEN object, as specified in <xref target="Association"/>.</t>
+
+<t>If a PCEP speaker receives SRPA but the SRPOLICY-CAPABILITY TLV is
+not exchanged, then the PCEP speaker MUST send a PCErr message with Error-
+Type = 10 ("Reception of an invalid object") and Error-Value = TBD
+("Missing SRPOLICY-CAPABILITY TLV") and MUST then close the PCEP
+session.</t>
 
 <figure anchor="SRPOLICY-CAPABILITY-TLV-FORMAT" title="The SRPOLICY-CAPABILITY TLV format">
 <artwork align="center"><![CDATA[
@@ -868,6 +873,13 @@ IANA is requested to confirm the early allocated new error values within the "PC
 +------------+------------------+-----------------------+-----------+
 |            |                  | 21: Missing SR        | This.I-D  |
 |            |                  | Policy Mandatory TLV  |           |
++------------+------------------+-----------------------+-----------+
+| 10         | Reception of an  |                       | [RFC5440] |
+|            | invalid object   |                       |           |
++------------+------------------+-----------------------+-----------+
+|            |                  | TBA: Missing          | This.I-D  |
+|            |                  | SRPOLICY-CAPABILITY   |           |
+|            |                  | TLV                   |           |
 +------------+------------------+-----------------------+-----------+
 | 26         | Association      |                       | [RFC8697] |
 |            | Error            |                       |           |
