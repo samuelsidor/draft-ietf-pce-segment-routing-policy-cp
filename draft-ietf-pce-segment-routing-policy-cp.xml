@@ -965,7 +965,7 @@ Note to IANA (RFC editor to remove this before publication): The new registry cr
 IANA is requested to process the registry creation via the first of these two documents to reach the publication stage and the authors of the other document would update the IANA considerations suitably.
 </t>
 <t>
-This document requests IANA to maintain a new registry under "Segment Routing Parameters" registry group.
+This document requests IANA to maintain a new registry under "Segment Routing" registry group.
 The new registry is called "SR Policy ENLP Values".
 New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
 The registry contains the following codepoints:
