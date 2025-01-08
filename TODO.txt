@@ -1,0 +1,2 @@
+1) GENART review - https://mailarchive.ietf.org/arch/msg/last-call/VwVwGch5xwV4V8j7fShNuASs7Vk/
+2) Check how IANA statement should be modified in section 6.3.  PCEP Errors since we need to allocate codepoint for one value as well 
