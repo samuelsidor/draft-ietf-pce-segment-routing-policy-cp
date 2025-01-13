@@ -166,7 +166,7 @@ they will automatically be output with "(if approved)" -->
 <t>Segment Routing Policy Architecture <xref target="RFC9256"/> details the concepts of SR Policy and approaches to steering traffic into an SR Policy.</t>
 
 <t>PCEP Extensions for Segment Routing <xref target="RFC8664"/> specifies extensions to the Path Computation Element Protocol (PCEP) that allow a stateful PCE to compute and initiate Traffic Engineering (TE) paths, as well as a PCC to request a path subject to certain constraint(s) and optimization criteria in SR networks.
-Although <xref target="RFC8664"/> was originally used to create SR-TE tunnels, these are not SR Policies and lack many important features and details.
+Although PCEP extensions introduced in <xref target="RFC8664"/> were originally used to create SR-TE tunnels, these are not SR Policies and lack many important features and details.
 </t>
 
 <t>PCEP Extensions for Establishing Relationships Between Sets of PCEP LSPs <xref target="RFC8697"/> introduces a generic mechanism to create a grouping of LSPs which is called an Association.</t>
@@ -202,16 +202,30 @@ The unit of signaling in PCEP is the LSP, thus all the information is carried at
 
      <t hangText="Discriminator:"> Distinguishes Candidate Paths created by the same device, as described in <xref target="RFC9256"/> Section 2.5.</t>
 
-     <t hangText="SRPA:"> SR Policy Association. A new association type 'SR Policy
-   Association' is used to group candidate paths belonging to the SR
-   Policy. Depending on the discussion context, it can refer to the PCEP
-   ASSOCIATION object of SR Policy type or to a group of LSPs that
-   belong to the association. </t>
-
      <t hangText="Association Parameters:"> As described in <xref target="RFC8697"/>, refers to the key data, that uniquely identifies the Association.</t>
 
      <t hangText="Association Information:"> As described in <xref target="RFC8697"/>, refers to the non-key information about the Association.</t>
-
+	 
+          <t hangText="ASN:"> Autonomous System Number.</t>
+          <t hangText="BSID:"> Binding Segment Identifier.</t>
+          <t hangText="ENLP:"> Explicit Null Label Policy.</t>
+		  <t hangText="IGP:"> Interior Gateway Protocol.</t>
+          <t hangText="LSP:"> Label Switched Path.</t>
+          <t hangText="MPLS:"> Multiprotocol Label Switching.</t>
+          <t hangText="PCC:"> Path Computation Client.</t>
+          <t hangText="PCE:"> Path Computation Element.</t>
+          <t hangText="PCEP:"> Path Computation Element Protocol.</t>
+          <t hangText="SID:"> Segment Identifier.</t>
+          <t hangText="SR:"> Segment Routing.</t>
+          <t hangText="SRPA:"> SR Policy Association. A new association type 'SR Policy
+   Association' is used to group candidate paths belonging to the SR
+   Policy. Depending on the discussion context, it can refer to the PCEP
+   ASSOCIATION object of SR Policy type or to a group of LSPs that
+   belong to the association.</t>
+          <t hangText="SRPM:"> SR Policy Manager.</t>
+          <t hangText="SR-TE:"> Segment Routing Traffic Engineering.</t>
+          <t hangText="TE:"> Traffic Engineering.</t>
+          <t hangText="TLV:"> Type-Length-Value.</t>
       </list>
 </t>
 
@@ -220,7 +234,7 @@ The unit of signaling in PCEP is the LSP, thus all the information is carried at
 <section anchor="Overview" title="Overview">
 
 <t>
-The SR Policy is represented by a new type of PCEP Association, called the SR Policy Association (SRPA).
+The SR Policy is represented by a new type of PCEP Association, called the SR Policy Association.
 The SR Candidate Paths of an SR Policy are the PCEP LSPs within the same SRPA.
 The subject of encoding multiple Segment Lists within an SR Policy Candidate Path is described in <xref target="I-D.ietf-pce-multipath"/>.
 </t>
@@ -233,16 +247,15 @@ This document also specifies some additional information that is not encoded as 
 </t>
 
 <t>
-This document does not propose any extension for the use of Binding Segment Identifier (BSID) with SR Policy; the existing behavior is documented in <xref target="RFC9604"/>.
+This document does not propose any extension for the use of BSID with SR Policy; the existing behavior is documented in <xref target="RFC9604"/>.
 </t>
 
 <section anchor="SRPolicyIdentifier" title="SR Policy Identifier">
 <t>SR Policy Identifier uniquely identifies the SR Policy <xref target="RFC9256"/> within the network.
 SR Policy Identifier MUST be the same for all SR Policy Candidate Paths in the same SRPA.
-SR Policy Identifier MUST NOT change for a given SR Policy Candidate Path during its lifetime.
+SR Policy Identifier MUST be constant for a given SR Policy Candidate Path for the lifetime of the PCEP session.
 SR Policy Identifier MUST be different for different SRPAs.
-When these rules are not satisfied, the PCEP speaker MUST send a PCErr message with
-Error-Type = 26 "Association Error", Error Value = 20 "SR Policy Identifier Mismatch".
+If the identifier is inconsistent among Candidate Paths, changes during the lifetime of the PCEP session, or is not unique across different SRPAs, the PCEP speaker MUST send a PCErr message with Error-Type = 26 "Association Error" and Error Value = 20 "SR Policy Identifier Mismatch".
 SR Policy Identifier consist of:</t>
 <t>
       <list style="symbols">
@@ -255,10 +268,9 @@ SR Policy Identifier consist of:</t>
 
 <section anchor="SRPolicyCandidatePathIdentifier" title="SR Policy Candidate Path Identifier">
 <t>SR Policy Candidate Path Identifier uniquely identifies the SR Policy Candidate Path within the context of an SR Policy.
-SR Policy Candidate Path Identifier MUST NOT change for a given LSP during its lifetime.
+SR Policy Candidate Path Identifier MUST be constant for the lifetime of the PCEP session.
 SR Policy Candidate Path Identifier MUST be different for distinct Candidate Paths within the same SRPA.
-When these rules are not satisfied, the PCEP speaker MUST send a PCErr message with
-Error-Type = 26 "Association Error", Error Value = 21 "SR Policy Candidate Path Identifier Mismatch".
+If an identifier changes during the lifetime of the PCEP session or is not unique among distinct Candidate Paths, the PCEP speaker MUST send a PCErr message with Error-Type = 26 "Association Error" and Error Value = 21 "SR Policy Candidate Path Identifier Mismatch".
 SR Policy Candidate Path Identifier consist of:</t>
 <t>
       <list style="symbols">
@@ -330,7 +342,7 @@ The color and endpoint are encoded as part of the Extended Association ID TLV.
         <t>Association Type: Part of the base ASSOCIATION object. Set to 6 "SR Policy Association".</t>
         <t>Association Source (IPv4/IPv6): Part of the base ASSOCIATION object. Set to the headend value of the SR Policy, as defined in <xref target="RFC9256"/> Section 2.1.</t>
         <t>Association ID (16-bit): Part of the base ASSOCIATION object. Always set to the numeric value "1". This 16-bit field does not store meaningful data, because neither the Color nor the Endpoint can fit in it.</t>
-	<t>Extended Association ID TLV: Mandatory TLV of the ASSOCIATION object. Encodes the Color and Endpoint of the SR Policy. MUST be in the format specified in <xref target="Extended-Association-ID-TLV-FORMAT"/>.</t>
+	<t>Extended Association ID TLV: Mandatory TLV of the ASSOCIATION object. Encodes the Color and Endpoint of the SR Policy.</t>
       </list>
 </t>
 
@@ -422,7 +434,7 @@ The SRPOLICY-POL-NAME TLV is an optional TLV for the SRPA object.
 
 <t>Length: indicates the length of the value portion of the TLV in octets and MUST be greater than 0. The TLV MUST be zero-padded so that the TLV is 4-octet aligned.</t>
 
-<t>SR Policy Name: SR Policy name, as defined in <xref target="RFC9256"/>. It SHOULD be a string of printable ASCII characters, without a NULL terminator.</t>
+<t>SR Policy Name: SR Policy name, as defined in <xref target="RFC9256"/>. It MUST be a string of printable ASCII characters, without a NULL terminator.</t>
 
 </section> <!-- Policy-name-tlv -->
 
@@ -439,7 +451,7 @@ The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  | Proto. Origin |                      MBZ                      |
+  | Proto. Origin |                 Reserved                      |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |                         Originator ASN                        |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -460,15 +472,15 @@ The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
 <t>Protocol Origin: 8-bit value that encodes the protocol origin, as specified in <xref target="protocol_origin"/>.
 Note that in the PCInitiate message <xref target="RFC8281"/>, the Protocol Origin is always set to 10 (PCEP). </t>
 
-<t>MBZ: Must be zero.</t>
+<t>Reserved: This field MUST be set to zero on transmission and MUST be ignored on receipt.</t>
 
-<t>Originator ASN: Represented as a 4-byte number, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4. If 2-byte ASNs are in use, the low-order 16 bits are used, and the high-order bits are set to 0.
+<t>Originator ASN: Represented as a 4-byte number, part of the originator identifier, as specified in <xref format="default" section="2.4" sectionFormat="of" target="RFC9256"/>.
 When sending a PCInitiate message <xref target="RFC8281"/>, the PCE is the originator of the Candidate Path.
 AS number is not a PCE concept and PCE is not required to have one for itself.
 If the PCE has its AS number, then it MUST set it, otherwise the AS number can be set to 0.
 </t>
 
-<t>Originator Address: Represented as a 128-bit value where IPv4 address is encoded in the lowest 32 bits and high-order bits are set to 0, part of the originator identifier, as specified in <xref target="RFC9256"/> Section 2.4. When sending a PCInitiate message, the PCE is acting as the originator and therefore MUST set this to an address that it owns.
+<t>Originator Address: Represented as a 128-bit value as specified in <xref format="default" section="2.4" sectionFormat="of" target="RFC9256"/>. When sending a PCInitiate message, the PCE is acting as the originator and therefore MUST set this to an address that it owns.
 </t>
 
 <t>Discriminator: 32-bit value that encodes the Discriminator of the Candidate Path, as specified in <xref target="RFC9256"/> Section 2.5.
@@ -501,7 +513,7 @@ The SRPOLICY-CPATH-NAME TLV is an optional TLV for the SRPA object.
 
 <t>Length: indicates the length of the value portion of the TLV in octets and MUST be greater than 0. The TLV MUST be zero-padded so that the TLV is 4-octet aligned.</t>
 
-<t>SR Policy Candidate Path Name: SR Policy Candidate Path Name, as defined in <xref target="RFC9256"/>. It SHOULD be a string of printable ASCII characters, without a NULL terminator.</t>
+<t>SR Policy Candidate Path Name: SR Policy Candidate Path Name, as defined in <xref target="RFC9256"/>. It MUST be a string of printable ASCII characters, without a NULL terminator.</t>
 
 </section> <!-- SRPOLICY-CPATH-NAME -->
 
@@ -583,22 +595,22 @@ session.</t>
 
 <t>P-flag: If set to '1' by a PCEP speaker, the P flag indicates that the PCEP speaker supports the handling of COMPUTATION-PRIORITY TLV for the SR Policy,
 see <xref target="Computation-priority-tlv"/>.
-If this flag is not set, then the PCEP speaker MUST NOT send the COMPUTATION-PRIORITY TLV and SHOULD ignore it on receipt.
+If this flag is not set, then the PCEP speaker MUST NOT send the COMPUTATION-PRIORITY TLV and MUST ignore it on receipt.
 </t>
 
 <t>E-Flag: If set to '1' by a PCEP speaker, the E flag indicates that the PCEP speaker supports the handling of ENLP TLV for the SR Policy,
   see <xref target="enlp-tlv"/>.
-If this flag is not set, then the PCEP speaker MUST NOT send the ENLP TLV and SHOULD ignore it on receipt.
+If this flag is not set, then the PCEP speaker MUST NOT send the ENLP TLV and MUST ignore it on receipt.
 </t>
 
 <t>I-Flag: If set to '1' by a PCEP speaker, the I flag indicates that the PCEP speaker supports the handling of INVALIDATION TLV for the SR Policy,
   see <xref target="Invalidation-tlv"/>.
-If this flag is not set, then the PCEP speaker MUST NOT send the INVALIDATION TLV and SHOULD ignore it on receipt.
+If this flag is not set, then the PCEP speaker MUST NOT send the INVALIDATION TLV and MUST ignore it on receipt.
 </t>
 
 <t>L-Flag: If set to '1' by a PCEP speaker, the L flag indicates that the PCEP speaker supports the stateless (PCReq/PCRep) operations for the SR Policy,
   see <xref target="Stateless-oper"/>.
-  If the PCE did not set this flag then the PCC SHOULD NOT send PCReq messages to this PCE for the SR Policy.
+  If the PCE did not set this flag then the PCC MUST NOT send PCReq messages to this PCE for the SR Policy.
 </t>
 
 <t>Unassigned bits MUST be set to '0' on transmission and MUST be ignored on receipt.</t>
@@ -618,7 +630,7 @@ If the TLV is absent from the LSP object and the P-flag in the SRPOLICY-CAPABILI
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |    Priority    |                     MBZ                      |
+  |    Priority    |                  Reserved                    |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
 </figure>
@@ -629,6 +641,8 @@ If the TLV is absent from the LSP object and the P-flag in the SRPOLICY-CAPABILI
 
 <t>Priority: Numerical priority with which this LSP is to be recomputed by the PCE upon topology change. Lowest value is the highest priority. The default value of priority is 128 (if this TLV is absent), see Section 2.12 of <xref target="RFC9256"/>.</t>
 
+<t>Reserved: This field MUST be set to zero on transmission and MUST be ignored on receipt.</t>
+
 </section> <!-- Computation-priority-tlv -->
 
 <section anchor="enlp-tlv" title="Explicit Null Label Policy (ENLP) TLV">
@@ -636,7 +650,7 @@ If the TLV is absent from the LSP object and the P-flag in the SRPOLICY-CAPABILI
 <t>
     To steer an unlabeled IP packet into an SR policy, it is necessary to create a label stack for that packet, and push one or more labels onto that stack.
     The Explicit NULL Label Policy (ENLP) TLV is an optional TLV used to indicate whether an Explicit NULL Label <xref target="RFC3032"/> must be pushed on an unlabeled IP packet before any other labels.
-    The contents of this TLV are used by the SR Policy Manager (SRPM) as described in section 4.1 of <xref target="RFC9256"/>.
+    The contents of this TLV are used by the SRPM as described in section 4.1 of <xref target="RFC9256"/>.
     If an ENLP TLV is not present, the decision of whether to push an Explicit NULL label on a given packet is a matter of local configuration.
 Note that Explicit Null is currently only defined for SR MPLS and not for SRv6. Therefore the PCEP speaker MUST ignore the presence of this TLV for SRv6 Policies.
 </t>
@@ -648,7 +662,7 @@ Note that Explicit Null is currently only defined for SR MPLS and not for SRv6. 
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |    ENLP        |                     MBZ                      |
+  |    ENLP        |                  Reserved                    |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
 </figure>
@@ -663,8 +677,10 @@ Note that Explicit Null is currently only defined for SR MPLS and not for SRv6. 
   The values of this field are specified in section <xref target="enlp_value"/>.
 </t>
 
+<t>Reserved: This field MUST be set to zero on transmission and MUST be ignored on receipt.</t>
+
 <t>
-    The ENLP reserved values may be used for future extensions and implementations SHOULD ignore the ENLP TLV with these values.
+    The ENLP reserved values may be used for future extensions and implementations MUST ignore the ENLP TLV with these values.
     The behavior signaled in this TLV MAY be overridden by local configuration.
     Section 4.1 of <xref target="RFC9256"/> describes the behavior on the headend for the handling of the explicit null label.
 </t>
@@ -704,7 +720,7 @@ The INVALIDATION TLV is used in both directions between PCEP peers:
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |   Oper        |   Config      |              MBZ              |
+  |   Oper        |   Config      |            Reserved           |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
 </figure>
@@ -719,6 +735,8 @@ This field can be set to non-zero values only by the PCC,
 it MUST be set to 0 by the PCE and MUST be ignored by the PCC.
 See Section <xref target="inval_drop_oper_iana"/> for IANA information.
 </t>
+
+<t>Reserved: This field MUST be set to zero on transmission and MUST be ignored on receipt.</t>
 
 <figure anchor="OPER_INVAL_FLAGS" title="Oper state of Drop-upon-invalid feature">
 <artwork align="center"><![CDATA[
@@ -761,9 +779,8 @@ See Section <xref target="inval_drop_config_iana"/> for IANA information.
 <t>
 The Drop-upon-invalid feature is somewhat special among the other SR Policy features in the way that it is enabled/disabled.
 This feature is enabled only on the whole SR Policy, not on a particular Candidate Path of that SR Policy,
-i.e., when any Candidate Path has Drop-upon-invalid enabled, it means that essentially the whole SR Policy has the feature enabled.
-As stated in <xref target="RFC9256"/> Section 8.1, the SR Policy is invalid when all its Candidate Paths are invalid,
-therefore all Candidate Paths MUST be attempted for bring up before the SR Policy is declared invalid.
+i.e., when any Candidate Path has Drop-upon-invalid enabled, it means that the whole SR Policy has the feature enabled.
+As stated in <xref target="RFC9256"/> Section 8.1, the SR Policy is invalid when all its Candidate Paths are invalid.
 </t>
 
 <t>
@@ -795,7 +812,7 @@ Furthermore, a PCEP speaker is not required to support PCReq/PCRep at all for SR
 The PCEP speaker can indicate support for PCReq/PCRep via the "L-Flag" in
 the SRPOLICY-CAPABILITY TLV (See <xref target="Capability-tlv"/>).
 When this flag is cleared, or when the SRPOLICY-CAPABILITY TLV is absent,
-the given peer SHOULD NOT be sent PCReq/PCRep messages for SR Policy LSPs.
+the given peer MUST NOT be sent PCReq/PCRep messages for SR Policy LSPs.
 Conversely, when this flag is set, the peer can receive and process
 PCReq/PCRep messages for SR Policy LSPs.
 </t>
@@ -814,7 +831,7 @@ continues to apply.
 
 <section title="Association Type">
 <t>This document defines a new association type: SR Policy Association.
-IANA is requested to confirm the following early allocated codepoint assignment in the
+IANA is requested to confirm the following allocation in the
 "ASSOCIATION Type Field" registry <xref target="RFC8697"/> within
 the "Path Computation Element Protocol (PCEP) Numbers" registry group:</t>
 <t>
@@ -831,7 +848,7 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry group:</t>
 </section>
 
 <section title="PCEP TLV Type Indicators">
-<t>This document defines eight new TLVs for carrying additional information about SR Policy and SR Candidate Paths. IANA is requested to confirm the early allocated assignment of a new value for the existing "PCEP TLV Type Indicators" registry as follows:</t>
+<t>This document defines eight new TLVs for carrying additional information about SR Policy and SR Candidate Paths. IANA is requested to confirm the following allocations in the existing "PCEP TLV Type Indicators" registry as follows:</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
@@ -860,8 +877,8 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry group:</t>
 </section>
 
 <section title="PCEP Errors">
-<t>This document defines one new Error-Value within the "Mandatory Object Missing" Error-Type and two new Error-Values within the "Association Error" Error-Type.
-IANA is requested to confirm the early allocated new error values within the "PCEP-ERROR Object Error Types and Values" registry of the "Path Computation Element Protocol (PCEP) Numbers" registry group, as follows:</t>
+<t>This document defines one new Error-Value within the "Mandatory Object Missing" Error-Type, two new Error-Values within the "Association Error" Error-Type and one new Error-Value within the "Reception of an invalid object".
+IANA is requested to confirm and allocate the following allocations within the "PCEP-ERROR Object Error Types and Values" registry of the "Path Computation Element Protocol (PCEP) Numbers" registry group, as follows:</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
@@ -965,11 +982,9 @@ Note to IANA (RFC editor to remove this before publication): The new registry cr
 IANA is requested to process the registry creation via the first of these two documents to reach the publication stage and the authors of the other document would update the IANA considerations suitably.
 </t>
 <t>
-This document requests IANA to maintain a new registry under "Segment Routing" registry group.
-The new registry is called "SR Policy ENLP Values".
-New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
-The registry contains the following codepoints:
-</t>
+This document requests IANA to maintain a new registry under "Segment Routing" registry group with the allocation policy of "Standards Action" <xref target="RFC8126"/>.
+The new registry is called "SR Policy ENLP Values" and contains the codepoints allocated to the "ENLP" field defined in Section 5.3.
+The registry contains the following codepoints, with initial values, to be assigned by IANA with the reference set to this document:</t>
 <figure>
         <artwork align="left"><![CDATA[
 +----------+--------------------------------------------+-----------+
