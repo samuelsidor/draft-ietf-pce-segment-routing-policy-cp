@@ -1,10 +1,1 @@
-1) GENART review - https://mailarchive.ietf.org/arch/msg/last-call/VwVwGch5xwV4V8j7fShNuASs7Vk/
-
-1.	How text in IANA related section 6.3 should be updated since we added new PCErr value after some codepoints were already allocated, so we need to confirm allocation, but also allocate new codepoint for new error value. Is there any standard text for that? (I proposed text in other mail thread)
-2.	As part of GENART review, there was a comment that the draft should have top level section "Updates to RFC 8231", but I don’t see anything like that done in other PCEP RFCs, which are updating other RFCs. I found only:
-https://datatracker.ietf.org/doc/html/draft-koldychev-pce-operational-07#section-3.3.1
-But even in such case, it is not top-level section. Is that really valid requirement? I can still move complete content of Section 5.6 to that new section if you think that it is valid ask.
-3.	This comment is not clear to me – I can see other PCEP RFCs having almost (or exactly) same statement before publication:
-
-The notes to the RFC editor to remove sections from the IANA considerations are unclear in their
-scope. Please identify exactly what to remove more clearly.
+Nothing pending.

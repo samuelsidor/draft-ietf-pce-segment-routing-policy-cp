@@ -177,6 +177,9 @@ an SR Policy by means of the Association mechanism.
 The PCEP Association corresponds to the SR Policy and the PCEP LSP corresponds to the Candidate Path.
 The unit of signaling in PCEP is the LSP, thus all the information is carried at the Candidate Path level.
 </t>
+
+<t>This document updates <xref target="RFC8231"/> by modifying Section 5.8.2 to make it optional for SR Policy LSPs, allowing a PCC to delegate an SR Policy LSP by sending a PCRpt without the preliminary PCReq and PCRep messages, with aim of reducing PCEP message exchanges and simplifying implementation.</t>
+
 <section anchor="Language" title="Requirements Language">
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
       NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
@@ -795,7 +798,7 @@ Note that only one Candidate Path needs to be reported to the PCE with the D (dr
 
 </section> <!-- Invalidation-tlv -->
 
-<section anchor="Stateless-oper" title="Stateless Operation">
+<section anchor="Stateless-oper" title="Update to RFC 8231">
 
 <t>
 <xref target="RFC8231"/> Section 5.8.2, allows delegation of an LSP in operationally down state,
@@ -877,8 +880,8 @@ the "Path Computation Element Protocol (PCEP) Numbers" registry group:</t>
 </section>
 
 <section title="PCEP Errors">
-<t>This document defines one new Error-Value within the "Mandatory Object Missing" Error-Type, two new Error-Values within the "Association Error" Error-Type and one new Error-Value within the "Reception of an invalid object".
-IANA is requested to confirm and allocate the following allocations within the "PCEP-ERROR Object Error Types and Values" registry of the "Path Computation Element Protocol (PCEP) Numbers" registry group, as follows:</t>
+<t>This document defines one new Error-Value within the "Mandatory Object Missing" Error-Type, two new Error-Values within the "Association Error" Error-Type and one new Error-Value within the "Reception of an invalid object". </t>
+<t>IANA is requested to confirm the following allocations within the "PCEP-ERROR Object Error Types and Values" registry of the "Path Computation Element Protocol (PCEP) Numbers" registry group.</t>
 <t>
 <figure>
         <artwork align="left"><![CDATA[
@@ -891,13 +894,6 @@ IANA is requested to confirm and allocate the following allocations within the "
 |            |                  | 21: Missing SR        | This.I-D  |
 |            |                  | Policy Mandatory TLV  |           |
 +------------+------------------+-----------------------+-----------+
-| 10         | Reception of an  |                       | [RFC5440] |
-|            | invalid object   |                       |           |
-+------------+------------------+-----------------------+-----------+
-|            |                  | TBA: Missing          | This.I-D  |
-|            |                  | SRPOLICY-CAPABILITY   |           |
-|            |                  | TLV                   |           |
-+------------+------------------+-----------------------+-----------+
 | 26         | Association      |                       | [RFC8697] |
 |            | Error            |                       |           |
 +------------+------------------+-----------------------+-----------+
@@ -907,6 +903,24 @@ IANA is requested to confirm and allocate the following allocations within the "
 |            |                  | 21: SR Policy         | This.I-D  |
 |            |                  | Candidate Path        |           |
 |            |                  | Identifier Mismatch   |           |
++------------+------------------+-----------------------+-----------+
+
+]]></artwork>
+      </figure></t>
+
+<t>IANA is requested to make new allocations within the "PCEP-ERROR Object Error Types and Values" registry of the "Path Computation Element Protocol (PCEP) Numbers" registry group.</t>
+
+<t><figure>
+        <artwork align="left"><![CDATA[
++------------+------------------+-----------------------+-----------+
+| Error-Type | Meaning          | Error-value           | Reference |
++------------+------------------+-----------------------+-----------+
+| 10         | Reception of an  |                       | [RFC5440] |
+|            | invalid object   |                       |           |
++------------+------------------+-----------------------+-----------+
+|            |                  | TBA: Missing          | This.I-D  |
+|            |                  | SRPOLICY-CAPABILITY   |           |
+|            |                  | TLV                   |           |
 +------------+------------------+-----------------------+-----------+
 
 ]]></artwork>
@@ -935,10 +949,8 @@ IANA is requested to cancel the early allocation made which is not needed anymor
 
 <section anchor="protocol_origin" title="SR Policy Candidate Path Protocol Origin field">
 <t>
-Note to IANA (RFC editor to remove this before publication): The new registry creation request below is also present in the draft-ietf-idr-bgp-ls-sr-policy.
-IANA is requested to process the registry creation via the first of these two documents to reach the publication stage and the authors of the other document would
-update the IANA considerations suitably. Note that draft-ietf-idr-bgp-ls-sr-policy
-allocates different values in BGP.
+[Note to IANA: The new registry creation request below is also present in the draft-ietf-idr-bgp-ls-sr-policy. IANA is requested to process the registry creation via the first of these two documents to reach the publication stage and the authors of the other document would update the IANA considerations suitably. Note that draft-ietf-idr-bgp-ls-sr-policy allocates different values in BGP.]
+[Note to RFC-Editor: Please remove the above and this note before publication.]
 </t>
 <t>
 This document requests IANA to maintain a new registry under "Segment Routing" registry group.
@@ -978,8 +990,8 @@ The registry contains the following codepoints:
 
 <section anchor="enlp_value" title="SR Policy Explicit Null Label Policy field">
 <t>
-Note to IANA (RFC editor to remove this before publication): The new registry creation request below is also present in the draft-ietf-idr-sr-policy-safi.
-IANA is requested to process the registry creation via the first of these two documents to reach the publication stage and the authors of the other document would update the IANA considerations suitably.
+[Note to IANA: The new registry creation request below is also present in the draft-ietf-idr-sr-policy-safi. IANA is requested to process the registry creation via the first of these two documents to reach the publication stage and the authors of the other document would update the IANA considerations suitably.]
+[Note to RFC-Editor: Please remove the above and this note before publication.]
 </t>
 <t>
 This document requests IANA to maintain a new registry under "Segment Routing" registry group with the allocation policy of "Standards Action" <xref target="RFC8126"/>.

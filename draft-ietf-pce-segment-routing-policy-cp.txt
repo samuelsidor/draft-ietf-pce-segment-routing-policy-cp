@@ -6,14 +6,14 @@ PCE Working Group                                           M. Koldychev
 Internet-Draft                                              S. Sivabalan
 Updates: 8231 (if approved)                            Ciena Corporation
 Intended status: Standards Track                                S. Sidor
-Expires: 17 July 2025                                Cisco Systems, Inc.
+Expires: 18 July 2025                                Cisco Systems, Inc.
                                                                 C. Barth
                                                   Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                         13 January 2025
+                                                         14 January 2025
 
 
  Path Computation Element Communication Protocol (PCEP) Extensions for
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Koldychev, et al.         Expires 17 July 2025                  [Page 1]
+Koldychev, et al.         Expires 18 July 2025                  [Page 1]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
 
-   This Internet-Draft will expire on 17 July 2025.
+   This Internet-Draft will expire on 18 July 2025.
 
 Copyright Notice
 
@@ -77,53 +77,53 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
-     1.1.  Requirements Language . . . . . . . . . . . . . . . . . .   3
-   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.1.  Requirements Language . . . . . . . . . . . . . . . . . .   4
+   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
    3.  Overview  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
      3.1.  SR Policy Identifier  . . . . . . . . . . . . . . . . . .   5
      3.2.  SR Policy Candidate Path Identifier . . . . . . . . . . .   6
      3.3.  SR Policy Candidate Path Attributes . . . . . . . . . . .   6
-   4.  SR Policy Association . . . . . . . . . . . . . . . . . . . .   6
+   4.  SR Policy Association . . . . . . . . . . . . . . . . . . . .   7
      4.1.  Association Parameters  . . . . . . . . . . . . . . . . .   7
      4.2.  Association Information . . . . . . . . . . . . . . . . .   9
        4.2.1.  SR Policy Name TLV  . . . . . . . . . . . . . . . . .   9
        4.2.2.  SR Policy Candidate Path Identifier TLV . . . . . . .  10
        4.2.3.  SR Policy Candidate Path Name TLV . . . . . . . . . .  11
-       4.2.4.  SR Policy Candidate Path Preference TLV . . . . . . .  11
+       4.2.4.  SR Policy Candidate Path Preference TLV . . . . . . .  12
    5.  Other Mechanisms  . . . . . . . . . . . . . . . . . . . . . .  12
      5.1.  SR Policy Capability TLV  . . . . . . . . . . . . . . . .  12
-     5.2.  Computation Priority TLV  . . . . . . . . . . . . . . . .  13
+     5.2.  Computation Priority TLV  . . . . . . . . . . . . . . . .  14
      5.3.  Explicit Null Label Policy (ENLP) TLV . . . . . . . . . .  14
      5.4.  Invalidation TLV  . . . . . . . . . . . . . . . . . . . .  15
-       5.4.1.  Drop-upon-invalid applies to SR Policy  . . . . . . .  16
-     5.5.  Stateless Operation . . . . . . . . . . . . . . . . . . .  17
+       5.4.1.  Drop-upon-invalid applies to SR Policy  . . . . . . .  17
+     5.5.  Update to RFC 8231  . . . . . . . . . . . . . . . . . . .  17
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
-     6.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  17
+     6.1.  Association Type  . . . . . . . . . . . . . . . . . . . .  18
      6.2.  PCEP TLV Type Indicators  . . . . . . . . . . . . . . . .  18
      6.3.  PCEP Errors . . . . . . . . . . . . . . . . . . . . . . .  18
      6.4.  TE-PATH-BINDING TLV Flag field  . . . . . . . . . . . . .  19
      6.5.  SR Policy Candidate Path Protocol Origin field  . . . . .  20
-     6.6.  SR Policy Explicit Null Label Policy field  . . . . . . .  20
-     6.7.  SR Policy Invalidation Drop Operational State . . . . . .  21
-     6.8.  SR Policy Invalidation Drop Configuration State . . . . .  22
+     6.6.  SR Policy Explicit Null Label Policy field  . . . . . . .  21
+     6.7.  SR Policy Invalidation Drop Operational State . . . . . .  22
+     6.8.  SR Policy Invalidation Drop Configuration State . . . . .  23
 
 
 
-Koldychev, et al.         Expires 17 July 2025                  [Page 2]
+Koldychev, et al.         Expires 18 July 2025                  [Page 2]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
 
-   7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  22
-     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  23
-     7.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  23
+   7.  Implementation Status . . . . . . . . . . . . . . . . . . . .  23
+     7.1.  Cisco . . . . . . . . . . . . . . . . . . . . . . . . . .  24
+     7.2.  Juniper . . . . . . . . . . . . . . . . . . . . . . . . .  24
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  24
    9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  24
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  24
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  24
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  25
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  25
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  26
    Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  26
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  26
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  27
 
 1.  Introduction
 
@@ -150,6 +150,26 @@ Internet-Draft               PCEP SR Policy                 January 2025
    to the Candidate Path.  The unit of signaling in PCEP is the LSP,
    thus all the information is carried at the Candidate Path level.
 
+   This document updates [RFC8231] by modifying Section 5.8.2 to make it
+   optional for SR Policy LSPs, allowing a PCC to delegate an SR Policy
+   LSP by sending a PCRpt without the preliminary PCReq and PCRep
+   messages, with aim of reducing PCEP message exchanges and simplifying
+   implementation.
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                  [Page 3]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
 1.1.  Requirements Language
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -161,14 +181,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
 2.  Terminology
 
    The following terminologies are used in this document:
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                  [Page 3]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    Endpoint:  The IPv4 or IPv6 endpoint address of an SR Policy, as
       described in [RFC9256] Section 2.1.
@@ -207,6 +219,13 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
    PCE:  Path Computation Element.
 
+
+
+Koldychev, et al.         Expires 18 July 2025                  [Page 4]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    PCEP:  Path Computation Element Protocol.
 
    SID:  Segment Identifier.
@@ -218,13 +237,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
       Policy.  Depending on the discussion context, it can refer to the
       PCEP ASSOCIATION object of SR Policy type or to a group of LSPs
       that belong to the association.
-
-
-
-Koldychev, et al.         Expires 17 July 2025                  [Page 4]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    SRPM:  SR Policy Manager.
 
@@ -262,6 +274,14 @@ Internet-Draft               PCEP SR Policy                 January 2025
    the PCEP session.  SR Policy Identifier MUST be different for
    different SRPAs.  If the identifier is inconsistent among Candidate
    Paths, changes during the lifetime of the PCEP session, or is not
+
+
+
+Koldychev, et al.         Expires 18 July 2025                  [Page 5]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    unique across different SRPAs, the PCEP speaker MUST send a PCErr
    message with Error-Type = 26 "Association Error" and Error Value = 20
    "SR Policy Identifier Mismatch".  SR Policy Identifier consist of:
@@ -271,16 +291,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    *  Color of SR Policy ([RFC9256] Section 2.1).
 
    *  Endpoint of SR Policy ([RFC9256] Section 2.1).
-
-
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                  [Page 5]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
 3.2.  SR Policy Candidate Path Identifier
 
@@ -313,6 +323,21 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
    *  SR Policy name.
 
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                  [Page 6]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
 4.  SR Policy Association
 
    As per [RFC8697], LSPs are associated with other LSPs with which they
@@ -327,16 +352,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    IPv4 and IPv6 which includes the field "Association Type".  This
    document defines a new Association type (6) "SR Policy Association"
    for SRPA.
-
-
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                  [Page 6]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    [RFC8697] specifies the mechanism for the capability advertisement of
    the Association Types supported by a PCEP speaker by defining an
@@ -369,6 +384,16 @@ Internet-Draft               PCEP SR Policy                 January 2025
       object.  Set to the headend value of the SR Policy, as defined in
       [RFC9256] Section 2.1.
 
+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                  [Page 7]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    *  Association ID (16-bit): Part of the base ASSOCIATION object.
       Always set to the numeric value "1".  This 16-bit field does not
       store meaningful data, because neither the Color nor the Endpoint
@@ -386,13 +411,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       ~                           Endpoint                            ~
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-
-
-Koldychev, et al.         Expires 17 July 2025                  [Page 7]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
                 Figure 1: Extended Association ID TLV format
 
@@ -422,6 +440,16 @@ Internet-Draft               PCEP SR Policy                 January 2025
    chance that different PCEP speakers will come up with different
    Association Parameters for the same SR Policy.
 
+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                  [Page 8]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    The last hop of the computed SR Policy Candidate Path MAY differ from
    the Endpoint contained in the <headend, color, endpoint> tuple.  An
    example use case is to terminate the SR Policy before reaching the
@@ -439,16 +467,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    SR Policy with Color-Only steering is signaled with the End-Point
    value set to null, i.e., 0.0.0.0 for IPv4 or :: for IPv6, see
    [RFC9256] Section 8.8.1.
-
-
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                  [Page 8]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
 4.2.  Association Information
 
@@ -479,6 +497,15 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
    The SRPOLICY-POL-NAME TLV is an optional TLV for the SRPA object.
 
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                  [Page 9]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -496,15 +523,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    Length: indicates the length of the value portion of the TLV in
    octets and MUST be greater than 0.  The TLV MUST be zero-padded so
    that the TLV is 4-octet aligned.
-
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                  [Page 9]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    SR Policy Name: SR Policy name, as defined in [RFC9256].  It MUST be
    a string of printable ASCII characters, without a NULL terminator.
@@ -536,6 +554,14 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
    Length: 28.
 
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 10]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    Protocol Origin: 8-bit value that encodes the protocol origin, as
    specified in Section 6.5.  Note that in the PCInitiate message
    [RFC8281], the Protocol Origin is always set to 10 (PCEP).
@@ -554,13 +580,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    Section 2.4 of [RFC9256].  When sending a PCInitiate message, the PCE
    is acting as the originator and therefore MUST set this to an address
    that it owns.
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 10]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    Discriminator: 32-bit value that encodes the Discriminator of the
    Candidate Path, as specified in [RFC9256] Section 2.5.  This is the
@@ -590,6 +609,15 @@ Internet-Draft               PCEP SR Policy                 January 2025
    octets and MUST be greater than 0.  The TLV MUST be zero-padded so
    that the TLV is 4-octet aligned.
 
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 11]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    SR Policy Candidate Path Name: SR Policy Candidate Path Name, as
    defined in [RFC9256].  It MUST be a string of printable ASCII
    characters, without a NULL terminator.
@@ -609,14 +637,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
              Figure 5: The SRPOLICY-CPATH-PREFERENCE TLV format
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 11]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    Type: 59 for "SRPOLICY-CPATH-PREFERENCE" TLV.
 
@@ -645,6 +665,15 @@ Internet-Draft               PCEP SR Policy                 January 2025
    ASSOC-Type-List TLV containing SRPA Type (6) MUST be present in the
    OPEN object, as specified in Section 4.
 
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 12]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    If a PCEP speaker receives SRPA but the SRPOLICY-CAPABILITY TLV is
    not exchanged, then the PCEP speaker MUST send a PCErr message with
    Error- Type = 10 ("Reception of an invalid object") and Error-Value =
@@ -664,15 +693,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    Type: 71 for "SRPOLICY-CAPABILITY TLV.
 
    Length: 4.
-
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 12]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    P-flag: If set to '1' by a PCEP speaker, the P flag indicates that
    the PCEP speaker supports the handling of COMPUTATION-PRIORITY TLV
@@ -700,6 +720,16 @@ Internet-Draft               PCEP SR Policy                 January 2025
    Unassigned bits MUST be set to '0' on transmission and MUST be
    ignored on receipt.
 
+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 13]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
 5.2.  Computation Priority TLV
 
    The COMPUTATION-PRIORITY TLV is an optional TLV for the LSP object.
@@ -721,14 +751,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    Type: 68 for "COMPUTATION-PRIORITY" TLV.
 
    Length: 4.
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 13]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    Priority: Numerical priority with which this LSP is to be recomputed
    by the PCE upon topology change.  Lowest value is the highest
@@ -752,6 +774,18 @@ Internet-Draft               PCEP SR Policy                 January 2025
    currently only defined for SR MPLS and not for SRv6.  Therefore the
    PCEP speaker MUST ignore the presence of this TLV for SRv6 Policies.
 
+
+
+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 14]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -773,18 +807,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
    Reserved: This field MUST be set to zero on transmission and MUST be
    ignored on receipt.
-
-
-
-
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 14]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    The ENLP reserved values may be used for future extensions and
    implementations MUST ignore the ENLP TLV with these values.  The
@@ -813,6 +835,13 @@ Internet-Draft               PCEP SR Policy                 January 2025
    *  PCE -> PCC: PCE specifies to the PCC whether to enable or disable
       Drop-upon-invalid (Config).
 
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 15]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    *  PCC -> PCE: PCC reports the current setting of the Drop-upon-
       invalid (Config) and also whether the LSP is currently in the drop
       state (Oper).
@@ -830,17 +859,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    Type: 70 for "INVALIDATION" TLV.
 
    Length: 4.
-
-
-
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 15]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    Oper: encodes the current state of the LSP, i.e., whether it is
    actively dropping traffic right now.  This field can be set to non-
@@ -873,6 +891,13 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
             Figure 11: Config state of Drop-upon-invalid feature
 
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 16]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    *  D: drop enabled - the Candidate Path has Drop-upon-invalid feature
       enabled.
 
@@ -889,15 +914,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    enabled.  As stated in [RFC9256] Section 8.1, the SR Policy is
    invalid when all its Candidate Paths are invalid.
 
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 16]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
-
    Once all the Candidate Paths of the SR Policy have become invalid,
    then the SR Policy checks whether any of the Candidate Paths have
    Drop-upon-invalid enabled.  If so, SR Policy enters the drop state
@@ -905,7 +921,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
    Drop-upon-invalid enabled.  Note that only one Candidate Path needs
    to be reported to the PCE with the D (dropping) flag set.
 
-5.5.  Stateless Operation
+5.5.  Update to RFC 8231
 
    [RFC8231] Section 5.8.2, allows delegation of an LSP in operationally
    down state, but at the same time mandates the use of PCReq before
@@ -930,6 +946,14 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 6.  IANA Considerations
 
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 17]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
 6.1.  Association Type
 
    This document defines a new association type: SR Policy Association.
@@ -942,17 +966,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    +-----------+-------------------------------------------+-----------+
    | 6         | SR Policy Association                     | This.I-D  |
    +-----------+-------------------------------------------+-----------+
-
-
-
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 17]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
 6.2.  PCEP TLV Type Indicators
 
@@ -986,29 +999,20 @@ Internet-Draft               PCEP SR Policy                 January 2025
    This document defines one new Error-Value within the "Mandatory
    Object Missing" Error-Type, two new Error-Values within the
    "Association Error" Error-Type and one new Error-Value within the
-   "Reception of an invalid object".  IANA is requested to confirm and
-   allocate the following allocations within the "PCEP-ERROR Object
-   Error Types and Values" registry of the "Path Computation Element
-   Protocol (PCEP) Numbers" registry group, as follows:
+   "Reception of an invalid object".
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 18]
+Koldychev, et al.         Expires 18 July 2025                 [Page 18]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
+
+   IANA is requested to confirm the following allocations within the
+   "PCEP-ERROR Object Error Types and Values" registry of the "Path
+   Computation Element Protocol (PCEP) Numbers" registry group.
 
    +------------+------------------+-----------------------+-----------+
    | Error-Type | Meaning          | Error-value           | Reference |
@@ -1018,13 +1022,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    +------------+------------------+-----------------------+-----------+
    |            |                  | 21: Missing SR        | This.I-D  |
    |            |                  | Policy Mandatory TLV  |           |
-   +------------+------------------+-----------------------+-----------+
-   | 10         | Reception of an  |                       | [RFC5440] |
-   |            | invalid object   |                       |           |
-   +------------+------------------+-----------------------+-----------+
-   |            |                  | TBA: Missing          | This.I-D  |
-   |            |                  | SRPOLICY-CAPABILITY   |           |
-   |            |                  | TLV                   |           |
    +------------+------------------+-----------------------+-----------+
    | 26         | Association      |                       | [RFC8697] |
    |            | Error            |                       |           |
@@ -1037,12 +1034,37 @@ Internet-Draft               PCEP SR Policy                 January 2025
    |            |                  | Identifier Mismatch   |           |
    +------------+------------------+-----------------------+-----------+
 
+   IANA is requested to make new allocations within the "PCEP-ERROR
+   Object Error Types and Values" registry of the "Path Computation
+   Element Protocol (PCEP) Numbers" registry group.
+
+   +------------+------------------+-----------------------+-----------+
+   | Error-Type | Meaning          | Error-value           | Reference |
+   +------------+------------------+-----------------------+-----------+
+   | 10         | Reception of an  |                       | [RFC5440] |
+   |            | invalid object   |                       |           |
+   +------------+------------------+-----------------------+-----------+
+   |            |                  | TBA: Missing          | This.I-D  |
+   |            |                  | SRPOLICY-CAPABILITY   |           |
+   |            |                  | TLV                   |           |
+   +------------+------------------+-----------------------+-----------+
+
 6.4.  TE-PATH-BINDING TLV Flag field
 
    An earlier version of this document added new bit within the "TE-
    PATH-BINDING TLV Flag field" registry of the "Path Computation
    Element Protocol (PCEP) Numbers" registry group, which was also early
    allocated by the IANA.
+
+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 19]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
 
    IANA is requested to cancel the early allocation made which is not
    needed anymore.  As per the instructions from the chairs, please mark
@@ -1054,33 +1076,51 @@ Internet-Draft               PCEP SR Policy                 January 2025
    | 1            | Deprecated (Specified-BSID-only)       | This.I-D  |
    +--------------+----------------------------------------+-----------+
 
-
-
-
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 19]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
-
 6.5.  SR Policy Candidate Path Protocol Origin field
 
-   Note to IANA (RFC editor to remove this before publication): The new
-   registry creation request below is also present in the draft-ietf-
-   idr-bgp-ls-sr-policy.  IANA is requested to process the registry
-   creation via the first of these two documents to reach the
-   publication stage and the authors of the other document would update
-   the IANA considerations suitably.  Note that draft-ietf-idr-bgp-ls-
-   sr-policy allocates different values in BGP.
+   [Note to IANA: The new registry creation request below is also
+   present in the draft-ietf-idr-bgp-ls-sr-policy.  IANA is requested to
+   process the registry creation via the first of these two documents to
+   reach the publication stage and the authors of the other document
+   would update the IANA considerations suitably.  Note that draft-ietf-
+   idr-bgp-ls-sr-policy allocates different values in BGP.]  [Note to
+   RFC-Editor: Please remove the above and this note before
+   publication.]
 
    This document requests IANA to maintain a new registry under "Segment
    Routing" registry group.  The new registry is called "SR Policy
    Protocol Origin".  New values are to be assigned by "Expert Review"
    [RFC8126] using the guidelines for Designated Experts as specified in
    [RFC9256].  The registry contains the following codepoints:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 20]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
 
    +--------------+----------------------------------------+-----------+
    | Value        | Description                            | Reference |
@@ -1108,19 +1148,12 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 6.6.  SR Policy Explicit Null Label Policy field
 
-   Note to IANA (RFC editor to remove this before publication): The new
-   registry creation request below is also present in the draft-ietf-
-   idr-sr-policy-safi.  IANA is requested to process the registry
-   creation via the first of these two documents to reach the
-   publication stage and the authors of the other document would update
-   the IANA considerations suitably.
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 20]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
+   [Note to IANA: The new registry creation request below is also
+   present in the draft-ietf-idr-sr-policy-safi.  IANA is requested to
+   process the registry creation via the first of these two documents to
+   reach the publication stage and the authors of the other document
+   would update the IANA considerations suitably.]  [Note to RFC-Editor:
+   Please remove the above and this note before publication.]
 
    This document requests IANA to maintain a new registry under "Segment
    Routing" registry group with the allocation policy of "Standards
@@ -1129,6 +1162,21 @@ Internet-Draft               PCEP SR Policy                 January 2025
    defined in Section 5.3.  The registry contains the following
    codepoints, with initial values, to be assigned by IANA with the
    reference set to this document:
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 21]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
 
    +----------+--------------------------------------------+-----------+
    | Value    | Description                                | Reference |
@@ -1169,15 +1217,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
    *  Reference.
 
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 21]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
-
    +-------+-----------------------------------------------+-----------+
    | Bit   | Description                                   | Reference |
    +-------+-----------------------------------------------+-----------+
@@ -1186,6 +1225,14 @@ Internet-Draft               PCEP SR Policy                 January 2025
    | 7     | D: dropping - the LSP is currently attracting | This.I-D  |
    |       | traffic and actively dropping it.             |           |
    +-------+-----------------------------------------------+-----------+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 22]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
 
 6.8.  SR Policy Invalidation Drop Configuration State
 
@@ -1215,25 +1262,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    [Note to the RFC Editor - remove this section before publication, as
    well as remove the reference to RFC 7942.]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 22]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
-
    This section records the status of known implementations of the
    protocol defined by this specification at the time of posting of this
    Internet-Draft, and is based on a proposal described in [RFC7942].
@@ -1253,6 +1281,14 @@ Internet-Draft               PCEP SR Policy                 January 2025
    and feedback that have made the implemented protocols more mature.
    It is up to the individual working groups to use this information as
    they see fit".
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 23]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
 
 7.1.  Cisco
 
@@ -1282,14 +1318,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
    *  Coverage: Partial.
 
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 23]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
-
    *  Contact: cbarth@juniper.net
 
 8.  Security Considerations
@@ -1309,6 +1337,14 @@ Internet-Draft               PCEP SR Policy                 January 2025
    Tom Petch for review and suggestions.
 
 10.  References
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 24]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
 
 10.1.  Normative References
 
@@ -1338,14 +1374,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
               Model", RFC 8281, DOI 10.17487/RFC8281, December 2017,
               <https://www.rfc-editor.org/info/rfc8281>.
 
-
-
-
-Koldychev, et al.         Expires 17 July 2025                 [Page 24]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
-
    [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
               Code: The Implementation Status Section", BCP 205,
               RFC 7942, DOI 10.17487/RFC7942, July 2016,
@@ -1362,6 +1390,17 @@ Internet-Draft               PCEP SR Policy                 January 2025
               Relationships between Sets of Label Switched Paths
               (LSPs)", RFC 8697, DOI 10.17487/RFC8697, January 2020,
               <https://www.rfc-editor.org/info/rfc8697>.
+
+
+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 25]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
 
    [RFC8664]  Sivabalan, S., Filsfils, C., Tantsura, J., Henderickx, W.,
               and J. Hardwick, "Path Computation Element Communication
@@ -1394,15 +1433,30 @@ Internet-Draft               PCEP SR Policy                 January 2025
               Networks", RFC 9604, DOI 10.17487/RFC9604, August 2024,
               <https://www.rfc-editor.org/info/rfc9604>.
 
+Appendix A.  Contributors
 
 
 
-Koldychev, et al.         Expires 17 July 2025                 [Page 25]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 26]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
-
-Appendix A.  Contributors
 
    Dhruv Dhody
    Huawei
@@ -1453,7 +1507,9 @@ Authors' Addresses
 
 
 
-Koldychev, et al.         Expires 17 July 2025                 [Page 26]
+
+
+Koldychev, et al.         Expires 18 July 2025                 [Page 27]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1509,4 +1565,4 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 17 July 2025                 [Page 27]
+Koldychev, et al.         Expires 18 July 2025                 [Page 28]
