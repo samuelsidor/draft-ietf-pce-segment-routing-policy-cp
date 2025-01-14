@@ -982,7 +982,7 @@ The registry contains the following codepoints:
 | 31-250       | Unassigned                             | This.I-D  |
 +--------------+----------------------------------------+-----------+
 | 251 - 255    | Private Use (not to be assigned by     | This.I-D  |
-|              | |ANA)                                  |           |
+|              | IANA)                                  |           |
 +--------------+----------------------------------------+-----------+
 ]]></artwork>
       </figure>
