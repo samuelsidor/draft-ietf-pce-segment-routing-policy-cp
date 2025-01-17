@@ -178,7 +178,7 @@ The PCEP Association corresponds to the SR Policy and the PCEP LSP corresponds t
 The unit of signaling in PCEP is the LSP, thus all the information is carried at the Candidate Path level.
 </t>
 
-<t>This document updates <xref target="RFC8231"/> by modifying Section 5.8.2 to make it optional for SR Policy LSPs, allowing a PCC to delegate an SR Policy LSP by sending a PCRpt without the preliminary PCReq and PCRep messages, with aim of reducing PCEP message exchanges and simplifying implementation.</t>
+<t>This document updates Section 5.8.2 of <xref target="RFC8231"/>, making the PCReq message optional for LSPs set up using Path Setup Type 1 (Segment Routing) described in <xref target="RFC8664"/> and 3 (SRv6) described in <xref target="RFC9603"/>, allowing a PCC to delegate such LSP by sending a PCRpt without the preliminary PCReq and PCRep messages, with the aim of reducing the PCEP message exchanges and simplifying implementation.</t>
 
 <section anchor="Language" title="Requirements Language">
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
@@ -208,6 +208,8 @@ The unit of signaling in PCEP is the LSP, thus all the information is carried at
      <t hangText="Association Parameters:"> As described in <xref target="RFC8697"/>, refers to the key data, that uniquely identifies the Association.</t>
 
      <t hangText="Association Information:"> As described in <xref target="RFC8697"/>, refers to the non-key information about the Association.</t>
+	 
+	 <t hangText="SR Policy LSP:"> An LSP set up using Path Setup Type 1 (Segment Routing) and 3 (SRv6).</t>
 	 
           <t hangText="ASN:"> Autonomous System Number.</t>
           <t hangText="BSID:"> Binding Segment Identifier.</t>
@@ -473,7 +475,7 @@ The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
 <t>Length: 28.</t>
 
 <t>Protocol Origin: 8-bit value that encodes the protocol origin, as specified in <xref target="protocol_origin"/>.
-Note that in the PCInitiate message <xref target="RFC8281"/>, the Protocol Origin is always set to 10 (PCEP). </t>
+Note that in the PCInitiate message <xref target="RFC8281"/>, the Protocol Origin is always set to 10 (PCEP reported via PCE/PCEP). The "SR Policy Protocol Origin" IANA registry includes a combination of values intended for use in PCEP and BGP-LS. When the registry contains two variants of values associated with the mechanism or protocol used for provisioning of the Candidate Path, for example 1 (PCEP) and 10 (PCEP reported via PCE/PCEP), the "reported via PCE" variants MUST be used in PCEP.</t>
 
 <t>Reserved: This field MUST be set to zero on transmission and MUST be ignored on receipt.</t>
 
@@ -596,22 +598,22 @@ session.</t>
 
 <t>Length: 4.</t>
 
-<t>P-flag: If set to '1' by a PCEP speaker, the P flag indicates that the PCEP speaker supports the handling of COMPUTATION-PRIORITY TLV for the SR Policy,
+<t>P-flag (Computation Priority): If set to '1' by a PCEP speaker, the P flag indicates that the PCEP speaker supports the handling of COMPUTATION-PRIORITY TLV for the SR Policy,
 see <xref target="Computation-priority-tlv"/>.
 If this flag is not set, then the PCEP speaker MUST NOT send the COMPUTATION-PRIORITY TLV and MUST ignore it on receipt.
 </t>
 
-<t>E-Flag: If set to '1' by a PCEP speaker, the E flag indicates that the PCEP speaker supports the handling of ENLP TLV for the SR Policy,
+<t>E-Flag (Explicit NULL Label Policy): If set to '1' by a PCEP speaker, the E flag indicates that the PCEP speaker supports the handling of ENLP TLV for the SR Policy,
   see <xref target="enlp-tlv"/>.
 If this flag is not set, then the PCEP speaker MUST NOT send the ENLP TLV and MUST ignore it on receipt.
 </t>
 
-<t>I-Flag: If set to '1' by a PCEP speaker, the I flag indicates that the PCEP speaker supports the handling of INVALIDATION TLV for the SR Policy,
+<t>I-Flag (Invalidation): If set to '1' by a PCEP speaker, the I flag indicates that the PCEP speaker supports the handling of INVALIDATION TLV for the SR Policy,
   see <xref target="Invalidation-tlv"/>.
 If this flag is not set, then the PCEP speaker MUST NOT send the INVALIDATION TLV and MUST ignore it on receipt.
 </t>
 
-<t>L-Flag: If set to '1' by a PCEP speaker, the L flag indicates that the PCEP speaker supports the stateless (PCReq/PCRep) operations for the SR Policy,
+<t>L-Flag (Stateless Operation): If set to '1' by a PCEP speaker, the L flag indicates that the PCEP speaker supports the stateless (PCReq/PCRep) operations for the SR Policy,
   see <xref target="Stateless-oper"/>.
   If the PCE did not set this flag then the PCC MUST NOT send PCReq messages to this PCE for the SR Policy.
 </t>
@@ -652,7 +654,7 @@ If the TLV is absent from the LSP object and the P-flag in the SRPOLICY-CAPABILI
 
 <t>
     To steer an unlabeled IP packet into an SR policy, it is necessary to create a label stack for that packet, and push one or more labels onto that stack.
-    The Explicit NULL Label Policy (ENLP) TLV is an optional TLV used to indicate whether an Explicit NULL Label <xref target="RFC3032"/> must be pushed on an unlabeled IP packet before any other labels.
+    The Explicit NULL Label Policy (ENLP) TLV is an optional TLV for the LSP object used to indicate whether an Explicit NULL Label <xref target="RFC3032"/> must be pushed on an unlabeled IP packet before any other labels.
     The contents of this TLV are used by the SRPM as described in section 4.1 of <xref target="RFC9256"/>.
     If an ENLP TLV is not present, the decision of whether to push an Explicit NULL label on a given packet is a matter of local configuration.
 Note that Explicit Null is currently only defined for SR MPLS and not for SRv6. Therefore the PCEP speaker MUST ignore the presence of this TLV for SRv6 Policies.
@@ -736,10 +738,8 @@ The INVALIDATION TLV is used in both directions between PCEP peers:
 the LSP, i.e., whether it is actively dropping traffic right now.
 This field can be set to non-zero values only by the PCC,
 it MUST be set to 0 by the PCE and MUST be ignored by the PCC.
-See Section <xref target="inval_drop_oper_iana"/> for IANA information.
+See Section <xref target="inval_oper_iana"/> for IANA information.
 </t>
-
-<t>Reserved: This field MUST be set to zero on transmission and MUST be ignored on receipt.</t>
 
 <figure anchor="OPER_INVAL_FLAGS" title="Oper state of Drop-upon-invalid feature">
 <artwork align="center"><![CDATA[
@@ -758,7 +758,7 @@ See Section <xref target="inval_drop_oper_iana"/> for IANA information.
 </t>
 
 <t>Config: encodes the current setting of the Drop-upon-invalid feature.
-See Section <xref target="inval_drop_config_iana"/> for IANA information.
+See Section <xref target="inval_config_iana"/> for IANA information.
 </t>
 
 <figure anchor="CONFIG_INVAL_FLAGS" title="Config state of Drop-upon-invalid feature">
@@ -776,6 +776,8 @@ See Section <xref target="inval_drop_config_iana"/> for IANA information.
     <t>The unassigned bits in the Flag octet MUST be set to zero upon transmission and MUST be ignored upon receipt.</t>
   </list>
 </t>
+
+<t>Reserved: This field MUST be set to zero on transmission and MUST be ignored on receipt.</t>
 
 <section anchor="Invalidation-per-policy" title="Drop-upon-invalid applies to SR Policy">
 
@@ -960,30 +962,28 @@ using the guidelines for Designated Experts as specified in <xref target="RFC925
 The registry contains the following codepoints:
 </t>
 <figure>
-        <artwork align="left"><![CDATA[
-+--------------+----------------------------------------+-----------+
-| Value        | Description                            | Reference |
-+--------------+----------------------------------------+-----------+
-| 0            | Reserved (not to be used)              | This.I-D  |
-+--------------+----------------------------------------+-----------+
-| 1-9          | Unassigned                             | This.I-D  |
-+--------------+----------------------------------------+-----------+
-| 10           | PCEP (in PCEP)                         | This.I-D  |
-+--------------+----------------------------------------+-----------+
-| 11-19        | Unassigned                             | This.I-D  |
-+--------------+----------------------------------------+-----------+
-| 20           | BGP SR Policy (in PCEP)                | This.I-D  |
-+--------------+----------------------------------------+-----------+
-| 21-29        | Unassigned                             | This.I-D  |
-+--------------+----------------------------------------+-----------+
-| 30           | Configuration (CLI, YANG model via     | This.I-D  |
-|              | NETCONF, etc.) (in PCEP)               |           |
-+--------------+----------------------------------------+-----------+
-| 31-250       | Unassigned                             | This.I-D  |
-+--------------+----------------------------------------+-----------+
-| 251 - 255    | Private Use (not to be assigned by     | This.I-D  |
-|              | IANA)                                  |           |
-+--------------+----------------------------------------+-----------+
+        <artwork align="left">
+<![CDATA[
++---------+--------------------------------------+-----------+
+|  Code   |                                      |           |
+|  Point  |  Protocol Origin                     | Reference |
++---------+--------------------------------------+---------- +
+|   0     | Reserved (not to be used)            | This.I-D  |
+|   1     | PCEP                                 | This.I-D  |
+|   2     | BGP SR Policy                        | This.I-D  |
+|   3     | Configuration (CLI, YANG model via   | This.I-D  |
+|         | NETCONF, etc.)                       | This.I-D  |
+|   4-9   | Unassigned                           | This.I-D  |
+|   10    | PCEP reported via PCE/PCEP           | This.I-D  |
+|  11-19  | Unassigned                           | This.I-D  |
+|   20    | BGP SR Policy reported via PCE/PCEP  | This.I-D  |
+|  21-29  | Unassigned                           | This.I-D  |
+|   30    | Configuration (CLI, YANG model via   | This.I-D  |
+|         | NETCONF, etc.) reported via PCE/PCEP | This.I-D  |
+|  31-250 | Unassigned                           | This.I-D  |
+| 251-255 | Private Use (not to be assigned by   | This.I-D  |
+|         | IANA                                 | This.I-D  |
++---------+--------------------------------------+-----------+
 ]]></artwork>
       </figure>
 </section>
@@ -1027,12 +1027,12 @@ The registry contains the following codepoints, with initial values, to be assig
       </figure>
 </section>
 
-<section anchor="inval_drop_oper_iana" title="SR Policy Invalidation Drop Operational State">
+<section anchor="inval_oper_iana" title="SR Policy Invalidation Operational State">
 <t>
 This document requests IANA to maintain a new registry under "Path Computation Element Protocol (PCEP) Numbers" registry group.
 The new registry is called "SR Policy Invalidation Operational Flags".
-New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
-Each bit should be tracked with the following qualities.
+New values are to be assigned by "IETF review" <xref target="RFC8126"/>.
+Each bit should be tracked with the following qualities:
   <list style="symbols">
   <t>Bit (counting from bit 0 as the most significant bit).</t>
   <t>Description.</t>
@@ -1053,12 +1053,12 @@ Each bit should be tracked with the following qualities.
       </figure>
 </section>
 
-<section anchor="inval_drop_config_iana" title="SR Policy Invalidation Drop Configuration State">
+<section anchor="inval_config_iana" title="SR Policy Invalidation Configuration State">
 <t>
 This document requests IANA to maintain a new registry under "Path Computation Element Protocol (PCEP) Numbers" registry group.
 The new registry is called "SR Policy Invalidation Configuration Flags".
-New values are to be assigned by "Standards Action" <xref target="RFC8126"/>.
-Each bit should be tracked with the following qualities.
+New values are to be assigned by "IETF review" <xref target="RFC8126"/>.
+Each bit should be tracked with the following qualities:
   <list style="symbols">
   <t>Bit (counting from bit 0 as the most significant bit).</t>
   <t>Description.</t>
@@ -1075,6 +1075,40 @@ Each bit should be tracked with the following qualities.
 | 7     | D: drop enabled - the Drop-upon-invalid is    | This.I-D  |
 |       | enabled on the LSP.                           |           |
 +-------+-----------------------------------------------+-----------+
+]]></artwork>
+      </figure>
+</section>
+
+<section anchor="sr_policy_cap_flag_field" title="SR Policy Capability TLV Flag field">
+<t>
+This document requests IANA to maintain a new registry under "Path Computation Element Protocol (PCEP) Numbers" registry group.
+The new registry is called "SR Policy Capability TLV Flag Field".
+New values are to be assigned by "IETF review" <xref target="RFC8126"/>.
+Each bit should be tracked with the following qualities:
+  <list style="symbols">
+  <t>Bit (counting from bit 0 as the most significant bit).</t>
+  <t>Description.</t>
+  <t>Reference.</t>
+  </list>
+</t>
+<figure>
+        <artwork align="left"><![CDATA[
++--------+-----------------------------------------------+-----------+
+| Bit    | Description                                   | Reference |
++--------+-----------------------------------------------+-----------+
+| 0 - 26 | Unassigned                                    | This.I-D  |
++--------+-----------------------------------------------+-----------+
+| 27     | Stateless Operation                           | This.I-D  |
++--------+-----------------------------------------------+-----------+
+| 28     | Unassigned                                    | This.I-D  |
++--------+-----------------------------------------------+-----------+
+| 29     | Invalidation                                  | This.I-D  |
++--------+-----------------------------------------------+-----------+
+| 30     | Explicit NULL Label Policy                    | This.I-D  |
++--------+-----------------------------------------------+-----------+
+| 31     | Computation Priority                          | This.I-D  |
++--------+-----------------------------------------------+-----------+
+
 ]]></artwork>
       </figure>
 </section>
@@ -1150,8 +1184,24 @@ Each bit should be tracked with the following qualities.
   <xref target="RFC8231"/>, <xref target="RFC8281"/>, <xref target="RFC8664"/>
   and <xref target="RFC9256"/> are applicable to this specification.
   </t>
+  
+  <t>As per <xref target="RFC8231"/>, it is RECOMMENDED that these PCEP extensions can only be activated on authenticated and encrypted sessions across PCEs and PCCs belonging to the same administrative authority, using Transport Layer Security (TLS) <xref target="RFC8253"/> as per the recommendations and best current practices in <xref target="RFC9325"/>.</t>
 </section>
-
+<section title="Manageability Considerations" numbered="true" toc="default">
+  <t>All manageability requirements and considerations listed in <xref target="RFC5440"/>, <xref target="RFC8231"/>, <xref target="RFC8664"/> and <xref target="RFC9603"/> apply to PCEP protocol extensions defined in this document. In addition, requirements and considerations listed in this section apply.</t>
+  <section title="Control of Function and Policy" numbered="true" toc="default">
+	<t>A PCE or PCC implementation MAY allow the capabilities specified in Section 5.1 and the capability for support of SRPA advertised in ASSOC-Type-List TLV to be enabled and disabled.</t>
+  </section>
+  <section title="Verify Correct Operations" numbered="true" toc="default">
+	<t>Operation verification requirements already listed in <xref target="RFC5440"/>, <xref target="RFC8231"/>, <xref target="RFC8664"/> and <xref target="RFC9603"/> are applicable to mechanisms defined in this document.</t>
+	<t>An implementation MUST allow the operator to view SR Policy Identifier and SR Policy Candidate Path Identifier advertised in SRPA object.</t>
+	<t>An implementation SHOULD allow the operator to view the capabilities defined in this document.</t>
+	<t>An implementation SHOULD allow the operator to view LSPs associated with specific SR Policy Identifier.</t>
+  </section>
+  <section title="Impact On Network Operations" numbered="true" toc="default">
+	<t>The mechanisms defined in <xref target="RFC5440"/>, <xref target="RFC8231"/> and <xref target="RFC9603"/> also apply to the PCEP extensions defined in this document.</t>
+  </section>
+</section>
 <section anchor="Acknowledgement" title="Acknowledgement">
 <t>
 Would like to thank Ketan Talaulikar, Dhruv Dhody, Stephane Litkowski, Boris Khasanov, Abdul Rehman, Zoey Rose, Praveen Kumar and Tom Petch for review and suggestions.
@@ -1164,17 +1214,19 @@ Would like to thank Ketan Talaulikar, Dhruv Dhody, Stephane Litkowski, Boris Kha
 
 <references title="Normative References">
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3032.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.5440.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7942.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8231.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8253.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8281.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7942.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9256.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8697.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8664.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3032.xml"?>
-  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
-  
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8697.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9256.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9325.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9603.xml"?>
 </references>
 <references title="Informative References">
 
