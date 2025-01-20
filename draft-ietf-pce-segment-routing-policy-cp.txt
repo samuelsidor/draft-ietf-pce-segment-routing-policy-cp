@@ -6,19 +6,19 @@ PCE Working Group                                           M. Koldychev
 Internet-Draft                                              S. Sivabalan
 Updates: 8231 (if approved)                            Ciena Corporation
 Intended status: Standards Track                                S. Sidor
-Expires: 21 July 2025                                Cisco Systems, Inc.
+Expires: 24 July 2025                                Cisco Systems, Inc.
                                                                 C. Barth
                                                   Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                         17 January 2025
+                                                         20 January 2025
 
 
  Path Computation Element Communication Protocol (PCEP) Extensions for
               Segment Routing (SR) Policy Candidate Paths
-              draft-ietf-pce-segment-routing-policy-cp-19
+              draft-ietf-pce-segment-routing-policy-cp-20
 
 Abstract
 
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Koldychev, et al.         Expires 21 July 2025                  [Page 1]
+Koldychev, et al.         Expires 24 July 2025                  [Page 1]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
 
-   This Internet-Draft will expire on 21 July 2025.
+   This Internet-Draft will expire on 24 July 2025.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Koldychev, et al.         Expires 21 July 2025                  [Page 2]
+Koldychev, et al.         Expires 24 July 2025                  [Page 2]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -121,14 +121,17 @@ Internet-Draft               PCEP SR Policy                 January 2025
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  25
    9.  Manageability Considerations  . . . . . . . . . . . . . . . .  26
      9.1.  Control of Function and Policy  . . . . . . . . . . . . .  26
-     9.2.  Verify Correct Operations . . . . . . . . . . . . . . . .  26
-     9.3.  Impact On Network Operations  . . . . . . . . . . . . . .  26
-   10. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  26
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  26
+     9.2.  Information and Data Models . . . . . . . . . . . . . . .  26
+     9.3.  Liveness Detection and Monitoring . . . . . . . . . . . .  26
+     9.4.  Verify Correct Operations . . . . . . . . . . . . . . . .  26
+     9.5.  Requirements On Other Protocols . . . . . . . . . . . . .  27
+     9.6.  Impact On Network Operations  . . . . . . . . . . . . . .  27
+   10. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  27
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  27
      11.1.  Normative References . . . . . . . . . . . . . . . . . .  27
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  28
-   Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  28
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  29
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  29
+   Appendix A.  Contributors . . . . . . . . . . . . . . . . . . . .  29
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  30
 
 1.  Introduction
 
@@ -155,20 +158,24 @@ Internet-Draft               PCEP SR Policy                 January 2025
    to the Candidate Path.  The unit of signaling in PCEP is the LSP,
    thus all the information is carried at the Candidate Path level.
 
+
+
+
+
+
+
+
+Koldychev, et al.         Expires 24 July 2025                  [Page 3]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    This document updates Section 5.8.2 of [RFC8231], making the PCReq
    message optional for LSPs set up using Path Setup Type 1 (Segment
    Routing) described in [RFC8664] and 3 (SRv6) described in [RFC9603],
    allowing a PCC to delegate such LSP by sending a PCRpt without the
    preliminary PCReq and PCRep messages, with the aim of reducing the
    PCEP message exchanges and simplifying implementation.
-
-
-
-
-Koldychev, et al.         Expires 21 July 2025                  [Page 3]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
 1.1.  Requirements Language
 
@@ -204,7 +211,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
       non-key information about the Association.
 
    SR Policy LSP:  An LSP set up using Path Setup Type 1 (Segment
-      Routing) and 3 (SRv6).
+      Routing) or 3 (SRv6).
 
    ASN:  Autonomous System Number.
 
@@ -212,19 +219,18 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
    ENLP:  Explicit Null Label Policy.
 
+
+
+Koldychev, et al.         Expires 24 July 2025                  [Page 4]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    IGP:  Interior Gateway Protocol.
 
    LSP:  Label Switched Path.
 
    MPLS:  Multiprotocol Label Switching.
-
-
-
-
-Koldychev, et al.         Expires 21 July 2025                  [Page 4]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    PCC:  Path Computation Client.
 
@@ -271,13 +277,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-
-
-
-
-
-
-Koldychev, et al.         Expires 21 July 2025                  [Page 5]
+Koldychev, et al.         Expires 24 July 2025                  [Page 5]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -333,7 +333,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                  [Page 6]
+Koldychev, et al.         Expires 24 July 2025                  [Page 6]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -389,7 +389,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                  [Page 7]
+Koldychev, et al.         Expires 24 July 2025                  [Page 7]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -445,7 +445,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                  [Page 8]
+Koldychev, et al.         Expires 24 July 2025                  [Page 8]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -501,7 +501,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                  [Page 9]
+Koldychev, et al.         Expires 24 July 2025                  [Page 9]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -557,7 +557,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 10]
+Koldychev, et al.         Expires 24 July 2025                 [Page 10]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -613,7 +613,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 11]
+Koldychev, et al.         Expires 24 July 2025                 [Page 11]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -669,7 +669,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 12]
+Koldychev, et al.         Expires 24 July 2025                 [Page 12]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -725,7 +725,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 13]
+Koldychev, et al.         Expires 24 July 2025                 [Page 13]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -781,7 +781,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 14]
+Koldychev, et al.         Expires 24 July 2025                 [Page 14]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -837,7 +837,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 15]
+Koldychev, et al.         Expires 24 July 2025                 [Page 15]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -893,7 +893,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 16]
+Koldychev, et al.         Expires 24 July 2025                 [Page 16]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -949,7 +949,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 17]
+Koldychev, et al.         Expires 24 July 2025                 [Page 17]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1005,7 +1005,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 18]
+Koldychev, et al.         Expires 24 July 2025                 [Page 18]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1061,7 +1061,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 19]
+Koldychev, et al.         Expires 24 July 2025                 [Page 19]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1117,7 +1117,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 20]
+Koldychev, et al.         Expires 24 July 2025                 [Page 20]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1173,7 +1173,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 21]
+Koldychev, et al.         Expires 24 July 2025                 [Page 21]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1229,7 +1229,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 22]
+Koldychev, et al.         Expires 24 July 2025                 [Page 22]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1285,7 +1285,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 23]
+Koldychev, et al.         Expires 24 July 2025                 [Page 23]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1341,7 +1341,7 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 24]
+Koldychev, et al.         Expires 24 July 2025                 [Page 24]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1390,14 +1390,14 @@ Internet-Draft               PCEP SR Policy                 January 2025
    SR Policy.
 
    The security considerations described in [RFC5440], [RFC8231],
-   [RFC8281], [RFC8664] and [RFC9256] are applicable to this
-   specification.
+   [RFC8281], [RFC8664], [RFC8697], [RFC9256] and [RFC9603] are
+   applicable to this specification.
 
 
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 25]
+Koldychev, et al.         Expires 24 July 2025                 [Page 25]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1411,9 +1411,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 9.  Manageability Considerations
 
    All manageability requirements and considerations listed in
-   [RFC5440], [RFC8231], [RFC8664] and [RFC9603] apply to PCEP protocol
-   extensions defined in this document.  In addition, requirements and
-   considerations listed in this section apply.
+   [RFC5440], [RFC8231], [RFC8664], [RFC9256] and [RFC9603] apply to
+   PCEP protocol extensions defined in this document.  In addition,
+   requirements and considerations listed in this section apply.
 
 9.1.  Control of Function and Policy
 
@@ -1421,11 +1421,24 @@ Internet-Draft               PCEP SR Policy                 January 2025
    Section 5.1 and the capability for support of SRPA advertised in
    ASSOC-Type-List TLV to be enabled and disabled.
 
-9.2.  Verify Correct Operations
+9.2.  Information and Data Models
+
+   The PCEP YANG module [I-D.ietf-pce-pcep-yang] will be extended with
+   PCEP extensions specified Section 5 of this document.
+   [I-D.ietf-pce-pcep-srv6-yang] defines YANG module with common
+   building blocks for PCEP Extensions described in Section 4.
+
+9.3.  Liveness Detection and Monitoring
+
+   Mechanisms defined in this document do not imply any new liveness
+   detection and monitoring requirements in addition to those already
+   listed in [RFC5440], [RFC8664] and [RFC9256].
+
+9.4.  Verify Correct Operations
 
    Operation verification requirements already listed in [RFC5440],
-   [RFC8231], [RFC8664] and [RFC9603] are applicable to mechanisms
-   defined in this document.
+   [RFC8231], [RFC8664], [RFC9256] and [RFC9603] are applicable to
+   mechanisms defined in this document.
 
    An implementation MUST allow the operator to view SR Policy
    Identifier and SR Policy Candidate Path Identifier advertised in SRPA
@@ -1437,10 +1450,23 @@ Internet-Draft               PCEP SR Policy                 January 2025
    An implementation SHOULD allow the operator to view LSPs associated
    with specific SR Policy Identifier.
 
-9.3.  Impact On Network Operations
 
-   The mechanisms defined in [RFC5440], [RFC8231] and [RFC9603] also
-   apply to the PCEP extensions defined in this document.
+
+
+Koldychev, et al.         Expires 24 July 2025                 [Page 26]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
+9.5.  Requirements On Other Protocols
+
+   The PCEP extensions defined in this document do not imply any new
+   requirements on other protocols.
+
+9.6.  Impact On Network Operations
+
+   The mechanisms defined in [RFC5440], [RFC8231], [RFC9256] and
+   [RFC9603] also apply to the PCEP extensions defined in this document.
 
 10.  Acknowledgement
 
@@ -1449,14 +1475,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
    Tom Petch for review and suggestions.
 
 11.  References
-
-
-
-
-Koldychev, et al.         Expires 21 July 2025                 [Page 26]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
 11.1.  Normative References
 
@@ -1489,6 +1507,13 @@ Internet-Draft               PCEP SR Policy                 January 2025
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+
+
+Koldychev, et al.         Expires 24 July 2025                 [Page 27]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
    [RFC8231]  Crabbe, E., Minei, I., Medved, J., and R. Varga, "Path
               Computation Element Communication Protocol (PCEP)
               Extensions for Stateful PCE", RFC 8231,
@@ -1506,13 +1531,6 @@ Internet-Draft               PCEP SR Policy                 January 2025
               Extensions for PCE-Initiated LSP Setup in a Stateful PCE
               Model", RFC 8281, DOI 10.17487/RFC8281, December 2017,
               <https://www.rfc-editor.org/info/rfc8281>.
-
-
-
-Koldychev, et al.         Expires 21 July 2025                 [Page 27]
-
-Internet-Draft               PCEP SR Policy                 January 2025
-
 
    [RFC8664]  Sivabalan, S., Filsfils, C., Tantsura, J., Henderickx, W.,
               and J. Hardwick, "Path Computation Element Communication
@@ -1544,6 +1562,14 @@ Internet-Draft               PCEP SR Policy                 January 2025
               RFC 9603, DOI 10.17487/RFC9603, July 2024,
               <https://www.rfc-editor.org/info/rfc9603>.
 
+
+
+
+Koldychev, et al.         Expires 24 July 2025                 [Page 28]
+
+Internet-Draft               PCEP SR Policy                 January 2025
+
+
 11.2.  Informative References
 
    [I-D.ietf-pce-multipath]
@@ -1559,13 +1585,43 @@ Internet-Draft               PCEP SR Policy                 January 2025
               Networks", RFC 9604, DOI 10.17487/RFC9604, August 2024,
               <https://www.rfc-editor.org/info/rfc9604>.
 
+   [I-D.ietf-pce-pcep-yang]
+              Dhody, D., Beeram, V. P., Hardwick, J., and J. Tantsura,
+              "A YANG Data Model for Path Computation Element
+              Communications Protocol (PCEP)", Work in Progress,
+              Internet-Draft, draft-ietf-pce-pcep-yang-29, 19 January
+              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              pce-pcep-yang-29>.
+
+   [I-D.ietf-pce-pcep-srv6-yang]
+              Li, C., Sivabalan, S., Peng, S., Koldychev, M., and L.
+              Ndifor, "A YANG Data Model for Segment Routing (SR) Policy
+              and SR in IPv6 (SRv6) support in Path Computation Element
+              Communications Protocol (PCEP)", Work in Progress,
+              Internet-Draft, draft-ietf-pce-pcep-srv6-yang-06, 19
+              October 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-pce-pcep-srv6-yang-06>.
+
 Appendix A.  Contributors
 
 
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 28]
+
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.         Expires 24 July 2025                 [Page 29]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1621,7 +1677,7 @@ Authors' Addresses
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 29]
+Koldychev, et al.         Expires 24 July 2025                 [Page 30]
 
 Internet-Draft               PCEP SR Policy                 January 2025
 
@@ -1677,4 +1733,4 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 21 July 2025                 [Page 30]
+Koldychev, et al.         Expires 24 July 2025                 [Page 31]
