@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-19" ipr="trust200902" updates="8231">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-20" ipr="trust200902" updates="8231">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN"
@@ -209,7 +209,7 @@ The unit of signaling in PCEP is the LSP, thus all the information is carried at
 
      <t hangText="Association Information:"> As described in <xref target="RFC8697"/>, refers to the non-key information about the Association.</t>
 	 
-	 <t hangText="SR Policy LSP:"> An LSP set up using Path Setup Type 1 (Segment Routing) and 3 (SRv6).</t>
+	 <t hangText="SR Policy LSP:"> An LSP set up using Path Setup Type 1 (Segment Routing) or 3 (SRv6).</t>
 	 
           <t hangText="ASN:"> Autonomous System Number.</t>
           <t hangText="BSID:"> Binding Segment Identifier.</t>
@@ -1181,25 +1181,33 @@ Each bit should be tracked with the following qualities:
   </t>
   <t>
   The security considerations described in <xref target="RFC5440"/>,
-  <xref target="RFC8231"/>, <xref target="RFC8281"/>, <xref target="RFC8664"/>
-  and <xref target="RFC9256"/> are applicable to this specification.
+  <xref target="RFC8231"/>, <xref target="RFC8281"/>, <xref target="RFC8664"/>, <xref target="RFC8697"/>, <xref target="RFC9256"/> and <xref target="RFC9603"/> are applicable to this specification.
   </t>
   
   <t>As per <xref target="RFC8231"/>, it is RECOMMENDED that these PCEP extensions can only be activated on authenticated and encrypted sessions across PCEs and PCCs belonging to the same administrative authority, using Transport Layer Security (TLS) <xref target="RFC8253"/> as per the recommendations and best current practices in <xref target="RFC9325"/>.</t>
 </section>
 <section title="Manageability Considerations" numbered="true" toc="default">
-  <t>All manageability requirements and considerations listed in <xref target="RFC5440"/>, <xref target="RFC8231"/>, <xref target="RFC8664"/> and <xref target="RFC9603"/> apply to PCEP protocol extensions defined in this document. In addition, requirements and considerations listed in this section apply.</t>
+  <t>All manageability requirements and considerations listed in <xref target="RFC5440"/>, <xref target="RFC8231"/>, <xref target="RFC8664"/>, <xref target="RFC9256"/> and <xref target="RFC9603"/> apply to PCEP protocol extensions defined in this document. In addition, requirements and considerations listed in this section apply.</t>
   <section title="Control of Function and Policy" numbered="true" toc="default">
 	<t>A PCE or PCC implementation MAY allow the capabilities specified in Section 5.1 and the capability for support of SRPA advertised in ASSOC-Type-List TLV to be enabled and disabled.</t>
   </section>
+  <section title="Information and Data Models" numbered="true" toc="default">
+     <t>The PCEP YANG module <xref target="I-D.ietf-pce-pcep-yang" format="default" sectionFormat="of" derivedContent="PCEP-YANG"/> will be extended with PCEP extensions specified Section 5 of this document. <xref target="I-D.ietf-pce-pcep-srv6-yang" format="default" sectionFormat="of" derivedContent="PCEP-SRv6-YANG"/> defines YANG module with common building blocks for PCEP Extensions described in Section 4.</t>
+  </section>
+  <section title="Liveness Detection and Monitoring" numbered="true" toc="default">
+     <t>Mechanisms defined in this document do not imply any new liveness detection and monitoring requirements in addition to those already listed in <xref target="RFC5440"/>, <xref target="RFC8664"/> and <xref target="RFC9256"/>.</t>
+ </section>
   <section title="Verify Correct Operations" numbered="true" toc="default">
-	<t>Operation verification requirements already listed in <xref target="RFC5440"/>, <xref target="RFC8231"/>, <xref target="RFC8664"/> and <xref target="RFC9603"/> are applicable to mechanisms defined in this document.</t>
+	<t>Operation verification requirements already listed in <xref target="RFC5440"/>, <xref target="RFC8231"/>, <xref target="RFC8664"/>, <xref target="RFC9256"/> and <xref target="RFC9603"/> are applicable to mechanisms defined in this document.</t>
 	<t>An implementation MUST allow the operator to view SR Policy Identifier and SR Policy Candidate Path Identifier advertised in SRPA object.</t>
 	<t>An implementation SHOULD allow the operator to view the capabilities defined in this document.</t>
 	<t>An implementation SHOULD allow the operator to view LSPs associated with specific SR Policy Identifier.</t>
   </section>
+  <section title="Requirements On Other Protocols" numbered="true" toc="default">
+    <t>The PCEP extensions defined in this document do not imply any new requirements on other protocols.</t>
+  </section>
   <section title="Impact On Network Operations" numbered="true" toc="default">
-	<t>The mechanisms defined in <xref target="RFC5440"/>, <xref target="RFC8231"/> and <xref target="RFC9603"/> also apply to the PCEP extensions defined in this document.</t>
+	<t>The mechanisms defined in <xref target="RFC5440"/>, <xref target="RFC8231"/>, <xref target="RFC9256"/> and <xref target="RFC9603"/> also apply to the PCEP extensions defined in this document.</t>
   </section>
 </section>
 <section anchor="Acknowledgement" title="Acknowledgement">
@@ -1232,6 +1240,8 @@ Would like to thank Ketan Talaulikar, Dhruv Dhody, Stephane Litkowski, Boris Kha
 
   <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-multipath.xml"?>
   <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9604.xml"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-pcep-yang"?>
+  <?rfc include="http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-pcep-srv6-yang"?>
 </references>
 
 <section title="Contributors">
