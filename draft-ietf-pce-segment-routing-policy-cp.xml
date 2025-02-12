@@ -36,7 +36,7 @@ please see http://xml.resource.org/authoring/README.html. -->
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-20" ipr="trust200902" updates="8231">
+<rfc category="std" docName="draft-ietf-pce-segment-routing-policy-cp-21" ipr="trust200902" updates="8231">
 <!-- category values: std, bcp, info, exp, and historic
 ipr values: full3667, noModification3667, noDerivatives3667
 you can add the attributes updates="NNNN" and obsoletes="NNNN"
@@ -475,7 +475,7 @@ The SRPOLICY-CPATH-ID TLV is a mandatory TLV for the SRPA object.
 <t>Length: 28.</t>
 
 <t>Protocol Origin: 8-bit value that encodes the protocol origin, as specified in <xref target="protocol_origin"/>.
-Note that in the PCInitiate message <xref target="RFC8281"/>, the Protocol Origin is always set to 10 (PCEP reported via PCE/PCEP). The "SR Policy Protocol Origin" IANA registry includes a combination of values intended for use in PCEP and BGP-LS. When the registry contains two variants of values associated with the mechanism or protocol used for provisioning of the Candidate Path, for example 1 (PCEP) and 10 (PCEP reported via PCE/PCEP), the "reported via PCE" variants MUST be used in PCEP.</t>
+Note that in the PCInitiate message <xref target="RFC8281"/>, the Protocol Origin is always set to 10 - "PCEP (In PCEP or when BGP-LS Producer is PCE)". The "SR Policy Protocol Origin" IANA registry includes a combination of values intended for use in PCEP and BGP-LS. When the registry contains two variants of values associated with the mechanism or protocol used for provisioning of the Candidate Path, for example 1 - "PCEP" and 10 - "PCEP (In PCEP or when BGP-LS Producer is PCE)", the "(In PCEP or when BGP-LS Producer is PCE)" variants MUST be used in PCEP.</t>
 
 <t>Reserved: This field MUST be set to zero on transmission and MUST be ignored on receipt.</t>
 
@@ -964,26 +964,29 @@ The registry contains the following codepoints:
 <figure>
         <artwork align="left">
 <![CDATA[
-+---------+--------------------------------------+-----------+
-|  Code   |                                      |           |
-|  Point  |  Protocol Origin                     | Reference |
-+---------+--------------------------------------+---------- +
-|   0     | Reserved (not to be used)            | This.I-D  |
-|   1     | PCEP                                 | This.I-D  |
-|   2     | BGP SR Policy                        | This.I-D  |
-|   3     | Configuration (CLI, YANG model via   | This.I-D  |
-|         | NETCONF, etc.)                       | This.I-D  |
-|   4-9   | Unassigned                           | This.I-D  |
-|   10    | PCEP reported via PCE/PCEP           | This.I-D  |
-|  11-19  | Unassigned                           | This.I-D  |
-|   20    | BGP SR Policy reported via PCE/PCEP  | This.I-D  |
-|  21-29  | Unassigned                           | This.I-D  |
-|   30    | Configuration (CLI, YANG model via   | This.I-D  |
-|         | NETCONF, etc.) reported via PCE/PCEP | This.I-D  |
-|  31-250 | Unassigned                           | This.I-D  |
-| 251-255 | Private Use (not to be assigned by   | This.I-D  |
-|         | IANA                                 | This.I-D  |
-+---------+--------------------------------------+-----------+
++---------+--------------------------------------+---------------+
+|  Code   |                                      |               |
+|  Point  |  Protocol Origin                     |   Reference   |
++---------+--------------------------------------+---------------+
+|   0     | Reserved (not to be used)            | this document |
+|   1     | PCEP                                 | this document |
+|   2     | BGP SR Policy                        | this document |
+|   3     | Configuration (CLI, YANG model via   | this document |
+|         | NETCONF, etc.)                       |               |
+|   4-9   | Unassigned                           | this document |
+|   10    | PCEP (In PCEP or when                | this document |
+|         | BGP-LS Producer is PCE)              |               |
+|  11-19  | Unassigned                           | this document |
+|   20    | BGP SR Policy (In PCEP or when       | this document |
+|         | BGP-LS Producer is PCE)              |               |
+|  21-29  | Unassigned                           | this document |
+|   30    | Configuration (CLI, YANG model via   | this document |
+|         | NETCONF, etc.) (In PCEP or when      |               |
+|         | BGP-LS Producer is PCE)              |               |
+|  31-250 | Unassigned                           | this document |
+| 251-255 | Private Use (not to be assigned by   | this document |
+|         | IANA)                                |               |
++---------+--------------------------------------+---------------+
 ]]></artwork>
       </figure>
 </section>

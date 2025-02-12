@@ -6,19 +6,19 @@ PCE Working Group                                           M. Koldychev
 Internet-Draft                                              S. Sivabalan
 Updates: 8231 (if approved)                            Ciena Corporation
 Intended status: Standards Track                                S. Sidor
-Expires: 24 July 2025                                Cisco Systems, Inc.
+Expires: 16 August 2025                              Cisco Systems, Inc.
                                                                 C. Barth
                                                   Juniper Networks, Inc.
                                                                  S. Peng
                                                      Huawei Technologies
                                                               H. Bidgoli
                                                                    Nokia
-                                                         20 January 2025
+                                                        12 February 2025
 
 
  Path Computation Element Communication Protocol (PCEP) Extensions for
               Segment Routing (SR) Policy Candidate Paths
-              draft-ietf-pce-segment-routing-policy-cp-20
+              draft-ietf-pce-segment-routing-policy-cp-21
 
 Abstract
 
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Koldychev, et al.         Expires 24 July 2025                  [Page 1]
+Koldychev, et al.        Expires 16 August 2025                 [Page 1]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
-   This Internet-Draft will expire on 24 July 2025.
+   This Internet-Draft will expire on 16 August 2025.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Koldychev, et al.         Expires 24 July 2025                  [Page 2]
+Koldychev, et al.        Expires 16 August 2025                 [Page 2]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
      6.9.  SR Policy Capability TLV Flag field . . . . . . . . . . .  24
@@ -165,9 +165,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                  [Page 3]
+Koldychev, et al.        Expires 16 August 2025                 [Page 3]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    This document updates Section 5.8.2 of [RFC8231], making the PCReq
@@ -221,9 +221,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                  [Page 4]
+Koldychev, et al.        Expires 16 August 2025                 [Page 4]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    IGP:  Interior Gateway Protocol.
@@ -277,9 +277,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                  [Page 5]
+Koldychev, et al.        Expires 16 August 2025                 [Page 5]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
 3.1.  SR Policy Identifier
@@ -333,9 +333,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                  [Page 6]
+Koldychev, et al.        Expires 16 August 2025                 [Page 6]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    *  SR Policy name.
@@ -389,9 +389,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                  [Page 7]
+Koldychev, et al.        Expires 16 August 2025                 [Page 7]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    *  Association ID (16-bit): Part of the base ASSOCIATION object.
@@ -445,9 +445,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                  [Page 8]
+Koldychev, et al.        Expires 16 August 2025                 [Page 8]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    The last hop of the computed SR Policy Candidate Path MAY differ from
@@ -501,9 +501,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                  [Page 9]
+Koldychev, et al.        Expires 16 August 2025                 [Page 9]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
        0                   1                   2                   3
@@ -557,20 +557,21 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 10]
+Koldychev, et al.        Expires 16 August 2025                [Page 10]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    Protocol Origin: 8-bit value that encodes the protocol origin, as
    specified in Section 6.5.  Note that in the PCInitiate message
-   [RFC8281], the Protocol Origin is always set to 10 (PCEP reported via
-   PCE/PCEP).  The "SR Policy Protocol Origin" IANA registry includes a
-   combination of values intended for use in PCEP and BGP-LS.  When the
-   registry contains two variants of values associated with the
-   mechanism or protocol used for provisioning of the Candidate Path,
-   for example 1 (PCEP) and 10 (PCEP reported via PCE/PCEP), the
-   "reported via PCE" variants MUST be used in PCEP.
+   [RFC8281], the Protocol Origin is always set to 10 - "PCEP (In PCEP
+   or when BGP-LS Producer is PCE)".  The "SR Policy Protocol Origin"
+   IANA registry includes a combination of values intended for use in
+   PCEP and BGP-LS.  When the registry contains two variants of values
+   associated with the mechanism or protocol used for provisioning of
+   the Candidate Path, for example 1 - "PCEP" and 10 - "PCEP (In PCEP or
+   when BGP-LS Producer is PCE)", the "(In PCEP or when BGP-LS Producer
+   is PCE)" variants MUST be used in PCEP.
 
    Reserved: This field MUST be set to zero on transmission and MUST be
    ignored on receipt.
@@ -609,14 +610,15 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
                 Figure 4: The SRPOLICY-CPATH-NAME TLV format
 
-   Type: 58 for "SRPOLICY-CPATH-NAME" TLV.
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 11]
+Koldychev, et al.        Expires 16 August 2025                [Page 11]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
+
+   Type: 58 for "SRPOLICY-CPATH-NAME" TLV.
 
    Length: indicates the length of the value portion of the TLV in
    octets and MUST be greater than 0.  The TLV MUST be zero-padded so
@@ -667,11 +669,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-
-
-Koldychev, et al.         Expires 24 July 2025                 [Page 12]
+Koldychev, et al.        Expires 16 August 2025                [Page 12]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
 5.1.  SR Policy Capability TLV
@@ -725,9 +725,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 13]
+Koldychev, et al.        Expires 16 August 2025                [Page 13]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    L-Flag (Stateless Operation): If set to '1' by a PCEP speaker, the L
@@ -781,9 +781,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 14]
+Koldychev, et al.        Expires 16 August 2025                [Page 14]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    present, the decision of whether to push an Explicit NULL label on a
@@ -837,9 +837,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 15]
+Koldychev, et al.        Expires 16 August 2025                [Page 15]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    has been computed.
@@ -893,9 +893,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 16]
+Koldychev, et al.        Expires 16 August 2025                [Page 16]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
                                0 1 2 3 4 5 6 7
@@ -949,9 +949,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 17]
+Koldychev, et al.        Expires 16 August 2025                [Page 17]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    CAPABILITY TLV is absent, the given peer MUST NOT be sent PCReq/PCRep
@@ -1005,9 +1005,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 18]
+Koldychev, et al.        Expires 16 August 2025                [Page 18]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    +-----------+-------------------------------------------+-----------+
@@ -1061,9 +1061,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 19]
+Koldychev, et al.        Expires 16 August 2025                [Page 19]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    +------------+------------------+-----------------------+-----------+
@@ -1117,9 +1117,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 20]
+Koldychev, et al.        Expires 16 August 2025                [Page 20]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    +------------+------------------------------------------+-----------+
@@ -1145,37 +1145,37 @@ Internet-Draft               PCEP SR Policy                 January 2025
    [RFC8126] using the guidelines for Designated Experts as specified in
    [RFC9256].  The registry contains the following codepoints:
 
-   +---------+--------------------------------------+-----------+
-   |  Code   |                                      |           |
-   |  Point  |  Protocol Origin                     | Reference |
-   +---------+--------------------------------------+---------- +
-   |   0     | Reserved (not to be used)            | This.I-D  |
-   |   1     | PCEP                                 | This.I-D  |
-   |   2     | BGP SR Policy                        | This.I-D  |
-   |   3     | Configuration (CLI, YANG model via   | This.I-D  |
-   |         | NETCONF, etc.)                       | This.I-D  |
-   |   4-9   | Unassigned                           | This.I-D  |
-   |   10    | PCEP reported via PCE/PCEP           | This.I-D  |
-   |  11-19  | Unassigned                           | This.I-D  |
-   |   20    | BGP SR Policy reported via PCE/PCEP  | This.I-D  |
-   |  21-29  | Unassigned                           | This.I-D  |
-   |   30    | Configuration (CLI, YANG model via   | This.I-D  |
-   |         | NETCONF, etc.) reported via PCE/PCEP | This.I-D  |
-   |  31-250 | Unassigned                           | This.I-D  |
-   | 251-255 | Private Use (not to be assigned by   | This.I-D  |
-   |         | IANA                                 | This.I-D  |
-   +---------+--------------------------------------+-----------+
+   +---------+--------------------------------------+---------------+
+   |  Code   |                                      |               |
+   |  Point  |  Protocol Origin                     |   Reference   |
+   +---------+--------------------------------------+---------------+
+   |   0     | Reserved (not to be used)            | this document |
+   |   1     | PCEP                                 | this document |
+   |   2     | BGP SR Policy                        | this document |
+   |   3     | Configuration (CLI, YANG model via   | this document |
+   |         | NETCONF, etc.)                       |               |
+   |   4-9   | Unassigned                           | this document |
+   |   10    | PCEP (In PCEP or when                | this document |
+   |         | BGP-LS Producer is PCE)              |               |
+   |  11-19  | Unassigned                           | this document |
+   |   20    | BGP SR Policy (In PCEP or when       | this document |
+   |         | BGP-LS Producer is PCE)              |               |
+   |  21-29  | Unassigned                           | this document |
+   |   30    | Configuration (CLI, YANG model via   | this document |
+   |         | NETCONF, etc.) (In PCEP or when      |               |
+   |         | BGP-LS Producer is PCE)              |               |
+   |  31-250 | Unassigned                           | this document |
+   | 251-255 | Private Use (not to be assigned by   | this document |
+   |         | IANA)                                |               |
+   +---------+--------------------------------------+---------------+
 
 
 
 
 
-
-
-
-Koldychev, et al.         Expires 24 July 2025                 [Page 21]
+Koldychev, et al.        Expires 16 August 2025                [Page 21]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
 6.6.  SR Policy Explicit Null Label Policy field
@@ -1229,9 +1229,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 22]
+Koldychev, et al.        Expires 16 August 2025                [Page 22]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
 6.7.  SR Policy Invalidation Operational State
@@ -1285,9 +1285,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 23]
+Koldychev, et al.        Expires 16 August 2025                [Page 23]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
 6.9.  SR Policy Capability TLV Flag field
@@ -1341,9 +1341,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 24]
+Koldychev, et al.        Expires 16 August 2025                [Page 24]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    According to [RFC7942], "this will allow reviewers and working groups
@@ -1397,9 +1397,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 25]
+Koldychev, et al.        Expires 16 August 2025                [Page 25]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    As per [RFC8231], it is RECOMMENDED that these PCEP extensions can
@@ -1453,9 +1453,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 26]
+Koldychev, et al.        Expires 16 August 2025                [Page 26]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
 9.5.  Requirements On Other Protocols
@@ -1509,9 +1509,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 27]
+Koldychev, et al.        Expires 16 August 2025                [Page 27]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    [RFC8231]  Crabbe, E., Minei, I., Medved, J., and R. Varga, "Path
@@ -1565,9 +1565,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 28]
+Koldychev, et al.        Expires 16 August 2025                [Page 28]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
 11.2.  Informative References
@@ -1589,9 +1589,9 @@ Internet-Draft               PCEP SR Policy                 January 2025
               Dhody, D., Beeram, V. P., Hardwick, J., and J. Tantsura,
               "A YANG Data Model for Path Computation Element
               Communications Protocol (PCEP)", Work in Progress,
-              Internet-Draft, draft-ietf-pce-pcep-yang-29, 19 January
+              Internet-Draft, draft-ietf-pce-pcep-yang-30, 26 January
               2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              pce-pcep-yang-29>.
+              pce-pcep-yang-30>.
 
    [I-D.ietf-pce-pcep-srv6-yang]
               Li, C., Sivabalan, S., Peng, S., Koldychev, M., and L.
@@ -1621,9 +1621,9 @@ Appendix A.  Contributors
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 29]
+Koldychev, et al.        Expires 16 August 2025                [Page 29]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    Dhruv Dhody
@@ -1677,9 +1677,9 @@ Authors' Addresses
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 30]
+Koldychev, et al.        Expires 16 August 2025                [Page 30]
 
-Internet-Draft               PCEP SR Policy                 January 2025
+Internet-Draft               PCEP SR Policy                February 2025
 
 
    Samuel Sidor
@@ -1733,4 +1733,4 @@ Internet-Draft               PCEP SR Policy                 January 2025
 
 
 
-Koldychev, et al.         Expires 24 July 2025                 [Page 31]
+Koldychev, et al.        Expires 16 August 2025                [Page 31]
